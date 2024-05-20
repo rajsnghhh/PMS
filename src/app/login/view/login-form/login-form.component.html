@@ -1,0 +1,38 @@
+<div class="login-form">
+  <h2>Welcome to Login</h2>
+  <form role="form" [formGroup]="loginForm">
+    <div class="mb-3 individualinput">
+      <label for="exampleInputEmail1" class="form-label"><img src="assets/login/email-icon.png" alt=""></label>
+      <input type="email" class="form-control" formControlName="username"
+        [ngClass]="displayFieldCss(loginForm,'username')" id="email" aria-describedby="emailHelp"
+        placeholder="Enter Email Address" value="">
+      <div class="required" *ngIf="isFieldValid(loginForm,'username')">
+        <span class="text-danger" *ngIf="loginForm.get('username')?.errors?.['required']">Username is required</span>
+        <span class="text-danger" *ngIf="loginForm.get('username')?.errors?.['pattern']">Enter a valid email
+          address</span>
+      </div>
+    </div>
+
+
+    <div class="mb-3 individualinput">
+      <label for="exampleInputPassword1" class="form-label"><img src="assets/login/secure-lock-icon.png" alt=""></label>
+      <input [type]="showloginpassword ? 'text' : 'password'" class="form-control" formControlName="password" (keyup)="ChangePass()"
+        [ngClass]="displayFieldCss(loginForm,'password')" id="exampleInputPassword1" placeholder="Password" value="">
+      <label for="exampleInputPassword1" (click)="togglePasswordView()" class="form-label clickable">
+        <img src="assets/login/closed-eye-icon.png" *ngIf="!showloginpassword" alt="">
+        <img src="assets/login/opened-eye-icon.png" *ngIf="showloginpassword" alt="">
+      </label>
+      <div class="required" *ngIf="isFieldValid(loginForm,'password')">
+        <span class="text-danger" *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
+      </div>
+      <div class="required">
+        <span class="text-danger" *ngIf="credentialerror">Please check the username and password</span>
+      </div>
+    </div>
+
+    <div class="form-action">
+      <a class="hover" (click)="proceedtoResetPassword()">Trouble in Login?</a>
+      <button type="submit" class="btn btn-primary float-right" (click)="loginSubmit()">LOGIN</button>
+    </div>
+  </form>
+</div>

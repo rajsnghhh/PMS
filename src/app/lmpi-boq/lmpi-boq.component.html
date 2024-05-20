@@ -1,0 +1,84 @@
+<div class="main-container">
+    <div class="wbs-scope">
+        <h3>WBS Activity :</h3>
+        <section>
+            <div class="wbs-imput-block">
+                <label for="">WBS</label>
+                <select name="" id="" [(ngModel)]="selectedWbs" (change)="changeWBS()">
+                    <option value="" disabled>Select WBS</option>
+                    <option value="{{Wbs.wbs_name}}" *ngFor="let Wbs of WbsList">{{Wbs.wbs_name}}</option>
+                </select>
+            </div>
+            <span class="unit-span uom-section" *ngIf="selectedWbs">UOM : {{selectedWBSUOM}}</span>
+        </section>
+        <section>
+            <span class="unit-span" *ngIf="selectedWbs">Budget Quantity : <input type="text" [ngClass]="{'disable': DisableModify == true }" amountNumber [(ngModel)]="wbsLinkedData.budgeted_quantity"></span>
+            <span class="unit-span" *ngIf="selectedWbs">Rate : <input type="text" amountNumber [ngClass]="{'disable': DisableModify == true }" [(ngModel)]="wbsLinkedData.rate"></span>
+            <span class="unit-span" *ngIf="selectedWbs">Cost : {{wbsLinkedData.rate * wbsLinkedData.budgeted_quantity}}</span>
+        </section>
+        <section>
+            <span class="unit-span" *ngIf="selectedWbs">Start Date : <input type="date" [ngClass]="{'disable': DisableModify == true }" [(ngModel)]="wbsLinkedData.start_date"></span>
+            <span class="unit-span" *ngIf="selectedWbs">End Date : <input type="date" [ngClass]="{'disable': DisableModify == true }" [(ngModel)]="wbsLinkedData.end_date"></span>
+        </section>
+        <section>
+            <button *ngIf="!wbsLinked" (click)="linkWBS('')" [ngClass]="{'disable': DisableModify == true }">Proceed</button>
+            <button *ngIf="wbsLinked" (click)="linkWBS('edit')" [ngClass]="{'disable': DisableModify == true }">Update</button>
+        </section>
+
+        
+    </div>
+    <div class="lmpi-scope" *ngIf="wbsLinked">
+        <div class="lmpi-header">
+            <section [ngClass]="{'active' : lmpiScope == 'labour'}" (click)="changelmpiscope('labour')">Labour ( L )
+            </section>
+            <section [ngClass]="{'active' : lmpiScope == 'material'}" (click)="changelmpiscope('material')">Materials (
+                M )</section>
+            <section [ngClass]="{'active' : lmpiScope == 'pnm'}" (click)="changelmpiscope('pnm')">Plant Machinery ( P )
+            </section>
+            <section [ngClass]="{'active' : lmpiScope == 'idc'}" (click)="changelmpiscope('idc')">Indirect cost ( IDC-I
+                )</section>
+        </div>
+        <div class="lmpi-content">
+            <app-pne 
+                *ngIf="lmpiScope == 'pnm'"
+                [wbsID]="selectedWbs"
+                [keyScopeID]="selectedWbs"
+                [tenderID]="TenderNumber"
+                [DisableModify]="DisableModify"
+                [wbsLinkedData]="wbsLinkedData"
+                [selectedTab]="selectedTab"
+            >
+            </app-pne>
+            <app-material 
+                *ngIf="lmpiScope == 'material'"
+                [wbsID]="selectedWbs"
+                [keyScopeID]="selectedWbs"
+                [tenderID]="TenderNumber"
+                [DisableModify]="DisableModify"
+                [wbsLinkedData]="wbsLinkedData"
+                [selectedTab]="selectedTab"
+            >
+            </app-material>
+            <app-labour 
+                *ngIf="lmpiScope == 'labour'"
+                [wbsID]="selectedWbs"
+                [keyScopeID]="selectedWbs"
+                [tenderID]="TenderNumber"
+                [DisableModify]="DisableModify"
+                [wbsLinkedData]="wbsLinkedData"
+                [selectedTab]="selectedTab"
+            >
+            </app-labour>
+            <app-idc 
+                *ngIf="lmpiScope == 'idc'"
+                [wbsID]="selectedWbs"
+                [keyScopeID]="selectedWbs"
+                [tenderID]="TenderNumber"
+                [DisableModify]="DisableModify"
+                [wbsLinkedData]="wbsLinkedData"
+                [selectedTab]="selectedTab"
+            >
+            </app-idc>
+        </div>
+    </div>
+</div>

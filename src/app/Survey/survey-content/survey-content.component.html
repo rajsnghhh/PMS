@@ -1,0 +1,248 @@
+<container-element [ngSwitch]="surveyNav">
+    <app-basic-details *ngSwitchCase="'basicDetails'"></app-basic-details>
+    <app-competition-analysis *ngSwitchCase="'competitionAnalysis'"></app-competition-analysis>
+    <app-document-collection *ngSwitchCase="'documentCollection'"></app-document-collection>
+    <app-general-details *ngSwitchCase="'generalDetails'"></app-general-details>
+    <app-hydrological-data *ngSwitchCase="'hydrologicalData'"></app-hydrological-data>
+    <app-items *ngSwitchCase="'items'"></app-items>
+    <app-local-data *ngSwitchCase="'localData'"></app-local-data>
+    <app-location-details *ngSwitchCase="'locationDetails'"></app-location-details>
+    <app-material-rates *ngSwitchCase="'materialRates'"></app-material-rates>
+    <app-name-of-work *ngSwitchCase="'nameofWork'"></app-name-of-work>
+    <app-other-details *ngSwitchCase="'otherDetails'"></app-other-details>
+</container-element>
+<!-- {{query|json}}
+{{fromDataList|json}} -->
+<div class="survey-body">
+
+    <form name="tenderdata" #f="ngForm" (ngSubmit)="checkIFValid() && submitTenderData()" novalidate>
+        <div class="form-conatainer">
+
+            <div class="survey-header">
+                <h1>{{fromDataList.name}}</h1>
+                <button type="button" (click)="proceedNext()" *ngIf="fromDataList.is_skipable">SKIP NOW</button>
+            </div>
+            <div class="flex-div" [ngClass]="{'is_multiple': fromDataList.is_multiple }"
+                *ngFor="let dataTouple of fromDataList.Datatouples">
+
+                <div class="mb-3" *ngFor="let controls of fromDataList.form_fields"
+                    [ngClass]="{'full-width': ['textarea','file'].includes(controls.form_input_type),'fileUpload': ['file'].includes(controls.form_input_type)}">
+                    <section [ngSwitch]="controls.form_input_type">
+                        <section *ngSwitchCase="'text'">
+                            <label>{{controls.form_label}}</label>
+                            <input type="text" class="form-control"
+                                [required]="controls.is_required == true ? true : false"
+                                #[controls.form_internal_name]="ngModel"
+                                name="{{controls.form_internal_name + '' + dataTouple}}"
+                                [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]">
+                            <div class="invalid-feedback">
+                                <div>{{controls.form_label}} is required</div>
+                            </div>
+                        </section>
+                        <section *ngSwitchCase="'date'">
+                            <label>{{controls.form_label}}</label>
+                            <input type="date" class="form-control"
+                                [required]="controls.is_required == true ? true : false"
+                                #[controls.form_internal_name]="ngModel"
+                                name="{{controls.form_internal_name + '' + dataTouple}}"
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]">
+                            <div class="invalid-feedback">
+                                <div>{{controls.form_label}} is required</div>
+                            </div>
+                        </section>
+                        <section *ngSwitchCase="'dropdown'">
+                            <label>{{controls.form_label}}</label>
+                            <select class="form-select" aria-label="Default select example"
+                                [required]="controls.is_required == true ? true : false"
+                                #[controls.form_internal_name]="ngModel"
+                                name="{{controls.form_internal_name + '' + dataTouple}}"
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]">
+                                <option selected>Select {{controls.form_label}}</option>
+                                <option value="{{dropdown_choice.id}}"
+                                    *ngFor="let dropdown_choice of controls.dropdown_choices">
+                                    {{dropdown_choice.option}}</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                <div>{{controls.form_label}} is required</div>
+                            </div>
+                        </section>
+                        <section *ngSwitchCase="'textarea'" class="full-width">
+                            <label>{{controls.form_label}}</label>
+                            <textarea class="form-control" rows="2"
+                                [required]="controls.is_required == true ? true : false"
+                                #[controls.form_internal_name]="ngModel"
+                                name="{{controls.form_internal_name + '' + dataTouple}}"
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]"></textarea>
+                            <div class="invalid-feedback">
+                                <div>{{controls.form_label}} is required</div>
+                            </div>
+                        </section>
+                        <section *ngSwitchCase="'checkbox'" class="custom-check">
+                            <label>{{controls.form_label}}</label>
+                            <label class="container">Add
+                                <input type="checkbox" name="add"
+                                    [required]="controls.is_required == true ? true : false"
+                                    #[controls.form_internal_name]="ngModel"
+                                    name="{{controls.form_internal_name + '' + dataTouple}}"
+                                    [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]">
+                                <span class="checkmark"></span>
+                            </label>
+                            <div class="invalid-feedback">
+                                <div>{{controls.form_label}} is required</div>
+                            </div>
+                        </section>
+
+                        <section *ngSwitchCase="'radio'" class="custom-check">
+                            <label>{{controls.form_label}}</label>
+                            <label #dropdown class="container"
+                                *ngFor="let dropdown_choice of controls.dropdown_choices; let i = index">
+                                <label>{{dropdown_choice.option}}</label>
+                                <input type="radio" name="custominput" id="season{{i}}"
+                                    [required]="controls.is_required == true ? true : false"
+                                    #[controls.form_internal_name]="ngModel" [value]="dropdown_choice.id"
+                                    name="{{controls.form_internal_name + '' + dataTouple}}"
+                                    [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]">
+                                <span class="checkmark"></span>
+                            </label>
+                            <div class="invalid-feedback">
+                                <div>{{controls.form_label}} is required</div>
+                            </div>
+                        </section>
+
+                        <section *ngSwitchCase="'number'">
+                            <label>{{controls.form_label}}</label>
+                            <input type="text" numbersOnly class="form-control"
+                                (input)="customFormula(controls.all_formulas)"
+                                [required]="controls.is_required == true ? true : false"
+                                #[controls.form_internal_name]="ngModel"
+                                name="{{controls.form_internal_name + '' + dataTouple}}"
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]">
+                            <div class="invalid-feedback">
+                                <div>{{controls.form_label}} is required</div>
+                            </div>
+                        </section>
+
+                        <section *ngSwitchCase="'file'">
+                            <span class="allow-file-type">Please upload :
+                                {{dynamicFileTypes(controls.dropdown_choices)}}</span>
+                            <div class="file btn btn-lg btn-primary">
+                                <span><img src="assets/icons/upload.png" alt=""></span>
+                                <span *ngIf="!tenderdata[controls.form_internal_name + '' + dataTouple]">Choose
+                                    file</span><span
+                                    *ngIf="tenderdata[controls.form_internal_name + '' + dataTouple]">{{tenderdata[controls.form_internal_name
+                                    + '' + dataTouple].name}}</span>
+                                <input type="file" name="file" accept="{{dynamicFileTypes(controls.dropdown_choices)}}"
+                                    (change)="uploadFile(controls.form_internal_name,$event,dynamicFileTypes(controls.dropdown_choices))"
+                                    [required]="controls.is_required == true ? true : false"
+                                    #[controls.form_internal_name]="ngModel"
+                                    name="{{controls.form_internal_name + '' + dataTouple}}"
+                                    [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]">
+                            </div>
+                            <div class="invalid-feedback">
+                                <div>{{controls.form_label}} is required</div>
+                            </div>
+                        </section>
+
+                        <section *ngSwitchCase="'boolean'" class="custom-check booleanInput">
+                            <label class="container">
+                                <h1>{{controls.form_label}}</h1>
+                                <h2>{{controls.form_description}} </h2>
+                                <input type="checkbox" [required]="controls.is_required == true ? true : false"
+                                    #[controls.form_internal_name]="ngModel"
+                                    name="{{controls.form_internal_name + '' + dataTouple}}"
+                                    [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]"
+                                    [checked]="tenderdata[controls.form_internal_name + '' + dataTouple]=='true'">
+                                <span class="checkmark"></span>
+                            </label>
+                            <div class="invalid-feedback">
+                                <div>{{controls.form_label}} is required</div>
+                            </div>
+                        </section>
+
+                        <section *ngSwitchCase="'multiselect'">
+                            <label>{{controls.form_label}}</label>
+                            <angular2-multiselect [data]="controls.dropdown_choices" [settings]="MultidropdownSettings"
+                                [required]="controls.is_required == true ? true : false"
+                                #[controls.form_internal_name]="ngModel"
+                                name="{{controls.form_internal_name + '' + dataTouple}}"
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]"></angular2-multiselect>
+                            <div class="invalid-feedback">
+                                <div>{{controls.form_label}} is required</div>
+                            </div>
+                            <!-- <label class="floating-label-select"
+                            [ngClass]="{'insideDropdown': addConformtion.selectedUser.length == '0' }">Assign Users<span
+                                class="asterisk">*</span></label> -->
+                        </section>
+
+                        <section *ngSwitchCase="'dependency'">
+                            <label>{{controls.form_label}}</label>
+                            <select class="form-select" aria-label="Default select example"
+                                [required]="controls.is_required == true ? true : false"
+                                #[controls.form_internal_name]="ngModel"
+                                name="{{controls.form_internal_name + '' + dataTouple}}"
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]">
+                                <option selected disabled>Select {{controls.form_label}}</option>
+                                <option value="{{dropdown_choice.id}}"
+                                    *ngFor="let dropdown_choice of controls.dropdown_choices">
+                                    {{dropdown_choice.itemName}}</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                <div>{{controls.form_label}} is required</div>
+                            </div>
+                        </section>
+
+                        <section *ngSwitchCase="'formulla'">
+                            <label>{{controls.form_label}}</label>
+                            <input type="text" class="form-control" disabled
+                                [required]="controls.is_required == true ? true : false"
+                                #[controls.form_internal_name]="ngModel"
+                                name="{{controls.form_internal_name + '' + dataTouple}}"
+                                [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]">
+                            <div class="invalid-feedback">
+                                <div>{{controls.form_label}} is required</div>
+                            </div>
+
+                        </section>
+
+                        <section *ngSwitchCase="'reference'">
+                            <label>{{controls.form_label}}</label>
+                            <select class="form-select" aria-label="Default select example"
+                                [required]="controls.is_required == true ? true : false"
+                                #[controls.form_internal_name]="ngModel"
+                                name="{{controls.form_internal_name + '' + dataTouple}}"
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]">
+                                <option selected>Select {{controls.form_label}}</option>
+                                <option value="{{dropdown_choice.id}}"
+                                    *ngFor="let dropdown_choice of controls.dependent_dropdown_choices">
+                                    {{dropdown_choice.name}}</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                <div>{{controls.form_label}} is required</div>
+                            </div>
+                        </section>
+
+                        <section *ngSwitchDefault>Typo Error <span>{{controls.form_input_type}}</span>
+                        </section>
+                    </section>
+                </div>
+            </div>
+            <div class="Add-new" *ngIf="fromDataList.is_multiple">
+                <button type="button" (click)="AddNewRow()" class="btn btn-primary main-submit">ADD NEW</button>
+            </div>
+            <button type="submit" *ngIf="fromDataList.length!=0" class="btn btn-primary main-submit">NEXT</button>
+        </div>
+
+    </form>
+
+</div>

@@ -1,0 +1,58 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Purchase Cancel/Close</h2>
+
+        <div class="action-button-container">
+            <button *ngIf="purchaseCheckboxIds.length>0" class="btn btn-primary" (click)="approveSubmit()">Cancel/Close</button>
+            <button hidden [routerLink]="['/pms/purchase/procurement/purchase']">List</button>
+        </div>
+    </div>
+
+    <div class="component-body">
+        <table>
+            <tr>
+                <th>Sr.No</th>
+                <th>Pur. No.</th>
+                <th>Date</th>
+                <th>GRN No.</th>
+                <th>Vendor</th>
+                <th>Tax Type</th>
+                <th>Tax Amount</th>
+                <th>Excise Amount</th>
+                <th>Bill Amount</th>
+                <th>Status</th>
+                <th>Change Status</th>
+
+            </tr>
+
+                <tr *ngFor="let transport of purchaseListDetails; let j = index">
+                    <td>{{(pageSize*(page-1)) + j+1}}.</td>
+                    <td>{{ transport.request_code }}</td>
+                    <td>{{ transport.date }}</td>
+                    <td> <span *ngIf="transport.grn_details">{{ transport?.grn_details[0].request_code}}</span></td>
+                    <td>{{ transport.vendor_details.vendor_name }}</td>
+                    <td>{{ transport.tax_type }}</td>
+                    <td>{{ transport.total_item_tax_amount  |currency:"INR":"symbol"}}</td>
+                    <td>{{ transport.total_item_excise_tax_amount  |currency:"INR":"symbol"}}</td>
+                    <td>{{ transport.total_item_total_amount  |currency:"INR":"symbol"}}</td>    
+                    <td>{{ transport.status }}</td>
+                    <td>
+                        <input type="checkbox" class="form-check-input" name="purchaseItem{{j+1}}" [(ngModel)]="transport.purchaseItem" value="" (change)="onPurchaseCheckboxChange($event, transport.id)">
+                        
+                        <select class="form-control" style="display: inline;width: unset;padding:3px;" name="changeStatus{{j+1}}" [(ngModel)]="transport.changeStatus">
+                            <option value="cancel">Cancel</option>
+                            <option value="close">Close</option>
+                        </select>
+                    </td>
+    
+                </tr>
+
+            <tr class="text-center">
+                <td colspan="11" *ngIf="purchaseListDetails.length == 0">No data found.</td>
+            </tr>
+
+        </table>
+
+    </div>
+</div>
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

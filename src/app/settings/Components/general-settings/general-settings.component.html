@@ -1,0 +1,47 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>General Setting</h2>
+    </div>
+    <div class="component-body">
+        <table>
+            
+            <tr>
+                <th>S.No</th>
+                <th>Select</th>
+                <th>Setting Name</th>
+                <th>Company & Site (Required if Row is Selected)</th>
+            </tr>
+            
+            <tr *ngFor="let permission of itemStockList; let i = index" [attr.data-index]="i" [ngClass]="{'disabled': !permission.Status}"> 
+                <td>
+                    #{{ (pageSize*(page-1)) + i+1.}}
+                </td>
+                <td>
+                    <input type="checkbox" (change)="editNow(permission)" [ngModelOptions]="{standalone: true}"  [(ngModel)]="permission.is_active">
+                </td>
+                <td>
+                    {{permission.setting_name}}
+                </td>
+                <td>
+                    <ng-select [items]="siteList" 
+                        bindLabel="site_name" 
+                        bindValue="id" 
+                        (change)="editNow(permission)"
+                        [multiple]="true"
+                        [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="permission.siteList"
+                    >
+                    </ng-select>
+                </td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="4" *ngIf="itemStockList.length == 0">No data found.</td>
+            </tr>
+            
+        </table>
+    
+    </div>
+<!-- <app-table-paginate></app-table-paginate> -->
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

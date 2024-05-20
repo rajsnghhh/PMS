@@ -1,0 +1,166 @@
+<div class="container">
+    <div class="row align-items-end">
+
+        <div class="col-lg-4 col-md-4 col-4">
+            <div class="adform">
+                <label for="project">Project</label>
+                <select id="sel1" class="form-control" [(ngModel)]="projectId"
+                    (change)="accountsMaterialBudgetGetAPI($event)">
+                    <option value="" disabled>-- select --</option>
+                    <option *ngFor="let project of projectList" [value]="project.id">
+                        {{project.project_data[1].value}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-3" *ngIf="projectId">
+            <textarea cols="40" rows="2" readonly>*** This Budget is not checked & approved yet.</textarea>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-2 d-flex justify-content-end" *ngIf="projectId">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#checkapprovebudget">Send For Approval</button>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-3 d-flex justify-content-end" *ngIf="projectId">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#datewisebudget">{{budgetName}}</button>
+        </div>
+
+    </div>
+</div><br>
+
+
+<div class="modal fade" id="datewisebudget" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="date">Select Date:</label>&nbsp;
+                    <input type="text" [(ngModel)]="selectedDate" placeholder="dd/mm/yyyy" (input)="formatDate($event)"
+                        (keypress)="onKeyPress($event)">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" (click)="manageDatewiseBudget()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="checkapprovebudget" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="date">Checker : </label>&nbsp;
+                    <select>
+                        <option>-- select --</option>
+                        <option *ngFor="let user of userList" value="user.id">{{user.full_name}}</option>
+                    </select>
+                </div><br>
+                <div class="form-group">
+                    <label for="date">Approver : </label>&nbsp;
+                    <select>
+                        <option>-- select --</option>
+                        <option *ngFor="let user of userList" value="user.id">{{user.full_name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="toggle_icon plus">
+            <i class="fa-solid fa-plus"></i>
+        </div>
+        <div class="toggle_icon minus">
+            <i class="fa-solid fa-minus"></i>
+        </div> -->
+
+<section class="relative-div">
+    <div class="table-container component-body budget_table budget_toggle" *ngIf="projectId">
+
+        <table>
+            <button (click)="toggleColumnVisibility()"
+                *ngIf="accountsMaterialBudgetList.length>0">{{toggle_name}}</button>
+
+            <tr>
+                <th *ngFor="let header of upperTableHeaders" [attr.colspan]="header.colspan"
+                    style="text-align: center;">{{ header.title }}</th>
+            </tr>
+
+            <tr>
+                <th *ngFor="let header of tableHeaders"
+                    [ngStyle]="{'display': header.is_visible ? 'table-cell' : 'none'}">{{ header.name}}</th>
+            </tr>
+
+            <tr *ngFor="let material of accountsMaterialBudgetList;index as i"
+                (contextmenu)="onRightClick($event, material)">
+
+                <td> <input type="text" [(ngModel)]="material.material_code" (change)="onDataChange(material,i)"> </td>
+
+                <td> <input type="text" [(ngModel)]="material.item_desc" (change)="onDataChange(material,i)"
+                        #inputField> </td>
+
+                <td><input type="text" [(ngModel)]="material.uom_text" (change)="onDataChange(material,i)">
+                </td>
+                <ng-container *ngFor="let items of material.breakdown">
+                    <td [ngStyle]="{'display': items.is_visible ? 'table-cell' : 'none'}">
+                        <input type="text" [(ngModel)]="items.qty" (change)="onDataChange(material,i)"
+                            [readonly]="!items.is_latest">
+                    </td>
+                    <td [ngStyle]="{'display': items.is_visible ? 'table-cell' : 'none'}">
+                        <input type="text" [(ngModel)]="items.rate" (change)="onDataChange(material,i)"
+                            [readonly]="!items.is_latest">
+                    </td>
+                    <td [ngStyle]="{'display': items.is_visible ? 'table-cell' : 'none'}">
+                        <input type="text" [(ngModel)]="items.amount" (change)="onDataChange(material,i)" readonly>
+                    </td>
+                </ng-container>
+
+                <ng-container *ngFor="let consumption of material.consumption_breakdown">
+                    <td>
+                        <input type="text" [(ngModel)]="consumption.consumed_qty" (change)="onDataChange(material,i)">
+                    </td>
+                    <td>
+                        <input type="text" [(ngModel)]="consumption.consumed_amt" (change)="onDataChange(material,i)">
+                    </td>
+                    <td>
+                        <input type="text" [(ngModel)]="consumption.consumed_rate" readonly>
+                    </td>
+                </ng-container>
+
+                <td><input type="text" [(ngModel)]="material.qty_left" (change)="onDataChange(material,i)" readonly>
+                </td>
+                <td><input type="text" [(ngModel)]="material.budget_left" (change)="onDataChange(material,i)" readonly>
+                </td>
+                <td>
+                    <span style="cursor: pointer;" (click)="deleteRowData(material, i)">
+                        <img src="assets/usermanagement/delete.png" alt="">
+                    </span>
+                </td>
+
+            </tr>
+
+            <div *ngIf="contextMenuVisible" class="context-menu" [style.left.px]="contextMenuX"
+                [style.top.px]="contextMenuY">
+                <ul>
+                    <li (click)="addRowAbove()">Add Row Above</li>
+                    <li (click)="addRowBelow()">Add Row Below</li>
+                </ul>
+            </div>
+
+        </table>
+
+    </div>
+</section>

@@ -1,0 +1,282 @@
+<div class="main-container">
+    <div class="filter-section">
+        <div class="filter-card">
+
+        </div>
+        <div class="filter-card">
+
+        </div>
+
+
+    </div>
+
+</div>
+<!-- 
+<form class="allfield" hidden name="searchData" #f="ngForm" (ngSubmit)="f.form.valid && searchSubmit()"
+    novalidate>
+
+    <section class="main-card">
+        <section class="split-card" *ngIf="linkSource == 'mr'">
+            <div class="mb-3 field">
+                <div class="fieldValue">
+                    <label>Site</label>
+                    <select class="form-select" name="site" [ngClass]="{ 'is-invalid': f.submitted && site.errors }"
+                        [(ngModel)]="searchData.site" required #site="ngModel">
+                        <option value="">Select Site</option>
+                    </select>
+                </div>
+                <div *ngIf="f.submitted && site.errors" class="invalid-feedback">
+                    <div *ngIf="site.errors['required']">Site is required</div>
+                </div>
+            </div>
+        
+            <div class="mb-3 field">
+                <div class="fieldValue">
+                    <label>Group</label>
+                    <select class="form-select" name="group" [ngClass]="{ 'is-invalid': f.submitted && group.errors }"
+                        [(ngModel)]="searchData.group" required #group="ngModel">
+                        <option value="">Select Group</option>
+                    </select>
+                </div>
+                <div *ngIf="f.submitted && group.errors" class="invalid-feedback">
+                    <div *ngIf="group.errors['required']">Group is required</div>
+                </div>
+            </div>
+        
+            <div class="mb-3 field">
+                <div class="fieldValue">
+                    <label>Sub Group</label>
+                    <select class="form-select" name="subgroup" [ngClass]="{ 'is-invalid': f.submitted && subgroup.errors }"
+                        [(ngModel)]="searchData.subgroup" required #subgroup="ngModel">
+                        <option value="">Select Sub Group</option>
+                    </select>
+                </div>
+                <div *ngIf="f.submitted && group.errors" class="invalid-feedback">
+                    <div *ngIf="group.errors['required']">Sub Group is required</div>
+                </div>
+            </div>
+        
+            <div class="mb-3 field">
+                <div class="fieldValue">
+                    <label>Item</label>
+                    <select class="form-select" name="material" [ngClass]="{ 'is-invalid': f.submitted && material.errors }"
+                        [(ngModel)]="searchData.material" required #material="ngModel">
+                        <option value="">Select Item</option>
+                    </select>
+                </div>
+                <div *ngIf="f.submitted && group.errors" class="invalid-feedback">
+                    <div *ngIf="group.errors['required']">Item is required</div>
+                </div>
+            </div>
+        </section>
+    
+
+        <section class="split-card" *ngIf="linkTO == 'indent'">
+            <div class="mb-3 field">
+                <div class="fieldValue">
+                    <label>Site</label>
+                    <select class="form-select" name="site" [ngClass]="{ 'is-invalid': f.submitted && site.errors }"
+                        [(ngModel)]="searchData.site" required #site="ngModel">
+                        <option value="">Select Site</option>
+                    </select>
+                </div>
+                <div *ngIf="f.submitted && site.errors" class="invalid-feedback">
+                    <div *ngIf="site.errors['required']">Site is required</div>
+                </div>
+            </div>
+        
+            <div class="mb-3 field">
+                <div class="fieldValue">
+                    <label>Group</label>
+                    <select class="form-select" name="group" [ngClass]="{ 'is-invalid': f.submitted && group.errors }"
+                        [(ngModel)]="searchData.group" required #group="ngModel">
+                        <option value="">Select Group</option>
+                    </select>
+                </div>
+                <div *ngIf="f.submitted && group.errors" class="invalid-feedback">
+                    <div *ngIf="group.errors['required']">Group is required</div>
+                </div>
+            </div>
+        
+            <div class="mb-3 field">
+                <div class="fieldValue">
+                    <label>Sub Group</label>
+                    <select class="form-select" name="subgroup" [ngClass]="{ 'is-invalid': f.submitted && subgroup.errors }"
+                        [(ngModel)]="searchData.subgroup" required #subgroup="ngModel">
+                        <option value="">Select Sub Group</option>
+                    </select>
+                </div>
+                <div *ngIf="f.submitted && group.errors" class="invalid-feedback">
+                    <div *ngIf="group.errors['required']">Sub Group is required</div>
+                </div>
+            </div>
+        
+            <div class="mb-3 field">
+                <div class="fieldValue">
+                    <label>Item</label>
+                    <select class="form-select" name="material" [ngClass]="{ 'is-invalid': f.submitted && material.errors }"
+                        [(ngModel)]="searchData.material" required #material="ngModel">
+                        <option value="">Select Item</option>
+                    </select>
+                </div>
+                <div *ngIf="f.submitted && group.errors" class="invalid-feedback">
+                    <div *ngIf="group.errors['required']">Item is required</div>
+                </div>
+            </div>
+        </section>
+    
+        <section class="split-card" *ngIf="linkTO == 'po'">
+            <div class="mb-3 field" *ngIf="searchData.material">
+                <div class="fieldValue">
+                    <label>Unit</label>
+                    <span class="form-control">{{searchData?.selectedMaterialMaster?.unit_of_mesurement_name}}</span>
+                </div>
+            </div>
+        
+            <div class="mb-3 field">
+                <div class="fieldValue">
+                    <label>Stock Type</label>
+                    <select class="form-select" name="stock_type" [ngClass]="{ 'is-invalid': f.submitted && stock_type.errors }"
+                        [(ngModel)]="searchData.stock_type" required #stock_type="ngModel">
+                        <option value="">Select Stock Type</option>
+                        <option value="party">Party</option>
+                        <option value="self">Self</option>
+                    </select>
+                </div>
+                <div *ngIf="f.submitted && stock_type.errors" class="invalid-feedback">
+                    <div *ngIf="stock_type.errors['required']">Stock Type is required</div>
+                </div>
+            </div>
+        
+            <div class="mb-3 field">
+                <div class="fieldValue">
+                    <label>Opening Quantity</label>
+                    <input type="text" class="form-control" name="opening_quantity" numbersOnly maxlength="12"
+                        [ngClass]="{ 'is-invalid': f.submitted && opening_quantity.errors }"
+                        [(ngModel)]="searchData.opening_quantity" required #opening_quantity="ngModel"
+                        placeholder="Enter opening quantity">
+                </div>
+                <div *ngIf="f.submitted && opening_quantity.errors" class="invalid-feedback">
+                    <div *ngIf="opening_quantity.errors['required']">Opening quantity is required</div>
+                </div>
+            </div>
+        
+        
+            <div class="mb-3 field">
+                <div class="fieldValue">
+                    <label>Unit Rate</label>
+                    <input type="text" class="form-control" name="cost_per_unit" amountNumber 
+                        [ngClass]="{ 'is-invalid': f.submitted && cost_per_unit.errors }"
+                        [(ngModel)]="searchData.cost_per_unit" required #cost_per_unit="ngModel"
+                        placeholder="Enter Unit Rate">
+                </div>
+                <div *ngIf="f.submitted && cost_per_unit.errors" class="invalid-feedback">
+                    <div *ngIf="cost_per_unit.errors['required']">Unit Rate is required</div>
+                </div>
+            </div>
+        
+            <div class="mb-3 field">
+                <div class="fieldValue">
+                    <label>Item Amount</label>
+                    <input type="text" disabled class="form-control" name="item_Amount" numbersOnly 
+                        [ngClass]="{ 'is-invalid': f.submitted && item_Amount.errors }"
+                        [(ngModel)]="searchData.item_Amount" #item_Amount="ngModel"
+                        placeholder="">
+                </div>
+            </div>
+            
+            <div class="mb-3 field">
+                <div class="fieldValue">
+                    <label>Remarks</label>
+                    <textarea type="textarea" class="form-control" name="remarks" 
+                    [ngClass]="{ 'is-invalid': f.submitted && remarks.errors }"
+                    [(ngModel)]="searchData.remarks" #remarks="ngModel"
+                    placeholder="Remarks">
+                    </textarea>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <div class="btnupdate">
+        <button type="submit" class="btn btn-primary" >Search</button>
+    </div>
+</form> -->
+
+<section class="link-table-main">
+    <section class="link-form">
+        <div class="main-body-container">
+            <h1>{{linkSource}}</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SL No</th>
+                        <th class="text-uppercase">{{linkSource}} No</th>
+                        <th>Date</th>
+                        <th>Item Name</th>
+                        <th>Bal Qty / Unit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let listData of linkFromList; let i = index">
+                        <td>#{{i+1}}</td>
+                        <td>{{listData?.material_request__request_code}}{{listData?.indent__request_code}}{{listData?.grn__request_code}}{{listData?.purchase_order__request_code}} {{listData?.purchase__request_code}}</td>
+                        <td>{{listData?.material_request__date | date:'MMM d,y'}}{{listData?.indent__date | date:'MMM d,y'}}{{listData?.grn__date | date:'MMM d,y'}}{{listData?.purchase_order__date | date:'MMM d,y'}} {{listData?.purchase__date | date:'MMM d,y'}}</td>
+                        <td>{{listData?.requested_material__material_name}}{{listData?.item__material_name}}</td>
+                        <td>{{listData?.quantity_unit}} {{listData?.quantity}} / {{listData?.requested_material__unit_of_mesurement__symbol}}{{listData?.item__unit_of_mesurement__symbol}}</td>
+                    </tr>
+                    <tr class="text-center">
+                        <td colspan="5" *ngIf="linkFromList.length == 0">No Data found.</td>
+                    </tr>
+                </tbody>
+            </table>
+    
+        </div>
+    </section>
+    <section class="link-to">
+        <div class="main-body-container" >
+            <h1>{{linkTO}}</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SL No</th>
+                        <th class="text-uppercase">{{linkTO}} No</th>
+                        <th>Date</th>
+                        <th>Item Name</th>
+                        <th>Bal Qty / Unit</th>
+                        <th class="text-uppercase">{{linkSource}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let listData of linktoList; let i = index">
+                        <td>#{{i+1}}</td>
+                        <td>{{listData?.indent__request_code}}{{listData?.grn__request_code}}{{listData?.purchase_order__request_code}}{{listData?.material_issue__request_code}}{{listData?.purchase__request_code}}</td>
+                        <td>{{listData?.indent__date | date :'MMM d,y'}}{{listData?.grn__date | date :'MMM d,y'}}{{listData?.purchase_order__date | date :'MMM d,y'}} {{listData?.material_issue__date | date :'MMM d,y'}} {{listData?.purchase__date}}</td>
+                        <td>{{listData?.requested_material__material_name}}{{listData?.item__material_name}}</td>
+                        <td>{{listData?.quantity}}/ {{listData?.item__unit_of_mesurement__symbol}} {{listData?.requested_material__unit_of_mesurement__symbol}}</td>
+                        <td>
+                            <select class="form-control" 
+                                name="linkedID{{i+1}}"
+                                [(ngModel)]="linktoList[i].linkedID" 
+                                #mrid="ngModel"
+                            >
+                                <option value="">-- select --</option>
+                                <option *ngFor="let storeData of linkFromList" value="{{storeData.id}}">{{storeData?.indent__request_code}} {{storeData?.purchase_order__request_code}} {{storeData?.grn__request_code}} {{storeData?.material_request__request_code}}  | {{storeData.item__material_code}}{{storeData.requested_material__material_code}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="text-center">
+                        <td colspan="6" *ngIf="linktoList.length == 0">No Data found.</td>
+                    </tr>
+                </tbody>
+            </table>
+    
+        </div>
+    </section>
+
+</section>
+
+
+<div class="btd-section">
+    <button type="button" class="btn-save" (click)="updateLink()">UPDATE</button>
+</div>

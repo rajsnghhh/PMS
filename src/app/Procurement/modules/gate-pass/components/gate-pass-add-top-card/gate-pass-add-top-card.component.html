@@ -1,0 +1,278 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="creatematerial">
+        <h3>
+            <span  *ngIf="scope == 'add'">ADD </span> <span  *ngIf="scope == 'update'">Update</span> <span  *ngIf="scope == 'view'">View</span> Gate Pass</h3>
+        <div class="row px-3 py-4">
+            <div class="col-lg-6 col-md-6 col-12">
+                <!-- <div class="addressform">      
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-12">
+                            <label for="ssil">Project&nbsp;</label>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-12">    
+                            <div class="control-sect">
+                            <select class="form-control" [disabled]="disabledEdit" id="sel1" name="project" [(ngModel)]="form.project" required #project="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project.errors }" (change)="getProjeDependentSiteData()">
+                                <option disabled>Please Select</option>
+                                <option *ngFor="let projectData of projectList" value="{{projectData.id}}">{{projectData.project_data[1].value}}</option>
+                           </select>   
+                           <div *ngIf="f.submitted && project.errors" class="invalid-feedback">
+                                <div *ngIf="project.errors['required']">This is required !</div>
+                            </div>                 
+                           </div>
+                        </div>                   
+                    </div>   
+                </div>  -->
+                <div class="addressform">   
+                            <label for="ssil">Request&nbsp;No.</label>  
+                            <input type="ssil" class="form-control" [disabled]="disabledEdit" placeholder="SSIL" id="ssil" name="gate_pass_no" [(ngModel)]="form.gate_pass_no" #gate_pass_no="ngModel" [ngClass]="{ 'is-invalid': f.submitted && gate_pass_no.errors }">
+                            <div *ngIf="f.submitted && gate_pass_no.errors" class="invalid-feedback">
+                                <div *ngIf="gate_pass_no.errors['required']">This is required !</div>
+                            </div>                    
+                        <!-- <div class="col-lg-3 col-md-3 col-12">
+                            <input type="ssil" class="form-control" placeholder="67" id="ssil">
+                        </div> -->                 
+                </div> 
+                <div class="addressform">
+                    <label for="requested">Gate Pass Type <span class="asterisk">*</span></label>
+                    <div class="requested-group" ngDefaultControl >
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" value="in" [disabled]="disabledEdit" placeholder="SSIL" id="ssil" name="gate_pass_type" [(ngModel)]="form.gate_pass_type" required #gate_pass_type="ngModel" [ngClass]="{ 'is-invalid': f.submitted && gate_pass_type.errors }"
+                                > In
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" value="out" [disabled]="disabledEdit" placeholder="SSIL" id="ssil" name="gate_pass_type" [(ngModel)]="form.gate_pass_type" required #gate_pass_type="ngModel" [ngClass]="{ 'is-invalid': f.submitted && gate_pass_type.errors }"
+                                > Out
+                            </label>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="addressform">            
+                    <label for="location">Rst no</label>                     
+                        <input type="text" class="form-control" [disabled]="disabledEdit" placeholder="" name="rst_no" [(ngModel)]="form.rst_no"  #rst_no="ngModel" [ngClass]="{ 'is-invalid': f.submitted && rst_no.errors }">
+                        <div *ngIf="f.submitted && rst_no.errors" class="invalid-feedback">
+                            <div *ngIf="rst_no.errors['required']">This is required !</div>
+                        </div>   
+                </div> 
+
+                <div class="addressform"> 
+           
+                        <label for="location">GRN Challan no</label>                        
+                            <input type="text" class="form-control" [disabled]="disabledEdit" placeholder="" name="grn_challan_no" [(ngModel)]="form.grn_challan_no"  #grn_challan_no="ngModel" [ngClass]="{ 'is-invalid': f.submitted && grn_challan_no.errors }">
+                            <div *ngIf="f.submitted && grn_challan_no.errors" class="invalid-feedback">
+                                <div *ngIf="grn_challan_no.errors['required']">This is required !</div>
+                        </div>              
+                </div> 
+                <div class="addressform">
+                            <label for="ssil">Type&nbsp;</label>    
+                            <div class="control-sect">
+                            <select class="form-control" id="sel1" [disabled]="disabledEdit" name="type" [(ngModel)]="form.type" #type="ngModel" [ngClass]="{ 'is-invalid': f.submitted && type.errors }">
+                                <option>Please Select</option>
+                                <option value="consumable">Consumable</option>
+                                <option value="returnable">Returnable</option>
+                                <option value="non_returnable">Non returnable</option>
+                                <option value="transfer">Transfer</option>
+                            </select>    
+                            <div *ngIf="f.submitted && type.errors" class="invalid-feedback">
+                                <div *ngIf="type.errors['required']">This is required !</div>
+                            </div>               
+                    </div>   
+                </div> 
+                <div class="addressform">      
+                        <label for="location">Other</label>                       
+                            <input type="text" class="form-control" [disabled]="disabledEdit" placeholder="" name="other" [(ngModel)]="form.other"  #other="ngModel" [ngClass]="{ 'is-invalid': f.submitted && other.errors }">
+                            <div *ngIf="f.submitted && other.errors" class="invalid-feedback">
+                                <div *ngIf="other.errors['required']">This is required !</div>
+                            </div>                  
+                </div> 
+
+                <div class="addressform">          
+                      <label for="location">Tare weight <span class="asterisk">*</span></label>             
+                            <input type="text" class="form-control" amountNumber required [disabled]="disabledEdit" placeholder="" name="tare_weight" [(ngModel)]="form.tare_weight"  #tare_weight="ngModel" [ngClass]="{ 'is-invalid': f.submitted && tare_weight.errors }">
+                            <div *ngIf="f.submitted && tare_weight.errors" class="invalid-feedback">
+                                <div *ngIf="tare_weight.errors['required']">This is required !</div>
+                            </div> 
+                </div>
+
+                <div class="addressform">                         
+                            <label for="ssil">UNIT&nbsp;</label>                
+                             <div class="control-sect">
+                            <select class="form-control" [disabled]="disabledEdit" name="unit" [(ngModel)]="form.unit" #unit="ngModel" [ngClass]="{ 'is-invalid': f.submitted && unit.errors }">
+                                <option>Please Select</option>
+                                <option *ngFor="let uomData of uomList" value="{{uomData.id}}">{{uomData.symbol}}</option>
+                            </select>    
+                            <div *ngIf="f.submitted && unit.errors" class="invalid-feedback">
+                                <div *ngIf="unit.errors['required']">This is required !</div>
+                            </div>                                         
+                    </div>   
+                </div>
+                
+                <div class="addressform">  
+                        <label for="ssil">Store&nbsp;</label>  
+                            <div class="control-sect">
+                            <select class="form-control" id="sel1" [disabled]="disabledEdit" name="store" [(ngModel)]="form.store" #store="ngModel" [ngClass]="{ 'is-invalid': f.submitted && store.errors }">
+                                <option>Please Select</option>
+                                <option *ngFor="let storeData of storeList" value="{{storeData.id}}">{{storeData.store_name}}</option>
+                            </select>    
+                            <div *ngIf="f.submitted && store.errors" class="invalid-feedback">
+                                <div *ngIf="store.errors['required']">This is required !</div>
+                            </div>       
+                    </div>   
+                </div> 
+
+                <!-- <div class="addressform">      
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-12">
+                            <label for="ssil">Financial year <span class="asterisk">*</span></label>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-12">    
+                            <div class="control-sect">
+                            <select class="form-control" [disabled]="disabledEdit" name="financialyear" [(ngModel)]="form.financialyear" required #financialyear="ngModel" [ngClass]="{ 'is-invalid': f.submitted && financialyear.errors }">
+                                <option>Please Select</option>
+                                <option *ngFor="let storeData of financialYearData" value="{{storeData.id}}">{{storeData.name}}</option>
+                            </select>    
+                            <div *ngIf="f.submitted && financialyear.errors" class="invalid-feedback">
+                                <div *ngIf="financialyear.errors['required']">This is required !</div>
+                            </div>                
+                           </div>
+                        </div>                   
+                    </div>   
+                </div> -->
+
+                
+
+                <div class="addressform"> 
+                            <label for="ssil">Vendor <span class="asterisk">*</span></label>
+                            <div class="control-sect">
+                            <select class="form-control" [disabled]="disabledEdit" name="vendor" [(ngModel)]="form.vendor" required #vendor="ngModel" [ngClass]="{ 'is-invalid': f.submitted && vendor.errors }">
+                                <option>Please Select</option>
+                                <option *ngFor="let storeData of vendorList" value="{{storeData.id}}">{{storeData?.vendor_master_data.vendor_name}}</option>
+                            </select>    
+                            <div *ngIf="f.submitted && vendor.errors" class="invalid-feedback">
+                                <div *ngIf="vendor.errors['required']">This is required !</div>
+                            </div>                  
+                    </div>   
+                </div>
+
+                <div class="addressform"> 
+                  
+                        <label for="location">Driver</label>
+                            <input type="text" class="form-control" [disabled]="disabledEdit" placeholder="" name="driver" [(ngModel)]="form.driver"  #driver="ngModel" [ngClass]="{ 'is-invalid': f.submitted && driver.errors }">
+                            <div *ngIf="f.submitted && driver.errors" class="invalid-feedback">
+                                <div *ngIf="driver.errors['required']">This is required !</div>
+                            </div>
+                </div>
+
+                <div class="addressform">
+                        <label for="location">Transporter</label>                        
+                            <input type="text" class="form-control" [disabled]="disabledEdit" placeholder="" name="transporter" [(ngModel)]="form.transporter"  #transporter="ngModel" [ngClass]="{ 'is-invalid': f.submitted && transporter.errors }">
+                            <div *ngIf="f.submitted && transporter.errors" class="invalid-feedback">
+                                <div *ngIf="transporter.errors['required']">This is required !</div>
+                            </div>
+                </div>
+
+                
+    
+            </div>
+    
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="addressform">
+                                <label for="location">Date</label>
+                                    <input type="Date" class="form-control" [min]="mindate" [disabled]="disabledEdit" placeholder="" name="date" [(ngModel)]="form.date" required #date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && date.errors }">
+                                    <div *ngIf="f.submitted && date.errors" class="invalid-feedback">
+                                        <div *ngIf="date.errors['required']">This is required !</div>
+                                    </div>
+                        </div> 
+                    </div>
+    
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="addressform">                        
+                               <label for="location">Time</label>
+                                    <input type="time" class="form-control" [disabled]="disabledEdit" placeholder="" name="time" [(ngModel)]="form.time" required #time="ngModel" [ngClass]="{ 'is-invalid': f.submitted && time.errors }">
+                                    <div *ngIf="f.submitted && time.errors" class="invalid-feedback">
+                                        <div *ngIf="time.errors['required']">This is required !</div>
+                                    </div>
+                        </div> 
+                    </div>
+    
+                </div>
+    
+                <div class="addressform">             
+                        <label >Chainage from <span class="asterisk">*</span></label>
+                            <input type="text" class="form-control" amountNumber (change)="detDiff()" required [disabled]="disabledEdit" name="chainage_from" placeholder="" [(ngModel)]="form.chainage_from"  #chainage_from="ngModel" [ngClass]="{ 'is-invalid': f.submitted && chainage_from.errors }">
+                            <div *ngIf="f.submitted && chainage_from.errors" class="invalid-feedback">
+                                <div *ngIf="chainage_from.errors['required']">This is required !</div>
+                            </div>                        
+                </div>
+                <div class="addressform">  
+                                     <label >Chainage to <span class="asterisk">*</span></label>
+                           <input type="text" class="form-control" amountNumber (change)="detDiff()" required [disabled]="disabledEdit" name="chainage_to" placeholder="" [(ngModel)]="form.chainage_to"  #chainage_to="ngModel" [ngClass]="{ 'is-invalid': f.submitted && chainage_to.errors }">
+                            <div *ngIf="f.submitted && chainage_to.errors" class="invalid-feedback">
+                                <div *ngIf="chainage_to.errors['required']">This is required !</div>
+                            </div>                        
+               
+                </div>
+                <div class="addressform">            
+                    <label >Diff&nbsp;</label>                    
+                        <input type="text" class="form-control" disabled value="{{detDiff()}}" required name="diff" placeholder="" [(ngModel)]="form.diff"  #diff="ngModel" [ngClass]="{ 'is-invalid': f.submitted && diff.errors }">
+                            <div *ngIf="f.submitted && diff.errors" class="invalid-feedback">
+                                <div *ngIf="diff.errors['required']">This is required !</div>
+                        </div>
+                </div>
+                <div class="addressform">      
+                            <label for="ssil">Chainage UNIT <span class="asterisk">*</span></label>
+                            <div class="control-sect">
+                            <select class="form-control" required [disabled]="disabledEdit" name="chainage_unit" [(ngModel)]="form.chainage_unit" #chainage_unit="ngModel" [ngClass]="{ 'is-invalid': f.submitted && chainage_unit.errors }">
+                                <option>Please Select</option>
+                                <option *ngFor="let uomData of uomList" value="{{uomData.id}}">{{uomData.symbol}}</option>
+                            </select>    
+                            <div *ngIf="f.submitted && vendor.errors" class="invalid-feedback">
+                                <div *ngIf="vendor.errors['required']">This is required !</div>
+                            </div>                                              
+                    </div>   
+                </div>
+                <div class="addressform">  
+                        <label for="ssil">Site <span class="asterisk">*</span></label>
+                         
+                            <select class="form-control" disabled name="site" [(ngModel)]="form.site" required #site="ngModel" [ngClass]="{ 'is-invalid': f.submitted && site.errors }">
+                                <option>Please Select</option>
+                                <option *ngFor="let storeData of siteList" value="{{storeData.id}}">{{storeData.site_name}}</option>
+                            </select>    
+                            <div *ngIf="f.submitted && site.errors" class="invalid-feedback">
+                                <div *ngIf="site.errors['required']">This is required !</div>
+                            </div>                
+                                 
+                            <div class="control-sect"> 
+                    </div>   
+                </div>
+                <div class="addressform">             
+                       <label for="location">Vehicle no</label>                     
+                            <input type="text" class="form-control" [disabled]="disabledEdit" placeholder="" name="vehicle_no" [(ngModel)]="form.vehicle_no"  #vehicle_no="ngModel" [ngClass]="{ 'is-invalid': f.submitted && vehicle_no.errors }">
+                            <div *ngIf="f.submitted && vehicle_no.errors" class="invalid-feedback">
+                                <div *ngIf="vehicle_no.errors['required']">This is required !</div>
+                            </div>
+                </div>
+                <div class="addressform">               
+                    <label for="location">Gross weight <span class="asterisk">*</span></label>
+                    <input type="text" class="form-control" amountNumber required [disabled]="disabledEdit" placeholder="" name="gross_weight" [(ngModel)]="form.gross_weight"  #gross_weight="ngModel" [ngClass]="{ 'is-invalid': f.submitted && gross_weight.errors }">
+                            <div *ngIf="f.submitted && gross_weight.errors" class="invalid-feedback">
+                                <div *ngIf="gross_weight.errors['required']">This is required !</div>
+                            </div>      
+                </div>
+                <div class="addressform"> 
+           
+                       <label for="location">Net weight <span class="asterisk">*</span></label>                 
+                            <input type="text" class="form-control" required amountNumber [disabled]="disabledEdit" placeholder="" name="net_weight" [(ngModel)]="form.net_weight"  #net_weight="ngModel" [ngClass]="{ 'is-invalid': f.submitted && net_weight.errors }">
+                            <div *ngIf="f.submitted && net_weight.errors" class="invalid-feedback">
+                                <div *ngIf="net_weight.errors['required']">This is required !</div>
+                            </div>                </div>
+            </div>
+            <button hidden  #submitButton="" type="submit">Save</button>
+        </div>
+    </div>
+    </form>
+    

@@ -1,0 +1,166 @@
+
+::-webkit-scrollbar {
+    width: 2px;
+    border-radius: 15px;
+}
+
+::-webkit-scrollbar-track {
+    background: #e6e6e6;
+    border-radius: 15px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #5577ff;
+    border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #5577ff;
+    border-radius: 15px;
+}
+
+
+
+.sidebar {
+    max-height: 83%;
+    min-height: 83%;
+    width: 230px;
+    position: fixed;
+    z-index: 1;
+    top: 65px;
+    left: 0;
+    background-color: rgb(0 0 0 / 5%);
+    overflow-x: hidden;
+    transition: 0.5s;
+    font-size: 13px;
+}
+
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #111;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+}
+
+.openbtn:hover {
+    background-color: #444;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidebar {
+        padding-top: 15px;
+    }
+
+    .sidebar a {
+        font-size: 18px;
+    }
+}
+
+.roundShape {
+    height: 30px;
+    width: 30px;
+    margin: 10px;
+    border-radius: 20px;
+    background-color: #0d6efd;
+    padding: 7px;
+    display: flex;
+
+    img {
+        height: 15px;
+        width: 15px;
+    }
+
+    .selectbox {
+        margin: -5px 0px 0px 18px;
+        border: 1px solid #8080805c;
+        border-radius: 6px;
+        height: 33px;
+        color: #0000ffb0;
+        cursor: pointer;
+    }
+}
+
+.sideIcon {
+    margin: 5px 0px;
+    display: flex;
+    justify-content: flex-start;
+
+    img {
+        height: 15px;
+        width: 15px;
+        margin: 10px 12px;
+    }
+
+    details {
+        width: 100%;
+        padding: 2px 4px;
+    }
+    summary:hover{
+        background-color: #5577ffa3;
+    }
+    p{
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+}
+
+details>summary {
+    list-style: none;
+}
+
+details summary::-webkit-details-marker {
+    display: none;
+}
+
+details[open] > summary:first-of-type{
+    background-position: right;
+    background-size: 10px;
+    background-image: url(../../../assets/icons/Vector.png) !important;
+    background-repeat: no-repeat !important;
+}
+details > summary:first-of-type {
+    background-position: right;
+    background-size: 10px;
+    background-image: url(../../../assets/icons/ep_arrow-left-bold.png) !important;
+    background-repeat: no-repeat !important;
+}
+
+.arrowIcon details > summary:first-of-type {
+    background-image: none !important;
+}
+.submenuArrow details > summary:first-of-type {
+    background-image: none !important;
+}
+
+.active-menu{
+    background-color: #a9a9a98f;
+}
+.menuHide{
+    display: none;
+}

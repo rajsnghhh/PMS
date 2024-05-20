@@ -1,0 +1,37 @@
+        <!-- <div class="modal-content statuswidth"> -->
+            <div class="modal-body">
+                <div class="btn-group">
+                    <div class="dropdown-menu statusbox" style="display: block;">
+
+                        <div class="container">
+                            <div class="step completed" *ngFor="let statusitem of popupTenderList;let k=index"
+                                [ngClass]="{'activeClass': statusitem.status_check == true && statusitem.status != 'Rejected'}">
+                                <div class="v-stepper">
+                                    <span class="bolletcolor"
+                                        *ngIf="statusitem.status_check == true && statusitem.status != 'Rejected'">&#9673;</span>
+                                    <span style="color: rgb(181, 181, 181);"
+                                        *ngIf="statusitem.status_check != true && statusitem.status != 'Rejected'">&#9673;</span>
+                                    <span class="text-danger" *ngIf="statusitem.status == 'Rejected'">&#9673;</span>
+                                    <div class="line"
+                                        [ngClass]="{'active': statusitem.status_check == true,'destination':popupTenderList.length-1==k}">
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <span [ngClass]="{'pendingstatus': statusitem.date ==''}">
+                                        {{statusitem.status}}</span>
+                                    <span *ngIf="statusitem.date !=''" style="color: rgb(107, 107, 107);"
+                                        [ngClass]="{'statusdate': statusitem.is_elapsed == true}"> on
+                                        {{statusitem.date | date:"EEEE, d MMMM y"}}</span>
+                                    <p class="targetdate" *ngIf="statusitem.target_date !=''">Target Date:
+                                        {{statusitem.target_date | date : 'dd-MM-yyyy'}} &nbsp;
+                                        <span class="elapsdate" *ngIf="statusitem.elapsed_days != '0 Day'">(Elapsed By:
+                                            {{statusitem.elapsed_days}})</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        <!-- </div> -->

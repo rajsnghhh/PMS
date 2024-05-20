@@ -1,0 +1,27 @@
+.action-button-container {
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	gap: 7px;
+}
+
+.empinfowth input {
+	border-radius: 0px;
+	font-size: 12px !important;
+	padding: 10px 15px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 300;
+    }
+.empinfowth select{
+    border-radius: 0px;
+    font-size: 12px !important;
+    padding: 10px 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    }
+.empinfowth label {
+    font-size: 13px;
+    font-weight: 300;
+    margin: 0px 0px 5px 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    }

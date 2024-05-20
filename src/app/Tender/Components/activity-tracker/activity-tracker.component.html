@@ -1,0 +1,33 @@
+<div class="main-container">
+
+    <div class="component-header">
+
+        <div class="action-button-container">
+            <button class="backbutton" onclick="history.back()">BACK</button>
+        </div>
+    </div>
+
+    <div class="progress-activity">
+        <ul class="activity_timeline">
+            <li style="--accent-color:green; padding-top: 20px;" *ngFor="let activity of ActivityList; let i = index">
+                <div class="date" [ngClass]="{'elapseday': activity.no_activity == true, 'elapsedate': activity.no_activity == true}">{{activity.date | date:"EEEE, d MMMM y"}}
+                    <span [ngClass]="{'date_no_left': i%2==0 ,'date_no_right': i%2!=0}">{{activity.day}}</span>
+                </div>
+                <div class="descr" [ngClass]="{'elapselist': activity.no_activity == true}">
+                    <ul class="textinfo activitylist">
+                        <div *ngIf="activity.no_activity == false">
+                            <li *ngFor="let details of activity?.activity_data">
+                                <p><img class="bulletimg" src="assets/icons/bullet.png">{{details?.activity}}</p>
+                            </li>
+                        </div>
+                        <li >
+                            <p *ngIf="activity.no_activity == true"><img class="bulletimg" src="assets/icons/bullet.png"> No Activity Captured On This Day</p>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            
+        </ul>
+    </div>
+
+</div>

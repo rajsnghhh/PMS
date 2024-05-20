@@ -1,0 +1,136 @@
+<div class="main-container" *ngIf="indentCheckboxIds.length>0 || issueCheckboxIds.length>0 || statusCheckboxIds.length>0">
+    <div class="component-header" style="display: flex; justify-content: flex-end;">
+
+        <div *ngIf="statusCheckboxIds.length>0">
+            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="updateStatusByIDs()">Update Status<img src="assets/header/add.png"
+                    alt=""></button>
+        </div>
+
+        <div *ngIf="indentCheckboxIds.length>0">
+            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="indentByIDs()">INDENT<img src="assets/header/add.png"
+                    alt=""></button>
+        </div>
+
+        <div *ngIf="issueCheckboxIds.length>0">
+            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="issueByIDs()">MATERIAL ISSUE<img src="assets/header/add.png"
+                    alt=""></button>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="createrequisition-section">
+
+    <div class="main-body-container table-responsive table_scroll" #customscroll>
+        <table class="table text-nowrap" >
+            <thead>
+                <tr>
+                    <th scope="col">Sr No</th>
+                    <th scope="col">Requisition No & Date</th>
+                    <th scope="col">Store Section</th>
+                    <th scope="col">Item Code</th>
+                    <th scope="col">Item Sub Group/ Item/ Req. For</th>
+                    <th scope="col">Remark</th>
+                    <th scope="col">Requested Qty.</th>
+                    <th scope="col">Sanctioned Qty.</th>
+                    <th scope="col">Frwd. Site</th>
+                    <th scope="col">Doc</th>
+                    <th scope="col">Sanctioned Status</th>
+                    <th scope="col">Requested By & Sanctioned By</th>
+                    <th scope="col">Indent Qty.</th>
+                    <th scope="col">Issue Qty.</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of procurementMaterialRequest;index as i">
+                    <td># {{i+1}}</td>
+                    <td>Req No : <b>{{item.req_code ?item.req_code:'-'}}</b><br>
+                        {{item.req_date.substring(0,10).split('-').reverse().join('-')}}</td>
+                    <td>{{item.store_name}}</td>
+                    <td>{{item.item_code}}</td>
+                    <td>
+                        {{item.item_type}}
+                        <br>
+                        <!-- {{item.item_sub_type}}
+                        <br> -->
+                        {{item.item_name}}
+                        <br>
+                        {{item.requested_for_type}}
+                    </td>
+                    <td style=" max-width: 200px; ">{{item.remarks}}</td>
+                    <td>{{item.req_qty}}</td>
+                    <td>{{item.sanc_qty}}</td>
+                    <td>{{item.site_name}}</td>
+                    <td>
+                        <section *ngIf="item.doc">
+                            <a href="{{docUrl}}{{attachmentdata}}" target="_blank"
+                                *ngFor="let attachmentdata of item.doc"><img src="assets/icons/eye.png" class="eye-docicon" alt=""></a>
+                        </section>
+                    </td>
+                    <td class="text-capitalize">
+                        <b>{{item.status}}</b>
+                        <br>
+                        <!-- <input type="checkbox" class="form-check-input" value="" (change)="onStatusCheckboxChange($event, item.item_id)" *ngIf="isMR_Approver && item.status=='pending'"> -->
+                    </td>
+                    <td>Req By : <b>{{item.req_by?item.req_by:'NA'}}</b><br>
+                        Sanc By : <b>{{item.sanc_by?item.sanc_by:'NA'}}</b></td>
+                    <td>{{item.indent_qty}}
+                        <br>
+                        <input type="checkbox" class="form-check-input" value="" (change)="onIndentCheckboxChange($event, item.item_id)" *ngIf="item.status=='approved' && item.indent_qty < item.sanc_qty">
+                    </td>
+                    <!--  (click)="indentByID(item.mr_id)"  -->
+                    <td>{{item.issue_qty}}<br><input type="checkbox" class="form-check-input" value=""
+                            (change)="onIssueCheckboxChange($event, item.item_id)" *ngIf="item.status=='approved' &&  item.issue_qty < item.sanc_qty"></td>
+                    <td>
+                        <div class="table-action">
+                            <img src="assets/icons/dots.png" alt="">
+                            <ul>
+                                <li (click)="viewByID(item.mr_id)">View <span>
+                                    <img class="eye-docicon" src="assets/icons/eye.png" alt=""></span>
+                                </li>
+                                <li (click)="updateByID(item.mr_id)" 
+                                    *ngIf="item.status=='pending'">Update <span><img src="assets/icons/amend.jpg" alt=""></span>
+                                </li>
+                                <li (click)="checkByID(item.mr_id)" 
+                                    *ngIf="item.status=='pending' && isMR_Checker">Check <span><img src="assets/icons/amend.jpg" alt=""></span>
+                                </li>
+                                <li (click)="approveRejectByID(item.mr_id)" 
+                                    *ngIf="item.status=='checked' && isMR_Approver">Approve / Reject <span><img src="assets/icons/amend.jpg" alt=""></span>
+                                </li>
+                                <li *ngIf="item.status=='approved'" (click)="printByID(item.mr_id)">Print Preview<span><img src="assets/icons/print.png" alt=""></span></li>
+
+                                
+                                <!-- <li *ngIf="item.status=='approved'" (click)="createGRN(item.mr_id)">Create GRN </li> -->
+
+                                <!-- <li>Delete <span><img src="assets/icons/delete.png" alt=""></span></li> -->
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+
+                <tr class="text-center">
+                    <td colspan="15" *ngIf="procurementMaterialRequest.length == 0">No data found.</td>
+                </tr>
+
+            </tbody>
+        </table>
+        
+        <div class="tablescroll_btn">
+            <div class="btn_action prev_btn" (click)="previous()">
+                <i class="fa-solid fa-chevron-left"></i>
+            </div>
+            <div class="btn_action next_btn" (click)="next()">
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()" *ngIf="procurementMaterialRequest.length > 0"></app-table-paginate>

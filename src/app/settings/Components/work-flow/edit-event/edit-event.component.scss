@@ -1,0 +1,10 @@
+.mb-3 .required {
+    opacity: 1 !important;
+    font-size: 11px;
+}
+
+.mb-3 .invalid-feedback {
+    position: absolute;
+    top: 32px;
+    font-size: 12px;
+}

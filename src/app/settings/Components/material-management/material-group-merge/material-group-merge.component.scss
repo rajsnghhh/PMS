@@ -1,0 +1,19 @@
+.boxview{
+    width: 70%;
+    margin: auto;
+    border: 1px solid #8080802e;
+    padding: 45px;
+    background-color: #cccccc21;
+    border-radius: 13px;
+}
+.empinfowth{
+    select{
+        font-size: 14px;
+    }
+    mat-select{
+        font-size: 12px;
+    }
+}
+.asterisk{
+    color: red;
+}

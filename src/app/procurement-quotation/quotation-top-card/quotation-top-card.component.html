@@ -1,0 +1,221 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="createrequisition-section">
+        <div class="creatematerial">
+            <h3>Quotation</h3>
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-12">
+
+                    <div class="row">
+                        <!-- <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Quotation&nbsp;No.</label>
+                                <input type="text" placeholder=""  class="form-control"
+                                    [(ngModel)]="form.quotation_no" #quotation_no="ngModel"
+                                    [ngModelOptions]="{standalone: true}" readonly>
+                            </div>
+                        </div> -->
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Vendor&nbsp;Quotation&nbsp;No.</label>
+                                <input type="text" placeholder="" class="form-control"
+                                    [(ngModel)]="form.vendor_quotation_number" #vendor_quotation_number="ngModel"
+                                    [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Vendor&nbsp;Name</label>
+                                <select name="vendor" disabled class="form-control" ngDefaultControl
+                                    [(ngModel)]="form.vendor" #vendor="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && vendor.errors }">
+                                    <option value="">-- select --</option>
+                                    <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                                        {{vendor.vendor_master_data.vendor_name}}
+                                    </option>
+                                </select>
+                                <!-- <div *ngIf="f.submitted && vendor .errors" class="invalid-feedback">
+                                    <div *ngIf="vendor .errors['required']">Vendor is required</div>
+                                </div> -->
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Enquiry No.</label>
+                                <select name="rfq_vendor" class="form-control" ngDefaultControl
+                                    [(ngModel)]="form.rfq_vendor" #rfq_vendor="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && rfq_vendor.errors }" disabled>
+                                    <option value="">-- select --</option>
+                                    <option *ngFor="let item of enquiryList" value="{{item.id}}">
+                                        {{ item.request_code }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="date">Date</label>
+                                <input type="date" placeholder="" class="form-control" id="date" name="date"
+                                    [(ngModel)]="form.date" required [ngModelOptions]="{standalone: true}"
+                                    #date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && date.errors }">
+                                <div *ngIf="f.submitted && date.errors" class="invalid-feedback">
+                                    <div *ngIf="date.errors['required']">This is required !</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Enquiry&nbsp;No.</label>
+                                <input type="text" placeholder=""  class="form-control"
+                                    [(ngModel)]="form.enquiry_number" #enquiry_number="ngModel"
+                                    [ngModelOptions]="{standalone: true}" readonly>
+                            </div>
+                        </div> -->
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Delivery&nbsp;State</label>
+                                <select id="sel1" class="form-control" name="delivert_state"
+                                    [(ngModel)]="form.delivery_state" #delivery_state="ngModel"
+                                    [ngModelOptions]="{standalone: true}">
+                                    <option disabled>-- select --</option>
+                                    <option value="{{stateData.state_id}}" *ngFor="let stateData of stateList">
+                                        {{stateData.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Vendor&nbsp;State</label>
+                                <select id="sel1" class="form-control" name="vendor_state"
+                                    [(ngModel)]="form.vendor_state" #store="ngModel"
+                                    [ngModelOptions]="{standalone: true}">
+                                    <option disabled>-- select --</option>
+                                    <option value="{{stateData.state_id}}" *ngFor="let stateData of stateList">
+                                        {{stateData.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">GST&nbsp;No.</label>
+                                <input type="text" placeholder="" name="gst_number" class="form-control"
+                                    [(ngModel)]="form.gst_number" #gst_number="ngModel" required
+                                    [ngClass]="{ 'is-invalid': f.submitted && gst_number.errors }">
+                            </div>
+                            <div *ngIf="f.submitted && gst_number.errors" class="invalid-feedback">
+                                <div *ngIf="gst_number.errors['required']">This is required !</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Payment&nbsp;Days</label>
+                                <input type="text" placeholder="" amountNumber required name="payment_days"
+                                    class="form-control" [(ngModel)]="form.payment_days" #payment_days="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && payment_days.errors }">
+                            </div>
+                            <div *ngIf="f.submitted && payment_days.errors" class="invalid-feedback">
+                                <div *ngIf="payment_days.errors['required']">This is required !</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Purchase&nbsp;Type</label>
+                                <input type="text" placeholder="" class="form-control" [(ngModel)]="form.purchase_type"
+                                    #purchase_type="ngModel" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Payment&nbsp;Mode</label>
+                                <select id="sel1" class="form-control" name="store" [(ngModel)]="form.payment_mode"
+                                    #payment_mode="ngModel" [ngModelOptions]="{standalone: true}">
+                                    <option value="">-- select --</option>
+                                    <option value="cash">Cash</option>
+                                    <option value="online">Online</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Delivery&nbsp;Days</label>
+                                <input type="text" placeholder="" amountNumber class="form-control" name="delivery_days"
+                                    [(ngModel)]="form.delivery_days" #delivery_days="ngModel" required
+                                    [ngClass]="{ 'is-invalid': f.submitted && delivery_days.errors }">
+                            </div>
+                            <div *ngIf="f.submitted && delivery_days.errors" class="invalid-feedback">
+                                <div *ngIf="delivery_days.errors['required']">This is required !</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Advance %</label>
+                                <input type="text" class="form-control" name="advance_percentage"
+                                    [(ngModel)]="form.advance_percentage" #advance_percentage="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && advance_percentage.errors }">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Advance Amount</label>
+                                <input type="text" class="form-control" name="advance_amount"
+                                    [(ngModel)]="form.advance_amount" #advance_amount="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && advance_amount.errors }">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Remarks</label>
+                                <input type="text" class="form-control" name="remarks" [(ngModel)]="form.remarks"
+                                    #remarks="ngModel" [ngClass]="{ 'is-invalid': f.submitted && remarks.errors }">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="request">Attach File</label>
+                  
+                                <div class="custom-file">
+                                    <input type="file" multiple="multiple" [(ngModel)]="form.file" name="file"
+                                        #file="ngModel" [ngClass]="{ 'is-invalid': f.submitted && file.errors }"
+                                        (change)="handleUpload($event)" class="custom-file-input" id="customFile">
+                                </div>
+                                <!-- <div *ngIf="f.submitted && file.errors" class="invalid-feedback">
+                                    <div *ngIf="file.errors['required']">This is required !</div>
+                                </div> -->
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button hidden #submitButton="" type="submit">Save</button>
+
+            </div>
+        </div>
+    </div>
+</form>

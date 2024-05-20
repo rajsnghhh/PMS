@@ -1,0 +1,13 @@
+<div class="notice-container">
+    <h1>Corporate Notice Board</h1>
+    <owl-carousel-o [options]="noticeBoard">
+        <ng-template carouselSlide *ngFor="let notice of noticeData">
+            <div class="notice-item">
+                <h5>Date : {{notice.notice_date}}</h5>
+                <h4>Subject : {{notice.subject}}</h4>
+                <p>{{notice.content}}</p>
+                <img *ngIf="notice.signature != null" src="{{environment.API_URL1}}{{notice.signature}}" alt="">
+            </div>
+        </ng-template>
+    </owl-carousel-o>
+</div>

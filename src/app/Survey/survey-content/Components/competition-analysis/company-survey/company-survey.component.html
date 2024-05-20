@@ -1,0 +1,17 @@
+<div class="survey-content-main">
+    <div class="survey-body">
+        <form role="form" [formGroup]="addcompanysurveyForm">
+
+            <div class="mb-3" [ngClass]="{ 'float-now': addCompanySurvey.companyname != '' }">
+                <input type="text" class="form-control" id="phone" formControlName="name"
+                    [(ngModel)]="addCompanySurvey.companyname" [ngClass]="displayFieldCss(addcompanysurveyForm,'name')">
+                <label class="floating-label">Company Name<span class="asterisk">*</span></label>
+                <div class="required" *ngIf="isFieldValid(addcompanysurveyForm,'name')">
+                    <span class="text-danger" *ngIf="addcompanysurveyForm.get('name')?.errors?.['required']">name is
+                        required</span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" (click)="submitCompany()">ADD</button>
+        </form>
+    </div>
+</div>

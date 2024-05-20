@@ -1,0 +1,67 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Restrict Item Group</h2>
+    </div>
+    <div class="component-body">
+        <table>
+
+            <tr>
+                <th style="width: 25%;">Page Name</th>
+                <th>Item Group</th>
+                <th>Site</th>
+                <th style="width: 4%;">Add</th>
+            </tr>
+
+            <tr *ngFor="let data of restrictData;let i =index">
+                <td style="width: 25%;">
+                    <select [(ngModel)]="data.name">
+                        <option selected disabled value="">Page Name</option>
+                        <option value="mr">mr</option>
+                        <option value="indent">indent</option>
+                        <option value="enquiry">enquiry</option>
+                        <option value="quotation">quotation</option>
+                        <option value="po">po</option>
+                        <option value="grn">grn</option>
+                        <option value="purchase">purchase</option>
+                        <option value="raw_material_sale">raw_material_sale</option>
+                        <option value="min_max_challan">min_max_challan</option>
+                        <option value="purchase_return">purchase_return</option>
+                        <option value="transport_bill">transport_bill</option>
+                        <option value="item_opening">item_opening</option>
+                        <option value="physical_stock">physical_stock</option>
+                        <option value="issue">issue</option>
+                        <option value="material_wastage">material_wastage</option>
+                        <option value="material_issue_return">material_issue_return</option>
+                        <option value="fabrication_work">fabrication_work</option>
+                        <option value="gate_pass">gate_pass</option>
+                        <option value="item_jv">item_jv</option>
+                    </select>
+                </td>
+                <td>
+                    <angular2-multiselect [data]="dropdownMultiselectGroupList" [(ngModel)]="data.group"
+                        [settings]="dropdownMultiselectGroupListSettings" (onSelect)="onMultiSelectAddUser($event)"
+                        (onDeSelect)="OnMultiDeSelectAddUser($event)" (onSelectAll)="onMultiSelectAddUserAll($event)"
+                        (onDeSelectAll)="onMultiDeSelectAddUserAll($event)">
+                    </angular2-multiselect>
+                </td>
+                <td>
+                    <angular2-multiselect [data]="dropdownMultiselectSiteList" [(ngModel)]="data.site"
+                        [settings]="dropdownMultiselectSiteListSettings" (onSelect)="onMultiSelectAddUser2($event)"
+                        (onDeSelect)="OnMultiDeSelectAddUser2($event)" (onSelectAll)="onMultiSelectAddUserAll2($event)"
+                        (onDeSelectAll)="onMultiDeSelectAddUserAll2($event)">
+                    </angular2-multiselect>
+                </td>
+                <td style="width: 4%;">
+                    <button *ngIf="i==0" class="addbtn" (click)=addRow()>Add</button>
+                    <button *ngIf="i!=0" class="deletebtn" (click)=deleteRow(i)>Delete</button>
+                </td>
+            </tr>
+
+        </table>
+        <div class="btd-section">
+            <button type="button" class="btn btn-primary" (click)="onSave()">Save</button>
+        </div>
+    </div>
+
+
+</div>

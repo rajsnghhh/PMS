@@ -1,0 +1,64 @@
+.table-container {
+    overflow: scroll;
+    padding: 10px;
+    table {
+        border: 1px solid;
+        th {
+            font-size: 12px;
+            border: 1px solid;
+            min-width: 140px;
+        }
+        td {
+            font-size: 12px;
+            border: 1px solid;
+            padding: 0 !important;
+            border-radius: 0;
+            input,select {
+                width: 100%;
+                border: none;
+                font-size: inherit;
+                border-radius: 0;
+            }
+        }
+    }
+}
+
+.add-new{
+    border: 1px solid;
+    background: unset;
+    color: blue;
+    position: absolute;
+    right: 12px;
+    top: -44px;
+    font-size: 11px;
+    border-radius: 18px;
+    padding: 1px 20px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+    border-radius: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #e6e6e6;
+    border-radius: 15px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #5577ff;
+    border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #5577ff;
+    border-radius: 15px;
+}
+
+.relative-div {
+    position: relative;
+}

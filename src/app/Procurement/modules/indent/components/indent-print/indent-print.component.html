@@ -1,0 +1,185 @@
+<button 
+    class="print-button"
+    useExistingCss="true"
+    printSectionId="printSection" 
+    ngxPrint>
+    <img src="assets/icons/print.png" alt="">
+</button> 
+
+<section id="printSection">
+    <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
+        <tr>
+          <td align="center" style="padding:0;">
+            <table role="presentation" cellspacing="0" cellpadding="0" style="width:900px;  border-collapse:collapse; border:0px solid #eee;border-spacing:0;text-align:left;">
+        
+              <tr style="margin: 0px 0px; padding: 0px 0px;">
+                <td colspan="2" style="text-align: center;color: #548235;font-size: 33px;font-weight: 600;padding: 15px 0px 5px 0px;">
+                  <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
+                    <tr style="background:#ffffff; border: transparent 1px solid;">
+                      <td colspan="4" style="text-align: left;font-size: 15px;font-weight: 600;padding: 8px 0px;"><img src="assets/Logo/infraLogo.png" style="height:59px; float: left;"></td>
+                      <td colspan="4" style="text-align: left;font-size: 15px;font-weight: 600;padding: 8px 0px;">
+                        <div class="text1" style="color: #000; font-size: 19px; text-align: center; line-height: 31px;" >{{printData?.organization_name}}</div>
+                        <div class="text2" style="color: #000; font-size: 17px; text-align: center; line-height: 23px;">{{printData?.organization_address}}<br>
+                        <!-- Bengali Squire Indore M.P.  -->
+                        </div>
+                        <div class="text1" style="color: #000; font-size: 19px; text-align: center; line-height: 31px;">Indent Detail</div></td>
+                      <td colspan="4" style="text-align: left;font-size: 15px;font-weight: 600;padding: 8px 0px;"><img src="assets/Logo/infraLogo.png" style="height:59px; float: right;"></td>
+    
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+    
+              <tr style="margin: 0px 0px; padding: 0px 0px;">
+                <td colspan="2" style="text-align: center;color: #548235;font-size: 33px;font-weight: 600;padding: 15px 0px 0px 0px;">
+                  <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
+                    <tr style="background:#ffffff; border: transparent 1px solid;">
+                      <td colspan="4" style="text-align: left;font-size: 15px;font-weight: 600;padding: 8px 0px;">
+                        <div class="text1 text-capitalize" style="color: #000; font-size: 15px; text-align: left; font-weight: normal; line-height: 25px;" ><span style="width: 80px; float: left;">Indent No </span>: {{printData?.indent_no}}</div>
+                        <div class="text1 text-capitalize" style="color: #000; font-size: 15px; text-align: left; font-weight: normal; line-height: 25px;" ><span style="width: 80px; float: left;">Status </span>: {{printData?.status}}</div>
+                        <div class="text1 text-capitalize" style="color: #000; font-size: 15px; text-align: left; font-weight: normal; line-height: 25px;" ><span style="width: 80px; float: left;">Indent for </span>: {{printData?.store}}
+                            <!-- FILTER -->
+                        </div>
+                        <div class="text1 text-capitalize" style="color: #000; font-size: 15px; text-align: left; font-weight: normal; line-height: 25px;" ><span style="width: 80px; float: left;">Site </span>: {{printData?.site}}
+                            <!-- FILTER -->
+                        </div>
+                      </td>
+                      <td colspan="4" style="text-align: left;font-size: 15px;font-weight: 600;padding: 8px 0px;"></td>
+                      <td colspan="4" style="text-align: left;font-size: 15px;font-weight: 600;padding: 8px 0px; float: right;">
+                        <div class="text1" style="color: #000; font-size: 15px; text-align: left; font-weight: normal; line-height: 25px;" ><span style="width: 143px; float: left;">Indent Date </span>: {{printData?.indent_date + ' '+printData?.indent_time | date :  "MMM d, y h:mm:ss a"}} </div>
+                        <div class="text1" style="color: #000; font-size: 15px; text-align: left; font-weight: normal; line-height: 25px;" ><span style="width: 143px; float: left;">Department/Section </span>: {{printData?.department_name}}</div>
+                        <div class="text1" style="color: #000; font-size: 15px; text-align: left; font-weight: normal; line-height: 25px;" ><span style="width: 143px; float: left;">Indenter Details </span>: {{printData?.requested_by_name? printData?.requested_by_name: printData?.items[0].created_by_name }}</div>
+                        <div class="text1" style="color: #000; font-size: 15px; text-align: left; font-weight: normal; line-height: 25px;" ><span style="width: 143px; float: left;">Location </span>: {{printData?.location}}</div>
+                        <div class="text1" style="color: #000; font-size: 15px; text-align: left; font-weight: normal; line-height: 25px;" ><span style="width: 143px; float: left;">Against MR.NO.</span>: {{printData?.mr_no}}</div>
+                      </td>  
+                    </tr>
+                  </table>
+    
+                </td>
+              </tr>
+    
+              <tr>
+                <td colspan="2" style="padding:0px 0px 0px 0px;">
+                  <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
+                    <tr style="background: #ddf2f3; border: #373737 1px solid; height: 30px;">
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">Sr</td>
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">Item Main Group</td>
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">Item Sub Group</td>
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">ITEM</td> 
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">Item Code</td>  
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">PART NO.</td>
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">Brand</td>                           
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">Total <br>Project <br>Quantity</td>                           
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">Total <br>Received Up <br>To Date</td>                           
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">Stock On<br>Site<br> {{printData?.indent_date | date :  "MMM d, y"}}</td> 
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">UOM</td> 
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">Qty</td>   
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">Application <br>or <br>work</td>   
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">Delivery  <br>Schedule</td>   
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">Remark</td>  
+                      <!-- <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 13px; color: #000000; vertical-align: top;">Weight/Unit</td>   -->
+                    </tr>
+                                    
+                    <tr *ngFor="let tableRow of printData?.items; let i = index" style="background: #ffffff; border: #373737 1px solid; height: 30px;">
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: normal; font-size: 12px; color: #000000; vertical-align: top;">{{i+1}}</td>
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: normal; font-size: 12px; color: #000000; vertical-align: top;">
+                        {{tableRow?.item_group.split("(")[0]}}</td>
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: normal; font-size: 12px; color: #000000; vertical-align: top;">{{tableRow?.item_group}}</td>
+                      <td style="text-align: left;padding: 4px; border-right:#373737 1px solid; font-weight: normal; font-size: 12px; color: #000000; vertical-align: top; ">
+                        <p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;">
+                            {{tableRow?.item_name}}</p>
+                        <!-- <p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;">For : </p>
+                        <p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;">Make : </p>
+                        <p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;">Owner : </p>
+                        <p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;">Model : </p>
+                        <p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;">Chassis No : </p>
+                        <p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;">Engine No.: </p> -->
+                        <!-- <p class="text-capitalize" style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;">[ SANCTION :  ]</p> -->
+                        <p class="text-capitalize" style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;">Priority - {{tableRow.priority}}</p>
+                        <p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;">Due Date- {{tableRow.due_date | date :  "MMM d, y"}}</p>                
+                      </td>
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: normal; font-size: 12px; color: #000000; vertical-align: top;">{{tableRow?.item_code}}</td>
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: normal; font-size: 12px; color: #000000; vertical-align: top;">{{tableRow?.part_no}}</td>
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: normal; font-size: 12px; color: #000000; vertical-align: top;">{{tableRow?.brand}}</td>       
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: normal; font-size: 12px; color: #000000; vertical-align: top;">{{tableRow?.total_project_quantity}}</td>       
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: normal; font-size: 12px; color: #000000; vertical-align: top;">{{tableRow?.total_received_uptodate}}</td>
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 12px; color: #000000; vertical-align: top;">{{tableRow.stock_on_site}}</td>   
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 12px; color: #000000; vertical-align: top;">{{tableRow?.uom}}</td>   
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 12px; color: #000000; vertical-align: top;"><p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;">{{tableRow?.quantity}}</p></td>
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 12px; color: #000000; vertical-align: top;">{{tableRow?.application}}</td>
+                      
+                      <td *ngIf="tableRow?.delivery_schedule=='date'" style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 12px; color: #000000; vertical-align: top;">{{tableRow?.delivery_schedule_date | date :  "MMM d, y"}}</td>
+                      <td *ngIf="tableRow?.delivery_schedule=='days'" style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 12px; color: #000000; vertical-align: top;">{{tableRow?.delivery_schedule_day}} Days</td>
+
+                      <td style="text-align: left;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 12px; color: #000000; vertical-align: top;">
+                        <ng-container *ngFor="let note of tableRow?.items_notes">
+                          <span *ngIf="note.note_title=='Technical'">Technical : {{note.note_details}}</span><br>
+                          <span *ngIf="note.note_title=='Warranty'">Warranty : {{note.note_details}}</span><br>
+                          <span *ngIf="note.note_title=='Justification'">Justification : {{note.note_details}}</span> 
+                          <span *ngIf="note.note_title=='Other'">Other : {{note.note_details}}</span> 
+                        </ng-container>                 
+                      </td>
+
+                      <!-- <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 12px; color: #000000; vertical-align: top;"><p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;"></p><p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;"></p></td> -->
+                    </tr>     
+    
+                    <!-- <tr style="background: #ffffff; border: #373737 1px solid; height: 30px;">
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 12px; color: #000000; vertical-align: top;"><p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;"></p></td>  
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 12px; color: #000000; vertical-align: top;"><p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;"></p></td>  
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 12px; color: #000000; vertical-align: top;"><p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;"></p></td>  
+                      <td style="text-align:right; padding: 4px; border-right:#373737 1px solid; font-weight: normal; font-size: 12px; color: #000000; vertical-align: top;">TOTAL</td>   
+                                   
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 12px; color: #000000; vertical-align: top;"><p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;"></p></td>   
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 12px; color: #000000; vertical-align: top;"><p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;">{{printData?.total_quantity}}</p></td>
+                      <td style="text-align: center;padding: 4px; border-right:#373737 1px solid; font-weight: 600; font-size: 12px; color: #000000; vertical-align: top;"><p style="padding: 0px 0px; margin: 0px 0px 5px 0px; font-weight: normal;"></p></td>
+                    </tr>           -->
+                  </table>
+                </td>
+              </tr>
+    
+              <tr>
+                <td colspan="2" style="padding:0px 0px;">
+                  <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
+                    <tr>
+                      <td colspan="4" style="text-align: left;font-size: 15px;font-weight: 600;padding: 8px 0px;">
+                        <div class="text1" style="color: #000; font-size: 15px; text-align: left; font-weight: normal; line-height: 25px;" ><span style="width: 130px; float: left;">Remark from Store </span>: {{printData?.remarks}}</div>                    
+                      </td> 
+                    </tr>
+
+                  <tr style="background:#ffffff; border: transparent 1px solid;">
+                    <td colspan="4" style="text-align: left;font-size: 15px;font-weight: 600;padding: 8px 0px;">
+                      <div class="text1" style="color: #000;margin: auto;width: 90%; font-size: 13px; text-align: left; font-weight: bold; line-height: 25px; display: flex;margin-top: 50px;
+                      align-items: center;
+                      justify-content: space-between;
+                      gap: 15px; padding: 0px 12px;" >
+                        <a href="#" style="color: #000; text-decoration: none;">{{printData?.items[0].created_by_name}}</a> 
+                        <a href="#" style="color: #000; text-decoration: none;">{{printData?.items[0].checked_by_name}}</a> 
+                        <a href="#" style="color: #000; text-decoration: none;">{{printData?.items[0].approved_by_name}}</a>
+                      </div>                    
+                    </td> 
+                  </tr>
+
+                  <tr style="background:#ffffff; border: transparent 1px solid; margin-top: 22px;">
+                    <td colspan="4" style="text-align: left;font-size: 15px;font-weight: 600;padding: 8px 0px;">
+                      <div class="text1" style="color: #000; font-size: 13px; text-align: left; font-weight: bold; line-height: 25px; display: flex;
+                      align-items: center;
+                      justify-content: space-between;
+                      gap: 15px; padding: 0px 12px;" >
+                        <a href="#" style="color: #000; text-decoration: none; border-top: #000 1px solid;">Requested By - Name & sign</a> 
+                        <a href="#" style="color: #000; text-decoration: none; border-top: #000 1px solid;">Checked By - Name & sign</a> 
+                        <a href="#" style="color: #000; text-decoration: none; border-top: #000 1px solid;">Approved By - Name & sign</a>
+                      </div>                    
+                    </td>  
+                  </tr>
+                  
+                  </table>
+                </td>
+              </tr>
+                    
+    
+              
+            </table>
+          </td>
+        </tr>
+      </table>
+</section>

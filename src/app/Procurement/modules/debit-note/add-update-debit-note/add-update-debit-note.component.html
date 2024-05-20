@@ -1,0 +1,399 @@
+
+<div class="createrequisition-section">
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+
+    <div class="creatematerial">
+        <div class="row">
+
+            <div class="col-lg-12 col-md-12 col-12">
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="addressform">
+                            <label for="text">Pur. Bill&nbsp;No.</label>
+                            <input type="text" placeholder="" id="text" class="form-control"
+                                [(ngModel)]="form.pur_bill_no" #pur_bill_no="ngModel" name="pur_bill_no">
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="addressform">
+                            <label for="date">Voucher&nbsp;Date</label>
+                            <input type="date" placeholder="" class="form-control" id="date" name="voucher_date"
+                                [(ngModel)]="form.voucher_date" required #voucher_date="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && voucher_date.errors }">
+                            <div *ngIf="f.submitted && voucher_date.errors" class="invalid-feedback">
+                                <div *ngIf="voucher_date.errors['required']">This is required !</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="addressform">
+                            <label for="text">Party. Bill&nbsp;No.</label>
+                            <input type="text" placeholder="" id="text" class="form-control"
+                                [(ngModel)]="form.party_bill_no" #party_bill_no="ngModel" name="party_bill_no">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="addressform">
+                            <label for="date">Date</label>
+                            <input type="date" placeholder="" class="form-control" id="date" name="date"
+                                [(ngModel)]="form.date" required #date="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && date.errors }">
+                            <div *ngIf="f.submitted && date.errors" class="invalid-feedback">
+                                <div *ngIf="date.errors['required']">This is required !</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="addressform">
+                            <label for="text">Party&nbsp;Name</label>
+                            <input type="text" placeholder="" id="text" class="form-control"
+                                [(ngModel)]="form.party_name" #party_name="ngModel" name="party_name">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="createtable-section">
+        <div class="createtable-section table-responsive">
+            <table style="width:230%">
+                <tr>
+                    <th>Sr.&nbsp;No</th>
+                    <th>Item&nbsp;Detail</th>
+                    <th>Rate</th>
+                    <th>Quantity</th>
+                    <th>GST</th>
+                    <th>Unit</th>
+                    <th>GRN Qty.</th>
+                    <th>Pur. Qty.</th>
+                    <th>Previous Billed Qty.</th>
+                    <th>Diff Qty</th>
+                    <th>Tolerance %</th>
+                    <th>Net Diff Qty.</th>
+                    <th>Pur. Rate</th>
+                    <th>PO Rate</th>
+                    <th>PO Rate Diff. Amt</th>
+                    <th>GR Qty Diff. Amt</th>
+                    <th>Taxable Amt</th>
+                    <th>SGST</th>
+                    <th>UTGST</th>
+                    <th>CGST</th>
+                    <th>IGST</th>
+                    <th>CESSGST</th>
+                    <th>Total Amount</th>
+                </tr>
+                <tr class="">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <!-- <td class="align-middle">
+                        <a (click)="addDebitNoteDetails()" type="button" class="tablebtn-save">ADD
+                            <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png" alt=""></i>
+                        </a>
+                    </td> -->
+                </tr>
+    
+                <tr class="tablebg" *ngFor="let item of form.details; let i = index">
+                    <td>#{{i+1}}</td>
+    
+                    <td>
+                        <div class="tablegroup">
+    
+                            <label>Item&nbsp;Group</label>
+                            <select class="form-control" name="requested_material_group{{i+1}}"
+                                [(ngModel)]="form.details[i].requested_material_group" #requested_material_group="ngModel"
+                                (change)="typeChange(form.details[i].requested_material_group,i)">
+                                <option value="" disabled>-- select --</option>
+                                <option *ngFor="let materialGroup of masterlist" [value]="materialGroup.id">
+                                    {{materialGroup.name}}</option>
+                            </select>
+    
+                            <label>Item&nbsp;Sub&nbsp;Group</label>
+                            <select class="form-control" name="requested_material_sub_group{{i+1}}"
+                                [(ngModel)]="form.details[i].requested_material_sub_group"
+                                #requested_material_sub_group="ngModel"
+                                (change)="subTypeChange(form.details[i].requested_material_sub_group, i)">
+                                <option value="" disabled>-- select --</option>
+                                <option *ngFor="let subGroup of form.details[i].MaterilSubGroupList" [value]="subGroup.id">
+                                    {{subGroup.name}}</option>
+                            </select>
+    
+                            <label>Item</label>
+                            <select class="form-control" name="material{{i+1}}" [(ngModel)]="form.details[i].material"
+                                #material="ngModel" (change)="setUOM($event,i)">
+                                <option value="" disabled>-- select --</option>
+                                <option *ngFor="let masterData of form.details[i].MaterilFilterList"
+                                    [value]="masterData.id">{{masterData.material_name}}</option>
+                            </select>
+                        </div>
+                    </td>
+    
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].rate" #rate="ngModel" name="rate{{i+1}}">
+                        </div>
+                    </td>
+    
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].quantity" #quantity="ngModel" name="quantity{{i+1}}">
+                        </div>
+                    </td>
+    
+    
+                    <td>
+                        <div class="tablegroup">
+                            <!-- <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].gst" #gst="ngModel" name="gst{{i+1}}"> -->
+                            <select class="form-control" id="sel1" name="gst{{i+1}}" [(ngModel)]="form.details[i].gst"
+                                #gst="ngModel"><!--  (change)="taxHeadChange(i)"  -->
+                                <option value="">Select </option>
+                                <option *ngFor="let tax of taxHeads" value="{{tax.id}}">{{tax.name}}</option>
+                            </select>
+                        </div>
+                    </td>
+    
+                    <td>
+                        <div class="tablegroup">
+                            <!-- <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].unit" #unit="ngModel" name="unit{{i+1}}"> -->
+                            <select class="form-control" aria-label="Default select example" name="unit{{i+1}}"
+                                [(ngModel)]="form.details[i].unit" #unit="ngModel">
+                                <option selected disabled value="">-- select --</option>
+                                <option *ngFor="let unitmeasure of uomList" value={{unitmeasure.id}}>{{unitmeasure.symbol}}
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+    
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].grn_qty" #grn_qty="ngModel" name="grn_qty{{i+1}}">
+                        </div>
+                    </td>
+    
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].pur_qty" #pur_qty="ngModel" name="pur_qty{{i+1}}">
+                        </div>
+                    </td>
+    
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].pvs_billed_qty" #pvs_billed_qty="ngModel"
+                                name="pvs_billed_qty{{i+1}}">
+                        </div>
+                    </td>
+    
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].diff_qty" #diff_qty="ngModel" name="diff_qty{{i+1}}">
+                        </div>
+                    </td>
+    
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].tolerance_per" #tolerance_per="ngModel"
+                                name="tolerance_per{{i+1}}">
+                        </div>
+                    </td>
+    
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].net_diff_qty" #net_diff_qty="ngModel"
+                                name="net_diff_qty{{i+1}}">
+                        </div>
+                    </td>
+    
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].pur_rate" #pur_rate="ngModel" name="pur_rate{{i+1}}">
+                        </div>
+                    </td>
+    
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].po_rate" #po_rate="ngModel" name="po_rate{{i+1}}">
+                        </div>
+                    </td>
+    
+    
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].po_rate_diff_amt" #po_rate_diff_amt="ngModel"
+                                name="po_rate_diff_amt{{i+1}}">
+                        </div>
+                    </td>
+    
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].gr_qty_diff_amt" #gr_qty_diff_amt="ngModel"
+                                name="gr_qty_diff_amt{{i+1}}">
+                        </div>
+                    </td>
+    
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].taxable_amt" #taxable_amt="ngModel" name="taxable_amt{{i+1}}">
+                        </div>
+                    </td>
+    
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].sgst" #sgst="ngModel" name="sgst{{i+1}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].utgst" #utgst="ngModel" name="utgst{{i+1}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].cgst" #cgst="ngModel" name="cgst{{i+1}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].igst" #igst="ngModel" name="igst{{i+1}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].cess_gst" #cess_gst="ngModel" name="cess_gst{{i+1}}">
+                        </div>
+                    </td>
+    
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].total_amt" #total_amt="ngModel" name="total_amt{{i+1}}">
+                        </div>
+                    </td>
+                </tr>
+    
+                <tr>
+                    <td colspan="20"></td>
+                    <td>Total&nbsp;Amount</td>
+                    <td colspan="2">
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder="0.00" name="total_item_amt"
+                                readonly [(ngModel)]="total_item_amt">
+                        </div>
+                    </td>
+                </tr>
+    
+                <tr>
+                    <td colspan="20"></td>
+                    <td>Round&nbsp;Off</td>
+                    <td colspan="2">
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder="0.00" name="total_item_amt"
+                                readonly [(ngModel)]="total_item_amt">
+                        </div>
+                    </td>
+                </tr>
+    
+                <tr>
+                    <td colspan="20"></td>
+                    <td>Net&nbsp;Amount</td>
+                    <td colspan="2">
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder="0.00" name="total_net_amt"
+                                readonly [(ngModel)]="total_net_amt">
+                        </div>
+                    </td>
+                </tr>
+    
+    
+            </table> 
+        </div>
+  
+    </div>
+
+    <div class="creatematerial">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-6">
+                <div class="addressform">
+                    <div class="col-lg-3 col-md-3 col-12">
+                        <label for="text">Attach&nbsp;a&nbsp;File</label>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-12">
+                        <div class="custom-file">
+                            <input type="file" multiple="multiple" (change)="handleUpload($event)" class="custom-file-input"
+                                id="customFile">
+                        </div>
+                    </div>
+                    <!-- <section *ngIf="prefieldData.attachment">
+                    <a href="{{docUrl}}{{attachmentdata.attachment}}" target="_blank"
+                        *ngFor="let attachmentdata of prefieldData.attachment"><img src="assets/icons/eye.png"
+                            alt=""></a>
+                </section> -->
+                </div>
+            </div>
+    
+            <div class="col-lg-6 col-md-6 col-6">
+                <div class="addressform">
+                    <label for="text">Remarks</label>
+                    <textarea placeholder="" id="text" class="form-control" [(ngModel)]="form.remark" #remark="ngModel"
+                        name="remark"></textarea>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+
+
+<div class="save_btn">    
+    <button type="submit" class="tablebtn-save">Save</button>
+</div>
+
+</form>
+    
+</div>

@@ -1,0 +1,19 @@
+.bottom-spave {
+    height: 20px;
+}
+
+.custom-select-input {
+    input:first-child {
+        border-radius: 25px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
+.flex-div .mb-3 {
+    width: 100%!important;
+}
+
+.mb-3 label {
+    font-size: 10px!important;
+}

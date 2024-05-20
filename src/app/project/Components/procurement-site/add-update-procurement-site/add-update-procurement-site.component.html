@@ -1,0 +1,102 @@
+<form role="form" [formGroup]="addUpdateProcurementSiteForm">
+
+    <div class="flex-div">
+
+        <!-- <div class="mb-3">
+            <select class="form-select" formControlName="project" [(ngModel)]="addProcurementSiteTemplate.project"
+                [ngClass]="displayFieldCss(addUpdateProcurementSiteForm,'project')" aria-label="Default select example">
+                <option value="" selected disabled>Select Project<span class="asterisk">*</span></option>
+                <option *ngFor="let project of projectList" value={{project.id}}>{{project.project_data[1].value}}
+                </option>
+            </select>
+            <label class="floating-label-select"
+                [ngClass]="{'insideDropdown': addProcurementSiteTemplate.project =='' }">Select
+                Project <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addUpdateProcurementSiteForm,'project')">
+                <span class="text-danger"
+                    *ngIf="addUpdateProcurementSiteForm.get('project')?.errors?.['required']">Project is required</span>
+            </div>
+        </div> -->
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addProcurementSiteTemplate.site_name != '' }">
+            <input type="text" class="form-control" formControlName="site_name"
+                [(ngModel)]="addProcurementSiteTemplate.site_name" (keyup)="labelName()"
+                [ngClass]="displayFieldCss(addUpdateProcurementSiteForm,'site_name')">
+            <label class="floating-label">Enter Site Name<span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addUpdateProcurementSiteForm,'site_name')">
+                <span class="text-danger"
+                    *ngIf="addUpdateProcurementSiteForm.get('site_name')?.errors?.['required']">Site
+                    Name is required</span>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addProcurementSiteTemplate.slug != '' }" hidden>
+            <input type="text" class="form-control" formControlName="slug" [(ngModel)]="addProcurementSiteTemplate.slug"
+                [ngClass]="displayFieldCss(addUpdateProcurementSiteForm,'slug')" [readonly]="isControlDisabled"
+                style="background-color: lightgrey;" >
+            <label class="floating-label">Enter Slug <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addUpdateProcurementSiteForm,'slug')">
+                <span class="text-danger" *ngIf="addUpdateProcurementSiteForm.get('slug')?.errors?.['required']">Slug is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addProcurementSiteTemplate.stateList != '' }">
+            <select name="" id="" required class="form-control" formControlName="state" [(ngModel)]="addProcurementSiteTemplate.state"
+                [ngClass]="displayFieldCss(addUpdateProcurementSiteForm,'state')"
+            >
+                <option value="{{stateData.state_id}}" *ngFor="let stateData of stateList">{{stateData.name}}</option>
+            </select>
+            
+            <!--  [ngClass]="displayFieldCss(addUpdateProcurementSiteForm,'location')" -->
+            <label class="floating-label">Select State <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addUpdateProcurementSiteForm,'state')">
+                <span class="text-danger"
+                    *ngIf="addUpdateProcurementSiteForm.get('state')?.errors?.['required']">State is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addProcurementSiteTemplate.location != '' }">
+            <input type="text" class="form-control" required formControlName="location"
+                [ngClass]="displayFieldCss(addUpdateProcurementSiteForm,'location')"
+                [(ngModel)]="addProcurementSiteTemplate.location">
+            <!--  [ngClass]="displayFieldCss(addUpdateProcurementSiteForm,'location')" -->
+            <label class="floating-label">Enter location <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addUpdateProcurementSiteForm,'location')">
+                <span class="text-danger"
+                    *ngIf="addUpdateProcurementSiteForm.get('location')?.errors?.['required']">Location is
+                    required</span>
+            </div>
+        </div>
+        
+        <div class="mb-3" [ngClass]="{ 'float-now': addProcurementSiteTemplate.address != '' }">
+            <textarea name="" id="" cols="10" rows="3" class="form-control" formControlName="address" [(ngModel)]="addProcurementSiteTemplate.address"></textarea>
+            <label class="floating-label">Enter address</label>
+            <div class="required" *ngIf="isFieldValid(addUpdateProcurementSiteForm,'address')">
+                <span class="text-danger"
+                    *ngIf="addUpdateProcurementSiteForm.get('address')?.errors?.['required']">address is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addProcurementSiteTemplate.users != '' }">
+            <angular2-multiselect 
+                formControlName="users"
+                [data]="dropdownMultiselectAddUserList" 
+                [(ngModel)]="selectedMultipleData"
+                [settings]="dropdownMultiselectAddUserListSettings" 
+                (onSelect)="onMultiSelectAddUser($event)" 
+                (onDeSelect)="OnMultiDeSelectAddUser($event)"
+                (onSelectAll)="onMultiSelectAddUserAll($event)" 
+                (onDeSelectAll)="onMultiDeSelectAddUserAll($event)"
+            >
+            </angular2-multiselect>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': selectedMultipleData =='' }">Select User <span class="asterisk">*</span></label>
+        </div>
+
+
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="addUpdateProcurementSite()">{{addUpdateButton}}</button>
+</form>

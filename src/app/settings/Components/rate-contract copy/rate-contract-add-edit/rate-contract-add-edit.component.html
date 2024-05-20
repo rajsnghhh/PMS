@@ -1,0 +1,144 @@
+<form class="allfield" name="addPersonalInformation" #f="ngForm" (ngSubmit)="f.form.valid && personalSubmit()"
+    novalidate>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Site</label>
+            <select class="form-select" name="site" [ngClass]="{ 'is-invalid': f.submitted && site.errors }"
+                [(ngModel)]="addPersonalInformation.site" required #site="ngModel">
+                <option value="">Select Site</option>
+                <!-- <option value="{{projectSite.id}}" *ngFor="let projectSite of projectSiteList">{{projectSite.site_name}}</option> -->
+            </select>
+        </div>
+        <div *ngIf="f.submitted && site.errors" class="invalid-feedback">
+            <div *ngIf="site.errors['required']">Site is required</div>
+        </div>
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Group</label>
+            <select class="form-select" name="group" [ngClass]="{ 'is-invalid': f.submitted && group.errors }"
+                [(ngModel)]="addPersonalInformation.group" required #group="ngModel">
+                <option value="">Select Group</option>
+                <!-- <option value="{{materialGroup}}" *ngFor="let materialGroup of materialGroupList">{{materialGroup}}</option> -->
+            </select>
+        </div>
+        <div *ngIf="f.submitted && group.errors" class="invalid-feedback">
+            <div *ngIf="group.errors['required']">Group is required</div>
+        </div>
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Sub Group</label>
+            <select class="form-select" name="subgroup" [ngClass]="{ 'is-invalid': f.submitted && subgroup.errors }"
+                [(ngModel)]="addPersonalInformation.subgroup" required #subgroup="ngModel">
+                <option value="">Select Sub Group</option>
+                <!-- <option value="{{materiSubDroup}}" *ngFor="let materiSubDroup of materiSubDroupList">{{materiSubDroup}}</option> -->
+            </select>
+        </div>
+        <div *ngIf="f.submitted && group.errors" class="invalid-feedback">
+            <div *ngIf="group.errors['required']">Sub Group is required</div>
+        </div>
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Item</label>
+            <select class="form-select" name="material" [ngClass]="{ 'is-invalid': f.submitted && material.errors }"
+                [(ngModel)]="addPersonalInformation.material" required #material="ngModel">
+                <option value="">Select Item</option>
+                <!-- <option value="{{seleceableMaterial.id}}" *ngFor="let seleceableMaterial of seleceableMaterialList">{{seleceableMaterial.material_name}}</option> -->
+            </select>
+        </div>
+        <div *ngIf="f.submitted && group.errors" class="invalid-feedback">
+            <div *ngIf="group.errors['required']">Item is required</div>
+        </div>
+    </div>
+
+    <div class="mb-3 field" *ngIf="addPersonalInformation.material">
+        <div class="fieldValue">
+            <label>Unit</label>
+            <span class="form-control">{{addPersonalInformation?.selectedMaterialMaster?.unit_of_mesurement_name}}</span>
+        </div>
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Stock Type</label>
+            <select class="form-select" name="stock_type" [ngClass]="{ 'is-invalid': f.submitted && stock_type.errors }"
+                [(ngModel)]="addPersonalInformation.stock_type" required #stock_type="ngModel">
+                <option value="">Select Stock Type</option>
+                <option value="party">Party</option>
+                <option value="self">Self</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && stock_type.errors" class="invalid-feedback">
+            <div *ngIf="stock_type.errors['required']">Stock Type is required</div>
+        </div>
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Opening Quantity</label>
+            <input type="text" class="form-control" name="opening_quantity" numbersOnly maxlength="12"
+                [ngClass]="{ 'is-invalid': f.submitted && opening_quantity.errors }"
+                [(ngModel)]="addPersonalInformation.opening_quantity" required #opening_quantity="ngModel"
+                placeholder="Enter opening quantity">
+        </div>
+        <div *ngIf="f.submitted && opening_quantity.errors" class="invalid-feedback">
+            <div *ngIf="opening_quantity.errors['required']">Opening quantity is required</div>
+        </div>
+    </div>
+
+    <!-- <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Quantity</label>
+            <input type="text" class="form-control" name="quantity" numbersOnly maxlength="12"
+                [ngClass]="{ 'is-invalid': f.submitted && quantity.errors }"
+                [(ngModel)]="addPersonalInformation.quantity" #quantity="ngModel"
+                placeholder="Enter opening quantity">
+        </div>
+    </div> -->
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Unit Rate</label>
+            <input type="text" class="form-control" name="cost_per_unit" amountNumber 
+                [ngClass]="{ 'is-invalid': f.submitted && cost_per_unit.errors }"
+                [(ngModel)]="addPersonalInformation.cost_per_unit" required #cost_per_unit="ngModel"
+                placeholder="Enter Unit Rate">
+        </div>
+        <div *ngIf="f.submitted && cost_per_unit.errors" class="invalid-feedback">
+            <div *ngIf="cost_per_unit.errors['required']">Unit Rate is required</div>
+        </div>
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Item Amount</label>
+            <input type="text" disabled class="form-control" name="item_Amount" numbersOnly 
+                [ngClass]="{ 'is-invalid': f.submitted && item_Amount.errors }"
+                [(ngModel)]="addPersonalInformation.item_Amount" #item_Amount="ngModel"
+                placeholder="">
+        </div>
+    </div>
+    
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Remarks</label>
+            <textarea type="textarea" class="form-control" name="remarks" 
+            [ngClass]="{ 'is-invalid': f.submitted && remarks.errors }"
+            [(ngModel)]="addPersonalInformation.remarks" #remarks="ngModel"
+            placeholder="Remarks">
+            </textarea>
+        </div>
+    </div>
+
+    <div class="btnupdate">
+        <button type="submit" class="btn btn-primary" *ngIf="canvasScope == 'add' ">ADD</button>
+        <button type="submit" class="btn btn-primary" *ngIf="canvasScope == 'update' ">UPDATE</button>
+        <button type="button" class="btn btn-primary non-active-btn" (click)="CloseComponent()">CANCEL</button>
+    </div>
+</form>

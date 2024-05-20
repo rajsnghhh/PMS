@@ -1,0 +1,79 @@
+<div class="createrequisition-section">
+
+    <div class="main-body-container">
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th scope="col">Sr No.</th>
+                    <th scope="col">WO No.</th>
+                    <th scope="col">WO Date</th>
+                    <th scope="col">Party Name</th>
+                    <th scope="col">Work Type</th>
+                    <th scope="col">WO Location</th>
+                    <th scope="col">Cheque No.</th>
+                    <th scope="col">Bank Name</th>
+                    <th scope="col">Contract</th>
+                    <th scope="col">Remark</th>
+                    <th scope="col">Final Status</th>
+                    <th scope="col">SGST Amt</th>
+                    <th scope="col">CGST Amt</th>
+                    <th scope="col">IGST Amt</th>
+                    <th scope="col">Discount</th>
+                    <th scope="col">Total Amt.</th>
+                    <th scope="col" *ngIf="WO_Checker || WO_Approver">Change WO Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of woList;index as i">
+                    <td>{{i+1}}</td>
+                    <td>{{item.request_code}}</td>
+                    <td>{{item.date.substring(0,10).split('-').reverse().join('-')}}</td>
+                    <td>{{item?.party_details?.vendor_name}}</td>
+                    <td>{{item.work_type}}</td>
+                    <td>{{item.location}}</td>
+                    <td>{{item.cheque_no}}</td>
+                    <td>{{item.bank_name}}</td>
+                    <td>{{item?.hire_contracts[0]?.hire}}</td>
+                    <td>{{item.remark}}</td>
+                    <td class="text-capitalize">{{item.status}}</td>
+                    <td>{{item.net_total_sgst_amount}}</td>
+                    <td>{{item.net_total_cgst_amount}}</td>
+                    <td>{{item.net_total_igst_amount}}</td>
+                    <td>{{item.net_total_discount}}</td>
+                    <td>{{item.net_total_amount}}</td>
+                    <td *ngIf="WO_Checker || WO_Approver">
+                        <select name="" id="" [(ngModel)]="item.updatedStatus" *ngIf="item.status == 'pending' || item.status == 'checked'">
+                            <option value="checked" *ngIf="item.status == 'pending' && WO_Checker">Checked</option>
+                            <option value="cancelled" *ngIf="item.status == 'checked' && WO_Approver">Cancelled</option>
+                            <option value="close" *ngIf="item.status == 'checked' && WO_Approver">Close</option>
+                            <option value="approved" *ngIf="item.status == 'checked' && WO_Approver">Approved</option>
+                            <option value="rejected" *ngIf="(item.status == 'pending' && WO_Checker) || (item.status == 'checked' && WO_Approver)">Rejected</option>
+                        </select>
+                    </td>
+                    <!-- <td>
+                        <div class="table-action">
+                            <img src="assets/icons/dots.png" alt="">
+                            <ul>
+                                <li (click)="viewByID(item.id)">
+                                    View <span><img class="eye-docicon" src="assets/icons/eye.png"
+                                            alt=""></span>
+                                </li>
+                                <li *ngIf="item.status!='approved'" (click)="updateByID(item.id)">Update<span><img src="assets/icons/amend.jpg" alt=""></span></li>
+                                <li (click)="printByID(item.id)">Print Preview<span><img
+                                            src="assets/icons/print.png" alt=""></span></li>
+                            </ul>
+                        </div>
+                    </td> -->
+
+                </tr>
+
+                <tr class="text-center">
+                    <td colspan="14" *ngIf="woList?.length == 0">No data found.</td>
+                </tr>
+            </tbody>
+        </table>
+        <section class="updateSection">
+            <button *ngIf="WO_Checker || WO_Approver" (click)="updateSatus()">Update</button>
+        </section>
+    </div>
+</div>

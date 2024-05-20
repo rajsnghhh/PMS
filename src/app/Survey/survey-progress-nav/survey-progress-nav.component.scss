@@ -1,0 +1,70 @@
+ul {
+    list-style-type: none;
+    padding: 0;
+    max-height: calc(100vh - 138px);
+    overflow-y: scroll;
+    padding-bottom: 20px;
+    margin-top: -5px;
+
+    li {
+        color: #5577ff;
+        position: relative;
+        font-size: 13px;
+        font-weight: 400;
+        padding: 10px 0px 10px 35px;
+        cursor: pointer;
+    }
+
+    li:hover {
+        font-weight: 400;
+    }
+
+    li::before {
+        content: "";
+        background-color: #b0b8ff;
+        border-radius: 50px;
+        height: 15px;
+        overflow: hidden;
+        width: 15px;
+        display: block;
+        position: absolute;
+        left: 15px;
+        top: 12px;
+    }
+
+    .completed::before {
+        background-image: url("../../../assets/icons/check.png");
+        background-size: 50% 50%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: #6676ff;
+    }
+}
+
+.active-nav {
+    border-bottom: 1px solid #5577ff;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+    border-radius: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #e6e6e6;
+    border-radius: 15px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #5577ff;
+    border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #5577ff;
+    border-radius: 15px;
+}

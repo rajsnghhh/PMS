@@ -1,0 +1,322 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="createrequisition-section">
+        <div class="creatematerial">
+            <h3>Purchase Order GST  <span>{{scope}}</span></h3>
+
+
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-12">
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Project</label>
+                                <select id="sel1" class="form-control" name="project" [(ngModel)]="form.project" [disabled]="disableEdit || disableProject"
+                                    required #project="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && project.errors }"
+                                    (change)="getProjeDependentSiteData()">
+                                    <option disabled>-- select --</option>
+                                    <option *ngFor="let project of projectList" value="{{project.id}}">
+                                        {{project.project_data[1]?.value}}</option>
+                                </select>
+                                <div *ngIf="f.submitted && project.errors" class="invalid-feedback">
+                                    <div *ngIf="project.errors['required']">This is required !</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Site</label>
+                                <select id="sel1" class="form-control" name="site" [disabled]="disableEdit || disableSite" [(ngModel)]="form.site" required
+                                    #site="ngModel" [ngClass]="{ 'is-invalid': f.submitted && site.errors }"
+                                    (change)="sendProjectSiteId()">
+                                    <option disabled>-- select --</option>
+                                    <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                        {{siteData.site_name}}</option>
+                                </select>
+                                <div *ngIf="f.submitted && site.errors" class="invalid-feedback">
+                                    <div *ngIf="site.errors['required']">This is required !</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Store</label>
+                                <select id="sel1" class="form-control" name="store" [disabled]="disableEdit || disableStore" [(ngModel)]="form.store" required
+                                    #store="ngModel" [ngClass]="{ 'is-invalid': f.submitted && store.errors }">
+                                    <option disabled>-- select --</option>
+                                    <option *ngFor="let storeData of storeList" value="{{storeData.id}}">
+                                        {{storeData.store_name}}</option>
+                                </select>
+                                <div *ngIf="f.submitted && store.errors" class="invalid-feedback">
+                                    <div *ngIf="store.errors['required']">This is required !</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-4" hidden>
+                            <div class="addressform">
+                                <label for="text">Manual PO&nbsp;No.</label>
+                                <input type="text" placeholder="" id="text" class="form-control"
+                                    [(ngModel)]="form.po_code" #po_code="ngModel"
+                                    [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="date">PO&nbsp;Date</label>
+                                <input type="date" max="{{maxDate}}" [disabled]="disableEdit" placeholder="" class="form-control" id="date" name="date"
+                                    [(ngModel)]="form.date" required [ngModelOptions]="{standalone: true}"
+                                    #date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && date.errors }">
+                                <div *ngIf="f.submitted && date.errors" class="invalid-feedback">
+                                    <div *ngIf="date.errors['required']">This is required !</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">PO&nbsp;For</label>
+                                <input type="text" [disabled]="disableEdit" placeholder="" id="text" class="form-control"
+                                    [(ngModel)]="form.po_for" #po_for="ngModel" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Vendor</label>
+                                <select id="sel1" [disabled]="disableEdit" class="form-control" name="vendor" (change)="changeCustomer(form.vendor)" [(ngModel)]="form.vendor"
+                                    #vendor="ngModel" [ngModelOptions]="{standalone: true}" required
+                                    [ngClass]="{ 'is-invalid': f.submitted && vendor.errors }">
+                                    <option disabled>-- select --</option>
+                                    <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                                        {{vendor.vendor_master_data.vendor_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="date">PO&nbsp;Valid&nbsp;Date&nbsp;From</label>
+                                <input max="{{maxDate}}" [disabled]="disableEdit" type="date" placeholder="" class="form-control" id="valid_date_from"
+                                    name="valid_date_from" [(ngModel)]="form.valid_date_from" required
+                                    [ngClass]="{ 'is-invalid': f.submitted && valid_date_from.errors }"
+                                    #valid_date_from="ngModel">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="date">PO&nbsp;Valid&nbsp;Date&nbsp;To</label>
+                                <input type="date" [disabled]="disableEdit" placeholder="" class="form-control" id="valid_date_to" required
+                                    [ngClass]="{ 'is-invalid': f.submitted && valid_date_to.errors }" name="valid_date_to"
+                                    [(ngModel)]="form.valid_date_to" #valid_date_to="ngModel">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Vendor&nbsp;State</label>
+                                <select [disabled]="disableEdit" id="sel1" class="form-control" name="vendor_state"
+                                    (change)="changeVendorState()"
+                                    [(ngModel)]="form.vendor_state" required #vendor_state="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && vendor_state.errors }"
+                                    [ngModelOptions]="{standalone: true}">
+                                    <option disabled>-- select --</option>
+                                    <option value="{{stateData.state_id}}" *ngFor="let stateData of stateList">
+                                        {{stateData.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Job&nbsp;Site</label>
+                                <select id="sel2" class="form-control" name="job_site" [disabled]="disableEdit" [(ngModel)]="form.job_site"
+                                    #job_site="ngModel" [ngModelOptions]="{standalone: true}">
+                                    <option disabled>-- select --</option>
+                                    <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                        {{siteData.site_name}}</option>
+
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">PO&nbsp;Subject</label>
+                                <input type="text" placeholder="" [disabled]="disableEdit" id="text" name="subject" class="form-control"
+                                    [(ngModel)]="form.subject" #subject="ngModel">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Purchase&nbsp;Type</label>
+                                <input type="text" [disabled]="disableEdit" placeholder="" id="text" class="form-control"
+                                    [(ngModel)]="form.purchase_type" [ngModelOptions]="{standalone: true}"
+                                    #purchase_type="ngModel">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Party&nbsp;Bank</label>
+                                <input type="text" [disabled]="disableEdit" placeholder="" id="text" class="form-control"
+                                    [(ngModel)]="form.party_bank" #party_bank="ngModel"
+                                    [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Vendor&nbsp;Currency</label>
+                                <select id="sel1" [disabled]="disableEdit" class="form-control" name="vendor_currency"
+                                    [(ngModel)]="form.vendor_currency" #vendor_currency="ngModel" (change)="changeCurrency()"
+                                    [ngModelOptions]="{standalone: true}" required
+                                    [ngClass]="{ 'is-invalid': f.submitted && vendor_currency.errors }">
+                                    <option disabled>-- select --</option>
+                                    <option *ngFor="let curr of vendorCurrencyList" value="{{curr.id}}">{{curr.symbol}}
+                                        - {{curr.name}} ({{curr.slug}}) </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                              <label for="text">Exchange&nbsp;Rate<span class="asterisk" style="color: #f86c6b;" *ngIf="exchangeRateRequired">*</span></label>
+                              <input type="text" placeholder="" id="text" class="form-control" name="exchange_rate"
+                                [(ngModel)]="form.exchange_rate" #exchange_rate="ngModel" amountNumber [required]="exchangeRateRequired" [disabled]="!exchangeRateRequired || disableEdit" [ngClass]="{
+                                  'is-invalid': f.submitted && exchange_rate.errors
+                                }" />INR
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <div class="checkbox-container">
+                                    <input type="checkbox" [disabled]="disableEdit" id="myCheckbox" class="custom-checkbox"
+                                        [(ngModel)]="form.gst_as_billing_state" #gst_as_billing_state="ngModel"
+                                        (change)="onCheckboxChange()" name="gst_as_billing_state">
+                                    <label for="myCheckbox" class="checkbox-label">GST As Per Billing State</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Quotation No</label>
+
+                                <!-- <select id="sel2" class="form-control" name="quotation" [(ngModel)]="form.quotation"
+                                    #quotation="ngModel">
+                                    <option disabled>-- select --</option>
+                                    <option *ngFor="let quotation of quotationList" value="{{quotation.id}}">
+                                        {{quotation.request_code?quotation.request_code:'-'}}
+                                    </option>
+                                </select> -->
+                                <input type="text" placeholder="" [disabled]="disableEdit" id="text" class="form-control" name="quotation_text"
+                                [(ngModel)]="form.quotation_text" #quotation_text="ngModel">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Quotation&nbsp;Date</label>
+                                <input type="date" max="{{maxDate}}" placeholder="" [disabled]="disableEdit" id="text" class="form-control" name="quotation_date"
+                                    [(ngModel)]="form.quotation_date" #quotation_date="ngModel">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <div class="addressform">
+                                <label for="text">Quotation&nbsp;By</label>
+
+                                <!-- <select id="sel3" class="form-control" name="quotation_by"
+                                    [(ngModel)]="form.quotation_by" #quotation_by="ngModel">
+                                    <option disabled>-- select --</option>
+                                    <option *ngFor="let user of userList" value="{{user.id}}">
+                                        {{user.full_name}}</option>
+                                </select> -->
+                                <input type="text" placeholder="" [disabled]="disableEdit" id="text" class="form-control" name="quotation_by_text"
+                                    [(ngModel)]="form.quotation_by_text" #quotation_by_text="ngModel">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-8">
+                          <div class="addressform">
+                            <label for="text">Line&nbsp;Before&nbsp;Items</label>
+                            <textarea name="" id="" [disabled]="disableEdit" cols="30" rows="3" placeholder="" id="text" class="form-control" name="line_before_items" [(ngModel)]="form.line_before_items" #line_before_items="ngModel"></textarea>
+                          </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row">
+                        <div class="col-lg-8 col-md-8 col-8">
+                          <div class="addressform">
+                            <label for="text">Line&nbsp;In&nbsp;Bottom</label>
+                            <textarea name="" [disabled]="disableEdit" id="" cols="30" rows="3" placeholder="" class="form-control" name="line_in_bottom" [(ngModel)]="form.line_in_bottom" #line_in_bottom="ngModel"></textarea>
+                          </div>
+                        </div>
+                    </div> -->
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">Attach&nbsp;a&nbsp;File</label>
+                                <div class="custom-file">
+                                    <input type="file" [disabled]="disableEdit" multiple="multiple" (change)="handleUpload($event)" [ngClass]="{ 'is-invalid': f.submitted && form.attachments.length == 0 }"
+                                        class="custom-file-input" id="customFile">
+                                </div>
+                                <section *ngIf="form.attachments">
+                                    <span  *ngFor="let attachmentdata of form.attachments">
+                                        <a href="{{docUrl}}{{attachmentdata.attachment}}" *ngIf="attachmentdata.id" target="_blank">
+                                            <img src="assets/icons/eye.png" class="eye-docicon" alt="">
+                                        </a>
+                                    </span>
+                                </section>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </div><br>
+
+            <button hidden #submitButton="" type="submit">Save</button>
+
+        </div>
+    </div>
+</form>

@@ -1,0 +1,43 @@
+<form role="form" [formGroup]="addSmsForm">
+    <div class="mb-3" [ngClass]="{ 'float-now': addSms.smsname != '' }">
+    <input type="text" class="form-control" id="role"  formControlName="smsname" [(ngModel)]="addSms.smsname"
+    [ngClass]="displayFieldCss(addSmsForm,'smsname')">
+    <label class="floating-label">Enter SMS Name <span class="asterisk">*</span></label>
+    <div class="required" *ngIf="isFieldValid(addSmsForm,'smsname')">
+        <span class="text-danger" *ngIf="addSmsForm.get('smsname')?.errors?.['required']">SMS Name is required</span>
+      </div>
+</div>   
+
+<div class="form-control custom1">
+    <label class="taglevel">Select Tags : </label> 
+    <ul class="taglistul">
+        <li *ngFor="let tag of tagList" (click)="addToken(tag.name)" class="taglistli">{{tag.name}}</li>
+    </ul>
+</div>
+<div class="mb-3" [ngClass]="{ 'float-now': addSms.smsbody != '' }">
+    <textarea type="text" class="form-control txtbox custom2" id="role" #myTextArea (click)="getCaretPos(myTextArea)" (keyup)="getCaretPos(myTextArea)" formControlName="smsbody" [(ngModel)]="addSms.smsbody"
+    [ngClass]="displayFieldCss(addSmsForm,'smsbody')" placeholder="Enter SMS Text"></textarea>
+    <div class="required" *ngIf="isFieldValid(addSmsForm,'smsbody')">
+        <span class="text-danger" *ngIf="addSmsForm.get('smsbody')?.errors?.['required']">SMS Template is required</span>
+      </div>
+</div>  
+
+
+<div class="mb-3">
+  <select class="form-select" formControlName="Templatetype" [(ngModel)]="addSms.Templatetype"
+      [ngClass]="displayFieldCss(addSmsForm,'Templatetype')" aria-label="Default select example">
+      <option value="" selected disabled>Select Template Type <span class="asterisk">*</span></option>
+      <option *ngFor="let template of templateList" value={{template.id}}>{{template.smtp_type_name}}</option>
+  </select>
+  <label class="floating-label-select"
+      [ngClass]="{'insideDropdown': addSms.Templatetype =='' }">Select Template Type <span
+          class="asterisk">*</span></label>
+  <div class="required" *ngIf="isFieldValid(addSmsForm,'Templatetype')">
+      <span class="text-danger"
+          *ngIf="addSmsForm.get('Templatetype')?.errors?.['required']">Template Type is
+          required</span>
+  </div>
+</div>
+
+<button type="submit" class="btn btn-primary" (click)="addnewSms()">ADD</button>
+</form>

@@ -1,0 +1,440 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Update Field</h2>
+    </div>
+    <div class="component-body">
+
+        <div class="left-side" [ngClass]="{'disabled': form_category == 'systemdefine' }">
+            <div class="left-flex">
+                <label #text class="container" (click)="selectCheck('text')">
+                    <img src="assets/icons/txtfld.png" alt="">
+                    <p>Text fields</p>
+                    <input type="radio" name="custominput">
+                    <span class="checkmark"></span>
+                </label>
+                <label #textarea class="container" (click)="selectCheck('textarea')">
+                    <img src="assets/icons/txtera.png" alt="">
+                    <p>Text area</p>
+                    <input type="radio" name="custominput">
+                    <span class="checkmark"></span>
+                </label>
+                <label #dropdown class="container" (click)="selectCheck('dropdown')">
+                    <img src="assets/icons/dropdown.png" alt="">
+                    <p>Dropdown</p>
+                    <input type="radio" name="custominput">
+                    <span class="checkmark"></span>
+                </label>
+                <label #checkbox class="container" (click)="selectCheck('checkbox')">
+                    <img src="assets/icons/checkbox.png" alt="">
+                    <p>Checkbox</p>
+                    <input type="radio" name="custominput">
+                    <span class="checkmark"></span>
+                </label>
+                <label #radio class="container" (click)="selectCheck('radio')">
+                    <img src="assets/icons/radio-list-line.png" alt="">
+                    <p>Radio</p>
+                    <input type="radio" name="custominput">
+                    <span class="checkmark"></span>
+                </label>
+                <label #date class="container" (click)="selectCheck('date')">
+                    <img src="assets/icons/date_dt.png" alt="">
+                    <p>Date</p>
+                    <input type="radio" name="custominput">
+                    <span class="checkmark"></span>
+                </label>
+                <label #number class="container" (click)="selectCheck('number')">
+                    <img src="assets/icons/number.jpg" alt="">
+                    <p>Number</p>
+                    <input type="radio" name="custominput">
+                    <span class="checkmark"></span>
+                </label>
+                <label #phone class="container" (click)="selectCheck('phone')">
+                    <img src="assets/icons/phone.png" alt="">
+                    <p>Phone</p>
+                    <input type="radio" name="custominput">
+                    <span class="checkmark"></span>
+                </label>
+                <label #multiselect class="container" (click)="selectCheck('multiselect')">
+                    <img src="assets/icons/multi-select.png" alt="">
+                    <p>Multi select</p>
+                    <input type="radio" name="custominput">
+                    <span class="checkmark"></span>
+                </label>
+                <label #boolean class="container" (click)="selectCheck('boolean')">
+                    <img src="assets/icons/boolean1.png" alt="">
+                    <p>Boolean</p>
+                    <input type="radio" name="custominput">
+                    <span class="checkmark"></span>
+                </label>
+                <label #file class="container" (click)="selectCheck('file')">
+                    <img src="assets/icons/file-input.png" alt="">
+                    <p>File Input</p>
+                    <input type="radio" name="custominput">
+                    <span class="checkmark"></span>
+                </label>
+                <label #formulla class="container" (click)="selectCheck('formulla')">
+                    <img src="assets/icons/formulla.png" alt="">
+                    <p>Formulla</p>
+                    <input type="radio" name="custominput">
+                    <span class="checkmark"></span>
+                </label>
+                <label #dependency class="container" (click)="selectCheck('dependency')">
+                    <img src="assets/icons/dependency.png" alt="">
+                    <p>Dependency</p>
+                    <input type="radio" name="custominput">
+                    <span class="checkmark"></span>
+                </label>
+                <label #reference class="container" (click)="selectCheck('reference')">
+                    <img src="assets/icons/reference.png" alt="">
+                    <p>Reference Data Source</p>
+                    <input type="radio" name="custominput">
+                    <span class="checkmark"></span>
+                </label>
+                <label #condition class="container" (click)="selectCheck('condition')">
+                    <img src="assets/icons/condition.png" alt="">
+                    <p>Conditional Field</p>
+                    <input type="radio" name="custominput">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+        <div class="right-side">
+            <form role="form">
+                <h1>Group</h1>
+                <div class="mb-3" [formGroup]="addmodulesForm" [ngClass]="{ 'float-now': addmodules.grid != '' }"
+                    [ngClass]="{'disabled': form_category == 'systemdefine' }">
+                    <select class="form-select" formControlName="grid" [(ngModel)]="addmodules.grid"
+                        [ngClass]="displayFieldCss(addmodulesForm,'grid')" (change)="changeGroup()"
+                        aria-label="Default select example">
+                        <option value="" selected disabled>Select Grid <span class="asterisk">*</span></option>
+                        <option *ngFor="let group of groupList" value={{group.id}}>{{group.name}}</option>
+                        <option value=0>Add New Group</option>
+                    </select>
+                    <label class="floating-label-select" [ngClass]="{'insideDropdown': addmodules.grid =='' }">Select
+                        Group <span class="asterisk">*</span></label>
+                    <div class="required" *ngIf="isFieldValid(addmodulesForm,'grid')">
+                        <span class="text-danger" *ngIf="addmodulesForm.get('grid')?.errors?.['required']">Group is
+                            required</span>
+                    </div>
+                </div>
+                <div class="mb-3" *ngIf="GroupName" [formGroup]="addmodulesForm"
+                    [ngClass]="{ 'float-now': addmodules.grName != '' }">
+                    <input type="text" class="form-control" formControlName="grName" required
+                        [(ngModel)]="addmodules.grName" [ngClass]="displayFieldCss(addmodulesForm,'grName')">
+                    <label class="floating-label">Group Name <span class="asterisk">*</span></label>
+                    <div class="required" *ngIf="isFieldValid(addmodulesForm,'grName')">
+                        <span class="text-danger" *ngIf="addmodulesForm.get('grName')?.errors?.['required']">Group
+                            Name is required</span>
+                    </div>
+                </div>
+                <h1>Update Fields</h1>
+                <div class="mb-3" [formGroup]="addmodulesForm" [ngClass]="{ 'float-now': addmodules.fieldlabel != '' }">
+                    <input type="text" class="form-control" id="role" formControlName="fieldlabel" required
+                        [(ngModel)]="addmodules.fieldlabel" [ngClass]="displayFieldCss(addmodulesForm,'fieldlabel')">
+                    <label class="floating-label">Field Label <span class="asterisk">*</span></label>
+                    <div class="required" *ngIf="isFieldValid(addmodulesForm,'fieldlabel')">
+                        <span class="text-danger" *ngIf="addmodulesForm.get('fieldlabel')?.errors?.['required']">Field
+                            Label is required</span>
+                    </div>
+                </div>
+                <div class="mb-3" [formGroup]="addmodulesForm"
+                    [ngClass]="{ 'float-now': addmodules.internalname != '' ,'disabled':true}">
+                    <input type="text" class="form-control" id="role" formControlName="internalname" required
+                        [(ngModel)]="addmodules.internalname"
+                        [ngClass]="displayFieldCss(addmodulesForm,'internalname')">
+                    <label class="floating-label">Internal Name <span class="asterisk">*</span></label>
+                    <div class="required" *ngIf="isFieldValid(addmodulesForm,'internalname')">
+                        <span class="text-danger">Internal Name is required</span>
+                    </div>
+                </div>
+                <div class="mb-3" [formGroup]="addmodulesForm" [ngClass]="{ 'float-now': addmodules.description!= '' }">
+                    <input type="text" class="form-control" id="role" formControlName="description"
+                        [(ngModel)]="addmodules.description">
+                    <label class="floating-label">Description</label>
+                </div>
+
+                <div class="mb-3" *ngIf="CheckField=='phone'" [formGroup]="addmodulesForm" [ngClass]="{ 'float-now': addmodules.country != '' }">
+                    <select class="form-select" formControlName="country" [(ngModel)]="addmodules.country"
+                        [ngClass]="displayFieldCss(addmodulesForm,'country')"
+                        aria-label="Default select example">
+                        <option value="" selected disabled>Select Country Code <span class="asterisk">*</span></option>
+                        <option *ngFor="let data of countrylist" value={{data.id}}>{{data.name}} ({{data.phone_code}})</option>
+                    </select>
+                    <label class="floating-label-select" [ngClass]="{'insideDropdown': addmodules.country =='' }">Select
+                        Country Code <span class="asterisk">*</span></label>
+                    <div class="required" *ngIf="isFieldValid(addmodulesForm,'country')">
+                        <span class="text-danger" *ngIf="addmodulesForm.get('country')?.errors?.['required']">Country Code is
+                            required</span>
+                    </div>
+                </div>
+
+                <div class="mb-3" *ngIf="CheckField=='file'" [formGroup]="addmodulesForm">
+                    <angular2-multiselect [data]="dropdownUserList" [settings]="dropdownUserSettings"
+                        formControlName="file" [(ngModel)]="addmodules.file">
+                    </angular2-multiselect>
+                    <label class="floating-label-select"
+                        [ngClass]="{'insideDropdown': addmodules.file.length == '0' }"><b>Select
+                            File Type</b></label>
+                </div>
+                <div class="mb-3" *ngIf="CheckField=='formulla'" [formGroup]="addmodulesForm">
+                    <div class="form-control custom1">
+                        <label class="taglevel">Select Tags : </label>
+                        <ul class="taglistul">
+                            <li *ngFor="let tag of tagList" (click)="addToken(tag.form_internal_name)"
+                                class="taglistli">{{tag.form_internal_name}}</li>
+                        </ul>
+                    </div>
+                    <div [ngClass]="{ 'float-now': addmodules.formulla != '' }">
+                        <textarea type="text" appNoSpace class="form-control txtbox custom2" id="role" #myTextArea
+                            (click)="getCaretPos(myTextArea)" (keyup)="getCaretPos(myTextArea)"
+                            formControlName="formulla" [(ngModel)]="addmodules.formulla"
+                            placeholder="Enter Formulla Field"></textarea>
+                    </div>
+                </div>
+                <div class="mb-3" *ngIf="CheckField=='dependency'" [formGroup]="addmodulesForm"
+                    [ngClass]="{ 'float-now': addmodules.dependency != '' }">
+                    <select class="form-select" formControlName="dependency" [(ngModel)]="addmodules.dependency"
+                        [ngClass]="displayFieldCss(addmodulesForm,'dependency')" (change)="changeDependency()"
+                        aria-label="Default select example">
+                        <option value="" selected disabled>Select Dependency <span class="asterisk">*</span></option>
+                        <option *ngFor="let depence of dependentList" value={{depence.id}}>{{depence.form_label}}
+                        </option>
+                    </select>
+                    <label class="floating-label-select"
+                        [ngClass]="{'insideDropdown': addmodules.dependency =='' }">Select Dependency <span
+                            class="asterisk">*</span></label>
+                    <div class="required" *ngIf="isFieldValid(addmodulesForm,'dependency')">
+                        <span class="text-danger"
+                            *ngIf="addmodulesForm.get('dependency')?.errors?.['required']">Dependency is required</span>
+                    </div>
+                </div>
+                <div class="mb-3" *ngIf="CheckField=='reference'" [formGroup]="addmodulesForm"
+                    [ngClass]="{ 'float-now': addmodules.referenceValue != '' }">
+                    <select class="form-select" formControlName="referenceValue" [(ngModel)]="addmodules.referenceValue"
+                        [ngClass]="displayFieldCss(addmodulesForm,'referenceValue')"
+                        (change)="changeValue(addmodules.referenceValue)" aria-label="Default select example">
+                        <option value="" selected disabled>Select Dependent Group <span class="asterisk">*</span>
+                        </option>
+                        <option value="department">Department</option>
+                        <option value="pmsuser">Users</option>
+                        <option value="Zone">Zone</option>
+                        <option value="executive_commitee">Executive Commitee</option>
+                        <option value="company">Company</option>
+                        <option value="employee_type">Employee Type</option>
+                        <option value="role">Role</option>
+                        <option value="profile">Profile</option>
+                        <option value="jv_master">JV Master</option>
+                        <option value="standalone_master">StandAlone Master</option>
+                        <option value="employee_master">Employee Master</option>
+                        <option value="state">State</option>
+                        <option value="city">City</option>
+                        <option value="site">Site</option>
+                        <option value="account_group">Account Group</option>
+                        <option value="currency">Currency</option>
+                        <option value="delay_reason">Delay Reason</option>
+                        <option value="unit_of_mesurement">Unit Master (UOM)</option>
+                        <option value="plant_machinery_master">P&E Master (Plant & Machinery)</option>
+                        <option value="material_master">Material Master</option>
+                    </select>
+                    <label class="floating-label-select"
+                        [ngClass]="{'insideDropdown': addmodules.referenceValue =='' }">Select Dependent Group<span
+                            class="asterisk">*</span></label>
+                    <div class="required" *ngIf="isFieldValid(addmodulesForm,'referenceValue')">
+                        <span class="text-danger"
+                            *ngIf="addmodulesForm.get('referenceValue')?.errors?.['required']">Value is required</span>
+                    </div>
+                </div>
+
+                <div class="mb-3" *ngIf="CheckField=='condition'" [formGroup]="addmodulesForm"
+                    [ngClass]="{ 'float-now': addmodules.condition != '' }">
+                    <select class="form-select" formControlName="condition" [(ngModel)]="addmodules.condition"
+                        [ngClass]="displayFieldCss(addmodulesForm,'condition')"
+                        (change)="changeConditionValue(addmodules.condition)" aria-label="Default select example">
+                        <option value="" selected disabled>Parent Field<span class="asterisk">*</span></option>
+                        <option *ngFor="let condit of conditionList" value={{condit.id}}>{{condit.form_label}}</option>
+                    </select>
+                    <label class="floating-label-select"
+                        [ngClass]="{'insideDropdown': addmodules.condition =='' }">Select Parent Field<span
+                            class="asterisk">*</span></label>
+                    <div class="required" *ngIf="isFieldValid(addmodulesForm,'condition')">
+                        <span class="text-danger" *ngIf="addmodulesForm.get('condition')?.errors?.['required']">Parent
+                            Field is required</span>
+                    </div>
+                </div>
+
+                <div class="mb-3" *ngIf="addmodules.condition!=''" [formGroup]="addmodulesForm"
+                    [ngClass]="{ 'float-now': addmodules.valCondition != '' }">
+                    <select class="form-select" formControlName="valCondition" [(ngModel)]="addmodules.valCondition"
+                        (change)="optionChange()" [ngClass]="displayFieldCss(addmodulesForm,'valCondition')"
+                        aria-label="Default select example">
+                        <option value="" selected disabled>Parent Field Value<span class="asterisk">*</span></option>
+                        <option *ngFor="let conditVal of conditionValue" value={{conditVal.id}},{{conditVal.itemName}}>
+                            {{conditVal.itemName}}</option>
+                    </select>
+                    <label class="floating-label-select"
+                        [ngClass]="{'insideDropdown': addmodules.valCondition =='' }">Select Parent Field Value<span
+                            class="asterisk">*</span></label>
+                    <div class="required" *ngIf="isFieldValid(addmodulesForm,'valCondition')">
+                        <span class="text-danger"
+                            *ngIf="addmodulesForm.get('valCondition')?.errors?.['required']">Parent Field Value is
+                            required</span>
+                    </div>
+                </div>
+
+                <div class="mb-3" *ngIf="addmodules.condition!=''" [formGroup]="addmodulesForm"
+                    [ngClass]="{ 'float-now': addmodules.pinputType != '' }">
+                    <select class="form-select" formControlName="pinputType" [(ngModel)]="addmodules.pinputType"
+                        [ngClass]="displayFieldCss(addmodulesForm,'pinputType')" aria-label="Default select example">
+                        <option value="" selected disabled>Select Input Type <span class="asterisk">*</span>
+                        </option>
+                        <option value="text">Text</option>
+                        <option value="textarea">Text Area</option>
+                        <option value="formulla">Formulla</option>
+                        <option value="number">Number</option>
+                        <option value="phone">Phone</option>
+                        <option value="dropdown">Dropdown</option>
+                        <option value="dependant-multiselect">Multi-Select</option>
+                        <option value="date">Date</option>
+                        <option value="file">File Input</option>
+                        <option value="boolean">Boolean</option>
+                    </select>
+                    <label class="floating-label-select"
+                        [ngClass]="{'insideDropdown': addmodules.pinputType =='' }">Select Input Type<span
+                            class="asterisk">*</span></label>
+                    <div class="required" *ngIf="isFieldValid(addmodulesForm,'pinputType')">
+                        <span class="text-danger" *ngIf="addmodulesForm.get('pinputType')?.errors?.['required']">Input Type is required</span>
+                    </div>
+                </div>
+
+                <div *ngIf="CheckField=='text' || CheckField=='textarea' || addmodules.pinputType=='text' || addmodules.pinputType=='textarea'" class="mb-3" [formGroup]="addmodulesForm" [ngClass]="{ 'float-now': addmodules.maxlength!= '' }">
+                    <input type="number" class="form-control" formControlName="maxlength" [min]="minValue" [max]="maxValue"  minMax  [(ngModel)]="addmodules.maxlength">
+                    <label class="floating-label">Maximum Character length</label>
+                </div>
+
+                
+
+                <div class="mb-3" *ngIf="addmodules.referenceValue!='' && CheckField=='reference' "
+                    [formGroup]="addmodulesForm" [ngClass]="{ 'float-now': addmodules.pinputType != '' }">
+                    <select class="form-select" formControlName="pinputType" [(ngModel)]="addmodules.pinputType"
+                        [ngClass]="displayFieldCss(addmodulesForm,'pinputType')" aria-label="Default select example">
+                        <option value="" selected disabled>Select Input Type <span class="asterisk">*</span></option>
+                        <option value="dropdown">Dropdown</option>
+                        <option value="dependant-multiselect">Multi-Select</option>
+                    </select>
+                    <label class="floating-label-select"
+                        [ngClass]="{'insideDropdown': addmodules.pinputType =='' }">Select Input Type<span
+                            class="asterisk">*</span></label>
+                    <div class="required" *ngIf="isFieldValid(addmodulesForm,'pinputType')">
+                        <span class="text-danger" *ngIf="addmodulesForm.get('pinputType')?.errors?.['required']">Input
+                            Type is required</span>
+                    </div>
+                </div>
+
+                <div class="mb-3"
+                    *ngIf="CheckField=='condition'&& (addmodules.pinputType=='dropdown' || addmodules.pinputType=='dependant-multiselect')"
+                    [formGroup]="addmodulesForm" [ngClass]="{ 'float-now': addmodules.referenceValue != '' }">
+                    <select class="form-select" formControlName="referenceValue" [(ngModel)]="addmodules.referenceValue"
+                        [ngClass]="displayFieldCss(addmodulesForm,'referenceValue')"
+                        (change)="changeValue(addmodules.referenceValue)" aria-label="Default select example">
+                        <option value="" selected disabled>Select Dependent Group <span class="asterisk">*</span>
+                        </option>
+                        <option value="department">Department</option>
+                        <option value="pmsuser">Users</option>
+                        <option value="Zone">Zone</option>
+                        <option value="executive_commitee">Executive Commitee</option>
+                        <option value="company">Company</option>
+                        <option value="employee_type">Employee Type</option>
+                        <option value="role">Role</option>
+                        <option value="profile">Profile</option>
+                        <option value="jv_master">JV Master</option>
+                        <option value="standalone_master">StandAlone Master</option>
+                        <option value="employee_master">Employee Master</option>
+                    </select>
+
+                    <label class="floating-label-select"
+                        [ngClass]="{'insideDropdown': addmodules.referenceValue =='' }">Select Dependent Group<span
+                            class="asterisk">*</span></label>
+                    <div class="required" *ngIf="isFieldValid(addmodulesForm,'referenceValue')">
+                        <span class="text-danger"
+                            *ngIf="addmodulesForm.get('referenceValue')?.errors?.['required']">Value is required</span>
+                    </div>
+                </div>
+                <div class="mb-3"
+                    *ngIf="addmodules.referenceValue!='' && (addmodules.pinputType=='dropdown' || addmodules.pinputType=='dependant-multiselect')">
+                    <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="dropdownValueList"
+                        [(ngModel)]="multiSelectedValue" [settings]="dropdownValueSettings">
+                    </angular2-multiselect>
+                    <label class="floating-label-select"
+                        [ngClass]="{'insideDropdown': multiSelectedValue.length ==0 }">Select Value <span
+                            class="asterisk">*</span></label>
+                </div>
+
+                <div class="mb-3" *ngIf="addmodules.pinputType=='file'" [formGroup]="addmodulesForm">
+                    <angular2-multiselect [data]="dropdownUserList" [settings]="dropdownUserSettings"
+                        formControlName="file" [(ngModel)]="addmodules.file">
+                    </angular2-multiselect>
+                    <label class="floating-label-select"
+                        [ngClass]="{'insideDropdown': addmodules.file.length == '0' }"><b>Select
+                            File Type</b></label>
+                </div>
+
+
+            </form>
+            <div *ngIf="CheckField=='dropdown' || CheckField=='radio' || CheckField=='multiselect'">
+                <h1>Choose Select Option</h1>
+                <div class="mb-3 option" [ngClass]="{ 'float-now': true}" *ngFor="let md of OptionData; let i=index">
+                    <input type="text" Name="option" class="form-control option-input" [(ngModel)]="md.option">
+                    <label class="floating-label">Option {{i+1}} <span class="asterisk">*</span></label>
+
+                    <div class="AddBtn" (click)="addOption()" *ngIf="i==0"><img src="assets/icons/add1.png" alt="">
+                    </div>
+                    <div class="RemoveBtn" [ngClass]="{'disabled': md.catagory == 'systemdefine' }"
+                        (click)="removeOption(i)" *ngIf="i!=0"><img src="assets/icons/minus.png" alt=""></div>
+                    <div class="required" *ngIf="md.option==''">
+                        <span class="text-danger">Option {{i+1}} is required</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <label class="container" [ngClass]="{'disabled': form_category == 'systemdefine' }">Is This field Required?
+                <input type="checkbox" name="is_required" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="is_required">
+                <span class="checkmark"></span>
+            </label>
+            <!-- <label class="container">Make This a Quick Field?
+                    <input type="checkbox" name="quick">
+                    <span class="checkmark"></span>
+                </label> -->
+            <label class="container" [ngClass]="{'disabled': form_category == 'systemdefine' }">Show in List/Export?
+                <input type="checkbox" name="is_export" [ngModelOptions]="{standalone: true}" [(ngModel)]="is_export">
+                <span class="checkmark"></span>
+            </label>
+
+            <label class="container" *ngIf="CheckField=='number'">Save on Change?
+                <input type="checkbox" name="on_key_avail" [ngModelOptions]="{standalone: true}" [(ngModel)]="on_key_avail">
+                <span class="checkmark"></span>
+            </label>
+
+            <label class="container" [ngClass]="{'disabled': form_category == 'systemdefine' }">Is Searchable?
+                <input type="checkbox" name="is_search" [ngModelOptions]="{standalone: true}" [(ngModel)]="is_search">
+                <span class="checkmark"></span>
+            </label>
+
+            <label class="container" [ngClass]="{'disabled': form_category == 'systemdefine' }">Is Other?
+                <input type="checkbox" name="is_other" [ngModelOptions]="{standalone: true}" [(ngModel)]="is_other">
+                <span class="checkmark"></span>
+            </label>
+
+            <label class="container" [ngClass]="{'disabled': form_category == 'systemdefine' }">Is Hidden?
+                <input type="checkbox" name="is_hidden" [ngModelOptions]="{standalone: true}" [(ngModel)]="is_hidden">
+                <span class="checkmark"></span>
+            </label>
+
+            <button type="submit" class="btn btn-primary" (click)="updateFields()">UPDATE</button>
+            <button type="button" class="btn btn-primary non-active-btn" (click)="cancleAdd()">CANCEL</button>
+
+        </div>
+
+    </div>
+</div>

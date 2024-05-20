@@ -1,0 +1,338 @@
+<div class="main-container">
+    <div class="creatematerial">
+        <div class="component-header">
+            <h3>Transport Bill (GRN & Issue)</h3>
+
+            <div class="action-button-container">
+                <button class="list_btn" [routerLink]="['/pms/store/procurement/transport-bill/list']">List</button>
+            </div>
+        </div>
+        <div class="component-body createrequisition-section">
+            <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="adform">
+                            <label>From</label>
+                            <input type="date" name="from_date " [(ngModel)]="form.from_date " #from_date="ngModel"
+                                placeholder="" id="from_date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="adform">
+                            <label>To</label>
+                            <input type="date" name="to_date " [(ngModel)]="form.to_date " #to_date="ngModel"
+                                placeholder="" id="to_date" class="form-control">
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="adform">
+                            <label>GRN Transporter</label>
+                            <mat-select name="transporter" [(ngModel)]="form.transporter " #transporter="ngModel"
+                                placeholder="Select Transporter" class="form-control">
+                                <input class="form-control w-100" name="transporterName"
+                                    [(ngModel)]="form.transporterName " #transporterName="ngModel" focused="'true'"
+                                    type="text" autocomplete="off" placeholder="Search Transporter">
+                                <mat-divider></mat-divider>
+                                <mat-option *ngFor="let vendorData of vendorList" [value]="vendorData.id">
+                                    {{vendorData.vendor_master_data.vendor_name}}
+                                </mat-option>
+                                <mat-option [value]="" *ngIf="vendorList.length==0">
+                                    No Records.
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="adform">
+                            <label>For Transporter (Bill To)<span class="asterisk">*</span></label>
+                            <mat-select name="transporter_bill_to" [(ngModel)]="form.transporter_bill_to "
+                                #transporter_bill_to="ngModel" placeholder="Select Transporter" required
+                                [ngClass]="{ 'is-invalid': f.submitted && transporter_bill_to.errors }"
+                                class="form-control">
+                                <input class="form-control w-100" name="transporter_bill_toName"
+                                    [(ngModel)]="form.transporter_bill_toName " #transporter_bill_toName="ngModel"
+                                    focused="'true'" type="text" autocomplete="off" placeholder="Search Transporter">
+                                <mat-divider></mat-divider>
+                                <mat-option *ngFor="let vendorData of vendorList" [value]="vendorData.id">
+                                    {{vendorData.vendor_master_data.vendor_name}}
+                                </mat-option>
+                                <mat-option [value]="" *ngIf="vendorList.length==0">
+                                    No Records.
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="adform">
+                            <label>Site</label>
+                            <input type="text" class="form-control" [disabled]="true" [value]="localStorageData?.site_data?.site_name">                        
+                            <!-- <mat-select name="site " [(ngModel)]="form.site " #site="ngModel" placeholder="Select Site"
+                                class="form-control" multiple>
+                                <input class="form-control w-100" name="siteName" [(ngModel)]="form.siteName "
+                                    #siteName="ngModel" focused="'true'" type="text" autocomplete="off"
+                                    placeholder="Search Site">
+                                <mat-divider></mat-divider>
+                                <mat-option *ngFor="let siteData of siteList" [value]="siteData.id">
+                                    {{siteData.site_name}}
+                                </mat-option>
+                                <mat-option [value]="" *ngIf="siteList.length==0">
+                                    No Records.
+                                </mat-option>
+                            </mat-select> -->
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="adform">
+                            <label>Item Group</label>
+                            <mat-select name="group " [(ngModel)]="form.group " #group="ngModel"
+                                placeholder="Select Group" class="form-control" multiple>
+                                <input class="form-control w-100" name="groupName" [(ngModel)]="form.groupName "
+                                    #groupName="ngModel" focused="'true'" type="text" autocomplete="off"
+                                    placeholder="Search Group">
+                                <mat-divider></mat-divider>
+                                <mat-option *ngFor="let groupData of materialGroupList" [value]="groupData.id">
+                                    {{groupData.name}}
+                                </mat-option>
+                                <mat-option [value]="" *ngIf="materialGroupList.length==0">
+                                    No Records.
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="adform">
+                            <label>Item</label>
+                            <mat-select name="item" [(ngModel)]="form.item " #item="ngModel" placeholder="Select Item"
+                                class="form-control" multiple>
+                                <input class="form-control w-100" name="itemName" [(ngModel)]="form.itemName "
+                                    #itemName="ngModel" focused="'true'" type="text" autocomplete="off"
+                                    placeholder="Search Item">
+                                <mat-divider></mat-divider>
+                                <mat-option *ngFor="let itemData of itemList" [value]="itemData.id">
+                                    {{itemData.material_name}}
+                                </mat-option>
+                                <mat-option [value]="" *ngIf="itemList.length==0">
+                                    No Records.
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="adform">
+                            <label>From Location(Self)</label>
+                            <select id="sel1" class="form-control" name="from_location "
+                                [(ngModel)]="form.from_location " #from_location="ngModel">
+                                <option value="">-- select --</option>
+                                <option *ngFor="let store of storeList" value={{store.id}}>
+                                    {{store.store_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="adform">
+                            <label>To Location(Self)</label>
+                            <select id="sel1" class="form-control" name="to_location " [(ngModel)]="form.to_location "
+                                #to_location="ngModel">
+                                <option value="">-- select --</option>
+                                <option *ngFor="let store of storeList" value={{store.id}}>
+                                    {{store.store_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="adform">
+                            <label>Party Name</label>
+                            <mat-select name="vendor" [(ngModel)]="form.vendor " #vendor="ngModel"
+                                placeholder="Select Vendor" class="form-control">
+                                <input class="form-control w-100" name="vendorName" [(ngModel)]="form.vendorName "
+                                    #vendorName="ngModel" focused="'true'" type="text" autocomplete="off"
+                                    placeholder="Search Vendor">
+                                <mat-divider></mat-divider>
+                                <mat-option *ngFor="let vendorData of vendorList" [value]="vendorData.id">
+                                    {{vendorData.vendor_master_data.vendor_name}}
+                                </mat-option>
+                                <mat-option [value]="" *ngIf="vendorList.length==0">
+                                    No Records.
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="btd-section">
+                    <button type="submit" class="btn-save">Preview</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- <div class="component-body">
+        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>From</label>
+                        <input type="date" name="from_date " [(ngModel)]="form.from_date " #from_date="ngModel"
+                            placeholder="" id="from_date" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>To</label>
+                        <input type="date" name="to_date " [(ngModel)]="form.to_date " #to_date="ngModel" placeholder=""
+                            id="to_date" class="form-control">
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>GRN Transporter</label>
+                        <mat-select name="transporter" [(ngModel)]="form.transporter " #transporter="ngModel"
+                            placeholder="Select Transporter" class="form-control">
+                            <input class="form-control w-100" name="transporterName" [(ngModel)]="form.transporterName "
+                                #transporterName="ngModel" focused="'true'" type="text" autocomplete="off"
+                                placeholder="Search Transporter">
+                            <mat-divider></mat-divider>
+                            <mat-option *ngFor="let vendorData of vendorList" [value]="vendorData.id">
+                                {{vendorData.vendor_master_data.vendor_name}}
+                            </mat-option>
+                            <mat-option [value]="" *ngIf="vendorList.length==0">
+                                No Records.
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>For Transporter (Bill To)<span class="asterisk">*</span></label>
+                        <mat-select name="transporter_bill_to" [(ngModel)]="form.transporter_bill_to " #transporter_bill_to="ngModel"
+                            placeholder="Select Transporter"  required [ngClass]="{ 'is-invalid': f.submitted && transporter_bill_to.errors }" class="form-control">
+                            <input class="form-control w-100" name="transporter_bill_toName" [(ngModel)]="form.transporter_bill_toName "
+                                #transporter_bill_toName="ngModel" focused="'true'" type="text" autocomplete="off"
+                                placeholder="Search Transporter">
+                            <mat-divider></mat-divider>
+                            <mat-option *ngFor="let vendorData of vendorList" [value]="vendorData.id">
+                                {{vendorData.vendor_master_data.vendor_name}}
+                            </mat-option>
+                            <mat-option [value]="" *ngIf="vendorList.length==0">
+                                No Records.
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Site</label>
+                        <mat-select name="site " [(ngModel)]="form.site " #site="ngModel" placeholder="Select Site"
+                            class="form-control" multiple>
+                            <input class="form-control w-100" name="siteName" [(ngModel)]="form.siteName "
+                                #siteName="ngModel" focused="'true'" type="text" autocomplete="off"
+                                placeholder="Search Site">
+                            <mat-divider></mat-divider>
+                            <mat-option *ngFor="let siteData of siteList" [value]="siteData.id">
+                                {{siteData.site_name}}
+                            </mat-option>
+                            <mat-option [value]="" *ngIf="siteList.length==0">
+                                No Records.
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Item Group</label>
+                        <mat-select name="group " [(ngModel)]="form.group " #group="ngModel" placeholder="Select Group"
+                            class="form-control" multiple>
+                            <input class="form-control w-100" name="groupName" [(ngModel)]="form.groupName "
+                                #groupName="ngModel" focused="'true'" type="text" autocomplete="off"
+                                placeholder="Search Group">
+                            <mat-divider></mat-divider>
+                            <mat-option *ngFor="let groupData of materialGroupList" [value]="groupData.id">
+                                {{groupData.name}}
+                            </mat-option>
+                            <mat-option [value]="" *ngIf="materialGroupList.length==0">
+                                No Records.
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Item</label>
+                        <mat-select name="item" [(ngModel)]="form.item " #item="ngModel" placeholder="Select Item"
+                            class="form-control" multiple>
+                            <input class="form-control w-100" name="itemName" [(ngModel)]="form.itemName "
+                                #itemName="ngModel" focused="'true'" type="text" autocomplete="off"
+                                placeholder="Search Item">
+                            <mat-divider></mat-divider>
+                            <mat-option *ngFor="let itemData of itemList" [value]="itemData.id">
+                                {{itemData.material_name}}
+                            </mat-option>
+                            <mat-option [value]="" *ngIf="itemList.length==0">
+                                No Records.
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>From Location(Self)</label>
+                        <select id="sel1" class="form-control" name="from_location " [(ngModel)]="form.from_location " #from_location="ngModel" >
+                            <option value="">-- select --</option>
+                            <option *ngFor="let store of storeList" value={{store.id}}>
+                                {{store.store_name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>To Location(Self)</label>
+                        <select id="sel1" class="form-control" name="to_location " [(ngModel)]="form.to_location " #to_location="ngModel" >
+                            <option value="">-- select --</option>
+                            <option *ngFor="let store of storeList" value={{store.id}}>
+                                {{store.store_name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Party Name</label>
+                        <mat-select name="vendor" [(ngModel)]="form.vendor " #vendor="ngModel"
+                            placeholder="Select Vendor" class="form-control">
+                            <input class="form-control w-100" name="vendorName" [(ngModel)]="form.vendorName "
+                                #vendorName="ngModel" focused="'true'" type="text" autocomplete="off"
+                                placeholder="Search Vendor">
+                            <mat-divider></mat-divider>
+                            <mat-option *ngFor="let vendorData of vendorList" [value]="vendorData.id">
+                                {{vendorData.vendor_master_data.vendor_name}}
+                            </mat-option>
+                            <mat-option [value]="" *ngIf="vendorList.length==0">
+                                No Records.
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="btd-section">
+                <button type="submit" class="btn-save">Preview</button>
+            </div>
+        </form>
+    </div> -->
+</div>

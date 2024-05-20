@@ -1,0 +1,371 @@
+.table-inde-icon {
+    max-width: 20px;
+    margin-right: 20px;
+}
+
+td {
+    .button {
+        background-color: #d9d9d9;
+        margin: 2px 3px;
+        padding: 0px 14px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        line-height: 25px;
+    }
+}
+
+.offcanvas-header {
+    h5 {
+        font-weight: 400;
+    }
+}
+
+.table-filter {
+    background: unset;
+    background-image: unset !important;
+    color: black !important;
+    padding: 8px 5px !important;
+    font-weight: 300 !important;
+}
+
+.table-filter.active {
+    color: #55A4FF !important;
+    border-bottom: 2px solid !important;
+    border-radius: 0 !important;
+    font-weight: 400 !important;
+}
+
+.viewIcon {
+    max-width: 17px;
+}
+
+.userSeen {
+    cursor: pointer;
+}
+
+.modal-content {
+    .userHeader {
+        border-bottom: 1px solid #D9D9D9 !important;
+        margin-left: 0% !important;
+        height: 57px;
+    }
+}
+
+.modal-body {
+    flex-wrap: wrap;
+    margin-top: -10px;
+}
+
+.userBody {
+    display: flex;
+
+    .column-devider {
+        margin-bottom: 13px;
+    }
+}
+
+.column-devider {
+    display: flex;
+    width: 33%;
+    flex-wrap: wrap;
+    //font-size: 15px;
+}
+
+.user {
+    min-width: 152% !important
+}
+
+.modal.show .modal-dialog-user {
+    justify-content: center !important;
+}
+
+.multi-select-dropdown {
+    min-width: 97px !important;
+}
+
+::ng-deep.viewAll {
+    .multi-select-dropdown {
+        .list-area {
+            min-width: 200px;
+        }
+    }
+}
+
+::ng-deep.multi-select-dropdown .list-area {
+    box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 54%) !important;
+}
+
+::ng-deep.cuppa-dropdown {
+    position: relative;
+}
+
+::ng-deep.dropdown-list {
+    position: absolute !important;
+    top: 38px !important;
+    left: 0 !important;
+}
+
+::ng-deep.arrow-down {
+    top: 0 !important;
+    bottom: unset !important;
+    margin-left: 30px !important;
+    transform: unset !important;
+}
+
+.viewAll {
+
+    ::ng-deep.dropdown-list ul {
+        pointer-events: none;
+    }
+
+    ::ng-deep.list-filter {
+        display: none;
+    }
+
+    ::ng-deep.select-all {
+        display: none;
+    }
+}
+
+.custom-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    img {
+        max-height: 20px;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        padding: 5px;
+    }
+
+    .dropdown-content {
+        display: none;
+        right: -10px;
+        top: 26px;
+        position: absolute;
+        background-color: white;
+        box-shadow: 0px 0px 11px 0px rgb(0 0 0 / 54%);
+        z-index: 1;
+        border-radius: 2px;
+        padding: 0px 5px;
+    }
+
+    .dropdown-content::after {
+        display: inline-block;
+        margin-left: 0.255em;
+        vertical-align: 0.255em;
+        content: "";
+        border-top: 0.3em solid;
+        border-right: 0.3em solid transparent;
+        border-bottom: 0;
+        border-left: 0.3em solid transparent;
+        color: white;
+        position: absolute;
+        transform: rotateZ(180deg);
+        top: -2px;
+        zoom: 2;
+        right: 7px;
+    }
+
+    .img-container {
+        span {
+            display: inline-flex;
+            min-width: 165px;
+            padding: 3px 10px;
+            cursor: pointer;
+        }
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+}
+
+.img-container {
+    span:hover {
+        background-color: #d9d9d9;
+    }
+}
+
+.container {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    font-size: 13px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 3px;
+    left: 57px;
+    height: 15px;
+    width: 15px;
+    background-color: red($color: #000000);
+    border: 1px solid #0d6efd;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input~.checkmark {
+    background-color: blue($color: #000000);
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked~.checkmark {
+    background-color: white;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    left: 5px;
+    top: 1px;
+    width: 4px;
+    height: 9px;
+    border: solid #0d6efd;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.close-user {
+    background: url(../../../assets/icons/close-red.png) !important;
+    height: 0px;
+    width: 0px;
+    background-repeat: no-repeat !important;
+    background-size: 100% !important;
+    margin-right: 15px;
+}
+
+
+::ng-deep.viewAll {
+    .multi-select-dropdown {
+        .list-area {
+            min-width: 200px;
+        }
+    }
+}
+
+::ng-deep.viewState {
+    .multi-select-dropdown {
+        .list-area {
+            min-width: 200px;
+        }
+    }
+}
+
+::ng-deep.multi-select-dropdown .list-area {
+    box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 54%) !important;
+}
+
+.viewAll {
+    ::ng-deep.dropdown-list ul {
+        pointer-events: none;
+    }
+
+    ::ng-deep.list-filter {
+        display: none;
+    }
+
+    ::ng-deep.select-all {
+        display: none;
+    }
+}
+
+.viewState {
+    ::ng-deep.dropdown-list ul {
+        pointer-events: none;
+    }
+
+    ::ng-deep.list-filter {
+        display: none;
+    }
+
+    ::ng-deep.select-all {
+        display: none;
+    }
+}
+
+::ng-deep.cuppa-dropdown {
+    position: relative;
+}
+
+::ng-deep.dropdown-list {
+    position: absolute !important;
+    top: 38px !important;
+    left: 0 !important;
+}
+
+::ng-deep.arrow-down {
+    top: 0 !important;
+    bottom: unset !important;
+    margin-left: 30px !important;
+    transform: unset !important;
+}
+
+.viewAll {
+    display: flex !important;
+    .custom-section {
+        .dropdown-content {
+            right: -178px;
+            top: -11px;
+            width: 184px;
+        }
+
+        .dropdown-content::after {
+            transform: rotateZ(90deg);
+            top: 11px;
+            right: 85px;
+        }
+    }
+}
+.modal-dialog{
+    max-width: 352px !important;
+}
+
+.export {
+    width: 15%;
+    height: 15%;
+    margin-right: 10px;
+}
+
+.downloadall {
+    padding: 5px 0px 5px 10px !important;
+    cursor: pointer;
+}
+
+.multi-select-dropdown .selected-list .c-list .c-token{
+    border-radius: 4px!important;
+}

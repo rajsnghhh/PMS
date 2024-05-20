@@ -1,0 +1,27 @@
+<form role="form" [formGroup]="addUpdateRackForm">
+
+    <div class="flex-div">
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addRackTemplate.RackName != '' }">
+            <input type="text" class="form-control" formControlName="RackName"
+                [(ngModel)]="addRackTemplate.RackName" [ngClass]="displayFieldCss(addUpdateRackForm,'RackName')">
+            <label class="floating-label">Enter Rack Name<span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addUpdateRackForm,'RackName')">
+                <span class="text-danger" *ngIf="addUpdateRackForm.get('RackName')?.errors?.['required']">Rack Name is required</span>
+            </div>
+        </div>
+        
+        <div class="mb-3" [ngClass]="{ 'float-now': addRackTemplate.RackShortName != '' }">
+            <input type="text" class="form-control" formControlName="RackShortName"
+                [(ngModel)]="addRackTemplate.RackShortName" [ngClass]="displayFieldCss(addUpdateRackForm,'RackShortName')">
+            <label class="floating-label">Enter Rack Short Name<span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addUpdateRackForm,'RackShortName')">
+                <span class="text-danger" *ngIf="addUpdateRackForm.get('RackShortName')?.errors?.['required']">Rack Short Name is required</span>
+            </div>
+        </div>
+
+    </div> 
+    
+
+    <button type="submit" class="btn btn-primary" (click)="addUpdateRackMaster()" *ngIf="this.onEditAccess != 'view'">{{addUpdateButton}}</button>
+</form>

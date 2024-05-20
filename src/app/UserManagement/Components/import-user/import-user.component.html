@@ -1,0 +1,387 @@
+<!-- Upload File -->
+<div *ngIf="activefrom == 'importuser'">
+    <div class="header">
+        <label> Import user accounts using your own file, or use our <a href="assets/usermanagement/user_import.xlsx"
+                target="_blank" download>sample file.</a> </label>
+    </div>
+    <div class="upload" (click)="fileImport.click()">
+        <div class="filecard" *ngIf="!excelIcon">
+            <img src="assets/usermanagement/csv.png" alt="">
+        </div>
+        <div class="filecard2" *ngIf="excelIcon">
+            <img src="assets/usermanagement/tick.png" class="uploadsuccess" alt=""> &nbsp; {{filen}}
+        </div>
+        <input style="display: none" #attachments type="file"
+            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="uploadFile($event)"
+            #fileImport>
+        
+    </div>
+    <div class="format">
+        <p>&nbsp; Drop or upload your file here <br> &nbsp;&nbsp;&nbsp;
+            <strong> (.xlsx formats supported) </strong>
+        </p>
+    </div>
+    <!-- <div class="header2">
+        <label> To make sure every record is imported, check if your file has data in this mandatory field </label>
+    </div> -->
+    <button type="submit" class="btn btn-primary addbutton1" (click)="importUser()">UPLOAD</button>
+</div>
+
+<!-- Submit Upload (change date format) -->
+<!-- <div *ngIf="activefrom == 'submitupload'">
+    <div class="header">
+        <label> Import user accounts using your own file, or use our <a href="assets/usermanagement/user_import.xlsx"
+                target="_blank" download>sample file.</a> </label>
+    </div>
+
+    <div class="upload2">
+        <div>
+            <img src="assets/usermanagement/tick.png" class="img2" alt="">
+            <p class="filename">{{filen}}</p>
+        </div>
+        <hr>
+        <div class="format2">
+            <p>If you have date fields in your file, select a date format: <b>MM/DD/YYYY</b></p>
+        </div>
+    </div>
+
+    <div class="header3">
+        <label> To make sure every record is imported, check if your file has data in this mandatory field </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary addbutton1" (click)="submitfile()">NEXT</button>
+</div> -->
+
+<!-- Map the Uploaded Data -->
+<form role="form" [formGroup]="importForm">
+
+<div *ngIf="activefrom == 'userlist'" class="table-header">
+    <div class="header">
+        <label> Map columns from your file to the right PMS fileds. </label>
+    </div>
+
+    <div class="table-data">
+        <ul class="list">
+            <li class="heading1">
+                <div>PMS FIELD</div>
+                <div></div>
+                <div>FILE COLUMN</div>
+                <div>MAPPED</div>
+            </li>
+            <li class="filecolumhead">
+                <span class="filecolum">FIRST NAME <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'firstName')" formControlName="firstName" [(ngModel)]="firstName">
+                        <option value="">Select first name</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="firstName!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">LAST NAME <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'lastName')" formControlName="lastName" [(ngModel)]="lastName">
+                        <option value="">Select last name</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="lastName!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">EMAIL <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'email')" formControlName="email" [(ngModel)]="email">
+                        <option value="" disabled>Select email</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="email!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">GENDER </span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'gender')" formControlName="gender" [(ngModel)]="gender">
+                        <option value="" disabled>Select gender</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="gender!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">PHONE NO <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'phoneNo')" formControlName="phoneNo" [(ngModel)]="phoneNo">
+                        <option value="" disabled>Select phone no.</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="phoneNo!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">BLOODGROUP </span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'bloodGroup')" formControlName="bloodGroup" [(ngModel)]="bloodGroup">
+                        <option value="" disabled>Select blood group</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="bloodGroup!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <!-- <li class="filecolumhead">
+                <span class="filecolum">USERNAME <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [(ngModel)]="username">
+                        <option value="" disabled>Select username</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="username!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">PASSWORD </span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [(ngModel)]="password">
+                        <option value="" disabled>Select password</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="password!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li> -->
+
+            <li class="filecolumhead">
+                <span class="filecolum">NOTICE PERIOD </span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'noticePeriod')" formControlName="noticePeriod" [(ngModel)]="noticePeriod">
+                        <option value="" disabled>Select notice period</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="noticePeriod!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">EMPLOYEE CODE<span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'employeecode')" formControlName="employeecode" [(ngModel)]="employeecode">
+                        <option value="" disabled>Enter Employee Code</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="employeecode!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">EMPLOYEE TYPE <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'employementType')" formControlName="employementType" [(ngModel)]="employementType">
+                        <option value="" disabled>Select employee type</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="employementType!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">COMPANY NAME <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'companyName')" formControlName="companyName" [(ngModel)]="companyName">
+                        <option value="" disabled>Select company name</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="companyName!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">ROLE <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'designation')" formControlName="designation" [(ngModel)]="designation">
+                        <option value="" disabled>Select role</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="designation!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">DEPARTMENT <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'department')" formControlName="department" [(ngModel)]="department">
+                        <option value="" disabled>Select department</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="department!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <!-- <li class="filecolumhead">
+                <span class="filecolum">ROLE <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'role')"  formControlName="role" [(ngModel)]="role">
+                        <option value="" disabled>Select role</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="role!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">COUNTRY <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'country')" formControlName="country" [(ngModel)]="country">
+                        <option value="" disabled>Select country</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="country!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">STATE <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'state')" formControlName="state" [(ngModel)]="state">
+                        <option value="" disabled>Select state</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="state!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">CITY <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'city')" formControlName="city" [(ngModel)]="city">
+                        <option value="" disabled>Select city</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="city!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li> -->
+
+            <li class="filecolumhead">
+                <span class="filecolum">Address Line 1 <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'address_line_1')" formControlName="address_line_1" [(ngModel)]="address_line_1">
+                        <option value="" disabled>Select Address Line 1</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="address_line_1!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">Address Line 2</span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'address_line_2')" formControlName="address_line_2" [(ngModel)]="address_line_2">
+                        <option value="" disabled>Select Address Line 2</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="address_line_2!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">AADHAR NO</span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'aadhar_number')" formControlName="aadhar_number" [(ngModel)]="aadhar_number">
+                        <option value="" disabled>Select aadhar number</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="aadhar_number!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">PAN NO</span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'pan_number')" formControlName="pan_number" [(ngModel)]="pan_number">
+                        <option value="" disabled>Select pan number</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="pan_number!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">Reporting Manager <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'reporting_manager')" formControlName="reporting_manager" [(ngModel)]="reporting_manager">
+                        <option value="" disabled>Select Reporting Manager</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="reporting_manager!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">Date of Birth <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'date_of_birth')" formControlName="date_of_birth" [(ngModel)]="date_of_birth">
+                        <option value="" disabled>Enter Date of Birth</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="date_of_birth!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">Joining Date <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'joining_date')" formControlName="joining_date" [(ngModel)]="joining_date">
+                        <option value="" disabled>Enter Joining Date</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="joining_date!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">Last Working Date</span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'last_working_date')" formControlName="last_working_date" [(ngModel)]="last_working_date">
+                        <option value="" disabled>Enter Last Working Date</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="last_working_date!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+        </ul>
+    </div>
+
+    <button type="submit" class="btn btn-primary addbutton" (click)="mapUser()">SAVE</button>
+</div>
+</form>

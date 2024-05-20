@@ -1,0 +1,79 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Send Enquiry</h2>
+    </div>
+    <div class="component-body">
+
+        <form name="form" #f="ngForm">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-4">
+                    <div class="adform">
+                        <label>Enquiry No</label>
+                        <select id="sel1" class="form-control" (change)="getTableData(form.enquiry_no)" ngDefaultControl name="enquiry_no "
+                            [(ngModel)]="form.enquiry_no " #enquiry_no="ngModel">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let enquiry of enquiryListData" value="{{enquiry.id}}">
+                                {{enquiry.request_code}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <table class="table text-center">
+                <tr>
+                    <th>SrNo.</th>
+                    <th>Vendor Name</th>
+                    <th>Email</th>
+                    <th>Indent No</th>
+                    <th>Item Name</th>
+                    <th>Enq. Send Status</th>
+                    <th>Email Preview</th>
+                </tr>
+    
+                <ng-container *ngIf="enquiryTableData">
+                    <tr *ngFor="let eachrowdata of enquiryTableData.vendor_details; let i =index">
+                        <td>{{i+1}}.</td>
+                        <td>{{eachrowdata.vendor_name}}</td>
+                        <td>{{eachrowdata.vendor_email_id}}</td>
+                        <td>{{enquiryTableData.indent_details[0]?.request_code}}</td>
+                        <td>
+                            <div *ngFor="let material of enquiryTableData.items">{{material.material_details?.material_name}}</div>
+                        </td>
+                        <td>
+                            <div *ngIf="eachrowdata.enq_send_status==false">No</div>
+                            <div *ngIf="eachrowdata.enq_send_status==true">Yes</div>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary"  data-bs-toggle="modal"
+                            data-bs-target="#deleteUser" (click)="previewEmail(eachrowdata.email_body)">Preview</button>
+                        </td>
+                    </tr>
+                </ng-container>
+               
+                <tr *ngIf="!enquiryTableData">
+                    <td class="text-center" colspan="7"> No Data Found!</td>
+                </tr>
+            </table>
+
+            <div class="text-center mt-2" *ngIf="enquiryTableData">
+                <button type="button" class="btn btn-primary" (click)="directMail()">Direct Email</button>
+            </div>
+        </form>
+      
+
+      
+    </div>
+</div>
+
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div [innerHTML]="emailBody"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="createrequisition-section">
+  <app-way-bill-top-card
+    #topCard
+    [scope]="scope"
+    [wayBillData]="wayBillData"
+    (checkValidation)="checkValidation($event)"
+    (parrentAction)="appendData($event)"
+    [checkValidData]="checkValidData"
+  ></app-way-bill-top-card>
+  <app-way-bill-table-data
+    #tableData
+    [scope]="scope"
+    [wayBillData]="wayBillData"
+    (totalPrice)="getTotalPrice($event)"
+    (checkValidation)="checkValidation($event)"
+    (parrentAction)="appendData($event)"
+    [checkValidData]="checkValidData"
+  ></app-way-bill-table-data>
+  <app-way-bill-bottom-card
+    #bottomCard
+    [scope]="scope"
+    [wayBillData]="wayBillData"
+    (checkValidation)="checkValidation($event)"
+    (parrentAction)="appendData($event)"
+    [checkValidData]="checkValidData"
+  ></app-way-bill-bottom-card>
+  <div class="d-flex justify-content-center p-2">
+    <button
+      type="submit"
+      [disabled]="isApiCalled"
+      class="btn-save"
+      (click)="saveData(topCard, tableData, bottomCard)"
+    >
+      <ng-container *ngIf="scope == 'add'">
+        {{ isApiCalled ? "SAVING..." : "SAVE" }}
+      </ng-container>
+      <ng-container *ngIf="scope == 'update'">
+        {{ isApiCalled ? "UPDATING..." : "UPDATE" }}
+      </ng-container>
+    </button>
+    <button type="button" class="btn-cancel" (click)="backtolist()">
+      CANCEL
+    </button>
+  </div>
+</div>

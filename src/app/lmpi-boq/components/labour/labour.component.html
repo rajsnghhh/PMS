@@ -1,0 +1,44 @@
+<section>
+    <div class="actions">
+        <button (click)="save()" [ngClass]="{'disable': DisableModify == true }">Save</button>
+        <button (click)="addNew()" [ngClass]="{'disable': DisableModify == true }">Add Labour</button>
+    </div>
+    <div class="lmpi-list">
+        <div class="list">
+            <ul>
+              <li>Labour</li>
+              <li>Budget Quantity</li>
+              <li >Rate</li>
+              <li >Cost</li>
+              <li>Action</li>
+            </ul>
+            <ul *ngIf="componentList.length==0">
+              <li>No Labour added yet!</li>
+              <li></li>
+              <li></li>
+              <li ></li>
+              <li ></li>
+            </ul>
+            <ul *ngFor="let component of componentList; let index = index">
+              <li>
+                <select name="" [ngClass]="{'disable': DisableModify == true }" id="" [(ngModel)]="componentList[index].labour">
+                    <option value="" disabled>Select Labour</option>
+                    <option value="{{masterData.id}}" *ngFor="let masterData of masterlist">{{masterData.cost_type}} | {{masterData.component}} | {{masterData.name}} </option>
+                </select>
+              </li>
+              <li>
+                <input type="text" [ngClass]="{'disable': DisableModify == true }" amountNumber [(ngModel)]="componentList[index].budgeted_quantity">
+              </li>
+              <li>
+                <input type="text" [ngClass]="{'disable': DisableModify == true }" amountNumber [(ngModel)]="componentList[index].rate">
+              </li>
+              <li >
+                {{component.cost}}
+              </li>
+              <li>
+                <button (click)="delete(index)" [ngClass]="{'disable': DisableModify == true }">Delete</button>
+              </li>
+            </ul>
+        </div>
+    </div>
+</section>

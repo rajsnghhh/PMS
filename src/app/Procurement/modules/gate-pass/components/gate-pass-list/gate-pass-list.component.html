@@ -1,0 +1,114 @@
+<app-gate-pass-advance-search></app-gate-pass-advance-search>
+<div class="main-container">
+    <div class="component-header" style="display: flex; justify-content: flex-end;">
+
+        <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+        aria-controls="offcanvasRight" (click)="addNew()">ADD NEW<img src="assets/header/add.png"
+            alt=""></button>
+        <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+            aria-controls="offcanvasRight" (click)="transportation()">Transportation Charge<img src="assets/header/add.png"
+                alt=""></button>
+
+    </div>
+</div>
+
+
+<div class="createrequisition-section">
+
+    <div class="main-body-container table-responsive">
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th scope="col">Sr No</th>
+                    <th scope="col">Requested No & Date</th>
+                    <th scope="col">Gate Pass Type</th>
+                    <th scope="col">Gate Pass NO</th>
+                    <th>RST NO</th>
+                    <th>Challan no</th>
+                    <th>Chinage</th>
+                    <th>Type</th>
+                    <th>Transporter</th>
+                    <th>Tare weight</th>
+                    <th>Driver</th>
+                    <th>Vehicle no</th>
+                    <th>Gross weight</th>
+                    <th>Net weight</th>
+                    <th>Doc</th>
+                    <th>Remarks</th>
+                    <th>Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of gatePassList;index as i">
+                    <td>{{i+1}}</td>
+                    <td>Req No : <b>{{item.request_code ?item.request_code:'-'}}</b><br>
+                        {{item.date.substring(0,10).split('-').reverse().join('-')}}</td>
+                    <td>{{item.gate_pass_type}}</td>
+                    <td>{{item.gate_pass_no}}</td>
+                    <td>{{item.rst_no}}</td>
+                    <td>{{item.challan_no}}</td>
+                    <td>
+                        Form :{{item.chainage_from}}
+                        <br>
+                        
+                        To : {{item.chainage_to}}
+                        <br>
+                        Diff : {{item.diff}}
+                    </td>
+                    <td>{{item.type}}</td>
+                    <td>{{item.transporter}}</td>
+                    <td>{{item.tare_weight}}</td>
+                    <td>{{item.driver}}</td>
+                    <td>{{item.vehicle_no}}</td>
+                    <td>{{item.gross_weight}}</td>
+                    <td>{{item.net_weight}}</td>
+                    <td>
+                        <section *ngIf="item.attachments">
+                            <a href="{{docUrl}}{{attachmentdata.attachment}}" target="_blank"
+                                *ngFor="let attachmentdata of item.attachments"><img src="assets/icons/eye.png" class="eye-docicon" alt=""></a>
+                        </section>
+                    </td>
+                    <td>{{item.remark}}</td>
+                    <td class="text-capitalize">
+                        <b>{{item.status}}</b>
+                        <br>
+                        <!-- <input type="checkbox" class="form-check-input" value="" (change)="onStatusCheckboxChange($event, item.item_id)" *ngIf="isMR_Approver && item.status=='pending'"> -->
+                    </td>
+                    <td>
+                        <div class="table-action">
+                            <img src="assets/icons/dots.png" alt="">
+                            <ul>
+                                <li (click)="viewByID(item.id)">View <span>
+                                    <img class="eye-docicon" src="assets/icons/eye.png" alt=""></span>
+                                </li>
+                                <li (click)="updateByID(item.id)" 
+                                    *ngIf="item.status=='pending'">Update <span><img src="assets/icons/amend.jpg" alt=""></span>
+                                </li>
+                                <!-- <li (click)="checkByID(item.mr_id)" 
+                                    *ngIf="item.status=='pending' && isMR_Checker">Check <span><img src="assets/icons/amend.jpg" alt=""></span>
+                                </li> -->
+                                <li (click)="approveRejectByID(item.id)" 
+                                    *ngIf="item.status=='pending' && isGP_Approver">Approve / Reject <span><img src="assets/icons/amend.jpg" alt=""></span>
+                                </li>
+                                <!-- <li (click)="printByID(item.mr_id)">Print Preview<span><img src="assets/icons/print.png" alt=""></span></li> -->
+
+                                
+                                <!-- <li *ngIf="item.status=='approved'" (click)="createGRN(item.mr_id)">Create GRN </li> -->
+
+                                <!-- <li>Delete <span><img src="assets/icons/delete.png" alt=""></span></li> -->
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+
+                <tr class="text-center">
+                    <td colspan="18" *ngIf="gatePassList.length == 0">No data found.</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>

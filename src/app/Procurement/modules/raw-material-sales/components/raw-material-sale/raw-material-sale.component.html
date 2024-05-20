@@ -1,0 +1,50 @@
+<div class="createrequisition-section">
+  <app-raw-material-sale-top-card
+    [scope]="scope"
+    [add_type]="add_type"
+    [rawMaterialSaleData]="rawMaterialSaleData"
+    (parrentAction)="appendData($event)"
+    [checkValidData]="checkValidData"
+  ></app-raw-material-sale-top-card>
+  <app-raw-material-sale-table-data
+    [scope]="scope"
+    [add_type]="add_type"
+    [rawMaterialSaleData]="rawMaterialSaleData"
+    (totalPrice)="getTotalPrice($event)"
+    (parrentAction)="appendData($event)"
+    [checkValidData]="checkValidData"
+  ></app-raw-material-sale-table-data>
+  <app-raw-material-sale-tax
+    [scope]="scope"
+    [add_type]="add_type"
+    [rawMaterialSaleData]="rawMaterialSaleData"
+    (parrentAction)="appendData($event)"
+    [checkValidData]="checkValidData"
+  ></app-raw-material-sale-tax>
+  <app-raw-material-sale-bottom-card
+    [scope]="scope"
+    [add_type]="add_type"
+    [rawMaterialSaleData]="rawMaterialSaleData"
+    (parrentAction)="appendData($event)"
+    [checkValidData]="checkValidData"
+  ></app-raw-material-sale-bottom-card>
+  <div class="d-flex justify-content-center p-2">
+    <button type="button" class="btn-cancel" (click)="backtolist()">
+      CANCEL
+    </button>
+    <button
+      type="submit"
+      [disabled]="isApiCalled"
+      class="btn-save"
+      (click)="saveData()"
+    >
+      <ng-container *ngIf="scope == 'add'">
+        {{ isApiCalled ? "SAVING..." : "SAVE" }}
+      </ng-container>
+      <ng-container *ngIf="scope == 'update'">
+        {{ isApiCalled ? "UPDATING..." : "UPDATE" }}
+      </ng-container>
+    </button>
+    
+  </div>
+</div>

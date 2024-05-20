@@ -1,0 +1,12 @@
+<div class="createrequisition-section">
+    <app-po-top-card (parrentAction)="appendData($event)" [prefieldData]="prefieldData" [reload]="reload" [scope]="scope" [disableEdit]="disableEdit"></app-po-top-card>
+    <app-po-table-data (parrentAction)="appendData($event)" [prefieldData]="prefieldData" [reload]="reload" [scope]="scope" [disableEdit]="disableEdit"></app-po-table-data>
+    <app-po-tax-terms-payment (actionButton)="actionButton($event)"  (parrentAction)="appendData($event)" [prefieldData]="prefieldData" [reload]="reload" [scope]="scope" [disableEdit]="disableEdit"></app-po-tax-terms-payment>
+
+    <div class="btd-section">
+        <button type="button" (click)="backtolist()" class="btn-cancel">CANCEL</button>
+        <button type="submit" class="btn-save" *ngIf="scope == 'create' && !draftScope" (click)="createPurchaseOrder()">SAVE</button>
+        <!-- <button type="submit" *ngIf="draftScope && (scope == 'create' || scope == 'update')"  class="btn-save" (click)="createPurchaseOrder()">SAVE as Draft</button> -->
+        <button type="submit" *ngIf="scope == 'update' && !draftScope" class="btn-save" (click)="createPurchaseOrder()">UPDATE</button>
+    </div>
+</div>

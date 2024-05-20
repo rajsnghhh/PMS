@@ -1,0 +1,174 @@
+<form name="form" [formGroup]="formGroup">
+  <div class="createtable-section table-responsive">
+    <table class="text-nowrap">
+      <tr>
+        <th>Sr.&nbsp;No</th>
+        <th>Bill No.</th>
+        <th>Bill Date</th>
+        <th>Item Group</th>
+        <th>Item Sub Group</th>
+        <th>Item</th>
+        <th>Qty</th>
+        <th>Unit</th>
+        <th>Bill Amount</th>
+        <th>Action</th>
+      </tr>
+      <ng-container formArrayName="items">
+        <ng-container
+          *ngFor="let item of items.controls; let i = index; let last = last"
+          [formGroupName]="i"
+        >
+          <tr>
+            <td>{{ i + 1 }}</td>
+            <td>
+              <input
+                class="form-control"
+                type="text"
+                formControlName="bill_no"
+                [class.is-invalid]="
+                  items.at(i).get('bill_no')?.errors &&
+                  items.at(i).get('bill_no')?.touched
+                "
+              />
+            </td>
+            <td>
+              <input
+                class="form-control"
+                type="date"
+                formControlName="bill_date"
+                [class.is-invalid]="
+                  items.at(i).get('bill_date')?.errors &&
+                  items.at(i).get('bill_date')?.touched
+                "
+              />
+            </td>
+            <td>
+              <ng-select
+                [clearable]="false"
+                style="min-width: 150px"
+                appendTo="body"
+                (change)="typeChange(item.value.item_group, i)"
+                formControlName="item_group"
+                [class.is-invalid]="
+                  items.at(i).get('item_group')?.errors &&
+                  items.at(i).get('item_group')?.touched
+                "
+              >
+                <ng-option
+                  *ngFor="let group_item of masterItemGroupList"
+                  [value]="group_item.id"
+                  >{{ group_item.name }}</ng-option
+                >
+              </ng-select>
+            </td>
+            <td>
+              <ng-select
+                style="min-width: 150px"
+                appendTo="body"
+                [clearable]="false"
+                (change)="subTypeChange(item.value.sub_item_group, i)"
+                formControlName="sub_item_group"
+                [class.is-invalid]="
+                  items.at(i).get('sub_item_group')?.errors &&
+                  items.at(i).get('sub_item_group')?.touched
+                "
+              >
+                <ng-option
+                  *ngFor="let sub_item of masterSubItemList[i]"
+                  [value]="sub_item.id"
+                  >{{ sub_item.name }}</ng-option
+                >
+              </ng-select>
+            </td>
+            <td>
+              <ng-select
+                [clearable]="false"
+                style="min-width: 150px"
+                appendTo="body"
+                (change)="setMaterialMasterData(i)"
+                formControlName="item"
+                [class.is-invalid]="
+                  items.at(i).get('item')?.errors &&
+                  items.at(i).get('item')?.touched
+                "
+              >
+                <ng-option
+                  *ngFor="let main_item of masterItemList[i]"
+                  [value]="main_item.id"
+                  >{{ main_item.material_name }}</ng-option
+                >
+              </ng-select>
+            </td>
+            <td>
+              <input
+              amountNumber
+                formControlName="quantity"
+                [class.is-invalid]="
+                  items.at(i).get('quantity')?.errors &&
+                  items.at(i).get('quantity')?.touched
+                "
+                class="form-control"
+                type="text"
+                placeholder=""
+              />
+            </td>
+            <td>
+              <ng-select
+                [clearable]="false"
+                formControlName="unit"
+                style="min-width: 70px"
+                appendTo="body"
+                placeholder="Unit"
+                [class.is-invalid]="
+                  items.at(i).get('unit')?.errors &&
+                  items.at(i).get('unit')?.touched
+                "
+              >
+                <ng-option *ngFor="let unit of uomList" [value]="unit.id">{{
+                  unit.symbol
+                }}</ng-option>
+              </ng-select>
+            </td>
+            <td>
+              <input
+                amountNumber
+                class="form-control"
+                type="text"
+                formControlName="bill_amount"
+                [class.is-invalid]="
+                  items.at(i).get('bill_amount')?.errors &&
+                  items.at(i).get('bill_amount')?.touched
+                "
+              />
+            </td>
+
+            <td class="align-middle">
+              <a
+                *ngIf="last"
+                (click)="addItems(i)"
+                type="submit"
+                class="tablebtn-save"
+              >
+                ADD
+                <i class="fa" aria-hidden="true">
+                  <img src="assets/img/vector-add.png" alt="" />
+                </i>
+              </a>
+              <a
+                *ngIf="!last"
+                (click)="deleteItem(i)"
+                type="submit"
+                class="vector-delete"
+                >DEL
+                <i class="fa" aria-hidden="true"
+                  ><img src="assets/img/vector-delete.png" alt="" /></i
+              ></a>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+
+      <button hidden #submitButton="" type="submit">Save</button>
+    </table>
+  </div>
+</form>

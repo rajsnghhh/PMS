@@ -1,0 +1,546 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>GST Tax Master</h2>
+    </div>
+</div>
+<div class="component-body">
+    <form name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+
+        <div class="divTable">
+            <div class="divTableBody">
+                <div class="divTableRow">
+                    <div class="divTableCell" style="width: 50%;">
+                        <div class="mb-3 " [ngClass]="{ 'float-now': addUser.name != '' }">
+                            <div class="addressform">
+                                <label class="">Enter Tax Name <span class="asterisk">*</span></label>
+                                <input type="text" class="form-control" required id="add1" name="name"
+                                    [(ngModel)]="addUser.name" #name="ngModel" placeholder="Enter Tax name"
+                                    [ngClass]="{ 'is-invalid': f.submitted && name.errors }">
+
+                            </div>
+
+                            <div *ngIf="f.submitted && name.errors" class="invalid-feedback">
+                                <div *ngIf="name.errors['required']">Tax Name is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divTableCell">
+                        <div class="mb-3 " [ngClass]="{ 'float-now': addUser.short_name != '' }">
+                            <div class="addressform">
+                                <label class="">Enter Short Name</label>
+                                <input type="text" class="form-control" id="add1" name="short_name"
+                                    [(ngModel)]="addUser.short_name" #short_name="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && short_name.errors }">
+                            </div>
+
+                            <div *ngIf="f.submitted && short_name.errors" class="invalid-feedback">
+                                <div *ngIf="short_name.errors['required']">Short Name is required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.tax_type =='' }">Select
+                                    Tax
+                                    type</label>
+                                <select class="form-control" aria-label="Default select example" name="tax_type"
+                                    [(ngModel)]="addUser.tax_type" #tax_type="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && tax_type.errors }">
+                                    <option selected disabled value="">Select Tax Type</option>
+                                    <!-- <option value="vat_tax">VAT TAX</option> -->
+                                    <option value="gst_tax">GST TAX</option>
+                                    <!-- <option value="excise_tax">Excise TAX</option> -->
+                                </select>
+
+
+                            </div>
+                            <div *ngIf="f.submitted && tax_type.errors" class="invalid-feedback">
+                                <div *ngIf="tax_type.errors['required']">Please select Tax Type</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.gst_type =='' }">Select GST
+                                    type</label>
+                                <select class="form-control" aria-label="Default select example" name="gst_type"
+                                    [(ngModel)]="addUser.gst_type" #gst_type="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && gst_type.errors }">
+                                    <option selected disabled value="">Select GST Type</option>
+                                    <option value="amount_wise">INPUT</option>
+                                    <option value="percent_wise">PAYABLE</option>
+                                </select>
+                            </div>
+
+
+                            <div *ngIf="f.submitted && gst_type.errors" class="invalid-feedback">
+                                <div *ngIf="gst_type.errors['required']">Please select GST Type</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.applicable_type =='' }">Select
+                                    Applicable
+                                    type</label>
+                                <select class="form-control" aria-label="Default select example" name="applicable_type"
+                                    [(ngModel)]="addUser.applicable_type" #applicable_type="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && applicable_type.errors }">
+                                    <option selected disabled value="">Select Applicable Type</option>
+                                    <option value="amount_wise">AMOUNT WISE</option>
+                                    <option value="percent_wise">PERCENT WISE</option>
+                                </select>
+                            </div>
+
+                            <div *ngIf="f.submitted && applicable_type.errors" class="invalid-feedback">
+                                <div *ngIf="applicable_type.errors['required']">Please select Applicable Type</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        <div class="mb-3" [ngClass]="{ 'float-now': addUser.sgst_rate != ''}">
+                            <div class="addressform">
+                                <label class="">SGST Rate (%)</label>
+                                <input type="text" amountNumber class="form-control" id="add1" name="sgst_rate"
+                                    [(ngModel)]="addUser.sgst_rate" #sgst_rate="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && sgst_rate.errors }">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.sgst_account =='' }">SGST
+                                    Account</label>
+                                <select class="form-control" aria-label="Default select example" name="sgst_account"
+                                    [(ngModel)]="addUser.sgst_account" #sgst_account="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && sgst_account.errors }">
+                                    <option selected disabled value="">SGST Account</option>
+                                    <option *ngFor="let account of accountList" value={{account.id}}>{{account.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div *ngIf="f.submitted && sgst_account.errors" class="invalid-feedback">
+                                <div *ngIf="sgst_account.errors['required']">Please select SGST Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">&nbsp;</div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.rmc_sgst_pay_account =='' }">RCM
+                                    SGST Payable Account</label>
+                                <select class="form-control" aria-label="Default select example"
+                                    name="rmc_sgst_pay_account" [(ngModel)]="addUser.rmc_sgst_pay_account"
+                                    #rmc_sgst_pay_account="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && rmc_sgst_pay_account.errors }">
+                                    <option selected disabled value="">RCM SGST Payable Account</option>
+                                    <option *ngFor="let account of accountList" value={{account.id}}>{{account.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div *ngIf="f.submitted && rmc_sgst_pay_account.errors" class="invalid-feedback">
+                                <div *ngIf="rmc_sgst_pay_account.errors['required']">Please select RCM SGST Payable
+                                    Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">&nbsp;</div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.rmc_sgst_input_account =='' }">RCM
+                                    SGST Input Account</label>
+                                <select class="form-control" aria-label="Default select example"
+                                    name="rmc_sgst_input_account" [(ngModel)]="addUser.rmc_sgst_input_account"
+                                    #rmc_sgst_input_account="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && rmc_sgst_input_account.errors }">
+                                    <option selected disabled value="">RCM SGST Input Account</option>
+                                    <option *ngFor="let account of accountList" value={{account.id}}>{{account.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div *ngIf="f.submitted && rmc_sgst_input_account.errors" class="invalid-feedback">
+                                <div *ngIf="rmc_sgst_input_account.errors['required']">Please select RCM SGST Input
+                                    Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        <div class="mb-3" [ngClass]="{ 'float-now': addUser.utgst_rate != ''}">
+                            <div class="addressform">
+                                <label class="">UTGST Rate (%)</label>
+                                <input type="text" amountNumber class="form-control" id="add1" name="utgst_rate"
+                                    [(ngModel)]="addUser.utgst_rate" #utgst_rate="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && utgst_rate.errors }">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.utgst_account =='' }">UTGST
+                                    Account</label>
+                                <select class="form-control" aria-label="Default select example" name="utgst_account"
+                                    [(ngModel)]="addUser.utgst_account" #utgst_account="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && utgst_account.errors }">
+                                    <option selected disabled value="">UTGST Account</option>
+                                    <option *ngFor="let account of accountList" value={{account.id}}>{{account.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div *ngIf="f.submitted && utgst_account.errors" class="invalid-feedback">
+                                <div *ngIf="utgst_account.errors['required']">Please select UTGST Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">&nbsp;</div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.rmc_utgst_pay_account =='' }">RCM
+                                    UTGST Payable Account</label>
+                                <select class="form-control" aria-label="Default select example"
+                                    name="rmc_utgst_pay_account" [(ngModel)]="addUser.rmc_utgst_pay_account"
+                                    #rmc_utgst_pay_account="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && rmc_utgst_pay_account.errors }">
+                                    <option selected disabled value="">RCM UTGST Payable Account</option>
+                                    <option *ngFor="let account of accountList" value={{account.id}}>{{account.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div *ngIf="f.submitted && rmc_utgst_pay_account.errors" class="invalid-feedback">
+                                <div *ngIf="rmc_utgst_pay_account.errors['required']">Please select RCM UTGST Payable
+                                    Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">&nbsp;</div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class=""
+                                    [ngClass]="{'insideDropdown': addUser.rmc_utgst_input_account =='' }">RCM UTGST
+                                    Input Account</label>
+                                <select class="form-control" aria-label="Default select example"
+                                    name="rmc_utgst_input_account" [(ngModel)]="addUser.rmc_utgst_input_account"
+                                    #rmc_utgst_input_account="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && rmc_utgst_input_account.errors }">
+                                    <option selected disabled value="">RCM UTGST Input Account</option>
+                                    <option *ngFor="let account of accountList" value={{account.id}}>{{account.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div *ngIf="f.submitted && rmc_utgst_input_account.errors" class="invalid-feedback">
+                                <div *ngIf="rmc_utgst_input_account.errors['required']">Please select RCM UTGST Input
+                                    Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        <div class="mb-3" [ngClass]="{ 'float-now': addUser.cgst_rate != ''}">
+                            <div class="addressform">
+                                <label class="">CGST Rate (%)</label>
+                                <input type="text" amountNumber class="form-control" id="add1" name="cgst_rate"
+                                    [(ngModel)]="addUser.cgst_rate" #cgst_rate="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && cgst_rate.errors }">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.cgst_account =='' }">CGST
+                                    Account</label>
+                                <select class="form-control" aria-label="Default select example" name="cgst_account"
+                                    [(ngModel)]="addUser.cgst_account" #cgst_account="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && cgst_account.errors }">
+                                    <option selected disabled value="">CGST Account</option>
+                                    <option *ngFor="let account of accountList" value={{account.id}}>{{account.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div *ngIf="f.submitted && cgst_account.errors" class="invalid-feedback">
+                                <div *ngIf="cgst_account.errors['required']">Please select CGST Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">&nbsp;</div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.rmc_cgst_pay_account =='' }">RCM
+                                    CGST Payable Account</label>
+                                <select class="form-control" aria-label="Default select example"
+                                    name="rmc_cgst_pay_account" [(ngModel)]="addUser.rmc_cgst_pay_account"
+                                    #rmc_cgst_pay_account="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && rmc_cgst_pay_account.errors }">
+                                    <option selected disabled value="">RCM CGST Payable Account</option>
+                                    <option *ngFor="let account of accountList" value={{account.id}}>{{account.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div *ngIf="f.submitted && rmc_cgst_pay_account.errors" class="invalid-feedback">
+                                <div *ngIf="rmc_cgst_pay_account.errors['required']">Please select RCM CGST Payable
+                                    Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">&nbsp;</div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.rmc_cgst_input_account =='' }">RCM
+                                    CGST Input Account</label>
+                                <select class="form-control" aria-label="Default select example"
+                                    name="rmc_cgst_input_account" [(ngModel)]="addUser.rmc_cgst_input_account"
+                                    #rmc_cgst_input_account="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && rmc_cgst_input_account.errors }">
+                                    <option selected disabled value="">RCM CGST Input Account</option>
+                                    <option *ngFor="let account of accountList" value={{account.id}}>{{account.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div *ngIf="f.submitted && rmc_cgst_input_account.errors" class="invalid-feedback">
+                                <div *ngIf="rmc_cgst_input_account.errors['required']">Please select RCM CGST Input
+                                    Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        <div class="mb-3" [ngClass]="{ 'float-now': addUser.igst_rate != ''}">
+                            <div class="addressform">
+                                <label class="">IGST Rate (%)</label>
+                                <input type="text" amountNumber class="form-control" id="add1" name="igst_rate"
+                                    [(ngModel)]="addUser.igst_rate" #igst_rate="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && igst_rate.errors }">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.igst_account =='' }">IGST
+                                    Account</label>
+                                <select class="form-control" aria-label="Default select example" name="igst_account"
+                                    [(ngModel)]="addUser.igst_account" #igst_account="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && igst_account.errors }">
+                                    <option selected disabled value="">IGST Account</option>
+                                    <option *ngFor="let account of accountList" value={{account.id}}>{{account.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+
+                            <div *ngIf="f.submitted && igst_account.errors" class="invalid-feedback">
+                                <div *ngIf="igst_account.errors['required']">Please select IGST Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">&nbsp;</div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.rmc_igst_pay_account =='' }">RCM
+                                    IGST Payable Account</label>
+                                <select class="form-control" aria-label="Default select example"
+                                    name="rmc_igst_pay_account" [(ngModel)]="addUser.rmc_igst_pay_account"
+                                    #rmc_igst_pay_account="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && rmc_igst_pay_account.errors }">
+                                    <option selected disabled value="">RCM IGST Payable Account</option>
+                                    <option *ngFor="let account of accountList" value={{account.id}}>{{account.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+
+                            <div *ngIf="f.submitted && rmc_igst_pay_account.errors" class="invalid-feedback">
+                                <div *ngIf="rmc_igst_pay_account.errors['required']">Please select RCM IGST Payable
+                                    Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">&nbsp;</div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.rmc_igst_input_account =='' }">RCM
+                                    IGST Input Account</label>
+                                <select class="form-control" aria-label="Default select example"
+                                    name="rmc_igst_input_account" [(ngModel)]="addUser.rmc_igst_input_account"
+                                    #rmc_igst_input_account="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && rmc_igst_input_account.errors }">
+                                    <option selected disabled value="">RCM IGST Input Account</option>
+                                    <option *ngFor="let account of accountList" value={{account.id}}>{{account.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div *ngIf="f.submitted && rmc_igst_input_account.errors" class="invalid-feedback">
+                                <div *ngIf="rmc_igst_input_account.errors['required']">Please select RCM IGST Input
+                                    Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        <div class="mb-3" [ngClass]="{ 'float-now': addUser.total_tax_rate != ''}">
+                            <div class="addressform">
+                                <label class="">Total Tax Rate.(%)</label>
+                                <input type="text" amountNumber class="form-control" id="add1" name="total_tax_rate"
+                                    [(ngModel)]="addUser.total_tax_rate" #total_tax_rate="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && total_tax_rate.errors }">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divTableCell">
+                        <div class="mb-3 " [ngClass]="{ 'float-now': addUser.remarks != '' }">
+                            <div class="addressform">
+                                <label class="">Remark</label>
+                                <input type="text" class="form-control" id="add1" name="remarks"
+                                    [(ngModel)]="addUser.remarks" #remarks="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && remarks.errors }">
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow" hidden>
+                    <div class="divTableCell">
+                        <div class="mb-3" [ngClass]="{ 'float-now': addUser.cess != ''}">
+                            <div class="addressform">
+                                <label class="">Cess.(%)</label>
+                                <input type="text" amountNumber class="form-control" id="add1" name="cess"
+                                    [(ngModel)]="addUser.cess" #cess="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && cess.errors }">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.cess_account =='' }">CESS
+                                    Account</label>
+                                <select class="form-control" aria-label="Default select example" name="cess_account"
+                                    [(ngModel)]="addUser.cess_account" #cess_account="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && cess_account.errors }">
+                                    <option selected disabled value="">CESS Account</option>
+                                    <option *ngFor="let account of accountList" value={{account.id}}>{{account.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+
+                            <div *ngIf="f.submitted && cess_account.errors" class="invalid-feedback">
+                                <div *ngIf="cess_account.errors['required']">Please select CESS Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow" hidden>
+                    <div class="divTableCell">&nbsp;</div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.rmc_cess_pay_account =='' }">RCM
+                                    CESS Payable Account</label>
+                                <select class="form-control" aria-label="Default select example"
+                                    name="rmc_cess_pay_account" [(ngModel)]="addUser.rmc_cess_pay_account"
+                                    #rmc_cess_pay_account="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && rmc_cess_pay_account.errors }">
+                                    <option selected disabled value="">RCM CESS Payable Account</option>
+                                    <option *ngFor="let account of accountList" value={{account.id}}>{{account.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+
+                            <div *ngIf="f.submitted && rmc_cess_pay_account.errors" class="invalid-feedback">
+                                <div *ngIf="rmc_cess_pay_account.errors['required']">Please select RCM CESS Payable
+                                    Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divTableRow" hidden>
+                    <div class="divTableCell">&nbsp;</div>
+                    <div class="divTableCell">
+                        <div class="mb-3 ">
+                            <div class="addressform">
+                                <label class="" [ngClass]="{'insideDropdown': addUser.rmc_cess_input_account =='' }">RCM
+                                    CESS Input Account</label>
+                                <select class="form-control" aria-label="Default select example"
+                                    name="rmc_cess_input_account" [(ngModel)]="addUser.rmc_cess_input_account"
+                                    #rmc_cess_input_account="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && rmc_cess_input_account.errors }">
+                                    <option selected disabled value="">RCM CESS Input Account</option>
+                                    <option *ngFor="let account of accountList" value={{account.id}}>{{account.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div *ngIf="f.submitted && rmc_cess_input_account.errors" class="invalid-feedback">
+                                <div *ngIf="rmc_cess_input_account.errors['required']">Please select RCM CESS Input
+                                    Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <button *ngIf="!gstTaxId" type="submit" class="btn btn-primary"
+                style="float: left; margin-left: 45%;">Save</button>
+            <button *ngIf="gstTaxId" type="submit" class="btn btn-primary"
+                style="float: left; margin-left: 45%;">Update</button>
+
+        </div>
+
+    </form>
+</div>

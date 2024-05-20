@@ -1,0 +1,151 @@
+.required{
+    font-size: 12px;
+    top: 40px !important;
+    margin-left: 12px;
+    position: absolute;
+}
+.mainform {
+   display: flex;
+   flex-wrap: wrap;
+   width: 100%;
+
+   .eachfield{
+    display: flex;
+    width: 48%;
+    margin: 7px;
+   }
+   .filefield{
+    display: flex;
+    width: 40%;
+    margin: 7px;
+   }
+}
+.prefiew-icon {
+    height: 20px;
+    width: 20px;
+    background: #d9d9d9;
+    margin-right: 5px;
+    margin-top: 16px;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+img{
+    height: 20px;
+    width: 20px;
+}
+
+.RemoveBtn {
+    width: 5%;
+  
+    img {
+      height: 32px;
+      width: 33px;
+      margin-left: 15px;
+      margin-top: 2px;
+      cursor: pointer;
+    }
+  }
+  
+  .AddBtn {
+    width: 5%;
+  
+    img {
+      height: 32px;
+      width: 33px;
+      margin-left: 15px;
+      margin-top: 2px;
+      cursor: pointer;
+    }
+  }
+
+  .field {
+    display: flex;
+    width: 40%;
+    margin-right: 1.33%;
+
+    .fieldValue {
+      width: 100%;
+
+      label {
+        color: grey;
+        margin-left: 8px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .firstunit {
+    width: 170px !important;
+  }
+  
+  .oftext {
+    margin-top: -4px !important;
+    font-size: 28px;
+    margin-left: 12px;
+    color: #999999;
+  }
+
+  .allfield {
+    display: flex;
+    // flex-wrap: wrap;
+    width: 100%;
+    margin: 10px 8px -38px 0px;
+  
+    // .field {
+    //   display: flex;
+    //   width: 40%;
+    //   margin-right: 1.33%;
+  
+    //   .fieldValue {
+    //     width: 100%;
+  
+    //     label {
+    //       color: grey;
+    //       margin-left: 8px;
+    //       font-size: 12px;
+    //     }
+    //   }
+    // }
+  
+    .fieldbtn {
+      display: flex;
+      width: 15%;
+      margin-right: 1.33%;
+    }
+  }
+
+  .mainuomtable {
+    border: 1px solid #d2cccc;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .prmrate {
+    margin-left: 8px !important;
+  }
+
+  .symbl {
+    margin-left: 20px !important;
+  }
+
+  .conrate {
+    margin-left: 15px !important;
+  }
+
+  .scnduom {
+    margin-left: 22px !important;
+  }
+
+  .primryfloat {
+    left: 18px !important;
+  }
+
+  .convfloat {
+    left: 26px !important;
+  }
+
+  .scnduomfloat {
+    left: 33px !important;
+  }

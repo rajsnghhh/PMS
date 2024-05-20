@@ -1,0 +1,387 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Indent List</h2>
+
+        <div class="action-button-container">
+            <button hidden data-bs-toggle="offcanvas" (click)="multistageApproval()">Multi Stage Approve
+                <img src="assets/icons/check.png" alt="">
+            </button>
+            <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="adddNew()">ADD NEW
+                <img src="assets/header/add.png" alt="">
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Advanced Search Section -->
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
+                Advanced Search
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse hide" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+
+                <form [formGroup]="indentAdvancedSearchForm" (ngSubmit)="onSubmit()">
+
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-6 col-12">
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    
+                                    <div class="adform">
+                                        <label for="project">Project</label>
+                                        <select id="sel1" class="form-control" formControlName="project"
+                                            (change)="getProjeDependentSiteData()">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let project of projectList" value={{project.id}}>
+                                                {{project.project_data[1].value}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="adform">
+                                        <label>From&nbsp;Date</label><input type="date" formControlName="fromDate"
+                                            placeholder="" id="date" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="adform">
+                                        <label>To</label><input type="date" formControlName="toDate" placeholder=""
+                                            id="date" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="adform">
+                                        <label>Site&nbsp;From</label>
+                                        <select id="sel1" class="form-control" ngDefaultControl
+                                            formControlName="siteFrom" (change)="getProjeDependentStoreData()">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let site of projectSiteList" value={{site.id}}>
+                                                {{site.site_name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="adform">
+                                        <label>Due&nbsp;Date</label><input type="date" formControlName="dueDateFrom"
+                                            placeholder="" id="date" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="adform">
+                                        <label>To</label><input type="date" formControlName="dueDateTo" placeholder=""
+                                            id="date" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="adform">
+                                        <label>Site<br>
+                                            Forwarded<br>
+                                            To</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="siteForwarded" placeholder="">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="row">
+
+                                <!-- <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="adform">
+                                        <label>Sanction&nbsp;By</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder="">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="adform">
+                                        <label>Item&nbsp;Group</label>
+                                        <select id="sel1" class="form-control" formControlName="itemGroup"
+                                            (change)="setMaterialSubGroup()">
+                                            <option value="">-- select -- </option>
+                                            <option *ngFor="let type of materialTypeList" value={{type.id}}>
+                                                {{type.name}}</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="adform">
+                                        <label>Sub Group</label>
+                                        <select id="sel1" class="form-control" formControlName="itemsubGroup"
+                                            (change)="typeChange()">
+                                            <option value="">-- select -- </option>
+                                            <option *ngFor="let type of materialSubTypeList" value={{type.id}}>
+                                                {{type.name}}</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="adform">
+                                        <label>Store Section</label>
+                                        <select id="sel1" class="form-control" formControlName="storeSection">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let store of projectStoreList" value={{store.id}}>
+                                                {{store.store_name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="row">
+                                <div class="col-lg-8 col-md-8 col-12">
+                                    <div class="adform">
+                                        <label>Requested<br>
+                                            For</label>
+                                        <div class="" ngDefaultControl formControlName="requestedFor">
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" value="All" name="optradio">All
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" value="party"  name="optradio">Party
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" value="vehicle" name="optradio">Vehicle
+                                                </label>
+                                            </div>
+                                        </div><br>
+                                        <div class="">
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" value="other" name="optradio">Other
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input"
+                                                        name="optradio" value="employee">Employee
+                                                </label>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div> -->
+
+
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-12">
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="adform">
+                                        <label>Indent&nbsp;No</label> <input type="text" formControlName="indentNo"
+                                            class="form-control" placeholder="0">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="adform mt-2"  formControlName="site">
+                                        <label>Site</label>
+                                        <div class="form-check-inline">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" name="optradio" value="onlySelf">Only
+                                                Self
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" name="optradio" value="includedForwarded">Included
+                                                Forwarded
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" name="optradio"
+                                                value="onlyForwarded">Only
+                                                Forwarded
+                                            </label>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div> -->
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="adform">
+                                        <label>Priority</label>
+                                        <select id="sel1" class="form-control" formControlName="priority">
+                                            <option value="">-- Select --</option>
+                                            <option value="low">Low</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="high">High</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="adform">
+                                        <label>Next Vch.<br>
+                                            Generated</label>
+                                        <select id="sel1" class="form-control" formControlName="nextVchGenerated">
+                                            <option value="all">All</option>
+                                        </select>
+                                    </div>
+                                </div> -->
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="adform">
+                                        <label>Location&nbsp;For</label><select id="sel1" class="form-control"
+                                            formControlName="location">
+                                            <option value="">-- select --</option>
+                                            <option value="Only Self">Only Self</option>
+                                            <option value="Included Forwarded">Included Forwarded</option>
+                                            <option value="Only Forwarded">Only Forwarded</option>
+                                            <option value="All">All</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="adform">
+                                        <label>Sanction&nbsp;By</label>
+                                        <select id="sel1" class="form-control" formControlName="sanctionBy">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let sanction of userList" value="{{sanction.id}}">
+                                                {{sanction.full_name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="adform">
+                                        <label>Indent&nbsp;By</label>
+                                        <select id="sel1" class="form-control" formControlName="indentBy">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let indent of userList" value="{{indent.id}}">
+                                                {{indent.full_name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="adform">
+                                        <label>Item</label>
+                                        <select id="sel1" class="form-control" formControlName="item">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let subtype of MaterilFilterList" value={{subtype.id}}>
+                                                {{subtype.material_name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="adform">
+                                        <label>Indent&nbsp;For</label><select id="sel1" class="form-control" formControlName="indentFor" >
+                                            <option value="all">All</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="adform">
+                                        <label>Created&nbsp;By</label>
+                                        <select id="sel1" class="form-control" formControlName="createdBy">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let sanction of userList" value="{{sanction.id}}">
+                                                {{sanction.full_name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="adform">
+                                        <label>Edit&nbsp;By</label>
+                                        <select id="sel1" class="form-control" formControlName="editBy">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let sanction of userList" value="{{sanction.id}}">
+                                                {{sanction.full_name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="btd-section">
+                                <!-- <button type="submit" class="btn-cancel">CANCEL</button> -->
+                                <button type="submit" class="btn-save">SEARCH</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- Advanced Search Section End -->
+
+    <app-indent-list [indentAdvancedSearchFormValue]="indentAdvancedSearchFormValue"></app-indent-list>

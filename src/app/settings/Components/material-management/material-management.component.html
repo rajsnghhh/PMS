@@ -1,0 +1,150 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Material Management</h2>
+
+        <div class="action-button-container">
+            <button type="button" [routerLink]="['/pms/settings/material-item-merge']">Item Merge</button>
+            <button type="button" [routerLink]="['/pms/settings/multiple-items']">Multiple Items</button>
+
+            <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown"
+                aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <!-- <li class="downloadall" (click)="getalldata('pdf')">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li> -->
+                <li class="downloadall" (click)="getalldata('csv')">
+                    <span><img src="assets/usermanagement/download_csv.png" class="export"><strong>CSV</strong> </span>
+                </li>
+            </ul>
+            <button (click)="addNew()" data-bs-toggle="offcanvas" data-bs-target="#addMaterial" aria-controls="offcanvasRight">ADD NEW <img
+                    src="assets/header/add.png" alt=""></button>
+        </div>
+    </div>
+    <div class="component-body">
+        <div class="scrollable-table-container">
+
+            <table class="scrollable-table text-center" *ngIf="materialList.length > 0">
+                <tr>
+                    <th class="posion-fixed-left-sno">S.No</th>
+                    <th class="posion-fixed-left">Material Code</th>
+                    <th>SAP Code</th>
+                    <th>Material Name</th>
+                    <!-- <th>Material Code</th> -->
+                    <th>Part No</th>
+                    <th>Material Description</th>
+                    <th>Material Group</th>
+                    <!-- <th>Material Sub Group</th> -->
+                    <th>Material Cost Head</th>
+                    <th>Material Sub Cost Head</th>
+                    <th>Standard Unit of Measurement (UOM)</th>
+                    <th>HSN</th>
+                    <th>2nd Unit of Measurement (UOM)</th>
+                    <th>Material Technical Specification(S)</th>
+                    <th>Material Lead Time</th>
+                    <th>Material Valuation</th>
+                    <th>Material Tolerance in (%)</th>
+                    <th class="posion-fixed-right lstheight table_des">Action</th>
+                </tr>
+
+                <tr class="tablerow" *ngFor="let item of materialList; let i = index">
+                    <td class="posion-fixed-left-sno-td"> <a class="text-info">{{ (pageSize*(page-1)) + i+1.}}</a></td>
+                    <td class="fstwidth posion-fixed-left-td entities">{{item.material_code}}</td>
+                    <td>{{item.sap_code}}</td>
+                    <td>{{item.material_name}}</td>
+                    <!-- <td>{{item.material_code}}</td> -->
+                    <td>{{item.part_no}}</td>
+                    <td>{{item.material_descriptions}}</td>
+                    <td class="material-group">
+                        {{item.material_group_details[0]?.parent_id ? item.material_group_details[0]?.parent_details?.name : item.material_group_details[0]?.name}}
+
+                        <ul class="lastNodeHed material_list" *ngIf="item.material_group_details[0]?.parent_id">           
+                            
+                            <li >{{item.material_group_details[0]?.name}}</li>
+                        </ul>
+                    </td>
+                    <!-- <td>
+                        {{item.material_sub_type_name}}
+                    </td> -->
+                    <td>{{item.material_cost_head_name}}</td>
+                    <td>{{item.material_sub_cost_head_name}}</td>
+                    <td>{{item.unit_of_mesurement_name}}</td>
+                    <td>{{item.hsncode}}</td>
+                    <td>{{item.second_unit_applicability}}</td>
+                    <td>{{item.material_nature_name}}</td>
+                    <td>{{item.material_lead_time}}</td>
+                    <td>{{item.material_valuation}}</td>
+                    <td>{{item.material_tolerance}}</td>
+                    <td class="posion-fixed-right materialbutton">
+                        <div class="custom-section">
+                            <div class="dropdown">
+                                <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                <div class="dropdown-content">
+                                    <div class="img-container">
+                                        <div class="img-container">
+                                            <span data-bs-toggle="offcanvas" (click)="editMaterialData(item.id)"
+                                                data-bs-target="#editMaterial"><label>Edit
+                                                    Material</label></span>
+                                            <span data-bs-toggle="offcanvas" (click)="deleteMaterial(item.id)" data-bs-toggle="modal"
+                                                data-bs-target="#deleteMaterial"><label>Delete
+                                                    Material</label></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="text-center" *ngIf="materialList.length == 0">
+                <tr class="text-center">
+                    <td colspan="13" >No data found.</td>
+                </tr>
+            </table>
+            
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="addMaterial" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Add Material</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-add-material *ngIf="scope == 'add'" [scope]="scope"  (parentFun)="closeCanvas()"></app-add-material>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="editMaterial" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Edit Material</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- <app-edit-material #editMaterial (parentFun)="closeCanvas()"></app-edit-material> -->
+            <app-add-material *ngIf="scope == 'edit'" [scope]="scope" [selectedID]="selectedID" #editMaterial (parentFun)="closeCanvas()"></app-add-material>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteMaterial" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this Material ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="deleteAlertCompany()" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-table-paginate [perPage]="100" (emitpage)="getPaginate()"></app-table-paginate>

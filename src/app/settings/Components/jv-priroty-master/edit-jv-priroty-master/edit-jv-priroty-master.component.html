@@ -1,0 +1,125 @@
+<form role="form" [formGroup]="editcompanyForm" (ngSubmit)="scrollToFirstInvalidControl()">
+
+  <div class="work-card1">
+    <div class="work-header1">General Details</div>
+    <div class="flex-div">
+      <div class="mb-3" [ngClass]="{ 'float-now': partyname != '' }">
+        <input type="text" class="form-control" id="role" formControlName="party_name" [(ngModel)]="partyname"
+          [ngClass]="displayFieldCss(editcompanyForm,'party_name')">
+        <label class="floating-label">Enter Party Name <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(editcompanyForm,'party_name')">
+          <span class="text-danger" *ngIf="editcompanyForm.get('party_name')?.errors?.['required']">Party Name is
+            required</span>
+        </div>
+      </div>
+      <div class="mb-3" [ngClass]="{ 'float-now': partyaddress != '' }">
+        <textarea type="text" class="form-control" id="role" formControlName="party_address" [(ngModel)]="partyaddress"
+          ></textarea>
+        <label class="floating-label">Enter Party Address</label>
+        <div class="required" *ngIf="isFieldValid(editcompanyForm,'party_address')">
+          <span class="text-danger" *ngIf="editcompanyForm.get('party_address')?.errors?.['required']">Party Address is
+            required</span>
+        </div>
+      </div>
+
+      <div class="mb-3" [ngClass]="{ 'float-now': pannumber!= '' }">
+        <input type="text" class="form-control" id="role" formControlName="pan" [(ngModel)]="pannumber"
+          (keyup)="PANupCase($event)" maxlength="10" [ngClass]="displayFieldCss(editcompanyForm,'pan')">
+        <label class="floating-label">Enter PAN No.</label>
+        <div class="required" *ngIf="editcompanyForm.get('pan')?.errors?.['pattern']">
+          <span class="text-danger">Valid PAN is required</span>
+        </div>
+      </div>
+
+      <div class="mb-3" [ngClass]="{ 'float-now': gstnumber!= '' }">
+        <input type="text" class="form-control" id="role" formControlName="gst" [(ngModel)]="gstnumber"
+        [ngClass]="displayFieldCss(editcompanyForm,'gst')">
+        <label class="floating-label">Enter GST No.</label>
+        <div class="required" *ngIf="isFieldValid(editcompanyForm,'gst')">
+          <span class="text-danger" *ngIf="editcompanyForm.get('gst')?.errors?.['pattern']">Valid GST is required</span>
+        </div>
+      </div>
+
+      <div class="mb-3" [ngClass]="{ 'float-now': phonenumber != '' }">
+        <input type="text" class="form-control" id="role" formControlName="phone" [(ngModel)]="phonenumber" numbersOnly
+          pattern="^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" minlength="4" maxlength="10"
+          [ngClass]="displayFieldCss(editcompanyForm,'phone')">
+        <label class="floating-label">Enter Phone No.</label>
+        <div class="required" *ngIf="editcompanyForm.get('phone')?.errors?.['pattern']">
+          <span class="text-danger">Valid Phone is required</span>
+        </div>
+      </div>
+
+      <div class="mb-3" [ngClass]="{ 'float-now': emailid!= '' }">
+        <input type="text" class="form-control" id="role" formControlName="email" [(ngModel)]="emailid"
+          autocomplete="off" [ngClass]="displayFieldCss(editcompanyForm,'email')">
+        <label class="floating-label">Enter Email Id</label>
+        <div class="required" *ngIf="editcompanyForm.get('email')?.errors?.['pattern']">
+          <span class="text-danger">Valid Email is required</span>
+        </div>
+      </div>
+
+      <div class="mb-3" [ngClass]="{ 'float-now': contactname != '' }">
+        <input type="text" class="form-control" id="role" formControlName="contact_person_name"
+          [(ngModel)]="contactname">
+        <label class="floating-label">Enter Contact Person Name</label>
+      </div>
+
+      <div class="mb-3" [ngClass]="{ 'float-now': contactno != '' }">
+        <input type="text" class="form-control" id="role" formControlName="contact_person_phone_no"
+          [(ngModel)]="contactno" pattern="^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" minlength="4"
+          maxlength="10" [ngClass]="displayFieldCss(editcompanyForm,'contact_person_phone_no')">
+        <label class="floating-label">Enter Contact Person's No.</label>
+        <div class="required" *ngIf="editcompanyForm.get('contact_person_phone_no')?.errors?.['pattern']">
+          <span class="text-danger">Valid Phone is required</span>
+        </div>
+      </div>
+
+      <div class="mb-3" [ngClass]="{ 'float-now': contactemail != '' }">
+        <input type="text" class="form-control" id="role" formControlName="contact_person_email_id"
+          [(ngModel)]="contactemail" [ngClass]="displayFieldCss(editcompanyForm,'contact_person_email_id')">
+        <label class="floating-label">Enter Contact Person's Email Id</label>
+        <div class="required" *ngIf="editcompanyForm.get('contact_person_email_id')?.errors?.['pattern']">
+          <span class="text-danger">Valid Email is required</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-header1">Technical Eligibilities</div>
+    <div class="flex-div">
+      <div class="mb-3" [ngClass]="{ 'float-now': threshold != '' }">
+        <input type="text" class="form-control" id="role" formControlName="available_threshold" [(ngModel)]="threshold">
+        <label class="floating-label">Enter Available Threshold (in Crs.)</label>
+      </div>
+
+      <div class="mb-3" [ngClass]="{ 'float-now': similarwork != '' }">
+        <input type="text" class="form-control" id="role" formControlName="value_of_similar_works"
+          [(ngModel)]="similarwork">
+        <label class="floating-label">Enter Value of Similar Works (in Crs.)</label>
+      </div>
+
+      <div class="mb-3" [ngClass]="{ 'float-now': spanofbridge != '' }">
+        <input type="text" class="form-control" amountNumber autocomplete="off" id="role" formControlName="maximum_span_length_of_bridge_avail"
+          [(ngModel)]="spanofbridge">
+        <label class="floating-label">Enter Maximum Span Length of Bridge Available (in Mtr)</label>
+      </div>
+    </div>
+
+    <div class="work-header1">Financial Eligibilities</div>
+    <div class="flex-div">
+      <div class="mb-3" [ngClass]="{ 'float-now': anuualturnover != '' }">
+        <input type="text" class="form-control" id="role" formControlName="average_annual_turn_over"
+          [(ngModel)]="anuualturnover">
+        <label class="floating-label">Enter Average Annual Turn Over (in Crs.)
+          (last 5 years)</label>
+      </div>
+
+      <div class="mb-3" [ngClass]="{ 'float-now': networth != '' }">
+        <input type="text" class="form-control" id="role" formControlName="net_worth" [(ngModel)]="networth">
+        <label class="floating-label">Enter Net Worth (in Crs.)</label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="editCompany()">UPDATE</button>
+  </div>
+</form>

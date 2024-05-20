@@ -1,0 +1,353 @@
+button {
+    min-width: 100px !important;
+}
+
+.modal-header {
+    background-color: #5577FF;
+    color: white;
+
+    h5 {
+        font-size: 17px;
+    }
+}
+
+.modal-footer {
+    button {
+        padding: 5px;
+    }
+
+    .btn-secondary {
+        background-color: #01d50a;
+        background-image: unset;
+    }
+
+    .btn-primary.close {
+        background-color: #eb4747;
+        background-image: unset;
+    }
+}
+
+.custom-section {
+    display: block;
+    width: 100%;
+    position: relative;
+
+    .container {
+        display: block;
+        position: relative;
+        padding-left: 25px;
+        font-weight: 500;
+        cursor: pointer;
+        font-size: 10px;
+        padding-top: 2px;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    /* Hide the browser's default radio button */
+    .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    /* Create a custom radio button */
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        background-color: #e4e4e4;
+        border-radius: 18%;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .container:hover input~.checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the radio button is checked, add a blue background */
+    .container input:checked~.checkmark {
+        background-color: #5577FF;
+    }
+
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the indicator (dot/circle) when checked */
+    .container input:checked~.checkmark:after {
+        display: block;
+    }
+
+    /* Style the indicator (dot/circle) */
+    .container .checkmark:after {
+        top: 3px;
+        font-size: 12px;
+        border-bottom: 1.5px solid white;
+        border-right: 1.5px solid white;
+        left: 7px;
+        height: 10px;
+        width: 6px;
+        color: white;
+        transform: rotate(45deg);
+    }
+}
+
+.tnc {
+    .container {
+        margin: 0;
+    }
+}
+
+.modal-footer {
+    .tnc {
+        width: 65%;
+    }
+
+    button {
+        width: 20%;
+    }
+}
+
+.reject {
+    background-color: #eb4747;
+    background-image: unset;
+}
+
+.modal-body {
+    overflow: scroll;
+}
+
+table,
+tr,
+td,
+th {
+    border: 1px solid gray;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.wide-model {
+    min-width: 180%;
+    left: -40%;
+
+    .modal-body {
+        overflow-y: hidden;
+        margin: 0 10px;
+    }
+
+    .tnc {
+        width: 15%;
+    }
+}
+
+.small-modal {
+    width: 80%;
+
+    .modal-body {
+        overflow: hidden;
+    }
+
+    .tnc {
+        width: 30%;
+    }
+}
+
+.approver-status-section {
+    margin: 0 10px;
+    color: #666666;
+
+    h1 {
+        font-weight: 700;
+        color: #001060;
+        font-size: 16px;
+        padding: 15px 0px 8px 5px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            background: rgba(220, 220, 220, 0.2509803922);
+            padding: 10px 15px;
+            border-radius: 18px;
+            position: relative;
+        }
+    }
+
+    span {
+        display: block;
+    }
+
+    .approver-icon {
+        width: 20px;
+        height: 20px;
+        min-width: 20px;
+        min-height: 20px;
+        background-color: #b9c2c9;
+        border-radius: 50px;
+        margin-right: 10px;
+    }
+
+    .approver-icon.approved {
+        background-image: url("../../../../assets/usermanagement/tick.png");
+        background-size: contain;
+    }
+
+    .approver-name {
+        font-weight: 400;
+        font-size: 12px;
+        width: 170px;
+    }
+
+    .approver-role {
+        font-weight: 700;
+        font-size: 10px;
+        width: 120px;
+    }
+
+    .approver-status {
+        max-width: 250px;
+
+        .approver-actioin {
+            font-size: 12px;
+            color: #9c9c00;
+            font-weight: 800;
+        }
+
+        .approver-remarks {
+            font-size: 10px;
+        }
+    }
+}
+.approver-update-status {
+    border: 1px solid #8080805c;
+    padding: 10px 5px;
+    border-radius: 10px;
+    margin: 10px 0 0 0;
+    width: fit-content;
+    button {
+        margin: auto;
+        float: unset;
+    }
+}
+.custom-radio-conatainer {
+    display: flex;
+    align-items: center;
+    /* Customize the label (the container) */
+    .container {
+        display: flex;
+        position: relative;
+        cursor: pointer;
+        font-size: 10px;
+        font-weight: 500;
+        -webkit-user-select: none;
+        user-select: none;
+        background: rgba(220, 220, 220, 0.2509803922);
+        padding: 0 0 0 40px;
+        border-radius: 18px;
+        min-height: 40px;
+        margin-right: 10px;
+        width: 200px;
+        margin-left: 0;
+        align-items: center;
+    }
+
+    /* Hide the browser's default checkbox */
+    .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+    /* Create a custom checkbox */
+    .checkmark {
+        position: absolute;
+        top: 7px;
+        left: 9px;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        border-radius: 20px;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .container:hover input~.checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the checkbox is checked, add a blue background */
+    .container input:checked~.checkmark {
+        background-color: #2196F3;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the checkmark when checked */
+    .container input:checked~.checkmark:after {
+        display: block;
+    }
+
+    /* Style the checkmark/indicator */
+    .container .checkmark:after {
+        left: 10px;
+        top: 7px;
+        width: 6px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+}
+
+.mb-3 {
+    display: flex;
+    flex-wrap: wrap;
+    label {
+        width: 100%;
+        display: flex;
+        padding: 6px 0px 0px 0px;
+        font-size: 12px !important;
+        color: #04274a;
+    }
+    textarea {
+        width: 100%;
+    }
+}
+.invalid-feedback {
+    opacity: 1 !important;
+    display: block;
+    position: absolute;
+    bottom: -16px;
+    left: 44px;
+    font-size: 10px;
+}
+
+form {
+    margin-bottom: unset !important;
+}
+button.nxt_btn {
+    justify-content: center;
+}
+button.nxt_btn {
+    margin-left: 18px;
+}

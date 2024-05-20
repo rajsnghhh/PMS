@@ -1,0 +1,101 @@
+.addbtn{
+    background-image: linear-gradient(to right, #40d4e6, #6675fe);
+    font-weight: initial;
+    padding: 0px 16px;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    line-height: 25px;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    align-items: baseline;
+    width: auto;
+    text-decoration: none;
+}
+.deletebtn{
+    background-image: linear-gradient(to right, #ff3636fa, #f00606);
+    font-weight: initial;
+    padding: 0px 16px;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    line-height: 25px;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    align-items: baseline;
+    width: auto;
+    text-decoration: none;
+
+
+    width: 57px;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+}
+
+select{
+    width: 100%;
+    font-size: revert-layer;
+    border: 1px solid #80808075;
+    border-radius: 3px;
+    min-height: 26px;
+}
+::ng-deep .c-btn{
+    min-height: unset !important;
+    font-size: unset !important;
+}
+
+.component-body table td{
+    padding: 2px 2px !important;
+}
+
+::ng-deep .multi-select-dropdown .selected-list .c-btn {
+    border-radius: 0px !important;
+    padding: 5px 9px !important;
+    font-size: 12px !important;
+}
+.component-body table th {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    }
+.component-body table td {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 5px 10px !important;
+    font-weight: 500 !important;
+    vertical-align: middle !important;
+    font-size: 12px !important;
+    line-height: 15px !important;
+    }
+.btd-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    }
+.btd-section button {
+        background-image: linear-gradient(to right, #40d4e6, #6675fe);
+        font-weight: initial;
+        padding: 0px 16px;
+        border-radius: 4px;
+        border: none;
+        color: white;
+        line-height: 30px;
+        font-size: 13px;
+        font-weight: 300;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 5px;
+        align-items: baseline;
+        max-width: 83px;
+        text-decoration: none;
+    }

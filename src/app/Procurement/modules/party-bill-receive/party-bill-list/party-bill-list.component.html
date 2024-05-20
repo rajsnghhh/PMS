@@ -1,0 +1,246 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Bill Receive List</h2>
+
+        <div class="action-button-container">
+            <button hidden [routerLink]="['/pms/store/procurement/party-bill-receive/accept']">ACCEPT BILL</button>
+
+            <button hidden [routerLink]="['/pms/store/procurement/party-bill-receive/add']">ADD NEW <img
+                    src="assets/header/add.png" alt=""></button>
+
+        </div>
+    </div>
+
+    <div class="component-body">
+        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSearch()" novalidate>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="adform">
+                        <label>Received Date</label><input type="date" name="received_date__gte "
+                            [(ngModel)]="form.received_date__gte " #received_date__gte="ngModel" placeholder=""
+                            id="received_date__gte" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="adform">
+                        <label>To</label><input type="date" name="received_date__lte "
+                            [(ngModel)]="form.received_date__lte " #received_date__lte="ngModel" placeholder=""
+                            id="received_date__lte" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="adform">
+                        <label>Bill Date</label><input type="date" name="bill_date__gte "
+                            [(ngModel)]="form.bill_date__gte " #bill_date__gte="ngModel" placeholder=""
+                            id="bill_date__gte" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="adform">
+                        <label>To</label><input type="date" name="bill_date__lte " [(ngModel)]="form.bill_date__lte "
+                            #bill_date__lte="ngModel" placeholder="" id="bill_date__lte" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="adform">
+                        <label>Forward to User</label>
+                        <select id="sel1" class="form-control" ngDefaultControl name="forward_to_user "
+                            [(ngModel)]="form.forward_to_user " #forward_to_user="ngModel">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let request of userList" value="{{request.id}}">
+                                {{request.full_name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="adform">
+                        <label>Party Name</label>
+                        <select id="sel1" class="form-control" ngDefaultControl name="vendor "
+                            [(ngModel)]="form.vendor " #vendor="ngModel">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                                {{vendor.vendor_master_data.vendor_name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="adform">
+                        <label>Bill No.</label>
+                        <input type="text" name="manual_slip_number" [(ngModel)]="form.manual_slip_number "
+                            #manual_slip_number="ngModel" placeholder="" id="manual_slip_number" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="adform">
+                        <label>Bill Type</label>
+                        <select id="sel1" class="form-control" ngDefaultControl name="bill_type "
+                            [(ngModel)]="form.bill_type " #bill_type="ngModel">
+                            <option value="">-- select --</option>
+                            <option value="purchase">Purchase</option>
+                            <option value="journal">Journal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="adform">
+                        <label>Site</label>
+                        <input type="text" class="form-control" [disabled]="true" [value]="localStorageData?.site_data?.site_name">
+                        <!-- <select id="sel1" class="form-control" ngDefaultControl name="site " [(ngModel)]="form.site "
+                            #site="ngModel">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                {{siteData.site_name}}</option>
+                        </select> -->
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-6">
+                    <div class="adformcard" ngDefaultControl name="status " [(ngModel)]="form.status " #status="ngModel">
+                        <label>Status</label>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="pending" name="typeradio" class="form-check-input"
+                                    id="status" name="status">
+                                Pending
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="checked" name="typeradio" class="form-check-input"
+                                    id="status" name="status">
+                                Checked
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="approved" name="typeradio" class="form-check-input"
+                                    id="status" name="status">
+                                Approved
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="rejected" name="typeradio" class="form-check-input"
+                                    id="status" name="status">
+                                Rejected
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-6">
+                    <div class="adformcard" ngDefaultControl name="voucher_status " [(ngModel)]="form.voucher_status "
+                        #voucher_status="ngModel">
+                        <label>Voucher Status</label>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="unpost" name="typeradio" class="form-check-input"
+                                    id="voucher_status" name="voucher_status">
+                                Unpost
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="post" name="typeradio" class="form-check-input"
+                                    id="voucher_status" name="voucher_status">
+                                Post
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="rejected" name="typeradio" class="form-check-input"
+                                    id="voucher_status" name="voucher_status">
+                                Rejected
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="corrected" name="typeradio" class="form-check-input"
+                                    id="voucher_status" name="voucher_status">
+                                Corrected
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+         
+            <div class="btd-section">
+                <button type="submit" class="btn-save">Search</button>
+            </div>
+        </form>
+
+        <table class="table">
+            <tr>
+                <th>SrNo.</th>
+                <th>Rec No.</th>
+                <th>Rec Data</th>
+                <th>Bill No.</th>
+                <th>Bill Date</th>
+                <th>File No.</th>
+                <th>Site Name</th>
+                <th>Bill Type</th>
+                <th>Party Name</th>
+                <th>Nature of Work</th>
+                <th>Forward User</th>
+                <th>Rec. Status</th>
+                <th>Amount</th>
+                <th>Action</th>
+            </tr>
+            <tr *ngFor="let item of partBillList; let i =index">
+                <td>{{i+1}}.</td>
+                <td>{{item.sr_no}}</td>
+                <td>{{item.received_date | date:"dd-MM-yyyy"}}</td>
+                <td>{{item.manual_slip_number}}</td>
+                <td>{{item.bill_date | date:"dd-MM-yyyy"}}</td>
+                <td>{{item.file_no}}</td>
+                <td>{{item.site_details[0]?.site_name}}</td>
+                <td class="text-capitalize">{{item.bill_type}}</td>
+                <td>{{item.vendor_details.vendor_name}}</td>
+                <td>{{item.nature_of_work}}</td>
+                <td>{{item.forward_to_user_details[0]?.first_name}} {{item.forward_to_user_details[0]?.last_name}}</td>
+                <td class="text-capitalize">{{item.received_status}}</td>
+                <td>{{item.amount}}</td>
+                <td class="actionbutton">
+                    <div class="custom-section">
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                            <div class="dropdown-content editwidth">
+                                <div class="img-container">
+                                    <span class="mt-2" (click)="editPartyBill(item.id)"><img
+                                            src="assets/usermanagement/edit.png" alt="">&nbsp;&nbsp;<label>Edit Bill Received
+                                        </label></span>
+                                    <span (click)="deletePartyBill(item.id)" data-bs-toggle="modal"
+                                        data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png"
+                                            alt="">&nbsp;&nbsp;<label>Delete Bill Received</label></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr *ngIf="partBillList?.length==0">
+                <td class="text-center" colspan="14"> No Data Found!</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this Party Bill Receive ?
+            </div>
+            <div class="modal-footer">
+                <button (click)="deleteAlertCompany()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>

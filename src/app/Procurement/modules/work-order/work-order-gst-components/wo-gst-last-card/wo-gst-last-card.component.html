@@ -1,0 +1,111 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="createrequisition-section">
+        <div class="creatematerial">
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Cheque&nbsp;No.</label>
+                        <input type="text" placeholder="" id="text" class="form-control" [(ngModel)]="form.cheque_no"
+                            #cheque_no="ngModel" name="cheque_no">
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="cheque_date">Cheque&nbsp;Date</label>
+                        <input type="date" placeholder="" class="form-control" id="date" name="cheque_date"
+                            [(ngModel)]="form.cheque_date" required #cheque_date="ngModel">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Cheque&nbsp;Amount</label>
+                        <input type="number" placeholder="" id="text" class="form-control" [(ngModel)]="form.cheque_amount"
+                            #cheque_amount="ngModel" name="cheque_amount">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Bank Name</label>
+                        <input type="text" placeholder="" id="text" class="form-control" [(ngModel)]="form.bank_name"
+                            #bank_name="ngModel" name="bank_name">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="cash_amount">Cash&nbsp;Amount</label>
+                        <input type="number" placeholder="" id="text" class="form-control" [(ngModel)]="form.cash_amount"
+                            #cash_amount="ngModel" name="cash_amount">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Total&nbsp;Amount</label>
+                        <input type="number" placeholder="" id="text" class="form-control" [(ngModel)]="form.total_amount"
+                            #total_amount="ngModel" name="total_amount">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="start_date">Start&nbsp;Date</label>
+                        <input type="date" placeholder="" class="form-control" id="start_date" name="start_date"
+                            [(ngModel)]="form.start_date"  #start_date="ngModel"
+                            >
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="date">End&nbsp;Date</label>
+                        <input type="date" placeholder="" class="form-control" id="end_date" name="end_date"
+                            [(ngModel)]="form.end_date" required #end_date="ngModel">
+                       
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Employee Name</label>
+                        <select id="sel1" class="form-control" name="employee_name" [(ngModel)]="form.employee_name" required
+                            #employee_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && employee_name.errors }">
+                            <option disabled>-- select --</option>
+                            <option *ngFor="let userData of userlist" value="{{userData.id}}">{{userData.full_name}}
+                            </option>
+
+                        </select>
+                        <div *ngIf="f.submitted && employee_name.errors" class="invalid-feedback">
+                            <div *ngIf="employee_name.errors['required']">This is required !</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Jurisdiction</label>
+                        <input type="text" placeholder="" id="text" class="form-control" [(ngModel)]="form.jurisdiction"
+                            #jurisdiction="ngModel" name="jurisdiction">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-6">
+                    <div class="addressform">
+                        <label>Attach File</label>
+                        <input type="file" name="fileData " [(ngModel)]="form.fileData" (change)="uploadFile($event)" #fileData="ngModel"
+                            placeholder="" id="fileData" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Remark</label>
+                        <textarea  id="text" class="form-control" [(ngModel)]="form.remark"
+                            #remark="ngModel" name="remark"></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <button hidden #submitButton="" type="submit">Save</button>
+
+</form>

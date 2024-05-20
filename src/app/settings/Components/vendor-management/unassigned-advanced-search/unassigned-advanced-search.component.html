@@ -1,0 +1,148 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Unassigned Account Vendor List</h2>
+
+        <div class="action-button-container">
+            <!-- <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="addNew()">ADD NEW <img src="assets/header/add.png"
+                    alt=""></button> -->
+        </div>
+    </div>
+</div>
+
+<!-- Advanced Search Section -->
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
+                Advanced Search
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+
+                <form [formGroup]="unassignedVendorAdvancedSearchForm" (ngSubmit)="onSubmit()">
+
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="adform">
+                                <label>Account Name</label>
+                                <input type="text" formControlName="name" placeholder="Account Name" ngDefaultControl class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="adform">
+                                <label>Account Group</label>
+                                <input type="text" formControlName="accountGroup" placeholder="Account Group" ngDefaultControl class="form-control">
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="adform">
+                                <label>Site</label>
+                                <select  class="form-control" ngDefaultControl
+                                    formControlName="site">
+                                    <option value="">-- select --</option>
+                                    <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                        {{siteData.site_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="adform">
+                                        <label>Country</label>
+                                        <select  class="form-control" ngDefaultControl
+                                            formControlName="country" (change)="changeCountry()">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let country of countrylist" value="{{country.id}}">
+                                                {{country.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="adform">
+                                        <label>State</label>
+                                        <select  class="form-control" ngDefaultControl
+                                            formControlName="state" (change)="changeState()">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let state of statelist" value="{{state.state_id}}">
+                                                {{state.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="adform">
+                                        <label>City</label>
+                                        <select  class="form-control" ngDefaultControl
+                                            formControlName="city">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let city of cityList" value="{{city.city_id}}">
+                                                {{city.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="adform">
+                                <label>Account Show</label>
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                <input type="radio" formControlName="accountShow" class="form-control" value="loginCompany">Login Company
+                            </label>
+                        </div>
+                                <!-- just for show -->
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                <input type="radio" class="form-control" formControlName="accountShow" >All Company
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-control" >Selected Site
+                            </label>
+                        </div>
+                                <!-- just for show -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="adform">
+                                <label>PAN No.</label>
+                                <input type="text" formControlName="pan" placeholder="Pan No." ngDefaultControl class="form-control">
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-12">
+                        <div class="btd-section">
+                            <!-- <button type="submit" class="btn-cancel">CANCEL</button> -->
+                            <button type="submit" class="btn-save">SEARCH</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- Advanced Search Section End -->
+
+    <app-unassigned-account-vendor [unassignedVendorAdvancedSearchFormValue]="unassignedVendorAdvancedSearchFormValue"></app-unassigned-account-vendor>

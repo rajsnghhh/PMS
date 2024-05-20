@@ -1,0 +1,142 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Sublet Order</h2>
+    </div>
+    <div class="component-body">
+
+        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+            <div class="row">
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>SO No.</label>
+                        <input type="text" name="so_no " [(ngModel)]="form.so_no " #so_no="ngModel" placeholder=""
+                            id="so_no" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Date</label><input type="date" name="date " [(ngModel)]="form.date " #date="ngModel"
+                            placeholder="" id="date" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Company<span class="asterisk">*</span></label>
+                        <input type="text" name="company" required [(ngModel)]="form.company "
+                            [ngClass]="{ 'is-invalid': f.submitted && company.errors }" #company="ngModel"
+                            placeholder="" id="company" class="form-control">
+                        <div *ngIf="f.submitted && company.errors" class="invalid-feedback">
+                            <div *ngIf="company.errors['required']">Company is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>No.</label>
+                        <input type="text" name="number " [(ngModel)]="form.number " #number="ngModel" placeholder=""
+                            id="number" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Work Desc.<span class="asterisk">*</span></label>
+                        <textarea name="work_description" required [(ngModel)]="form.work_description "
+                            #work_description="ngModel" placeholder=""
+                            [ngClass]="{ 'is-invalid': f.submitted && work_description.errors }" id="work_description"
+                            class="form-control"> </textarea>
+                        <div *ngIf="f.submitted && work_description.errors" class="invalid-feedback">
+                            <div *ngIf="work_description.errors['required']">Work Description is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Representative<span class="asterisk">*</span></label>
+                        <select id="sel1" class="form-control" required
+                            [ngClass]="{ 'is-invalid': f.submitted && representative.errors }" ngDefaultControl
+                            name="representative " [(ngModel)]="form.representative " #representative="ngModel">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                                {{vendor.vendor_master_data.vendor_name}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && representative.errors" class="invalid-feedback">
+                            <div *ngIf="representative.errors['required']">Representative is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btd-section">
+                <button *ngIf="scope!='edit'" type="submit" class="btn-save">Save</button>
+                <button *ngIf="scope=='edit'" type="submit" class="btn-save">Update</button>
+
+            </div>
+        </form>
+        <table class="table">
+            <tr>
+                <th>SrNo.</th>
+                <th>SO NO.</th>
+                <th>SO Date</th>
+                <th>Company Name</th>
+                <th>Representative</th>
+                <th>Work Description</th>
+                <th>Action</th>
+            </tr>
+            <tr *ngFor="let item of subletOrderList;let i=index">
+                <td>{{i+1}}.</td>
+                <td>{{item.so_no}}</td>
+                <td>{{item.date | date:"dd-MM-yyyy"}}</td>
+                <td>{{item.company}}</td>
+                <td>{{item.representative_details?.data?.vendor_name}}</td>
+                <td>{{item.work_description}}</td>
+                <td class="actionbutton">
+                    <div class="custom-section">
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                            <div class="dropdown-content editwidth">
+                                <div class="img-container">
+                                    <span class="mt-2" (click)="editSubletOrder(item.id)"><img
+                                            src="assets/usermanagement/edit.png" alt="">&nbsp;&nbsp;<label>Edit Sublet
+                                            Order
+                                        </label></span>
+                                    <span (click)="deleteSubletOrder(item.id)" data-bs-toggle="modal"
+                                        data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png"
+                                            alt="">&nbsp;&nbsp;<label>Delete Sublet Order</label></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            <tr *ngIf="subletOrderList?.length==0">
+                <td class="text-center" colspan="7"> No Data Found!</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this Sublet Order ?
+            </div>
+            <div class="modal-footer">
+                <button (click)="deleteAlertCompany()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,159 @@
+button {
+    background-image: linear-gradient(to right, #40d4e6, #6675fe);
+    font-weight: initial;
+    padding: 12px 30px;
+    margin-top: 8px;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    font-size: 13px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    float: right;
+    min-width: 275px !important;
+    margin-left: 15px;
+}
+
+.modal-header {
+    background-color: #5577FF;
+    color: white;
+    h5 {
+        font-size: 17px;
+    }
+}
+.modal-footer {
+    button {
+        padding: 5px;
+    }
+    .btn-secondary {
+        background-color: #01d50a;
+        background-image: unset;
+    }
+    .btn-primary.close{
+        background-color: #eb4747;
+        background-image: unset;
+    }
+}
+.custom-section {
+    display: block;
+    width: 100%;
+    position: relative;
+    .container {
+        display: block;
+        position: relative;
+        padding-left: 25px;
+        margin: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        font-size: 10px;
+        padding-top: 2px;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    
+    /* Hide the browser's default radio button */
+    .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+    
+    /* Create a custom radio button */
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        background-color: #e4e4e4;
+        border-radius: 18%;
+    }
+    
+    /* On mouse-over, add a grey background color */
+    .container:hover input~.checkmark {
+        background-color: #ccc;
+    }
+    
+    /* When the radio button is checked, add a blue background */
+    .container input:checked~.checkmark {
+        background-color: #5577FF;
+    }
+    
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+    
+    /* Show the indicator (dot/circle) when checked */
+    .container input:checked~.checkmark:after {
+        display: block;
+    }
+    
+    /* Style the indicator (dot/circle) */
+    .container .checkmark:after {
+        top: 3px;
+        font-size: 12px;
+        border-bottom: 1.5px solid white;
+        border-right: 1.5px solid white;
+        left: 7px;
+        height: 10px;
+        width: 6px;
+        color: white;
+        transform: rotate(45deg);
+    }
+}
+
+.tnc {
+    .container {
+        margin: 0;
+    }
+}
+
+.modal-footer {
+    .tnc {
+        width: 65%;
+    }
+    button {
+        width: 20%;
+    }
+}
+.reject{
+    background-color: #eb4747;
+    background-image: unset;
+}
+.modal-body{
+    overflow: scroll;
+}
+table,tr,td,th {
+    border: 1px solid gray;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.wide-model {
+    min-width: 180%;
+    left: -40%;
+    .modal-body {
+        overflow-y: hidden;
+        margin: 0 10px;
+    }
+    .tnc {
+        width: 15%;
+    }
+}
+.small-modal {
+    width: 80%;
+    .modal-body {
+        overflow: hidden;
+    }
+    .tnc {
+        width: 30%;
+    }
+}
+button.reject {
+    min-width: 80px !important;
+  }

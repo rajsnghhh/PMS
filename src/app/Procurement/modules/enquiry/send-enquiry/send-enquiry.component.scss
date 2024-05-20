@@ -1,0 +1,117 @@
+
+.adform {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.adform .form-control {
+    display: block;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 7px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    appearance: auto;
+}
+
+.adform .form-control2 {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 42px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    position: relative;
+    appearance: auto;
+}
+
+.adform .input-group>.form-control {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    margin-bottom: 0;
+}
+
+.adform .input-group-text {
+    display: flex;
+    align-items: center;
+    padding: 12px 17px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    text-align: center;
+    white-space: nowrap;
+    background-color: var(--bs-tertiary-bg);
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 42px;
+}
+
+.adform .input-group>.input-group-append>.input-group-text {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    background: #fff;
+    color: #a8a2a2;
+}
+
+.adform label {
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 14px;
+    color: #666;
+    font-weight: 400;
+    margin: 0px 0px;
+    vertical-align: middle;
+    text-align: right;
+    min-width: 110px;
+}
+
+.adform .form-check-inline {
+    margin-right: 36px;
+}
+
+.adform .form-check-input[type="radio"] {
+    margin-right: 5px;
+}
+
+.modal-dialog {
+    max-width: 600px !important;
+   
+}
+
+.component-body table th {
+	background-color: #5577ff;
+	color: white;
+	font-size: 14px;
+	padding: 10px;
+	font-weight: 600;
+	line-height: 15px;
+    }
+    .component-body table td {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 300 !important;
+        font-size: 12px !important;
+        line-height: 15px !important;
+    }

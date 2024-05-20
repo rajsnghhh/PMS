@@ -1,0 +1,146 @@
+<div class="createrequisition-section">
+  <div class="component-header" *ngIf="isRawMaterialSaleApprover">
+    <div class="action-button-container" *ngIf="scope == 'list'">
+      <button (click)="scopeChange('approve')">Approve</button>
+    </div>
+    <div class="action-button-container" *ngIf="scope == 'approve'">
+      <button (click)="scopeChange('list')">List</button>
+    </div>
+    <div
+      class="action-button-container"
+      style="margin-right: 87px"
+      *ngIf="scope == 'approve' && selected_items.length > 0"
+    >
+      <button class="btn btn-primary" (click)="approveRawMaterials()">
+        Save
+      </button>
+    </div>
+  </div>
+  <div class="main-body-container">
+    <div class="table-responsive">
+      <table class="table table-nowrap">
+        <thead>
+          <tr>
+            <th scope="col" class="text-center">Sr No</th>
+            <th scope="col">Location</th>
+            <th scope="col">Bill Type</th>
+            <th scope="col">Inv. Prefix No.</th>
+            <th scope="col">Sale No.</th>
+            <th scope="col">Sale Date</th>
+            <th scope="col">Vendor</th>
+            <th scope="col">Tax Type</th>
+            <th scope="col">Tax Amt.</th>
+            <th scope="col">Excise Amt.</th>
+            <th scope="col">Bill Amt.</th>
+            <th scope="col" class="text-center">Stock Effect</th>
+            <th scope="col">Doc.</th>
+            <th scope="col" class="text-center">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            [class]="selected[i] ? 'selected' : ''"
+            *ngFor="let item of purchaseOrderList; index as i"
+          >
+            <td class="text-center">{{ i + 1 }}</td>
+            <td>{{ item.sale_from_location }}</td>
+            <td>
+              {{ item.bill_type ? Global.humanize(item.bill_type) : "" }}
+            </td>
+            <td>{{ item.invoice_no_prefix }}</td>
+            <td>{{ item.rm_sale_voucher_no }}</td>
+            <td>
+              {{ item?.sale_date }}
+            </td>
+            <td>{{ item?.vendor_details?.vendor_name }}</td>
+            <td>{{ item.tax_type | uppercase }}</td>
+            <td>
+              {{
+                item?.total_item_tax_amount + item?.total_tax_tax_amount
+                  | currency : "INR" : "symbol"
+              }}
+            </td>
+            <td>
+              {{
+                item?.total_item_excise_tax_amount | currency : "INR" : "symbol"
+              }}
+            </td>
+            <td>{{ item?.total_amount | currency : "INR" : "symbol" }}</td>
+            <td class="text-center">
+              <div [ngSwitch]="item?.is_stock_effect">
+                <div *ngSwitchCase="true">
+                  <span class="badge bg-success">YES</span>
+                </div>
+                <div *ngSwitchDefault>
+                  <span class="badge bg-danger">NO</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <ng-container *ngIf="item?.attachments?.length">
+                <ng-container
+                  *ngFor="let data of item?.attachments; let i = index"
+                >
+                  <a
+                    class="mx-2"
+                    target="_blank"
+                    [href]="Global.BACKEND_URL + data?.attachment"
+                  >
+                    <img src="assets/icons/eye.png" alt="" />
+                  </a>
+                </ng-container>
+              </ng-container>
+            </td>
+            <td class="text-center">
+              <div [ngSwitch]="item?.status">
+                <div *ngSwitchCase="'approved'">
+                  <span class="badge bg-success">Approved</span>
+                </div>
+                <div *ngSwitchDefault>
+                  <div class="form-check" *ngIf="scope == 'approve'">
+                    <input
+                      type="checkbox"
+                      id="itemCheck_{{ i }}"
+                      class="form-check-input"
+                      value=""
+                      (change)="selectItems($event, item.id, i)"
+                    />
+                    <label class="form-check-label" for="itemCheck_{{ i }}">
+                      {{ item?.status }}
+                    </label>
+                  </div>
+                  <span
+                    *ngIf="scope == 'list'"
+                    class="badge bg-light text-dark"
+                    >{{ item?.status | titlecase }}</span
+                  >
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="table-action">
+                <img src="assets/icons/dots.png" alt="" />
+                <ul>
+                  <!-- <li (click)="printByID(item.id)">
+                    Print Preview<span
+                      ><img src="assets/icons/print.png" alt=""
+                    /></span>
+                  </li> -->
+                  <li (click)="editItem(item)">Edit</li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+  
+          <tr class="text-center">
+            <td colspan="15" *ngIf="purchaseOrderList?.length == 0">
+              No data found.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,123 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>KEY ITEMS</h2>
+
+        <div class="action-button-container">
+            <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown"
+                aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span><img src="assets/usermanagement/download_csv.png" class="export"><strong>CSV</strong> </span>
+                </li>
+            </ul>
+            <button (click)="AddNewWBS()">ADD NEW WBS</button>
+        </div>
+
+    </div>
+    <div class="component-body">
+        <div style=" width: 100%;overflow-x: scroll; ">
+
+            <table *ngIf="WbsList.length > 0" class="text-center">
+
+                <tr>
+                    <th style=" width: 6%; ">S.No</th>
+                    <th class="wbsname">KEY Item</th>
+                    <th>WBS Category</th>
+                    <!-- <th>WBS Item code</th> -->
+                    <!-- <th>WBS Heads</th> -->
+                    <!-- <th style=" min-width: 140px; ">UOM</th> -->
+                    <th style=" width: 10%; ">Action </th>
+                </tr>
+
+                <tr *ngFor="let item of WbsList; let i = index">
+                    <td style=" width: 6%; ">{{ (pageSize*(page-1)) + i+1.}}</td>
+                    <td class="wbsname">{{item.wbs_name}}</td>
+                    <td class="text-capitalize">{{item.category}}</td>
+                    <!-- <td> {{item.schedule_h_code}}</td>
+                    <td class="no-padding">
+                        <table>
+                            <tr *ngFor="let key of item.key_scopes; let j = index">
+                                <td>{{key.keyscope}}&nbsp;</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="no-padding">
+                        <table>
+                            <tr *ngFor="let uom of item.key_scopes; let j = index">
+                                <td>{{uom.uom_name}}&nbsp;</td>
+                            </tr>
+                        </table>
+                    </td>  -->
+                    <td style=" width: 10%; ">
+                        <div class="custom-section">
+                            <div class="dropdown">
+                                <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                <div class="dropdown-content">
+                                    <div class="img-container">
+                                        <span (click)="editWBSData(item.id)"><img src="assets/usermanagement/edit.png" alt="">&nbsp;&nbsp;<label>Edit WBS</label></span>
+                                        <span (click)="deleteWBS(item.id)" data-bs-toggle="modal" data-bs-target="#deleteWBSModel"><img src="assets/usermanagement/delete.png" alt="">&nbsp;&nbsp;<label>Delete WBS</label></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>   
+                </tr>
+            </table>
+            <table>
+                <tr class="text-center" *ngIf="WbsList.length == 0">
+                    <td colspan="4">No data found.</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+
+    
+
+    
+</div>
+
+<div class="offcanvas offcanvas-end" style="min-width: 50%;" tabindex="-1" id="addWBSCanvas" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Add WBS</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <app-add-wbs (parentFun)="closeUserCanvas()" [tenderId]="selectedTender"></app-add-wbs>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" style="min-width: 42%;" tabindex="-1" id="editWBSCanvas" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Edit WBS</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <app-edit-wbs #editWBSValue (parentFun)="closeUserCanvas()" [tenderId]="selectedTender"></app-edit-wbs>
+    </div>
+</div>
+
+
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteWBSModel"  data-bs-keyboard="false" tabindex="-1"  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="">Are You Sure ?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Do you want to delete this WBS ?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="finalDeleteWbs()">Yes</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+        </div>
+        </div>
+    </div>
+</div>

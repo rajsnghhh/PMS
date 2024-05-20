@@ -1,0 +1,129 @@
+<form name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+
+    <div class="flex-div">
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.name != '' }">
+            <input type="text" class="form-control" required id="add1" name="name" [(ngModel)]="addUser.name"
+                #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.errors }">
+            <label class="floating-label">Enter Tax Name <span class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && name.errors" class="invalid-feedback">
+                <div *ngIf="name.errors['required']">Tax Name is required</div>
+            </div>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.short_name  != '' }">
+            <input type="text" class="form-control" id="add1" name="short_name " [(ngModel)]="addUser.short_name "
+                #short_name ="ngModel" [ngClass]="{ 'is-invalid': f.submitted && short_name .errors }">
+            <label class="floating-label">Enter Short Name</label>
+            <div *ngIf="f.submitted && short_name .errors" class="invalid-feedback">
+                <div *ngIf="short_name .errors['required']">Short Name is required</div>
+            </div>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.percentage  != ''}">
+            <input type="text" amountNumber
+                class="form-control" required id="add1" name="percentage " [(ngModel)]="addUser.percentage " #percentage ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && percentage .errors }">
+            <label class="floating-label">Enter Rate (%) <span class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && percentage .errors" class="invalid-feedback">
+                <div *ngIf="percentage .errors['required']">Rate is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="applicable_type "
+                [(ngModel)]="addUser.applicable_type " #applicable_type ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && applicable_type .errors }">
+                <option selected disabled value="">Select Applicable Type</option>
+                <option value="amount_wise">AMOUNT WISE</option>
+                <option value="percent_wise">PERCENT WISE</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.applicable_type  =='' }">Select
+                Applicable type</label>
+            <div *ngIf="f.submitted && applicable_type .errors" class="invalid-feedback">
+                <div *ngIf="applicable_type .errors['required']">Please select Applicable Type</div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="tax_type" [(ngModel)]="addUser.tax_type"
+                #tax_type="ngModel" [ngClass]="{ 'is-invalid': f.submitted && tax_type.errors }">
+                <option selected disabled value="">Select Tax Type</option>
+                <option value="vat_tax">VAT TAX</option>
+                <!-- <option value="gst_tax">GST TAX</option> -->
+                <option value="excise_tax">Excise TAX</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.tax_type =='' }">Select Tax
+                type</label>
+            <div *ngIf="f.submitted && tax_type.errors" class="invalid-feedback">
+                <div *ngIf="tax_type.errors['required']">Please select Tax Type</div>
+            </div>
+        </div>
+        <div class="mb-3" style="padding: 8px;">
+            <!-- <input type="checkbox"  name="vatax" [(ngModel)]="addUser.vatax"
+            #vatax="ngModel">
+            <label for="vatax"> Is Additional VAT Tax</label> -->
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.educational_cess != ''}">
+            <input type="text" amountNumber
+                class="form-control"  id="add1" name="educational_cess" [(ngModel)]="addUser.educational_cess" #educational_cess="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && educational_cess.errors }">
+            <label class="floating-label">Enter Education Cess.(%)</label>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.she_cess  != ''}">
+            <input type="text" amountNumber
+                class="form-control"  id="add1" name="she_cess " [(ngModel)]="addUser.she_cess " #she_cess ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && she_cess .errors }">
+            <label class="floating-label">Enter SHE Cess.(%)</label>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.swachh_bharat_cess  != ''}">
+            <input type="text" amountNumber
+                class="form-control"  id="add1" name="swachh_bharat_cess " [(ngModel)]="addUser.swachh_bharat_cess " #swachh_bharat_cess ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && swachh_bharat_cess .errors }">
+            <label class="floating-label">Enter Swachh Bharat Cess.(%)</label>
+        </div>
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="sbc_account "
+                [(ngModel)]="addUser.sbc_account " #sbc_account ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && sbc_account .errors }">
+                <option selected disabled value="">Select SBC Account</option>
+                <option *ngFor="let account of accountNameList" value={{account.id}}>{{account.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.sbc_account  =='' }">Select
+                SBC Account</label>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.krishi_kalyan_cess  != ''}">
+            <input type="text" amountNumber
+                class="form-control"  id="add1" name="krishi_kalyan_cess " [(ngModel)]="addUser.krishi_kalyan_cess " #krishi_kalyan_cess ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && krishi_kalyan_cess .errors }">
+            <label class="floating-label">Enter Krishi Kalyan Cess.(%)</label>
+        </div>
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="krishi_kalyan_account "
+                [(ngModel)]="addUser.krishi_kalyan_account " #krishi_kalyan_account ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && krishi_kalyan_account .errors }">
+                <option selected disabled value="">Select Krishi Kalyan Account</option>
+                <option *ngFor="let account of accountNameList" value={{account.id}}>{{account.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.krishi_kalyan_account  =='' }">Select
+                Krishi Kalyan Account</label>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.tax_rate  != ''}">
+            <input type="text" amountNumber
+                class="form-control"  id="add1" name="tax_rate " [(ngModel)]="addUser.tax_rate " #tax_rate ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && tax_rate .errors }">
+            <label class="floating-label">Tax Rate</label>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.remarks != ''}">
+            <input type="text"
+                class="form-control"  id="add1" name="remarks" [(ngModel)]="addUser.remarks" #remarks="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && remarks.errors }">
+            <label class="floating-label">Remark</label>
+        </div>
+
+    </div>
+
+    <div class="btd-section">
+        <button type="submit" class="btn btn-primary" *ngIf="scope == 'add'">SAVE</button>
+        <button type="submit" class="btn btn-primary" *ngIf="scope == 'edit'">UPDATE</button>
+        <button type="button" class="btn btn-primary non-active-btn" (click)="resetADD(f)">BACK</button>
+    </div>
+
+</form>

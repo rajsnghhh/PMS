@@ -1,0 +1,126 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Archived User List</h2>
+
+        <div class="action-button-container">
+            <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown" aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>  
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span ><img src="assets/usermanagement/download_csv.png"  class="export" ><strong>CSV</strong> </span>
+                </li>
+            </ul> 
+            <button data-bs-toggle="offcanvas" data-bs-target="#addZone" aria-controls="offcanvasRight" (click)="gotoTenderList()">USER LIST<img src="assets/header/add.png" alt=""></button>
+        </div>
+
+    </div>
+    <div class="component-body">
+        <div class="scrollable-table-container">
+            <table>
+
+                <tr>
+                    <th>S.No</th>
+                    <th>Emp. Code</th>
+                    <th class="contact-col">Contact</th>
+                    <th>Company</th>
+                    <th>Profile</th>
+                    <th>Zone</th>
+                    <th>Department</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+
+                <tr *ngFor="let deluser of deletedUserList; let i = index" [attr.data-index]="i" > 
+                    <td>{{ (pageSize*(page-1)) + i+1.}}</td>
+                    <td>{{deluser.employe_code}}</td>
+                    <td>
+                        <div class="contact-card">
+                            <div class="contact-details">
+                                <h1>{{deluser.first_name}} {{deluser.last_name}}</h1>
+                                <div class="iconcontainer">
+                                    <div class="active-icon" *ngIf="deluser.phone_no != ''">
+                                        <span><img src="assets/usermanagement/mobile.png" alt=""></span> {{deluser.phone_no | phoneNumber}}
+                                    </div>
+                                    <div class="active-time" *ngIf="deluser.email != ''">
+                                        <span><img src="assets/login/email-icon.png" alt=""></span> {{deluser.email}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{deluser.company_details[0]?.name}}</td>
+                    <td>{{deluser.role_details?.role_name}}</td>
+                    <td>{{deluser.zone_details?.zone_name}}</td>
+                    <td>{{deluser.department_details[0]?.department}}</td>
+                    <td>{{deluser.designation_details[0]?.designation}}</td>
+                    <td class="close"><img src="assets/icons/point.png" alt="">Archived</td>
+                    <td class="">
+                        <span data-bs-toggle="modal" class="restore" (click)="deleteUser(deluser.id)" data-bs-target="#restoreTender"><img src="assets/icons/restore.png" alt="">&nbsp;Restore</span>
+                        <!-- <div class="custom-section">
+                            <div class="dropdown">
+                                <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                <div class="dropdown-content">
+                                    <div class="img-container">
+                                       <span data-bs-toggle="modal" data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png" alt="">&nbsp;&nbsp;<label>Delete User</label></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </td>
+                </tr>
+                <!-- <tr class="text-center">
+                <td colspan="11" *ngIf="List.length == 0">No data found.</td>
+            </tr> -->
+
+            </table>
+        </div>
+    </div>
+    <!-- <app-table-paginate></app-table-paginate> -->
+
+</div>
+
+<!-- Modal Restore -->
+<div class="modal fade" id="restoreTender" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to restore this User ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="retriveUser()" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this User ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

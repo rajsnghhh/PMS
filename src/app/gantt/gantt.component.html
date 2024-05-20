@@ -1,0 +1,354 @@
+<section hidden>
+  
+<h3>Options</h3>
+
+<label for="">Editable</label>
+<select [(ngModel)]="vEditable" (change)="ngOnInit()" placeholder="Editable">
+  <option value="false">No</option>
+  <option value="true">Yes</option>
+</select>
+
+<input type="text" [(ngModel)]="delay" (change)="ngOnInit()" placeholder="Tooltip timeout">
+
+<h4>Show / Hide columns or informations</h4>
+<label for="">Show Resource</label>
+<select [(ngModel)]="vShowRes" (change)="ngOnInit()" placeholder="Show Resource">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+
+<label for="">Show Cost</label>
+<select [(ngModel)]="vShowCost" (change)="ngOnInit()" placeholder="Show Cost">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+--
+
+
+<label for="">Show UOM</label>
+<select [(ngModel)]="vShowUom" (change)="ngOnInit()" placeholder="Show UOM">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show Completation</label>
+<select [(ngModel)]="vShowComp" (change)="ngOnInit()" placeholder="Show Completation">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show Duration</label>
+<select [(ngModel)]="vShowDur" (change)="ngOnInit()" placeholder="Show Duration">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show StartDate</label>
+<select [(ngModel)]="vShowStartDate" (change)="ngOnInit()" placeholder="Show StartDate">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show ShowEndDate</label>
+<select [(ngModel)]="vShowEndDate" (change)="ngOnInit()" placeholder="Show ShowEndDate">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show PlanStartDate</label>
+<select [(ngModel)]="vShowPlanStartDate" (change)="ngOnInit()" placeholder="Show PlanStartDate">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show PlanEndDate</label>
+<select [(ngModel)]="vShoPlanEndDate" (change)="ngOnInit()" placeholder="Show PlanEndDate">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show ShowEndWeekDate</label>
+<select [(ngModel)]="vShowEndWeekDate" (change)="ngOnInit()" placeholder="Show ShowEndWeekDate">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+<label for="">Show TaskInfoLink</label>
+<select [(ngModel)]="vShowTaskInfoLink" (change)="ngOnInit()" placeholder="Show TaskInfoLink">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+--
+
+
+
+<h4>Dev Options</h4>
+  
+
+<label for="">Debug</label>
+<select [(ngModel)]="vDebug" (change)="ngOnInit()" placeholder="Debug">
+  <option value="false">No</option>
+  <option value="true">Yes</option>
+</select>
+
+<label for="">Use Sort</label>
+<select [(ngModel)]="vUseSort" (change)="ngOnInit()" placeholder="UseSort">
+  <option value="false">No</option>
+  <option value="true">Yes</option>
+</select>
+
+
+<button (click)="clear()">Clear Data</button>
+
+<hr/>
+
+<h3>Live Reload</h3>
+<button (click)="changeData()">New Data</button>
+
+<h3>Custom Options</h3>
+</section>
+<button *ngIf="selectedBoqObj?.status == 'pending'" (click)="addNew()" [ngClass]="{'hidden': this.boqStatus == 'blank' }">Add Item</button>
+<button *ngIf="selectedBoqObj?.status == 'approved' || selectedBoqObj?.status == 'rejected'" (click)="amendentBOQ()" >Amendment BOQ : {{selectedBoqObj.name}}</button>
+<br>
+<br>
+<!-- <button (click)="setAce()">Customize Ace</button> -->
+
+<hr/>
+<div class="offcanvas offcanvas-end" style=" width: 86% !important; " tabindex="-1" id="offcanvasRightadd" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">{{boqScope}} BOQ</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body" *ngIf="this.boqStatus != 'blank'">
+    <form name="itemData" #f="ngForm" (ngSubmit)="f.form.valid && addItem()" novalidate>
+      <div class="flex-div">
+        <div class="mb-3">
+          <select class="form-select" aria-label="Default select example" name="parent" [(ngModel)]="itemData.parent"
+              [disabled]="disabledcodeEdit"
+              #parent="ngModel" [ngClass]="{ 'is-invalid': f.submitted && parent.errors }">
+              <option selected value="">Select Parent</option>
+              <option *ngFor="let listdata of addedList" [disabled]="listdata.id == selectedforedit" value={{listdata.id}}>{{listdata.wbs}}</option>
+          </select>
+          <label class="floating-label-select" [ngClass]="{'insideDropdown': itemData.parent =='' }">Select Parent</label>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': itemData.code != '' }">
+          <input type="text" class="form-control" required name="code"
+              [(ngModel)]="itemData.code" #code="ngModel"
+              [disabled]="disabledcodeEdit"
+              [ngClass]="{ 'is-invalid': f.submitted && code.errors }">
+          <label class="floating-label">Enter code <span class="asterisk">*</span></label>
+          <div *ngIf="f.submitted && code.errors" class="invalid-feedback">
+              <div *ngIf="code.errors['required']">Code required</div>
+          </div>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': itemData.content != '' }">
+              <input type="text" class="form-control" required id="add1" name="content"
+                  [(ngModel)]="itemData.content" #content="ngModel"
+                  [disabled]="disabledcodeEdit"
+                  [ngClass]="{ 'is-invalid': f.submitted && content.errors }">
+              <label class="floating-label">Enter Item <span class="asterisk">*</span></label>
+              <div *ngIf="f.submitted && content.errors" class="invalid-feedback">
+                  <div *ngIf="content.errors['required']">Item required</div>
+              </div>
+        </div>
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" [disabled]="disabledcodeEdit" name="uom" [(ngModel)]="itemData.uom"
+                #uom="ngModel" [ngClass]="{ 'is-invalid': f.submitted && uom.errors }">
+                <option selected disabled value="">Select UOM</option>
+                <option *ngFor="let unitmeasure of uomList" value={{unitmeasure.id}}>{{unitmeasure.symbol}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': itemData.uom =='' }">Select UOM</label>
+            <div *ngIf="f.submitted && uom.errors" class="invalid-feedback">
+                <div *ngIf="uom.errors['required']">Please Select UOM</div>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': itemData.quantity != '' || itemData.quantity == 0 }">
+        
+            <input type="text" class="form-control" id="add1" name="quantity"
+                [(ngModel)]="itemData.quantity" #quantity="ngModel"
+                [disabled]="disabledcodeEdit"
+                amountNumber
+                [ngClass]="{ 'is-invalid': f.submitted && quantity.errors }">
+            <label class="floating-label">Enter Quantity</label>
+            <div *ngIf="f.submitted && quantity.errors" class="invalid-feedback">
+                <div *ngIf="quantity.errors['required']">Quantity is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': itemData.rate != '' ||  itemData.rate == 0}">
+          <input type="text" class="form-control" id="add1" name="rate"
+              [(ngModel)]="itemData.rate" #rate="ngModel"
+              [disabled]="disabledcodeEdit"
+              amountNumber
+              [ngClass]="{ 'is-invalid': f.submitted && rate.errors }">
+          <label class="floating-label">Enter Rate</label>
+          <div *ngIf="f.submitted && rate.errors" class="invalid-feedback">
+              <div *ngIf="rate.errors['required']">Rate is required</div>
+          </div>
+        </div>
+        
+
+        <div *ngIf="boqWithTime" class="mb-3" [ngClass]="{ 'float-now': itemData.start_date != '' }">
+          <input type="date" class="form-control" name="start_date"
+              [(ngModel)]="itemData.start_date" #start_date="ngModel"
+              [disabled]="disabledcodeEdit"
+              amountNumber
+              [ngClass]="{ 'is-invalid': f.submitted && start_date.errors }">
+          <label class="floating-label">Enter Start Date</label>
+          <div *ngIf="f.submitted && start_date.errors" class="invalid-feedback">
+          </div>
+        </div>
+
+        <div *ngIf="boqWithTime" class="mb-3" [ngClass]="{ 'float-now': itemData.end_date != '' }">
+          <input type="date" class="form-control" name="end_date"
+              [(ngModel)]="itemData.end_date" #end_date="ngModel"
+              [disabled]="disabledcodeEdit"
+              amountNumber
+              [ngClass]="{ 'is-invalid': f.submitted && end_date.errors }">
+          <label class="floating-label">Enter End Date</label>
+          <div *ngIf="f.submitted && end_date.errors" class="invalid-feedback">
+          </div>
+        </div>
+
+
+          
+      </div>
+      <button type="button"  *ngIf="boqScope == 'Edit'" class="btn btn-danger delete" (click)="deleteItem()">Delete</button>
+      <button type="submit" class="btn btn-primary" *ngIf="boqScope != 'View'">{{boqScope}} Item</button>
+  </form>
+  <div class="lmpi-scope" *ngIf="(boqScope == 'Edit' || boqScope == 'View') && selectedRowItem?.id">
+    <div class="lmpi-header">
+        <section [ngClass]="{'active' : lmpiScope == 'labour'}" (click)="changelmpiscope('labour')">Labour ( L )
+        </section>
+        <section [ngClass]="{'active' : lmpiScope == 'material'}" (click)="changelmpiscope('material')">Materials (
+            M )</section>
+        <section [ngClass]="{'active' : lmpiScope == 'pnm'}" (click)="changelmpiscope('pnm')">Plant Machinery ( P )
+        </section>
+        <section [ngClass]="{'active' : lmpiScope == 'idc'}" (click)="changelmpiscope('idc')">Indirect cost ( IDC-I
+            )</section>
+    </div>
+    <div class="lmpi-content">
+        <app-pne 
+            *ngIf="lmpiScope == 'pnm'"
+            [wbsID]="selectedRowItem?.id"
+            [keyScopeID]="selectedRowItem?.id"
+            [tenderID]="TenderNumber"
+            [DisableModify]="disabledcodeEdit"
+            [wbsLinkedData]="selectedRowItem"
+            [selectedTab]="selectedTab"
+        >
+        </app-pne>
+        <app-material 
+            *ngIf="lmpiScope == 'material'"
+            [wbsID]="selectedRowItem?.id"
+            [keyScopeID]="selectedRowItem?.id"
+            [tenderID]="TenderNumber"
+            [DisableModify]="disabledcodeEdit"
+            [wbsLinkedData]="selectedRowItem"
+            [selectedTab]="selectedTab"
+        >
+        </app-material>
+        <app-labour 
+            *ngIf="lmpiScope == 'labour'"
+            [wbsID]="selectedRowItem?.id"
+            [keyScopeID]="selectedRowItem?.id"
+            [tenderID]="TenderNumber"
+            [DisableModify]="disabledcodeEdit"
+            [wbsLinkedData]="selectedRowItem"
+            [selectedTab]="selectedTab"
+        >
+        </app-labour>
+        <app-idc 
+            *ngIf="lmpiScope == 'idc'"
+            [wbsID]="selectedRowItem?.id"
+            [keyScopeID]="selectedRowItem?.id"
+            [tenderID]="TenderNumber"
+            [DisableModify]="disabledcodeEdit"
+            [wbsLinkedData]="selectedRowItem"
+            [selectedTab]="selectedTab"
+        >
+        </app-idc>
+    </div>
+</div>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRigtBoq" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel"><span *ngIf="!selectedBoqObj.id">Add</span> <span *ngIf="selectedBoqObj.id">Amendent</span> BOQ</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onboqSubmit()" novalidate>
+      <div class="flex-div">
+          <div class="mb-3" [ngClass]="{ 'float-now': form.name != '' }">
+              <label class="floating-label">Name<span class="asterisk">*</span></label>
+              <input type="text" [ngClass]="{'disable': disableFrom == true }" class="form-control" name="name" [(ngModel)]="form.name" required #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.errors }" />
+              <div *ngIf="f.submitted && name.errors" class="invalid-feedback">
+                <div *ngIf="name.errors['required']">Name is required</div>
+              </div>
+            </div>
+      </div>
+      <div class="flex-div" *ngIf="boqWithTime">
+          <div class="mb-3" [ngClass]="{ 'float-now': form.start_date != '' }">
+              <label class="floating-label">Start Date<span class="asterisk">*</span></label>
+              <input type="date" [ngClass]="{'disable': disableFrom == true }" class="form-control" name="start_date" [(ngModel)]="form.start_date" required  #start_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && start_date.errors }" />
+              <div *ngIf="f.submitted && start_date.errors" class="invalid-feedback">
+                <div *ngIf="start_date.errors['required']">Start date is required</div>
+              </div>
+            </div>
+            <div class="mb-3" [ngClass]="{ 'float-now': form.end_date != '' }">
+              <label class="floating-label">End date<span class="asterisk">*</span></label>
+              <input type="date" [ngClass]="{'disable': disableFrom == true }" class="form-control" name="end_date" [(ngModel)]="form.end_date" required end_date #end_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && end_date.errors }" />
+              <div *ngIf="f.submitted && end_date.errors" class="invalid-feedback">
+                <div *ngIf="end_date.errors['required']">End date is required</div>
+              </div>
+            </div>
+      </div>
+  
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" ><span *ngIf="!selectedBoqObj.id">Add</span> <span *ngIf="selectedBoqObj.id">Amendent</span></button>
+      </div>
+  </form>
+  
+  </div>
+</div>
+
+
+<h3 *ngIf="editorOptions.language">Force Language to {{editorOptions.language}}</h3>
+<div style="height:400px;" [ngClass]="{'hidden': this.boqStatus == 'blank' }">
+  <ng-gantt  [ngClass]="{'onlygantt': !boqWithTime }" [options]="editorOptions" [data]="data" #editor></ng-gantt> 
+
+</div>
+<section *ngIf="this.boqStatus == 'blank'">
+  <div class="noboq-found">
+    <h1>No BOQ Item Created</h1>
+    <button (click)="addNewBOQ()">Create One</button>
+  </div>
+</section>
+<!-- 
+<h3>Multiple jsgantt</h3>
+<div style="height:600px;">
+  <ng-gantt [options]="editorOptions" [data]="data2" #editorTwo></ng-gantt>
+</div> -->

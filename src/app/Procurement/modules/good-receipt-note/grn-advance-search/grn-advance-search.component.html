@@ -1,0 +1,312 @@
+<div class="main-container">
+    <div class="component-header">
+      <h2>Goods Receipt Note List</h2>
+      <div class="action-button-container">
+        <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole" aria-controls="offcanvasRight" (click)="addNew()">ADD NEW <img src="assets/header/add.png" alt="">
+        </button>
+        <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole" aria-controls="offcanvasRight" (click)="addNewgst()">ADD(GST) NEW <img src="assets/header/add.png" alt="">
+        </button>
+        <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole" aria-controls="offcanvasRight" (click)="importGRN()">IMPORT GRN <img src="assets/header/add.png" alt="">
+        </button>
+        <button hidden [routerLink]="['/pms/store/procurement/grn/multiple-add']">Add Multiple GRN</button>
+      </div>
+    </div>
+  </div>
+  <!-- Advanced Search Section -->
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"> Advanced Search </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <form [formGroup]="purchaseOrderAdvancedSearchForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>Period</label>
+                    <input type="date" formControlName="date__gt" placeholder="" id="date" class="form-control">
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>To</label>
+                    <input type="date" formControlName="date__lt" placeholder="" id="date" class="form-control">
+                  </div>
+                </div>
+                </div>
+              </div>
+
+
+              <div class="col-lg-6 col-md-6 col-6">
+                <div class="adform" ngDefaultControl formControlName="received_from">
+                  <label>Received From</label>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="radio" value="supplier_transfer" name="optradio" class="form-check-input" id="received_from" name="received_from"> Supplier/ Transfer </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="radio" value="customer" name="optradio" class="form-check-input" id="received_from" name="received_from"> Customer </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>GRN&nbsp;Site</label>
+                  <select id="sel1" class="form-control" ngDefaultControl formControlName="site">
+                    <option value="">-- select --</option>
+                    <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                      {{siteData.site_name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>Location</label>
+                  <input type="text" formControlName="site__location" class="form-control" placeholder="">
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>GRN Status</label>
+                  <select id="sel1" class="form-control" ngDefaultControl formControlName="status">
+                    <option value="">-- select --</option>
+                    <option value="approved">Approved</option>
+                    <option value="pending">Pending</option>
+                    <option value="rejected">Rejected</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>Vendor</label>
+                  <select id="sel1" class="form-control" ngDefaultControl formControlName="vendor">
+                    <option value="">-- select --</option>
+                    <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                      {{vendor.vendor_master_data.vendor_name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <!-- <div class="col-lg-3 col-md-3 col-3"><div class="adform"><label>Is Vendor</label><div class="form-check-inline"><label class="form-check-label"><input type="radio" value="all" name="optradio" class="form-check-input"
+                                              id="is_vendor" name="is_vendor">
+                                          All
+                                      </label></div><div class="form-check-inline"><label class="form-check-label"><input type="radio" value="exists" name="optradio" class="form-check-input"
+                                              id="is_vendor" name="is_vendor">
+                                          Exists</label></div><div class="form-check-inline"><label class="form-check-label"><input type="radio" value="without" name="optradio" class="form-check-input"
+                                              id="is_vendor" name="is_vendor">
+                                          Without</label></div></div></div> -->
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>Job Site</label>
+                  <select id="sel1" class="form-control" ngDefaultControl formControlName="job_site">
+                    <option value="">-- select --</option>
+                    <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                      {{siteData.site_name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>Manual Slip No</label>
+                  <input type="text" formControlName="manual_slip_no" class="form-control" placeholder="">
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>Transporter</label>
+                  <select id="sel1" formControlName="transporter" class="form-control">
+                    <option disabled>-- select --</option>
+                    <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                      {{vendor.vendor_master_data.vendor_name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>PO Site</label>
+                  <select id="sel1" class="form-control" ngDefaultControl formControlName="purchase_order__site">
+                    <option value="">-- select --</option>
+                    <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                      {{siteData.site_name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- <div class="col-lg-3 col-md-3 col-3"><div class="adform"><label>Transport Billed</label><select id="sel1" class="form-control" ngDefaultControl
+                                      formControlName="transport_billed"><option value="">-- select --</option><option value="all">All</option><option value="billed">Billed</option><option value="unbilled">Unbilled</option></select></div></div> -->
+              <!-- <div class="col-lg-3 col-md-3 col-3"><div class="adform"><label>GRN At Party (Vendor)</label><select id="sel1" class="form-control" ngDefaultControl
+                                      formControlName="transport_billed"><option value="">-- select --</option></select></div></div> -->
+              <!-- <div class="col-lg-3 col-md-3 col-3"><div class="adform"><label>Party (Customer GRN)</label><input type="text" formControlName="party_customer_grn" class="form-control"
+                                      placeholder=""></div></div> -->
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>Item&nbsp;Group</label>
+                  <select id="sel1" class="form-control" ngDefaultControl formControlName="procurement_grn_item__item__material_type" (change)="typeChange()">
+                    <option value="">-- select --</option>
+                    <option *ngFor="let type of materialTypeList" value={{type.id}}>
+                      {{type.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>Item</label>
+                  <select id="sel1" class="form-control" formControlName="procurement_grn_item__item__material_sub_type" ngDefaultControl>
+                    <option value="">-- select --</option>
+                    <option *ngFor="let subtype of materialSubTypeList?.material_sub_type" value={{subtype.id}}>
+                      {{subtype.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>Received By</label>
+                  <select id="sel1" class="form-control" formControlName="received_by" ngDefaultControl>
+                    <option disabled>-- select --</option>
+                    <option *ngFor="let user of userList" value="{{user.id}}">
+                      {{user.full_name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>Carrying Veh. No.</label>
+                  <input type="text" formControlName="carrying_vehicle_no" class="form-control" placeholder="">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>GRN No.</label>
+                  <input type="text" formControlName="request_code" class="form-control" placeholder="">
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>PO No.</label>
+                  <input type="text" formControlName="purchase_order__request_code" class="form-control" placeholder="">
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>RST No.</label>
+                  <input type="text" formControlName="rst_no" class="form-control" placeholder="">
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>Challan No.</label>
+                  <input type="text" formControlName="challan_no" class="form-control" placeholder="">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>Lab&nbsp;Report No.</label>
+                  <input type="text" formControlName="lab_report_no" class="form-control" placeholder="">
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>Entry By</label>
+                  <select id="sel1" class="form-control" formControlName="created_by" ngDefaultControl>
+                    <option disabled>-- select --</option>
+                    <option *ngFor="let user of userList" value="{{user.id}}">
+                      {{user.full_name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="adform">
+                  <label>Edit By</label>
+                  <select id="sel1" class="form-control" formControlName="updated_by" ngDefaultControl>
+                    <option disabled>-- select --</option>
+                    <option *ngFor="let user of userList" value="{{user.id}}">
+                      {{user.full_name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-2 col-2">
+                <div class="adform">
+                  <label for="is_royalty" class="checkbox-label">Is Royalty</label>
+                  <input type="checkbox" formControlName="procurement_grn_item__is_royalty" id="is_royalty" class="custom-checkbox">
+                </div>
+                <!--    [(ngModel)]="form.grn_items[i].is_royalty" #is_royalty="ngModel" name="is_royalty" -->
+              </div>
+              <div class="col-lg-1 col-md-1 col-1">
+                <div class="adform">
+                  <label for="is_royalty" class="checkbox-label">Is ISTP</label>
+                  <input type="checkbox" formControlName="procurement_grn_item__is_istp" id="is_royalty" class="custom-checkbox">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-3">
+                <div class="adform">
+                  <label>Edit Date From</label>
+                  <input type="date" formControlName="updated_at__gt" class="form-control" placeholder="">
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-3">
+                <div class="adform">
+                  <label>Edit Date To</label>
+                  <input type="date" formControlName="updated_at__lt" class="form-control" placeholder="">
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-3">
+                <div class="adform">
+                  <label>Entry Date From</label>
+                  <input type="date" formControlName="created_at__gt" class="form-control" placeholder="">
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-3">
+                <div class="adform">
+                  <label>Entry Date To</label>
+                  <input type="date" formControlName="created_at__lt" class="form-control" placeholder="">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-12">
+              <div class="btd-section">
+                <!-- <button type="submit" class="btn-cancel">CANCEL</button> -->
+                <button type="submit" class="btn-save">SEARCH</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Advanced Search Section End -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightImport" aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Import GRN</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" (click)="reloadData()"></button>
+      </div>
+      <div class="offcanvas-body">
+        <app-import-grn></app-import-grn>
+      </div>
+    </div>
+    <app-grn-list [purchaseOrderAdvancedSearchFormValue]="purchaseOrderAdvancedSearchFormValue"></app-grn-list>

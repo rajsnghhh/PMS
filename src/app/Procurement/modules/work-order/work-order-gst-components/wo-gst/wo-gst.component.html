@@ -1,0 +1,14 @@
+<div class="createrequisition-section">
+
+    <app-wo-gst-top-card (parrentAction)="appendData($event)"></app-wo-gst-top-card>
+    <!-- [scope]="scope" [prefieldData]="prefieldData" -->
+    <app-wo-gst-table-card (parrentAction)="appendData($event)"></app-wo-gst-table-card>
+    <app-wo-gst-last-card (parrentAction)="appendData($event)"></app-wo-gst-last-card>
+
+    <div class="btd-section">
+        <!--  *ngIf="scope == 'view'"--> <button type="button" (click)="backtolist()" class="btn-cancel">CANCEL</button>
+        <!-- *ngIf="scope == 'add'"  --> <button type="submit" class="btn-save" (click)="createWO()">SAVE</button>
+        <!-- *ngIf="scope == 'update'" --> 
+        <!-- <button type="submit" class="btn-save" (click)="updateWO()">UPDATE</button> -->
+    </div>
+</div>

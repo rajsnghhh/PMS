@@ -1,0 +1,28 @@
+<form role="form" [formGroup]="editdesignationForm">
+    <div class="mb-3">
+        <select class="form-select"  formControlName="roleid"
+        [ngClass]="displayFieldCss(editdesignationForm,'roleid')" [(ngModel)]="parrentid">
+          <option selected disabled value="">Select Parent Role </option>
+          <option *ngFor="let designation of roleListValue" value="{{designation.id}}">{{designation.designation}}</option>
+      </select>
+      <label class="floating-label-select" [ngClass]="{'insideDropdown': parrentid =='' }">Select Parent Role <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(editdesignationForm,'roleid')">
+            <span class="text-danger" *ngIf="editdesignationForm.get('roleid')?.errors?.['required']">Parent Role is required</span>
+          </div>
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': designationname != '' }">
+        <input type="text" class="form-control" id="role"  [(ngModel)]="designationname" formControlName="name"
+            [ngClass]="displayFieldCss(editdesignationForm,'name')">
+            <label class="floating-label">Enter Role Name <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(editdesignationForm,'name')">
+            <span class="text-danger" *ngIf="editdesignationForm.get('name')?.errors?.['required']">Role Name is required</span>
+        </div>
+    </div>
+
+    <div class="mb-3" [ngClass]="{ 'float-now': designationname != '' }">
+        <input type="text" class="form-control" id="description"  [(ngModel)]="descriptionname" formControlName="description">
+            <label class="floating-label">Enter designation</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="editdesignation()">UPDATE</button>
+</form>

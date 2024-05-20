@@ -1,0 +1,47 @@
+<form role="form" [formGroup]="GroupForm">
+
+    <div class="mb-3" [ngClass]="{ 'float-now': addGroup.groupname != '' }">
+        <input type="text" class="form-control" formControlName="group_name" [(ngModel)]="addGroup.groupname"
+        [ngClass]="displayFieldCss(GroupForm,'group_name')" id="role">
+        <label class="floating-label">Enter Group Name <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(GroupForm,'group_name')">
+            <span class="text-danger" *ngIf="GroupForm.get('group_name')?.errors?.['required']">Group Name is required</span>
+          </div>
+    </div>
+    <div class="mb-3">
+        <angular2-multiselect  formControlName="role"
+        [ngClass]="displayFieldCss(GroupForm,'role')" [data]="dropdownRolelist" [(ngModel)]="selectedRole"
+            [settings]="dropdownRoleSettings">
+        </angular2-multiselect>
+        <label class="floating-label-select" [ngClass]="{'insideDropdown': selectedRole =='' }">Select Action Role <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(GroupForm,'role')">
+            <span class="text-danger" *ngIf="GroupForm.get('role')?.errors?.['required']">Action role is required</span>
+          </div>
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': addGroup.value_type != '' }">
+        <select class="form-select" formControlName="value_type" [(ngModel)]="addGroup.value_type"
+         aria-label="Default select example">
+            <option value="" selected disabled>Select View Type</option>
+            <option value='NORMAL'>Normal</option>
+            <option value='TABULAR'>Tabular</option>
+        </select>
+        <label class="floating-label-select" [ngClass]="{'insideDropdown': addGroup.value_type =='' }">Select View Type </label>
+        <div class="required" *ngIf="isFieldValid(GroupForm,'value_type')">
+            <span class="text-danger" *ngIf="GroupForm.get('value_type')?.errors?.['required']">View Type is required</span>
+          </div>
+    </div>
+
+
+    <label class="container">Is This Skippable?
+        <input type="checkbox" name="is_skippable" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="is_skippable">
+        <span class="checkmark"></span>
+    </label>
+    <label class="container">Is Multiple?
+        <input type="checkbox" name="is_multiple" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="is_multipl">
+        <span class="checkmark"></span>
+    </label>
+
+    <button type="submit" class="btn btn-primary" (click)="addNewGroup()">ADD</button>
+</form>

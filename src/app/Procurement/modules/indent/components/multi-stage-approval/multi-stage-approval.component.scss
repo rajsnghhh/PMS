@@ -1,0 +1,105 @@
+.inner-td {
+    min-width: 100px;
+    width: 100px;
+}
+
+.stage-table {
+    list-style-type: none;
+    padding: 0;
+    li {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    li:first-child {
+        background: blue;
+        color: white;
+    }
+    .stage-name {
+        width: 25%;
+        border: 1px solid gray;
+        padding: 4px;
+    }
+}
+
+.createrequisition-section {
+    margin: 12px 12px;
+    padding: 0px 0px;
+    width: auto;
+    position: relative;
+}
+
+.btd-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 60px;
+}
+
+.btn-save {
+    background-image: linear-gradient(to right, #40d4e6, #6675fe);
+    font-weight: initial;
+    padding: 12px 30px;
+    margin-top: 8px;
+    border-radius: 28px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    float: right;
+    min-width: 130px;
+    margin-left: 15px;
+}
+
+.btn-save:hover {
+    background-image: linear-gradient(to right, #6675fe, #40d4e6);
+    color: white;
+}
+
+.btn-cancel{
+    background-image: linear-gradient(to right, #888888, #6e6e6e);
+    font-weight: initial;
+    padding: 7px 17px;
+    margin-top: 8px;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    float: right;
+    min-width: auto;
+    margin-left: 15px;
+}
+.btn-cancel:hover {
+    background-image: linear-gradient(to right, #6e6e6e, #888888);
+    color: white;
+}
+.btn_cancel{
+    background-image: linear-gradient(to right, #888888, #6e6e6e);
+    font-weight: initial;
+    padding: 7px 17px;
+    margin-top: 8px;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    float: right;
+    min-width: auto;
+    margin-left: 15px;
+}
+.btn_cancel:hover {
+    background-image: linear-gradient(to right, #6e6e6e, #888888);
+    color: white;
+}

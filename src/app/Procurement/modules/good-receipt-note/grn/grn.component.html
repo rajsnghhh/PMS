@@ -1,0 +1,22 @@
+<div class="createrequisition-section">
+
+    <app-grn-top-card (parrentAction)="appendData($event)"  [scope]="scope" [prefieldData]="prefieldData" [selectedPODetails]="selectedPODetails" [selectedIndentDetails]="selectedIndentDetails"></app-grn-top-card>
+    <!-- <app-grn-table-data (parrentAction)="appendData($event)" [scope]="scope" [prefieldData]="prefieldData" [selectedPODetails]="selectedPODetails" [selectedIndentDetails]="selectedIndentDetails"></app-grn-table-data> -->
+
+    <app-grn-item-table *ngIf="!gstScope" (parrentAction)="appendData($event)" [scope]="scope" [prefieldData]="prefieldData" [reload]="reload" [isGRN_Approver]="isGRN_Approver"></app-grn-item-table>
+    <app-grn-gst-item-table *ngIf="gstScope" (parrentAction)="appendData($event)" [scope]="scope" [prefieldData]="prefieldData" [reload]="reload" [isGRN_Approver]="isGRN_Approver"></app-grn-gst-item-table>
+
+
+
+    <app-grn-approver *ngIf="isGRN_Approver && scope == 'update' && prefieldData?.status == 'checked'"
+    [prefieldData]="prefieldData" [isGRN_Approver]="isGRN_Approver"></app-grn-approver>
+
+    <app-grn-check *ngIf="isGRN_Checker && scope == 'update' && prefieldData?.status == 'pending'"
+    [prefieldData]="prefieldData" [isGRN_Checker]="isGRN_Checker"></app-grn-check>
+
+    <div class="btd-section">
+        <button type="button" (click)="backtolist()" class="btn-cancel">CANCEL</button>
+        <button type="submit" *ngIf="scope == 'add'" class="btn-save" (click)="createGRN()">SAVE</button>
+        <button type="submit" *ngIf="scope == 'update'" class="btn-save" (click)="updateGRN()">UPDATE</button>
+    </div>
+</div>

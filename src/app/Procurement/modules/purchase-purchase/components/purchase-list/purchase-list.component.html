@@ -1,0 +1,148 @@
+<div class="main-container">
+    <div class="component-header">
+      <h2>Purchase List</h2>
+      <div class="action-button-container">
+        <!-- <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown" aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button><ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;"><li class="downloadall" (click)="downloadPdf()"><span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong></span></li><li class="downloadall" (click)="downloadCsv()"><span ><img src="assets/usermanagement/download_csv.png"  class="export" ><strong>CSV</strong></span></li></ul>        -->
+        
+        <button hidden *ngIf="purchase_Checker" [routerLink]="['/pms/purchase/procurement/purchase/check']">Check</button>
+        <button hidden *ngIf="purchase_Approver" [routerLink]="['/pms/purchase/procurement/purchase/reject']">Reject</button>
+        <button hidden *ngIf="purchase_Approver" [routerLink]="['/pms/purchase/procurement/purchase/cancel/close']">Cancel/Close</button>
+        <button hidden *ngIf="purchase_Approver" [routerLink]="['/pms/purchase/procurement/purchase/approve']">Approve</button>
+
+
+        <button hidden *ngIf="grn_Approver" [routerLink]="['/pms/purchase/procurement/purchase/cancel-close']">GRN Cancel/Close</button>
+        <button hidden data-bs-toggle="offcanvas" *ngIf="addScope" data-bs-target="#offcanvasRightLabeladdrole" aria-controls="offcanvasRight" (click)="add()">Add (Billing) <img src="assets/header/add.png" alt="">
+        </button>
+        <button hidden data-bs-toggle="offcanvas" *ngIf="addScope" data-bs-target="#offcanvasRightLabeladdrole" aria-controls="offcanvasRight" (click)="addGST()">Add GST (Billing) <img src="assets/header/add.png" alt="">
+        </button>
+        <button hidden data-bs-toggle="offcanvas" *ngIf="addScope" data-bs-target="#offcanvasRightLabeladdrole" aria-controls="offcanvasRight">Through GRN <img src="assets/header/add.png" alt="">
+        </button>
+      </div>
+    </div>
+    <!-- <div class="accordion" id="accordionExample"><div class="accordion-item"><h2 class="accordion-header" id="headingOne"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne">
+                        Advanced Search
+                    </button></h2><div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample"><div class="accordion-body"><form [formGroup]="materialWastageAdvancedSearchForm" (ngSubmit)="onSubmit()"><div class="row"><div class="col-lg-6 col-md-6 col-6"><div class="mb-3 row"><div class="col-md-6"><label>From</label><input type="date" name="date_gte" formControlName="date_gte" class="form-control"></div><div class="col-md-6"><label>To</label><input type="date" name="date_lte" formControlName="date_lte" class="form-control"></div></div></div><div class="col-lg-6 col-md-6 col-6"><div class="adform"><label>Item Group</label><select class="form-control" formControlName="group" ><option value="">Select Item Group</option><option value="{{materialGroup.id}}" *ngFor="let materialGroup of materialGroupList">{{materialGroup.name}}</option></select></div></div><div class="col-lg-6 col-md-6 col-6"><div class="adform"><label>Item</label><select class="form-control" formControlName="material" ngDefaultControl class="form-control" ><option value="">Select Item</option><option value="{{masterData.id}}" *ngFor="let masterData of MaterilFilterList">{{masterData.material_name}}</option></select></div></div><div class="col-lg-6 col-md-6 col-6"><div class="adform"><label >Issued For</label><input type="radio" formControlName="wastage_type" ngDefaultControl value=""> All
+                                        <input type="radio" value="self" formControlName="wastage_type" ngDefaultControl> Self
+                                        <input type="radio" formControlName="wastage_type" ngDefaultControl value="party"> Party
+                                    </div></div></div><div class="col-lg-12 col-md-12 col-12"><div class="btd-section"><button type="submit" class="btn-save">SEARCH</button></div></div></form></div></div></div> -->
+    <div class="component-body">
+      <table>
+        <tr>
+          <th>Sr. No</th>
+          <th>Pur. No.</th>
+          <th>Date</th>
+          <th>GRN No.</th>
+          <th>Vendor</th>
+          <th>Tax Type</th>
+          <th>Total Item Amount</th>
+          <th>Total Expense Amount</th>
+          <th>Other Charges</th>
+          <th>Bill Amount</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+        <ng-container *ngFor="let transport of purchaseListDetails; let j = index">
+          <tr style=" border-top: 2px solid #92c3ff; background: #f3f8ff;">
+            <td [attr.rowspan]=" transport.colaps ? transport.items.length + 2 : 1"><span class="click" title="View Items" (click)="colapsIndex(j)"># {{ (pageSize*(page-1)) + j+1.}}</span></td>
+            <td>{{ transport.request_code }}</td>
+            <td>{{ transport.date }}</td>
+            <td>
+              <span *ngIf="transport.grn_details">{{ transport?.grn_details[0].request_code}}</span>
+            </td>
+            <td>{{ transport?.vendor_details?.vendor_name }}</td>
+            <td class="text-uppercase">{{ transport.tax_type }}</td>
+            <td>{{ transport.total_item_total_amount |currency:"INR":"symbol"}}</td>
+            <td>{{ transport.total_expense_total_expense_amount |currency:"INR":"symbol"}}</td>
+            <td> {{ transport.total_tax_total_tax_amount |currency:"INR":"symbol"}}</td>
+            <td>{{ transport.total_amount |currency:"INR":"symbol"}}</td>
+            <td [attr.rowspan]=" transport.colaps ? transport.items.length + 2 : 1"  class="text-capitalize"> {{transport.status}}</td>
+            <td [attr.rowspan]=" transport.colaps ? transport.items.length + 2 : 1">
+              <div class="custom-section">
+                <div class="dropdown">
+                  <span class="dropbtn">
+                    <img src="assets/icons/dots.png" alt="">
+                  </span>
+                  <div class="dropdown-content">
+                    <div class="img-container">
+                      <span class="mt-2" data-bs-toggle="offcanvas" (click)="viewById(transport)" data-bs-target="#offcanvasRightLabeladdrole">
+                        <img src="assets/usermanagement/view.png" alt="" aria-controls="offcanvasRight">&nbsp;&nbsp; <label>View </label>
+                      </span>
+                      <span class="mt-2" data-bs-toggle="offcanvas" (click)="updateById(transport)" data-bs-target="#offcanvasRightLabeladdrole">
+                        <img src="assets/usermanagement/edit.png" alt="" aria-controls="offcanvasRight">&nbsp;&nbsp; <label>Update </label>
+                      </span>
+                      <span data-bs-toggle="modal" (click)="deleteAlertWastage(transport)" data-bs-target="#deleteUser">
+                        <img src="assets/usermanagement/delete.png" alt="">&nbsp;&nbsp; <label>Delete</label>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <ng-container *ngIf="transport?.items?.length != 0">
+            <tr style="background-color: #57f; color: #fff;" [ngClass]="{'hidden': !transport.colaps }">
+              <td>Sr. No</td>
+              <td>Item Group</td>
+              <td>Item Name</td>
+              <td>Qty.</td>
+              <td>Unit Rate</td>
+              <td>Amount</td>
+              <td>Disc. Amt.</td>
+              <td>Tax</td>
+              <td>Total Amt.</td>
+            </tr>
+            <ng-container>
+              <tr *ngFor="let item of transport.items; let k = index;" [ngClass]="{'hidden': !transport.colaps }" >
+                <td># {{ (pageSize*(page-1)) + j+1.}}.{{ k+1 }}</td>
+                <td>
+                  <span *ngIf="item.material_details.material_type_details">
+                    {{ item.material_details?.material_type_details[0]?.name }}
+                  </span>
+                  <span *ngIf="!item.material_details"> - </span>
+                </td>
+                <td>
+                  <span *ngIf="item.material_details">
+                    {{ item.material_details?.material_name }}
+                  </span>
+                  <span *ngIf="!item.material_details"> - </span>
+                </td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.rate |currency:"INR":"symbol"}}</td>
+                <td>{{ item.item_amount |currency:"INR":"symbol"}}</td>
+                <td>{{ item.disc_amount |currency:"INR":"symbol"}}</td>
+                <td>
+                  {{item.cess_amount + item.cgst_amount + item.excise_tax_amount + item.igst_amount + item.sgst_amount + item.tax_amount + item.utgst_amount |currency:"INR":"symbol"}}
+                </td>
+                <td>{{ item.total_amount |currency:"INR":"symbol"}}</td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <tr class="text-center">
+          <td colspan="12" *ngIf="purchaseListDetails.length == 0">No data found.</td>
+        </tr>
+      </table>
+    </div>
+    <!-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLabeladdrole"
+            aria-labelledby="offcanvasRightLabel"><div class="offcanvas-header"><h5 id="offcanvasRightLabel">{{addUpdateMaterialWastage}}</h5><button #closeButton type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close" (click)="closeModal()"></button></div><div class="offcanvas-body planbody" *ngIf="onEditTransportData"><app-add-update-material-wastage [prefieldData]="onEditTransportData" [onEditAccess]="onEditAccess" (getMaterialWastageList)="getMaterialWastageList()" (closeModal)="closeModal()"></app-add-update-material-wastage></div><div class="offcanvas-body planbody" *ngIf="!onEditTransportData"><app-add-update-material-wastage [onEditAccess]="onEditAccess" (getMaterialWastageList)="getMaterialWastageList()" (closeModal)="closeModal()"></app-add-update-material-wastage></div></div> -->
+  </div>
+  <!-- Modal Delete -->
+  <div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="">Are You Sure ?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body"> Do you want to delete this Purchase ? </div>
+        <div class="modal-footer">
+          <button (click)="deleteMaterialWastage()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

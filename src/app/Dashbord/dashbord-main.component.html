@@ -1,0 +1,12 @@
+<div class="cards-list">
+    <ng-container *ngFor="let menuListData of menuList">
+        <div class="card" *ngIf="getPermissionchild(menuListData.permission,'')" (click)="routeTransfer(menuListData.route,menuListData.name)">
+            <div class="card_image">
+                <img src="assets/menuBanner/{{menuListData.bannerImg}}" />
+            </div>
+            <div class="card_title">
+                <p>{{menuListData.name}}</p>
+            </div>
+        </div>
+    </ng-container>
+</div>

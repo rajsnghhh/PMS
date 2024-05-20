@@ -1,0 +1,114 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+<div class="creatematerial">
+    <h3>
+        <span  *ngIf="scope == 'add'">Create </span> <span  *ngIf="scope == 'update'">Update</span> <span  *ngIf="scope == 'view'">View</span> Material Requisition</h3>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-12">
+            <div class="addressform">   
+            
+                        <label for="ssil">Project&nbsp;</label> 
+                        <select class="form-control" [disabled]="true" id="sel1" name="project" [(ngModel)]="form.project" required #project="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project.errors }" (change)="getProjeDependentSiteData()">
+                            <option disabled>Please Select</option>
+                            <option *ngFor="let projectData of projectList" value="{{projectData.id}}">{{projectData.project_data[1].value}}</option>
+                       </select>   
+                       <div *ngIf="f.submitted && project.errors" class="invalid-feedback">
+                            <div *ngIf="project.errors['required']">This is required !</div>
+                                
+                </div>   
+            </div> 
+
+            <div class="addressform" *ngIf="scope == 'update' || scope == 'view' || scope == 'print'">
+              
+                        <label for="ssil">Requisition&nbsp;No.</label>
+             
+                        <input type="ssil" class="form-control" [disabled]="true" placeholder="SSIL" id="ssil" disabled name="request_number" [(ngModel)]="form.request_number" required #request_number="ngModel" [ngClass]="{ 'is-invalid': f.submitted && request_number.errors }">
+                        <div *ngIf="f.submitted && request_number.errors" class="invalid-feedback">
+                            <div *ngIf="request_number.errors['required']">This is required !</div>
+                        </div>
+               
+                    <!-- <div class="col-lg-3 col-md-3 col-12">
+                        <input type="ssil" class="form-control" placeholder="67" id="ssil">
+                    </div> -->
+                 
+            </div> 
+
+            <div class="addressform">     
+             <label for="ssil">Department</label>
+                        <select class="form-control" id="sel1" [disabled]="disabledEdit" name="department" [(ngModel)]="form.department" required #department="ngModel" [ngClass]="{ 'is-invalid': f.submitted && department.errors }" >
+                            <option>Please Select</option>
+                            <option *ngFor="let depData of departmentList" value="{{depData.id}}">{{depData.department}}</option>
+                       </select>
+                       <div *ngIf="f.submitted && department.errors" class="invalid-feedback">
+                            <div *ngIf="department.errors['required']">This is required !</div>
+                        </div>                    
+           
+            </div>
+
+            <div class="addressform">      
+                        <label for="ssil">Site&nbsp;Location</label>                    
+                        <select class="form-control" [disabled]="true" name="site" [(ngModel)]="form.site" required #site="ngModel" [ngClass]="{ 'is-invalid': f.submitted && site.errors }" (change)="getProjeDependentStoreData()">
+                            <option>Please Select</option>
+                            <option *ngFor="let siteData of siteList" [ngValue]="siteData.id">{{siteData.site_name}}</option>
+                       </select>
+                       <div *ngIf="f.submitted && site.errors" class="invalid-feedback">
+                            <div *ngIf="site.errors['required']">This is required !</div>
+                        </div>                   
+                       
+              
+            </div>
+
+            <div class="addressform">      
+                        
+                        <label for="ssil">Store&nbsp;</label> 
+                
+                        <select class="form-control" id="sel1" [disabled]="disabledEdit" name="store" [(ngModel)]="form.store" required #store="ngModel" [ngClass]="{ 'is-invalid': f.submitted && store.errors }">
+                            <option>Please Select</option>
+                            <option *ngFor="let storeData of storeList" value="{{storeData.id}}">{{storeData.store_name}}</option>
+                       </select>    
+                        <div *ngIf="f.submitted && store.errors" class="invalid-feedback">
+                            <div *ngIf="store.errors['required']">This is required !</div>
+                        </div>                
+                
+            </div> 
+
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12">
+            <div class="row">
+                
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform"> 
+                 
+                           <label for="location">Date</label>                       
+                                <input type="Date" class="form-control" [min]="mindate" max="{{maxDate}}" [disabled]="disabledEdit" placeholder="" name="date" [(ngModel)]="form.date" required #date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && date.errors }">
+                                <div *ngIf="f.submitted && date.errors" class="invalid-feedback">
+                                    <div *ngIf="date.errors['required']">This is required !</div>
+                                </div>                       
+                       
+                    </div> 
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">                 
+                           <label for="location">Time</label>                       
+                                <input type="time" class="form-control" [disabled]="disabledEdit" placeholder="" name="time" [(ngModel)]="form.time" required #time="ngModel" [ngClass]="{ 'is-invalid': f.submitted && time.errors }">
+                                <div *ngIf="f.submitted && time.errors" class="invalid-feedback">
+                                    <div *ngIf="time.errors['required']">This is required !</div>
+                                </div>
+                    </div> 
+                </div>
+
+            </div>
+
+            <div class="addressform">  
+                       <label for="location">Location&nbsp;For</label>
+                        <input type="location" class="form-control" [disabled]="disabledEdit" placeholder="Type here for search data" id="location" name="location" [(ngModel)]="form.location" required #location="ngModel" [ngClass]="{ 'is-invalid': f.submitted && location.errors }">
+                        <div *ngIf="f.submitted && location.errors" class="invalid-feedback">
+                            <div *ngIf="location.errors['required']">This is required !</div>
+                        </div>      
+            </div>
+        </div>
+        <button hidden  #submitButton="" type="submit">Save</button>
+    </div>
+</div>
+</form>

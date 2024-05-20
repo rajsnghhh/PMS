@@ -1,0 +1,191 @@
+@import "~angular2-multiselect-dropdown/themes/default.theme.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "~jsgantt-improved/dist/jsgantt.css";
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Source Sans Pro', sans-serif !important;
+  background: transparent;
+  scroll-behavior: smooth;
+}
+
+/* Change autocomplete styles in WebKit */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid unset;
+  -webkit-text-fill-color: unset;
+  -webkit-box-shadow: 0 0 0px 1000px unset inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+textarea:focus,
+input:focus,
+.form-select:focus {
+  outline: none;
+  box-shadow: none !important;
+}
+
+::-webkit-input-placeholder {
+  /* Edge */
+  color: #b3b3b3;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #b3b3b3;
+}
+
+::placeholder {
+  color: #b3b3b3;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.float-right {
+  float: right;
+}
+
+.offcanvas {
+  z-index: 99999 !important;
+
+  .offcanvas-header {
+    background-color: #5577FF;
+    color: white;
+    height: 50px;
+  }
+}
+
+.offcanvas.offcanvas-end {
+  width: 35% !important;
+  min-width: 520px;
+  border: none;
+}
+
+.offcanvas-backdrop.show {
+  z-index: 9999;
+}
+
+.hidden {
+  display: none;
+}
+
+textarea {
+  resize: none;
+}
+
+::-webkit-resizer {
+  display: none;
+}
+
+.btn-close {
+  background: url(assets/icons/close.png) !important;
+  background-size: 50% 50% !important;
+  opacity: 1 !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  min-width: unset !important;
+}
+
+.pdfClose {
+  padding: 8px 30px !important;
+  margin-top: 0px !important;
+  margin-left: 731px !important;
+  background: url(assets/icons/close-red.png) !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+}
+
+.file-type {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    max-width: 75%;
+  }
+}
+
+.offcanvas-backdrop.show {
+  pointer-events: none;
+  opacity: 0.8 !important;
+}
+
+.highcharts-credits {
+  display: none;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.modal {
+	z-index: 99999 !important;
+}
+.form-control.is-valid {
+  background-image : none !important
+}
+ng-select.is-invalid {
+  .ng-select-container {
+      border-color: #f86c6b !important;
+      padding-right: calc(1.5em + 0.75rem);
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: center right calc(0.375em + 0.1875rem);
+      background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+  }
+
+  span.ng-arrow-wrapper {
+      display: none;
+  }
+
+  ~.invalid-feedback {
+      display: block !important;
+  }
+}
+// input:read-only {
+//   background-color: #97929248;
+// }
+select.is-invalid {
+  border-color: #f86c6b !important;
+  -webkit-appearance: none  !important;;
+  appearance: none  !important;
+}
+input.is-invalid {
+border-color: #f86c6b !important;
+}
+div.is-invalid {
+border-color: #f86c6b !important;
+padding-right: calc(1.5em + 0.75rem);
+background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+background-repeat: no-repeat;
+background-position: center right calc(0.375em + 0.1875rem);
+background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+tr.selected td{
+	background-color: #d1e7dd !important;
+  border: 1px solid #64905eb5 !important;
+}
+
+button.disable {
+  opacity: 0 !important;
+}

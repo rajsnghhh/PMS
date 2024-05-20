@@ -1,0 +1,289 @@
+.custom-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    img {
+        max-height: 20px;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        padding: 5px;
+    }
+
+    .dropdown-content {
+        display: none;
+        right: -10px;
+        top: 26px;
+        position: absolute;
+        background-color: white;
+        box-shadow: 0px 0px 11px 0px rgb(0 0 0 / 54%);
+        z-index: 1;
+        border-radius: 13px;
+        padding: 0px 5px;
+    }
+
+    .dropdown-content::after {
+        display: inline-block;
+        margin-left: 0.255em;
+        vertical-align: 0.255em;
+        content: "";
+        border-top: 0.3em solid;
+        border-right: 0.3em solid transparent;
+        border-bottom: 0;
+        border-left: 0.3em solid transparent;
+        color: white;
+        position: absolute;
+        transform: rotateZ(180deg);
+        top: -1px;
+        zoom: 2;
+        right: 7px;
+    }
+
+    .img-container {
+        span {
+            display: inline-flex;
+            min-width: 165px;
+            padding: 3px 10px;
+            cursor: pointer;
+        }
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+}
+
+.table-inde-icon {
+    max-width: 20px;
+    margin-right: 20px;
+}
+
+td {
+    .button {
+        background-color: #d9d9d9;
+        margin: 1px 3px;
+        padding: 5px 20px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
+.viewAll {
+    display: flex !important;
+}
+
+.viewState {
+    display: flex !important;
+}
+
+.multi-select-dropdown {
+    min-width: 97px !important;
+}
+
+::ng-deep.viewAll {
+    .multi-select-dropdown {
+        .list-area {
+            min-width: 200px;
+        }
+    }
+}
+
+::ng-deep.viewState {
+    .multi-select-dropdown {
+        .list-area {
+            min-width: 200px;
+        }
+    }
+}
+
+::ng-deep.multi-select-dropdown .list-area {
+    box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 54%) !important;
+}
+
+.viewAll {
+    ::ng-deep.dropdown-list ul {
+        pointer-events: none;
+    }
+
+    ::ng-deep.list-filter {
+        display: none;
+    }
+
+    ::ng-deep.select-all {
+        display: none;
+    }
+}
+
+.viewState {
+    ::ng-deep.dropdown-list ul {
+        pointer-events: none;
+    }
+
+    ::ng-deep.list-filter {
+        display: none;
+    }
+
+    ::ng-deep.select-all {
+        display: none;
+    }
+}
+
+::ng-deep.cuppa-dropdown {
+    position: relative;
+}
+
+::ng-deep.dropdown-list {
+    position: absolute !important;
+    top: 38px !important;
+    left: 0 !important;
+}
+
+::ng-deep.arrow-down {
+    top: 0 !important;
+    bottom: unset !important;
+    margin-left: 30px !important;
+    transform: unset !important;
+}
+
+
+::ng-deep .role-treeview {
+    color: black;
+    font-size: 12px;
+    
+    .organization-card {
+        width: 95%;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #ececec;
+        border-radius: 18px;
+        h1 {
+            font-size: 18px;
+            margin: 10px 0px 30px 15px;
+            color: #55A4FF;
+        }
+        .card-space {
+            height: 30px;
+        }
+    }
+    .role-action {
+        
+        img {
+            max-width: 15px;
+            margin: 0 4px;
+            cursor: pointer;
+        }
+    }
+    .tree {
+        --spacing: 1.5rem;
+        --radius: 10px;
+        padding-left: 0;
+    }
+
+    .tree li {
+        display: block;
+        position: relative;
+        padding-left: calc(2 * var(--spacing) - var(--radius) - 1px);
+    }
+
+    .tree ul {
+        margin-left: calc(var(--radius) - var(--spacing));
+        padding-left: 0;
+    }
+
+    .tree ul li {
+        border-left: 1px solid #ddd;
+        padding-top: 15px;
+    }
+
+    .tree ul li:last-child {
+        border-color: transparent;
+    }
+
+    .tree ul li::before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: calc(var(--spacing) / -2);
+        left: -1px;
+        width: calc(var(--spacing) + 1px);
+        height: calc(var(--spacing) + 15px);
+        border: solid #ddd;
+        border-width: 0 0 1px 1px;
+    }
+
+    .tree summary {
+        display: block;
+        cursor: pointer;
+        background: white;
+        padding: 5px 20px;
+        border-radius: 18px;
+    }
+
+    .tree summary::marker,
+    .tree summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .tree summary:focus {
+        outline: none;
+    }
+
+    .tree summary:focus-visible {
+        outline: 1px dotted #000;
+    }
+
+    .tree div .indexclass::after {
+        top: calc(var(--spacing) / 2 - var(--radius))!important;
+    }
+
+    .tree li::after,
+    .tree summary::before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 15px;
+        left: calc(var(--spacing) - var(--radius) - 1px);
+        width: calc(2 * var(--radius));
+        height: calc(2 * var(--radius));
+        border-radius: 50%;
+        background: #ddd;
+    }
+
+    .indexclass::before, .indexclass::after {
+        top: 2px !important;
+    }
+
+    .tree summary::before {
+        content: '+';
+        z-index: 1;
+        background: #5577FF;
+        color: #fff;
+        line-height: calc(2 * var(--radius) - 1px);
+        text-align: center;
+    }
+
+    .tree details[open]>summary::before {
+        content: '−';
+    }
+}
+.content-description {
+    font-size: 15px;
+    width: 100%;
+    margin: auto;
+    padding: 10px 0px;
+    margin-top: 0px;
+    justify-content: center;
+    display: flex;
+    font-weight: 500;
+    color: #144782;
+    background-color: #e4f5ff;
+}
+span:hover {
+    background-color: #d9d9d9;
+  }

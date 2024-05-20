@@ -1,0 +1,123 @@
+<!-- Development Under Progress!
+<app-planning-head (parentFun)="closePlanning()" [projectId]="projectId"></app-planning-head>
+
+<app-project-head (parentFun)="closeUserSetting()" [projectId]="projectId"></app-project-head> -->
+
+
+<form class="main-container" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="flex-div project-sites">
+        <div class="mb-3" [ngClass]="{ 'float-now': form.projecthead != '' }">
+            <!-- <label class="floating-label">Project Head<span class="asterisk">*</span></label> -->
+            <!-- <select name="" id="" [ngClass]="{'disable': disableFrom == true }" class="form-control" name="projecthead" [(ngModel)]="form.projecthead" required #projecthead="ngModel" [ngClass]="{ 'is-invalid': f.submitted && projecthead.errors }">
+                <option value="" disabled>Select Project Head</option>
+                <option value="{{user.id}}" *ngFor="let user of userList">{{user.full_name}}</option>
+            </select> -->
+            <h3>Project Head</h3>
+            <ng-select 
+                placeholder="Select Project Head" 
+                class="form-control" 
+                name="projecthead" 
+                [multiple]="false"
+                [disabled]="true"
+                [(ngModel)]="form.projecthead" 
+                required #projecthead="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && projecthead.errors }" 
+                [items]="userList"
+                bindLabel="full_name"
+                bindValue="id"
+            >
+            </ng-select>
+            <div *ngIf="f.submitted && projecthead.errors" class="invalid-feedback">
+              <div *ngIf="projecthead.errors['required']">Project Head is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': form.planninghead != '' }">
+            <h3>Planning Head</h3>
+            <!-- <label class="floating-label">Planning Head<span class="asterisk">*</span></label> -->
+            <!-- <select name="" id="" [ngClass]="{'disable': disableFrom == true }" class="form-control" name="planninghead" [(ngModel)]="form.planninghead" required #planninghead="ngModel" [ngClass]="{ 'is-invalid': f.submitted && planninghead.errors }">
+                <option value="" disabled>Select Project Head</option>
+                <option value="{{user.id}}" *ngFor="let user of userList">{{user.full_name}}</option>
+            </select> -->
+            <ng-select 
+                placeholder="Select Planning Head" 
+                class="form-control" 
+                name="planninghead" 
+                [multiple]="false"
+                [disabled]="true"
+                [(ngModel)]="form.planninghead" 
+                required #planninghead="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && planninghead.errors }" 
+                [items]="userList"
+                bindLabel="full_name"
+                bindValue="id"
+            >
+            </ng-select>
+            <div *ngIf="f.submitted && planninghead.errors" class="invalid-feedback">
+              <div *ngIf="planninghead.errors['required']">Planning Head is required</div>
+            </div>
+        </div>
+    </div>
+    <div class="project-sites">
+        <div class="ind-sight" *ngFor="let site of siteList; let i = index">
+            <h1>Site : {{site.site_name}}</h1>
+            <h2>Users : 
+                <!-- {{site.users | json}} -->
+                <ng-select 
+                    placeholder="Select Site Users" 
+                    class="form-control" 
+                    name="siteuser{{i+1}}" 
+                    [multiple]="true"
+                    [(ngModel)]="site.users" 
+                    [disabled]="true"
+                    required #siteuser="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && siteuser.errors }" 
+                    [items]="userList"
+                    bindLabel="full_name"
+                    bindValue="id"
+                >
+                </ng-select>
+            </h2>
+            <div class="not-store-found" *ngIf="site.storeList.length == 0">
+                No Store found on this Sight
+            </div>
+            <div class="store-container" *ngFor="let store of site.storeList; let j = index">
+                <h3>Store : {{store.store_name}} </h3>
+                <h3>Users : 
+                <!-- {{store.users | json}} -->
+                <!-- <ng-select 
+                    placeholder="Select Store Users" 
+                    class="form-control" 
+                    name="storeUser" 
+                    [multiple]="true"
+                    [(ngModel)]="store.users" 
+                    required #storeUser="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && storeUser.errors }" 
+                    [items]="storeUser"
+                    bindLabel="full_name"
+                    bindValue="id"
+                >
+                </ng-select> -->
+                <ng-select 
+                    placeholder="Select Store Users" 
+                    class="form-control" 
+                    name="storeuser{{i+1}}{{j}}" 
+                    [multiple]="true"
+                    [disabled]="true"
+                    [(ngModel)]="store.users" 
+                    required #storeuser="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && storeuser.errors }" 
+                    [items]="userList"
+                    bindLabel="full_name"
+                    bindValue="id"
+                >
+                </ng-select>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+      <!-- <button type="submit" class="btn btn-primary">Update</button> -->
+    </div>
+</form>

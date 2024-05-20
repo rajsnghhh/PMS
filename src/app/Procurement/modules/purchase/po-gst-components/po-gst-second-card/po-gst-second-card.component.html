@@ -1,0 +1,182 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+
+    <div class="tabs">
+        <div class="tab" [ngClass]="{ 'is-invalid': f.submitted && !f.form.valid }" [class.active]="activeTab === 'tab1'" (click)="openTab(event, 'tab1')">Delivery/ Billing Site
+        </div>
+        <div class="tab" [ngClass]="{ 'is-invalid': f.submitted && !f.form.valid }" [class.active]="activeTab === 'tab2'" (click)="openTab(event, 'tab2')">Delivery Site Location/
+            Days</div>
+        <!-- <div class="tab" [class.active]="activeTab === 'tab3'" (click)="openTab(event, 'tab3')">Last PO Rates</div> -->
+    </div>
+
+    <!-- Tab 1 begins here for Delivery/ Billing Site -->
+    <div class="tab-content" id="tab1" [class.active]="activeTab === 'tab1'">
+        <div class="row">
+
+            <div class="col-lg-3 col-md-3 col-3">
+                <div class="addressform">
+                    <label for="text">Delivery&nbsp;Site</label>
+                    <select id="sel3" [disabled]="disableEdit" class="form-control" name="delivery_site" [(ngModel)]="form.delivery_site"
+                        #delivery_site="ngModel"  required (change)="changeDeliverSite(form.delivery_site)"
+                        [ngClass]="{ 'is-invalid': f.submitted && delivery_site.errors }">
+                        <option disabled>-- select --</option>
+                        <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                            {{siteData.site_name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-3">
+                <div class="addressform">
+                    <label for="text">Billing&nbsp;Site</label>
+                    <select id="sel4" [disabled]="disableEdit" class="form-control" (change)="changeBillingSite(form.billing_site)" name="billing_site" [(ngModel)]="form.billing_site"
+                        #billing_site="ngModel"  required
+                        [ngClass]="{ 'is-invalid': f.submitted && billing_site.errors }">
+                        <option disabled>-- select --</option>
+                        <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                            {{siteData.site_name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-3">
+                <div class="addressform">
+                    <label for="text">Billing&nbsp;State</label>
+                    <select id="sel1" class="form-control" disabled name="billing_state" [(ngModel)]="form.billing_state"
+                        #billing_state="ngModel" [ngModelOptions]="{standalone: true}"  required
+                        [ngClass]="{ 'is-invalid': f.submitted && billing_state.errors }">
+                        <option disabled>-- select --</option>
+                        <option value="{{stateData.state_id}}" *ngFor="let stateData of stateList">
+                            {{stateData.name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-3">
+                <div class="addressform">
+                    <label for="text">Delivery&nbsp;State</label>
+                    <select id="sel1" class="form-control" disabled name="delivery_state" [(ngModel)]="form.delivery_state"
+                        #delivery_state="ngModel" [ngModelOptions]="{standalone: true}"  
+                        required
+                        [ngClass]="{ 'is-invalid': f.submitted && delivery_state.errors }">
+                        <option disabled>-- select --</option>
+                        <option value="{{stateData.state_id}}" *ngFor="let stateData of stateList">
+                            {{stateData.name}}</option>
+                    </select>
+                </div>
+            </div>
+
+        </div><br>
+
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-8">
+                <div class="addressform">
+                    <label for="delivery_address1">Delivery&nbsp;Address</label>
+                    <textarea [disabled]="disableEdit" id="delivery_address1" class="form-control" name="delivery_address1"
+                        [(ngModel)]="form.delivery_address1" #delivery_address1="ngModel"
+                        [ngModelOptions]="{standalone: true}"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Tab 2 begins here for Delivery Site Location/ Days -->
+    <div class="tab-content" id="tab2" [class.active]="activeTab === 'tab2'">
+        <div class="createtable-section">
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-6">
+                    <table>
+                        <tr>
+                            <th>Sr.&nbsp;No</th>
+                            <th>Delivery Location</th>
+                            <th>Contact Person</th>
+                            <th>Goods %</th>
+                            <th class="align-middle">
+                                <a (click)="addDeliverySiteLocation()" type="button" class="tablebtn-save">ADD
+                                    <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png" alt=""></i>
+                                </a>
+                            </th>
+                        </tr>
+
+                        <tr class="tablebg" *ngFor="let item of form.po_delivery_loc; let i = index">
+                            <td>{{i+1}}</td>
+                            <td><input type="text" [(ngModel)]="form.po_delivery_loc[i].delivery_location"
+                                    class="form-control" [disabled]="disableEdit" name="delivery_location{{i+1}}" #delivery_location="ngModel">
+                            </td>
+                            <td>
+                                <input type="text" [(ngModel)]="form.po_delivery_loc[i].contact_person"
+                                    class="form-control" [disabled]="disableEdit" name="contact_person{{i+1}}" #contact_person="ngModel">
+                            </td>
+                            <td><input type="text" amountNumber [(ngModel)]="form.po_delivery_loc[i].goods_percentage"
+                                    class="form-control" [disabled]="disableEdit" name="goods_percentage{{i+1}}" #goods_percentage="ngModel">
+                            </td>
+                            <td class="align-middle">
+                                <a (click)="deleteDeliverySiteLocation(i)" type="submit" class="vector-delete">DEL<i
+                                        class="fa" aria-hidden="true"><img src="assets/img/vector-delete.png"
+                                            alt=""></i></a>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-6">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="addressform">
+                                <label for="text">Delivery&nbsp;Days</label>
+                                <input type="text" [disabled]="disableEdit" numbersOnly placeholder="" id="text" class="form-control" name="delivery_days"
+                                required
+                                [ngClass]="{ 'is-invalid': f.submitted && delivery_days.errors }"    
+                                [(ngModel)]="form.delivery_days" #delivery_days="ngModel">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="addressform">
+                                <label for="text">For Alerts Delivery&nbsp;Days</label>
+                                <input type="text" numbersOnly placeholder="" id="text" class="form-control"
+                                    name="for_alerts_delivery_days" [disabled]="disableEdit" [(ngModel)]="form.for_alerts_delivery_days"
+                                    required
+                                    [ngClass]="{ 'is-invalid': f.submitted && for_alerts_delivery_days.errors }"
+                                    #for_alerts_delivery_days="ngModel">
+                            </div>
+                        </div>
+                    </div><br>
+
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="addressform">
+                                <label for="text">Payment&nbsp;Days</label>
+                                <input type="text" numbersOnly [disabled]="disableEdit" placeholder="" id="text" class="form-control" name="payment_days"
+                                required
+                                [ngClass]="{ 'is-invalid': f.submitted && payment_days.errors }"    
+                                [(ngModel)]="form.payment_days" #payment_days="ngModel" >
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="addressform">
+                                <label for="text">For Alerts Payment&nbsp;Days</label>
+                                <input type="text" [disabled]="disableEdit" numbersOnly placeholder="" id="text" class="form-control"
+                                    name="for_alerts_payment_days" [(ngModel)]="form.for_alerts_payment_days"
+                                    required
+                                    [ngClass]="{ 'is-invalid': f.submitted && for_alerts_payment_days.errors }"
+                                    #for_alerts_payment_days="ngModel">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 3 begins here for Last PO Rates -->
+
+    <button hidden #submitButton="" type="submit">Save</button>
+
+</form>

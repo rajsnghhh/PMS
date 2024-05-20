@@ -1,0 +1,54 @@
+<div class="creatematerial">
+
+  <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-12">
+
+        <div class="addressform">         
+            <label for="request">Request&nbsp;By</label>           
+              <select class="form-control" id="request" name="requested_by" [(ngModel)]="form.requested_by"
+                #requested_by="ngModel" [disabled]="disabledEdit" >
+                <option value="">-- select --</option>
+                <option *ngFor="let userData of userlist" value="{{userData.id}}">{{userData.full_name}}</option>
+              </select>       
+        </div>
+
+        <div class="addressform">
+    
+          <label for="request">Issued&nbsp;By</label>
+              <select class="form-control" id="request" name="issued_by" [(ngModel)]="form.issued_by" required
+                #issued_by="ngModel" [ngClass]="{ 'is-invalid': f.submitted && issued_by.errors }" disabled="">
+                <option disabled>-- select --</option>
+                <option *ngFor="let userData of userlist" value="{{userData.id}}">{{userData.full_name}}</option>
+              </select>
+              <div *ngIf="f.submitted && issued_by.errors" class="invalid-feedback">
+                <div *ngIf="issued_by.errors['required']">This is required !</div>
+            </div> 
+           
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-12">
+
+        <div class="addressform">
+              <label for="request">Attach&nbsp;a&nbsp;File</label>
+              <div class="custom-file">
+                <input type="file" multiple="multiple" (change)="handleUpload($event)"
+                  class="custom-file-input" id="customFile" [disabled]="disabledEdit">
+              </div>         
+        </div>
+
+        <div class="addressform">
+              <label for="request">Remarks</label>
+              <textarea class="form-control form-textarea" rows="1" id="comment" name="remarks" [(ngModel)]="form.remarks"
+                #remarks="ngModel" [disabled]="disabledEdit"></textarea>
+        </div>
+
+      </div>
+      <button hidden #submitButton="" type="submit">Save</button>
+
+    </div>
+  </form>
+
+</div>

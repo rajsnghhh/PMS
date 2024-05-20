@@ -1,0 +1,383 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+  <div class="tabs">
+    <div [ngClass]="{
+        'is-invalid': f.submitted && !f.form.valid
+      }" class="tab" [class.active]="activeTabs === 'tab_tax'" (click)="openTab(event, 'tab_tax')">
+      Tax Details
+    </div>
+    <div class="tab" [class.active]="activeTabs === 'tab_terms'" (click)="openTab(event, 'tab_terms')">
+      Terms & Conditions
+    </div>
+    <div [ngClass]="{
+        'is-invalid': f.submitted && !f.form.valid
+      }" class="tab" [class.active]="activeTabs === 'tab_payment'" (click)="openTab(event, 'tab_payment')">
+      Payment Schedule
+    </div>
+  </div>
+
+  <div class="tab-contents p-0" id="tab_tax" [class.active]="activeTabs === 'tab_tax'">
+    <div class="createtable-section">
+      <table>
+        <tr>
+          <th>Sr.&nbsp;No</th>
+          <th style=" min-width: 200px; ">Expense Type</th>
+          <th>Calculate On Amount</th>
+          <th>Percent</th>
+          <th>Percent Amount</th>
+          <th>GST&nbsp;Tax&nbsp;Type</th>
+          <th>SGST Rate/ Amt.</th>
+          <th>CGST Rate/ Amt.</th>
+          <th>IGST Rate/ Amt.</th>
+          <th>Total</th>
+          <th>Action</th>
+        </tr>
+        <tr class="">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="align-middle">
+            <a (click)="addPOExpense()" type="button" class="tablebtn-save">ADD
+              <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png" alt="" /></i>
+            </a>
+          </td>
+        </tr>
+
+        <tr class="tablebg" *ngFor="let item of form.po_expense; let i = index">
+          <td>#{{ i + 1 }}</td>
+
+          <td>
+            <div class="tablegroup">
+              <select [disabled]="disableEdit" class="form-control" id="sel1" (change)="changeExpanceHead(i)"
+                name="expense_head{{ i + 1 }}" [(ngModel)]="form.po_expense[i].expense_head" #expense_head="ngModel"
+                required [ngClass]="{ 'is-invalid': f.submitted && expense_head.errors }">
+                <option value="">Select</option>
+                <option *ngFor="let tax of expenseList" value="{{ tax.id }}">
+                  {{ tax.name }}
+                </option>
+              </select>
+            </div>
+            <br />
+
+            SAC Code:
+            <input type="text" class="form-control" id="data" placeholder="" [disabled]="disableEdit" [(ngModel)]="form.po_expense[i].sac_code"
+              #sac_code="ngModel" name="sac_code{{ i + 1 }}" />
+          </td>
+
+          <td>
+            <input type="text" class="form-control" id="data" [disabled]="disableEdit" placeholder="showMaterialTableTotalVal"
+              [(ngModel)]="showMaterialTableTotalVal" name="showMaterialTableTotalVal{{ i + 1 }}" readonly />
+          </td>
+          <td>
+            <input amountNumber type="text" class="form-control" [disabled]="disableEdit" id="data" placeholder=""
+              [(ngModel)]="form.po_expense[i].expense_percentage" #expense_percentage="ngModel"
+              name="expense_percentage{{ i + 1 }}" (ngModelChange)="showMaterialsCalculatedAmt(i)" />
+          </td>
+
+          <td>
+            <input amountNumber type="text" class="form-control" [disabled]="disableEdit" id="data" placeholder=""
+              [(ngModel)]="form.po_expense[i].expense_amount" #expense_amount="ngModel" name="expense_amount{{ i + 1 }}"
+              (ngModelChange)="set_discount_pecentage_blanck(i)" />
+          </td>
+
+          <td>
+            <select class="form-control" name="tax_head{{ i + 1 }}" [(ngModel)]="form.po_expense[i].tax_head" disabled
+              #tax_head="ngModel" (change)="taxMaterialsAutoFilled(form.po_expense[i].tax_head, i)">
+              <option value="" disabled>-- select --</option>
+              <option value="{{ taxHead.id }}" *ngFor="let taxHead of taxHeads">
+                {{ taxHead.name }}
+              </option>
+            </select>
+          </td>
+
+          <td>
+            <div class="tablegroup">
+              <input type="text" class="form-control" id="data" placeholder=""
+                [(ngModel)]="form.po_expense[i].sgst_percentage" #sgst_percentage="ngModel"
+                name="sgst_percentage{{ i + 1 }}" readonly (ngModelChange)="showMaterialsCalculatedAmt(i)" />
+            </div>
+
+            <div class="tablegroup">
+              <input type="text" class="form-control" id="data" placeholder="" readonly
+                (ngModelChange)="showMaterialsCalculatedAmt(i)" [(ngModel)]="form.po_expense[i].sgst_amount"
+                #sgst_amount="ngModel" name="sgst_amount{{ i + 1 }}" />
+            </div>
+            <label>UTGST</label>
+            <div class="tablegroup">
+              <input type="text" class="form-control" id="data" placeholder=""
+                [(ngModel)]="form.po_expense[i].utgst_percentage" #utgst_percentage="ngModel"
+                name="utgst_percentage{{ i + 1 }}" readonly (ngModelChange)="showMaterialsCalculatedAmt(i)" />
+            </div>
+
+            <div class="tablegroup">
+              <input type="text" class="form-control" id="data" placeholder="" readonly
+                (ngModelChange)="showMaterialsCalculatedAmt(i)" [(ngModel)]="form.po_expense[i].utgst_amount"
+                #utgst_amount="ngModel" name="utgst_amount{{ i + 1 }}" />
+            </div>
+          </td>
+
+          <td>
+            <div class="tablegroup">
+              <input type="text" class="form-control" id="data" placeholder=""
+                [(ngModel)]="form.po_expense[i].cgst_percentage" #cgst_percentage="ngModel"
+                name="cgst_percentage{{ i + 1 }}" readonly (ngModelChange)="showMaterialsCalculatedAmt(i)" />
+            </div>
+
+            <div class="tablegroup">
+              <input type="text" class="form-control" id="data" placeholder=""
+                [(ngModel)]="form.po_expense[i].cgst_amount" #cgst_amount="ngModel" name="cgst_amount{{ i + 1 }}"
+                readonly (ngModelChange)="showMaterialsCalculatedAmt(i)" />
+            </div>
+          </td>
+          <td>
+            <div class="tablegroup">
+              <input type="text" class="form-control" id="data" placeholder=""
+                [(ngModel)]="form.po_expense[i].igst_percentage" #igst_percentage="ngModel" readonly
+                (ngModelChange)="showMaterialsCalculatedAmt(i)" name="igst_percentage{{ i + 1 }}" />
+            </div>
+
+            <div class="tablegroup">
+              <input type="text" class="form-control" id="data" placeholder=""
+                [(ngModel)]="form.po_expense[i].igst_amount" #igst_amount="ngModel" name="igst_amount{{ i + 1 }}"
+                readonly (ngModelChange)="showMaterialsCalculatedAmt(i)" />
+            </div>
+
+            <!-- <label>CESS</label>
+            <div class="tablegroup">
+              <input type="text" class="form-control" id="data" placeholder=""
+                [(ngModel)]="form.po_expense[i].cess_percentage" #cess_percentage="ngModel"
+                name="cess_percentage{{ i + 1 }}" readonly (ngModelChange)="showMaterialsCalculatedAmt(i)" />
+            </div>
+
+            <div class="tablegroup">
+              <input type="text" class="form-control" id="data" placeholder="" readonly
+                (ngModelChange)="showMaterialsCalculatedAmt(i)" [(ngModel)]="form.po_expense[i].cess_amount"
+                #cess_amount="ngModel" name="cess_amount{{ i + 1 }}" />
+            </div> -->
+          </td>
+          <td>
+            <div class="tablegroup">
+              <input type="text" class="form-control" id="data" placeholder="" name="total_expense_amount{{ i + 1 }}"
+                [(ngModel)]="form.po_expense[i].total_expense_amount" [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="showMaterialsCalculatedAmt(i)" readonly />
+            </div>
+          </td>
+
+          <td class="align-middle">
+            <a (click)="delete(i)" type="submit" class="vector-delete">DEL
+              <i class="fa" aria-hidden="true"><img src="assets/img/vector-delete.png" alt="" /></i></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="createtable-section table-responsive">
+      <table class="text-nowrap">
+        <tr *ngFor="let taxRow of po_tax; let i = index">
+          <td colspan="2" style="width: 40%" class="text-end">
+            {{ taxRow.name }}
+          </td>
+
+          <td></td>
+
+          <td class="">
+            <div class="tablegroup" *ngIf="po_tax[i].tax_percentage_applicable">
+              <input type="text" [disabled]="disableEdit" class="form-control" placeholder="" amountNumber
+                pattern="^(?:100(?:\.00?)?|\d?\d(?:\.\d\d?)?)$" (change)="calculateExpances()"
+                name="tax_percentage{{ i + 1 }}" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="po_tax[i].tax_percentage" #tax_percentage="ngModel" [ngClass]="{
+                  'is-invalid': f.submitted && tax_percentage.errors
+                }" />
+            </div>
+          </td>
+          <td>
+            <span *ngIf="po_tax[i].tax_percentage_applicable">%</span>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="">
+            <div class="tablegroup">
+              <input type="text" [disabled]="disableEdit" class="form-control" placeholder="" amountNumber
+                (change)="changeamount(i)" name="tax_amount{{ i + 1 }}" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="po_tax[i].tax_amount" #tax_amount="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && tax_amount.errors }" />
+            </div>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="text-end">Total PO Value</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <!-- <input class="form-control"   type="text" readonly [value]="this.form?.total_expense_expense_amount |currency:'INR':'symbol'"></td> -->
+          </td>
+
+          <td>
+            <!-- <input class="form-control"  type="text" readonly [value]="this.form?.total_expense_sgst_amount |currency:'INR':'symbol'"> -->
+            <!-- <input class="form-control"  type="text" readonly [value]="this.form?.total_expense_utgst_amount |currency:'INR':'symbol'"> -->
+          </td>
+          <td>
+            <!-- <input class="form-control"  type="text" readonly [value]="this.form?.total_expense_cgst_amount |currency:'INR':'symbol'"> -->
+          </td>
+          <td>
+            <!-- <input class="form-control"  type="text" readonly [value]="this.form?.total_expense_igst_amount |currency:'INR':'symbol'"> -->
+            <!-- <input class="form-control"  type="text" readonly [value]="this.form?.total_expense_cess_amount |currency:'INR':'symbol'"> -->
+          </td>
+          <td>
+            <input class="form-control" type="text" readonly [value]="
+                this.form?.afterAll_tax_Amount | currency : 'INR' : 'symbol'
+              " />
+          </td>
+          <td style="width: 8%"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-contents" id="tab_terms" [class.active]="activeTabs === 'tab_terms'">
+    <fieldset class="scheduler-border">
+      <legend class="scheduler-border">Terms & Conditions</legend>
+      <div class="createtable-section">
+        <table>
+          <tr>
+            <th>Sr.&nbsp;No</th>
+            <th>Jurisdiction</th>
+            <th>Terms & Condition</th>
+            <!-- <th>Remarks</th> -->
+          </tr>
+
+          <tr class="tablebg" *ngFor="let item of termsFromMaster; let i = index">
+            <td width="5%">{{ i + 1 }}
+
+              <input type="checkbox" [disabled]="disableEdit" name="is_checked" [(ngModel)]="form.terms_and_conditions[i].is_checked"
+                [ngModelOptions]="{ standalone: true }" #is_checked="ngModel">
+
+            </td>
+            <td>
+              <input type="text" placeholder="" id="text{{ i }}" class="form-control" name="key"
+                [(ngModel)]="form.terms_and_conditions[i].key" [ngModelOptions]="{ standalone: true }" #key="ngModel" />
+            </td>
+            <td>
+              <input type="text" placeholder="" id="text{{ i }}" class="form-control" name="description"
+                [(ngModel)]="form.terms_and_conditions[i].description" #description="ngModel"
+                [ngModelOptions]="{ standalone: true }" />
+            </td>
+            <!-- <td>
+              <input type="text" placeholder="" id="text{{ i }}" class="form-control" name="remarks"
+                [(ngModel)]="form.terms_and_conditions[i].remarks" #remarks="ngModel"
+                [ngModelOptions]="{ standalone: true }" />
+            </td> -->
+          </tr>
+        </table>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="tab-contents" id="tab_payment" [class.active]="activeTabs === 'tab_payment'">
+    <fieldset class="scheduler-border">
+      <legend class="scheduler-border">Payment Schedule</legend>
+      <div class="createtable-section">
+        <table>
+          <tr>
+            <th>Sr.&nbsp;No</th>
+            <th>Percent %</th>
+            <th style=" min-width: 230px; ">Payment Type</th>
+            <th>Payment Credit Days</th>
+            <th>Notify Days</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Attachment</th>
+            <th>Action</th>
+            
+          </tr>
+
+          <!-- <tr>
+            <td colspan="8"></td>
+            <td class="align-middle">
+              <a (click)="addPaymentSchedule()" type="button" class="tablebtn-save">ADD
+                <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png" alt="" /></i>
+              </a>
+            </td>
+          </tr> -->
+
+
+          <tr class="tablebg" *ngFor="let item of form.payment_schedule; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>
+              <input type="text" [disabled]="disableEdit" amountNumber [(ngModel)]="form.payment_schedule[i].percent" class="form-control"
+                name="percent{{ i + 1 }}" name="percent" #percent="ngModel" (change)="calculateTotalPaymentShedule()" />
+            </td>
+            <td>
+              <select [disabled]="disableEdit" [(ngModel)]="form.payment_schedule[i].percent_type" class="form-control"
+                name="percent_type{{ i + 1 }}" #percent_type="ngModel" required
+                [ngClass]="{ 'is-invalid': f.submitted && percent_type.errors }">
+                <option disabled>-- select --</option>
+                <option value="bg">BG</option>
+                <option value="lc">LC (LETTER OF CREDIT)</option>
+                <option value="before_dispatch">BEFORE DISPATCH</option>
+                <option value="advance">ADVANCE</option>
+                <option value="after_delivery">AFTER DELIVERY</option>
+                <option value="after_days">AFTER DAYS</option>
+                <option value="other">OTHER</option>
+              </select>
+            </td>
+            <td>
+              <input type="text" [disabled]="disableEdit" [(ngModel)]="form.payment_schedule[i].payment_credit_days" class="form-control"
+                name="payment_credit_days{{ i + 1 }}" [ngClass]="{ 'is-invalid': f.submitted && payment_credit_days.errors }" required amountNumber #payment_credit_days="ngModel" />
+            </td>
+            <td>
+              <input type="text" [disabled]="disableEdit" [(ngModel)]="form.payment_schedule[i].notify_days" class="form-control"
+                name="notify_days{{ i + 1 }}" amountNumber #notify_days="ngModel" />
+            </td>
+
+            <td>
+              <input type="text" [disabled]="disableEdit" [(ngModel)]="form.payment_schedule[i].description" class="form-control"
+                name="description{{ i + 1 }}" />
+            </td>
+            <td>
+              <input type="text" [(ngModel)]="form.payment_schedule[i].amount" class="form-control"
+                name="amount{{ i + 1 }}" disabled #amount="ngModel" />
+            </td>
+
+            <td>
+              <input type="file" [disabled]="disableEdit" name="fileData{{i+1}} " [(ngModel)]="form.payment_schedule[i].fileData" (change)="uploadFile($event,i)"
+                #fileData="ngModel" placeholder="" id="fileData" class="form-control">
+            </td>
+            <td class="align-middle">
+              <a (click)="deletePaymentSchedule(i)" type="submit" class="vector-delete">DEL
+                <i class="fa" aria-hidden="true"><img src="assets/img/vector-delete.png" alt="" /></i></a>
+            </td>
+          </tr>
+
+          <!-- Total Row -->
+          <tr class="tablebg">
+            <td>Total</td>
+            <td>
+              {{totalPercent}}
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              {{ totalAmount | currency:"INR":"symbol" }}
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </fieldset>
+  </div>
+  <button hidden #submitButton="" type="submit">Save</button>
+</form>
+

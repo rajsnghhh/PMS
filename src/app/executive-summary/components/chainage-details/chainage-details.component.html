@@ -1,0 +1,115 @@
+<div class="main-container" *ngIf="selectedScope == 'Executive Summary'">
+    <div class="component-body">
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button acc_btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    Chainage Details
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div>
+                        <table>
+                            <tr>
+                                <th style="width: 14%">Name<span class="asterisk">*</span></th>
+                                <th style="width: 14%">
+                                    Starting Point<span class="asterisk">*</span>
+                                </th>
+                                <th style="width: 14%">End Point<span class="asterisk">*</span></th>
+                                <th style="width: 14%">Distance</th>
+                                <th style="width: 6%" *ngIf="openTab === 'edit'">Action</th>
+                            </tr>
+            
+                            <tr *ngFor="let data of chainageData; let i = index">
+                                <td>
+                                    <input class="inputCss" [(ngModel)]="data.name" placeholder="Enter Chainage Name" type="text"
+                                        [disabled]="openTab === 'view'" />
+                                    <div *ngIf="data.name == ''" class="invalid-feedback">
+                                        <div>Chainage Name is required</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input class="inputCss" [(ngModel)]="data.start" placeholder="Enter Starting Point"
+                                        type="number" (keyup)="getDistance(i, 'chainage')" (change)="onChange('chainage')"
+                                        [disabled]="openTab === 'view'" />
+                                    <div *ngIf="data.start == ''" class="invalid-feedback">
+                                        <div>Starting Point is required</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input class="inputCss" [(ngModel)]="data.end" placeholder="Enter End Point" type="number"
+                                        (keyup)="getDistance(i, 'chainage')" (change)="onChange('chainage')" [disabled]="openTab === 'view'" />
+                                    <div *ngIf="data.end == ''" class="invalid-feedback">
+                                        <div>End Point is required</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input class="inputCss" [disabled]="true" [(ngModel)]="data.chainage_value" type="number" />
+                                </td>
+                                <td style="width: 4%" *ngIf="openTab === 'edit'">
+                                    <!-- <button *ngIf="i == chainageData.length - 1" class="addbtn" (click)="addRow()">
+                                        Add
+                                    </button> -->
+                                    <button  class="editbtn" (click)="editRow(i)">
+                                        Update
+                                    </button>
+                                    <button  class="deletebtn"
+                                        (click)="deleteRow(i, 'chainageData')">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let data of addChainageData; let i = index">
+                                <td *ngIf="openTab === 'edit'">
+                                    <input class="inputCss" [(ngModel)]="data.name" placeholder="Enter Chainage Name" type="text"
+                                        />
+                                    <div *ngIf="data.name == ''" class="invalid-feedback">
+                                        <div>Chainage Name is required</div>
+                                    </div>
+                                </td>
+                                <td *ngIf="openTab === 'edit'">
+                                    <input class="inputCss" [(ngModel)]="data.start" placeholder="Enter Starting Point"
+                                        type="number" (keyup)="getDistance(i, 'addChainage')" (change)="onChange('addChainage')"
+                                       />
+                                    <div *ngIf="data.start == ''" class="invalid-feedback">
+                                        <div>Starting Point is required</div>
+                                    </div>
+                                </td>
+                                <td *ngIf="openTab === 'edit'">
+                                    <input class="inputCss" [(ngModel)]="data.end" placeholder="Enter End Point" type="number"
+                                        (keyup)="getDistance(i, 'addChainage')" (change)="onChange('addChainage')" />
+                                    <div *ngIf="data.end == ''" class="invalid-feedback">
+                                        <div>End Point is required</div>
+                                    </div>
+                                </td>
+                                <td *ngIf="openTab === 'edit'">
+                                    <input class="inputCss" [(ngModel)]="data.chainage_value" type="number" />
+                                </td>
+                                <td style="width: 4%" *ngIf="openTab === 'edit'">
+                                    <button class="addbtn" (click)="addRow()">
+                                        Add
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+              </div>
+            </div>
+      
+          </div>
+        
+    
+    </div>
+</div>
+
+<app-executive-summary 
+    [TenderNumber]="TenderNumber" 
+    [chainageData]="chainageData" 
+    (getWBSID)="getWBSID($event)"
+    [selectedScope]="selectedTab"
+    [usingIn]="usingIn"
+    [DisableModify]="DisableModify" 
+>
+</app-executive-summary>

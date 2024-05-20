@@ -1,0 +1,363 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>GRN Cancel/Close</h2>
+    </div>
+
+    <div class="component-body">
+        <form [formGroup]="purchaseOrderAdvancedSearchForm" (ngSubmit)="onSearch()">
+
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Period</label><input type="date" formControlName="date__gt" placeholder="" id="date"
+                            class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>To</label><input type="date" formControlName="date__lt" placeholder="" id="date"
+                            class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform" ngDefaultControl formControlName="received_from">
+                        <label>Received From</label>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="supplier_transfer" name="optradio" class="form-check-input"
+                                    id="received_from" name="received_from">
+                                Supplier/ Transfer
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="customer" name="optradio" class="form-check-input"
+                                    id="received_from" name="received_from">
+                                Customer
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>GRN&nbsp;Site</label>
+                        <select id="sel1" class="form-control" ngDefaultControl formControlName="site">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                {{siteData.site_name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Location</label>
+                        <input type="text" formControlName="site__location" class="form-control" placeholder="">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>GRN Status</label>
+                        <select id="sel1" class="form-control" ngDefaultControl formControlName="status">
+                            <option value="">-- select --</option>
+                            <option value="approved">Approved</option>
+                            <option value="pending">Pending</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Vendor</label>
+                        <select id="sel1" class="form-control" ngDefaultControl formControlName="vendor">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                                {{vendor.vendor_master_data.vendor_name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Job Site</label>
+                        <select id="sel1" class="form-control" ngDefaultControl formControlName="job_site">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                {{siteData.site_name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Manual Slip No</label>
+                        <input type="text" formControlName="manual_slip_no" class="form-control" placeholder="">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Transporter</label>
+                        <select id="sel1" formControlName="transporter" class="form-control">
+                            <option disabled>-- select --</option>
+                            <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                                {{vendor.vendor_master_data.vendor_name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>PO Site</label>
+                        <select id="sel1" class="form-control" ngDefaultControl formControlName="purchase_order__site">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                {{siteData.site_name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Item&nbsp;Group</label>
+                        <select id="sel1" class="form-control" ngDefaultControl
+                            formControlName="procurement_grn_item__item__material_type" (change)="typeChange()">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let type of materialTypeList" value={{type.id}}>
+                                {{type.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Item</label>
+                        <select id="sel1" class="form-control"
+                            formControlName="procurement_grn_item__item__material_sub_type" ngDefaultControl>
+                            <option value="">-- select --</option>
+                            <option *ngFor="let subtype of materialSubTypeList?.material_sub_type" value={{subtype.id}}>
+                                {{subtype.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Received By</label>
+                        <select id="sel1" class="form-control" formControlName="received_by" ngDefaultControl>
+                            <option disabled>-- select --</option>
+                            <option *ngFor="let user of userList" value="{{user.id}}">
+                                {{user.full_name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Carrying Veh. No.</label>
+                        <input type="text" formControlName="carrying_vehicle_no" class="form-control" placeholder="">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>GRN No.</label>
+                        <input type="text" formControlName="request_code" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>PO No.</label>
+                        <input type="text" formControlName="purchase_order__request_code" class="form-control"
+                            placeholder="">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>RST No.</label>
+                        <input type="text" formControlName="rst_no" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Challan No.</label>
+                        <input type="text" formControlName="challan_no" class="form-control" placeholder="">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Lab&nbsp;Report No.</label>
+                        <input type="text" formControlName="lab_report_no" class="form-control" placeholder="">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Entry By</label>
+                        <select id="sel1" class="form-control" formControlName="created_by" ngDefaultControl>
+                            <option disabled>-- select --</option>
+                            <option *ngFor="let user of userList" value="{{user.id}}">
+                                {{user.full_name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Edit By</label>
+                        <select id="sel1" class="form-control" formControlName="updated_by" ngDefaultControl>
+                            <option disabled>-- select --</option>
+                            <option *ngFor="let user of userList" value="{{user.id}}">
+                                {{user.full_name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-2">
+                    <div class="adform">
+                        <label for="is_royalty" class="checkbox-label">Is
+                            Royalty</label>
+                        <input type="checkbox" formControlName="procurement_grn_item__is_royalty" id="is_royalty"
+                            class="custom-checkbox">
+                    </div>
+                </div>
+
+                <div class="col-lg-1 col-md-1 col-1">
+                    <div class="adform">
+                        <label for="is_royalty" class="checkbox-label">Is
+                            ISTP</label>
+                        <input type="checkbox" formControlName="procurement_grn_item__is_istp" id="is_royalty"
+                            class="custom-checkbox">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-3">
+                    <div class="adform">
+                        <label>Edit Date From</label>
+                        <input type="date" formControlName="updated_at__gt" class="form-control" placeholder="">
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-3">
+                    <div class="adform">
+                        <label>Edit Date To</label>
+                        <input type="date" formControlName="updated_at__lt" class="form-control" placeholder="">
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-3">
+                    <div class="adform">
+                        <label>Entry Date From</label>
+                        <input type="date" formControlName="created_at__gt" class="form-control" placeholder="">
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-3">
+                    <div class="adform">
+                        <label>Entry Date To</label>
+                        <input type="date" formControlName="created_at__lt" class="form-control" placeholder="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-12">
+                <div class="btd-section">
+                    <button type="submit" class="btn-save">SEARCH</button>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="component-header" *ngIf="grnCheckboxIdsForCancelClose.length>0">
+            <div class="action-button-container">
+                <button (click)="onSubmit()">Save<img src="assets/header/add.png" alt=""></button>
+            </div>
+        </div>
+        <div class="main-container">
+            <div class="table-responsive">
+                <table class="table
+        text-nowrap">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sr No</th>
+                            <th scope="col">GRN No.</th>
+                            <th scope="col">GRN Date</th>
+                            <th scope="col">Ch. No./ Party Bill No</th>
+                            <th scope="col">Indent No.</th>
+                            <th scope="col">RST No.</th>
+                            <th scope="col">Recd. From</th>
+                            <th scope="col">Account Name</th>
+                            <th scope="col">Transporter Name</th>
+                            <th scope="col">Vehicle No.</th>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Pur. Bill Done Qty</th>
+                            <th scope="col">Qty Pending For Pur.</th>
+                            <th scope="col">Amt.</th>
+                            <th scope="col">Received Location</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Change GRN Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of grnList;index as i">
+                            <td>{{i+1}}</td>
+                            <td>{{item.request_code}}</td>
+                            <td>{{item.date.substring(0,10).split('-').reverse().join('-')}}</td>
+                            <td>{{item.challan_no}}</td>
+                            <td>{{item.linked_docs?.indent}}</td>
+                            <td>{{item.rst_no}}</td>
+                            <td>{{item.received_from}}</td>
+                            <td>-</td>
+                            <td>{{item.transporter_details?.data?.vendor_name}}</td>
+                            <td>{{item.carrying_vehicle_no}}</td>
+                            <td>{{item.total_quantity}}</td>
+                            <td>{{item.purchase_bill_done_qty}}</td>
+                            <td>{{item.qty_pending_for_pur}}</td>
+                            <td>{{item.total_amount}}</td>
+                            <td>{{item.receive_location}}</td>
+                            <td class="text-capitalize">{{item.status}}</td>
+                            <td style="min-width:150px;">
+                                <div class="adform">
+                                    <input class="" type="checkbox" name="grnItem{{i+1}}" [(ngModel)]="item.grnItem"
+                                        (change)="onGRNCheckboxChange($event, item.id)">
+
+                                    <select class="form-control" name="changeStatus{{i+1}}"
+                                        [(ngModel)]="item.changeStatus">
+                                        <option value="cancel">Cancel</option>
+                                        <option value="close">Close</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="text-center">
+                            <td colspan="17" *ngIf="grnList?.length == 0">No data found.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+</div>

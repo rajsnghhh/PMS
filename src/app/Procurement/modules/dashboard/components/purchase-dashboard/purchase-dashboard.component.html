@@ -1,0 +1,362 @@
+<div class="topbar">
+   <ng-container *ngFor="let memudata of purchaseMemu">
+      <div class="eachmenu" *ngIf="getPermissionchild(memudata.permission,'')" (click)="routeTransfer(memudata.slug)">
+         <div class="upsection">
+            <img src="{{memudata.icon}}"><br>
+         </div>
+         <span>{{memudata.name}}</span>
+      </div>
+   </ng-container>
+
+
+</div>
+<div class="container">
+   <div class="row">
+      <div class="col-md-8">
+         <div class="accordion leftside" id="accordionExample">
+            <div class="accordion-item">
+               <h2 class="accordion-header" id="headingTODO">
+                  <div class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTODO"
+                     aria-expanded="true" aria-controls="collapseTODO">
+                     <div class="header">
+                        <span>To Do List</span>
+                        <button>As per current and previous financial year</button>
+                        <div class="reload_btn" (click)="getToDoList()">
+                           <img src="assets/icons/uiw_reload.png"><br>
+                        </div>
+                     </div>
+                  </div>
+               </h2>
+
+               <div id="collapseTODO" class="accordion-collapse collapse show" aria-labelledby="headingTODO"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                     <div class="bodycss" *ngIf="toDoList.current">
+
+                        <div class="todo_box" *ngFor="let key of objectKeys(toDoList.current)">
+                           <div class="single_todocon">
+                              <h5 class="text-uppercase">{{key}}</h5>
+                           </div>
+                           <div class="single_todocon">
+                              <div class="count_box">
+                                 <h6>Pending to Approval</h6>
+                                 <section class="count">
+                                    <p class="bg-warning"
+                                       (click)="todoRedirection(key,toDoList?.current[key].financial_year,'pending_approve')">
+                                       {{toDoList?.current[key].pending_approve}}</p>
+                                    <p class="bg-warning" *ngIf="toDoList.previous"
+                                       (click)="todoRedirection(key,toDoList?.previous[key].financial_year,'pending_approve')">
+                                       {{toDoList?.previous[key].pending_approve}}</p>
+                                 </section>
+                              </div>
+                           </div>
+                           <div class="single_todocon">
+                              <div class="count_box">
+                                 <h6>Pending to Next Process</h6>
+                                 <section class="count">
+                                    <p class="bg-success"
+                                       (click)="todoRedirection(key,toDoList?.current[key].financial_year,'pending_next')">
+                                       {{toDoList?.current[key].pending_next}}</p>
+                                    <p class="bg-success" *ngIf="toDoList.previous"
+                                       (click)="todoRedirection(key,toDoList?.previous[key].financial_year,'pending_next')">
+                                       {{toDoList?.previous[key].pending_next}}</p>
+                                 </section>
+                              </div>
+                           </div>
+
+                           <div class="single_todocon">
+                              <div class="count_box">
+                                 <h6>Rejected</h6>
+                                 <section class="count">
+                                    <p class="bg-danger"
+                                       (click)="todoRedirection(key,toDoList?.current[key].financial_year,'rejected')">
+                                       {{toDoList?.current[key].rejected}}</p>
+                                    <p class="bg-danger" *ngIf="toDoList.previous"
+                                       (click)="todoRedirection(key,toDoList?.previous[key].financial_year,'rejected')">
+                                       {{toDoList?.previous[key].rejected}}</p>
+                                 </section>
+                              </div>
+                           </div>
+
+                           <div class="single_todocon">
+                              <div class="count_box">
+                                 <h6>Corrected</h6>
+                                 <section class="count">
+                                    <p class="bg-primary"
+                                       (click)="todoRedirection(key,toDoList?.current[key].financial_year,'corrected')">
+                                       {{toDoList?.current[key].corrected}}</p>
+                                    <p class="bg-primary" *ngIf="toDoList.previous"
+                                       (click)="todoRedirection(key,toDoList?.previous[key].financial_year,'corrected')">
+                                       {{toDoList?.previous[key].corrected}}</p>
+                                 </section>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="accordion-item">
+               <h2 class="accordion-header" id="headingreject">
+                  <div class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsereject"
+                     aria-expanded="true" aria-controls="collapsereject">
+                     <div class="header">
+                        <span>Top 10 Rejected Transactions</span>
+                        <div class="reload_btn" (click)="getTransaction()">
+                           <img src="assets/icons/uiw_reload.png"><br>
+                        </div>
+                     </div>
+                  </div>
+               </h2>
+
+               <div id="collapsereject" class="accordion-collapse collapse show" aria-labelledby="headingreject"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                     <div class="bodycss" *ngIf="rejectedTransaction">
+                        <div class="table_box" *ngFor="let transaction of objectKeys(rejectedTransaction)">
+                           <div class="table_head">
+                              <h6>{{transaction | uppercase }}</h6>
+                              <a class="linkable" *ngIf="showTransactionList.includes(transaction)"
+                                 (click)="showList(transaction)">SHOW ALL</a>
+                           </div>
+                           <div class="table_body">
+                              <div class="table-responsive">
+                                 <table class="table table-bordered">
+                                    <thead>
+                                       <tr>
+                                          <th scope="col">Sr.</th>
+                                          <th scope="col">V.No</th>
+                                          <th scope="col">V.Date</th>
+                                          <th scope="col">Rejection Date</th>
+                                          <th scope="col">Rejection Reason</th>
+                                          <th scope="col">Rejection By</th>
+                                          <th scope="col">PDF</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr *ngFor="let tabledata of rejectedTransaction[transaction];let i=index">
+                                          <th scope="row">{{i+1}}</th>
+                                          <td>{{tabledata.request_code}}</td>
+                                          <td>{{tabledata.date | date:'dd-MM-YYYY'}}</td>
+                                          <td>{{tabledata.rejected_by_date | date:'dd-MM-YYYY'}}</td>
+                                          <td>{{tabledata.rejected_remarks}}</td>
+                                          <td><span *ngIf="tabledata.rejected_by_details">
+                                                {{tabledata?.rejected_by_details[0].first_name}}
+                                                {{tabledata?.rejected_by_details[0].last_name}}
+                                             </span>
+                                          </td>
+                                          <td><img class="linkable" *ngIf="printScope.includes(transaction)"
+                                                (click)="printData(tabledata.id,transaction)"
+                                                src="assets/icons/print.png" alt=""></td>
+                                       </tr>
+
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <!-- <div class="accordion-item">
+                <h2 class="accordion-header" id="headingAlert">
+                   <div class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAlert"
+                      aria-expanded="true" aria-controls="collapseAlert">
+                      <div class="header">
+                         <span>Alerts</span>
+                         <div class="reload_btn">                           
+                            <img src="assets/icons/uiw_reload.png"><br>
+                         </div>
+                      </div>
+                   </div>
+                </h2>
+ 
+                <div id="collapseAlert" class="accordion-collapse collapse show" aria-labelledby="headingAlert"
+                   data-bs-parent="#accordionExample">
+                   <div class="accordion-body">
+                      <div class="bodycss">
+ 
+                         <div class="table_box">
+                            <div class="table_head">
+                               <h6>PO Validity Alert</h6>
+                               <a href="#">SHOW ALL</a>
+                            </div>
+                            <div class="table_body">
+                               <div class="table-responsive">
+                                  <table class="table table-bordered">
+                                     <thead>
+                                        <tr>
+                                           <th scope="col">Sr.</th>
+                                           <th scope="col">PO.No</th>
+                                           <th scope="col">PO.Date</th>
+                                           <th scope="col">Valid From Date</th>
+                                           <th scope="col">Valid To Date</th>
+                                           <th scope="col">GRN Pending Qty</th>
+                                           <th scope="col">PDF</th>
+                                        </tr>
+                                     </thead>
+                                     <tbody>
+                                        <tr>
+                                           <th scope="row">1</th>
+                                           <td>LKG-84</td>
+                                           <td>22-12-2023</td>
+                                           <td>09-02-2024</td>
+                                           <td>29-02-2024</td>
+                                           <td>2000,0000</td>
+                                           <td><img src="assets/icons/print.png" alt=""></td>
+                                        </tr>
+                                        <tr>
+                                           <th scope="row">1</th>
+                                           <td>LKG-84</td>
+                                           <td>22-12-2023</td>
+                                           <td>09-02-2024</td>
+                                           <td>29-02-2024</td>
+                                           <td>2000,0000</td>
+                                           <td><img src="assets/icons/print.png" alt=""></td>
+                                        </tr>
+                                        <tr>
+                                           <th scope="row">1</th>
+                                           <td>LKG-84</td>
+                                           <td>22-12-2023</td>
+                                           <td>09-02-2024</td>
+                                           <td>29-02-2024</td>
+                                           <td>2000,0000</td>
+                                           <td><img src="assets/icons/print.png" alt=""></td>
+                                        </tr>
+                                        <tr>
+                                           <th scope="row">1</th>
+                                           <td>LKG-84</td>
+                                           <td>22-12-2023</td>
+                                           <td>09-02-2024</td>
+                                           <td>29-02-2024</td>
+                                           <td>2000,0000</td>
+                                           <td><img src="assets/icons/print.png" alt=""></td>
+                                        </tr>
+                                        <tr>
+                                           <th scope="row">1</th>
+                                           <td>LKG-84</td>
+                                           <td>22-12-2023</td>
+                                           <td>09-02-2024</td>
+                                           <td>29-02-2024</td>
+                                           <td>2000,0000</td>
+                                           <td><img src="assets/icons/print.png" alt=""></td>
+                                        </tr>
+ 
+                                     </tbody>
+                                  </table>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div> -->
+         </div>
+
+      </div>
+      <div class="col-md-4">
+         <div class="accordion rightside" id="accordionExampleRight">
+            <div class="accordion-item">
+               <h2 class="accordion-header" id="headingSearch">
+                  <div class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSearch"
+                     aria-expanded="true" aria-controls="collapseSearch">
+                     <div class="header">
+                        <img src="assets/icons/search.svg">
+                        <span>Quick Search </span>
+                        <span>(Item Stock)</span>
+                     </div>
+                  </div>
+               </h2>
+
+               <div id="collapseSearch" class="accordion-collapse collapse show" aria-labelledby="headingSearch"
+                  data-bs-parent="#accordionExampleRight">
+                  <div class="accordion-body">
+                     <div class="bodycss">
+                        <div class="quicksearch_box">
+                           <div class="search_input">
+                              <ng-select class="form-control" (change)="changeMaterial()" placeholder="Type atleast 3 character to search data"
+                                 name="material" [(ngModel)]="materialId">
+                                 <ng-option *ngFor="let material of materialMasterlist"
+                                    [value]="material.id">{{material.material_name}}</ng-option>
+                              </ng-select>
+                              <button class="search_btn" hidden>
+                                 <img src="assets/icons/Edit.svg">
+                              </button>
+                           </div>
+
+                           <div class="stock_item">
+                              <div class="single_stock">
+                                 <h6>STOCK - COMPANY</h6>
+                                 <p><span> <img src="assets/icons/stock.svg"></span>{{inventoryData.stockCompany}}</p>
+                              </div>
+                              <div class="single_stock">
+                                 <h6>STOCK - SITE</h6>
+                                 <p><span> <img src="assets/icons/stock.svg"></span>{{inventoryData.stockSite}}</p>
+                              </div>
+                           </div>
+
+                           <div class="location_sec" hidden>
+                              <div class="single_loc">
+                                 <span> <img src="assets/icons/ledger.svg"></span>
+                                 <p>
+                                    Ledger
+                                 </p>
+                              </div>
+                              <div class="single_loc">
+                                 <span> <img src="assets/icons/location.svg"></span>
+                                 <p>
+                                    Site/ Location Wise Stock
+                                 </p>
+                              </div>
+                           </div>
+                        </div>
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+
+            <div class="accordion-item">
+               <h2 class="accordion-header" id="headingComment">
+                  <div class="accordion-button" type="button" data-bs-toggle="collapse"
+                     data-bs-target="#collapseComment" aria-expanded="true" aria-controls="collapseComment">
+                     <div class="header">
+                        <span>Comments </span>
+                     </div>
+                  </div>
+               </h2>
+
+               <div id="collapseComment" class="accordion-collapse collapse show" aria-labelledby="headingComment"
+                  data-bs-parent="#accordionExampleRight">
+                  <div class="accordion-body">
+                     <div class="bodycss">
+                        <div class="comment_box" *ngFor="let comment of commentList">
+                           <div class="single_comnt">
+                              <div class="singlecmnt_head">
+                                 <div class="name_box">
+                                    <p>{{comment.created_by_details[0].first_name | titlecase | slice:0:1}}{{comment.created_by_details[0].last_name | titlecase | slice:0:1}}</p>
+                                 </div>
+                                 <div class="single_details">
+                                    <h6>{{comment.created_by_details[0].first_name}} {{comment.created_by_details[0].last_name}}</h6>
+                                    <p>{{comment.created_at | date:'dd-MM-YYYY'}} | {{comment.created_at | date:'HH:mm'}}</p>
+                                 </div>
+                              </div>
+                              <div class="indent_box">
+                                 <p>{{comment.ref_type | titlecase}} : {{comment.ref_details[0].request_code}} , Date : {{comment.ref_details[0].created_at | date:'dd-MM-YYYY'}} , Comment : {{comment.comments}}</p>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+</div>

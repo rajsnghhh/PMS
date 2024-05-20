@@ -1,0 +1,12 @@
+<form role="form" [formGroup]="addEmployeeForm">
+<div class="mb-3" [ngClass]="{ 'float-now': addEmployee.name != '' }">
+    <!-- <label for="">Zone Name</label> -->
+    <input type="text" class="form-control" id="role" [(ngModel)]="addEmployee.name" formControlName="name"
+    [ngClass]="displayFieldCss(addEmployeeForm,'name')" >
+    <label class="floating-label">Enter Employement Type <span class="asterisk">*</span></label>
+    <div class="required" *ngIf="isFieldValid(addEmployeeForm,'name')">
+        <span class="text-danger" *ngIf="addEmployeeForm.get('name')?.errors?.['required']">Employement Type is required</span>
+      </div>
+</div>   
+
+<button type="submit" class="btn btn-primary" (click)="addnewEmployee()">ADD</button>

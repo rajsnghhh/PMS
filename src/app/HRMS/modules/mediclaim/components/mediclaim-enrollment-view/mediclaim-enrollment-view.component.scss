@@ -1,0 +1,130 @@
+.personalinfo {
+    border: 0px solid #d7d8db;
+    padding: 28px;
+    margin-top: 40px;
+    margin-left: 25px;
+    width: 96%;
+    border-radius: 12px;
+    background: #d0d0d047;
+    h5 {
+        color: #8d8d8d;
+        font-size: 11px;
+        display: flex;
+        align-items: center;
+    }
+    h4 {
+        color: #242424;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.dependentinfo {
+    border: 0px solid #d7d8db;
+    padding: 28px;
+    margin-top: -5px;
+    margin-left: 25px;
+    width: 96%;
+    border-radius: 12px;
+    background: #d0d0d047;
+    h5 {
+        color: #8d8d8d;
+        font-size: 11px;
+        display: flex;
+        align-items: center;
+    }
+    h4 {
+        color: #242424;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.noteinfo {
+    border: 0px solid #d7d8db;
+    padding: 38px;
+    margin-top: 25px;
+    margin-left: 25px;
+    width: 96%;
+    border-radius: 12px;
+    background: #d0d0d047;
+    h5 {
+        color: #8d8d8d;
+        font-size: 11px;
+        display: flex;
+        align-items: center;
+        margin-top: 25px;
+        margin-left: -10px;    
+    }
+    h6 {
+        color: #000000;
+        font-size: 17px;
+        margin-top: -15px;
+        margin-left: -15px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.header1 {
+    padding: 20px;
+    margin-left: 5px;
+    width: 96%;
+    font-size: 17px;
+}
+
+.flex-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .mb-3 {
+        width: 48.5%;
+    }
+}   
+
+.flex-div2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 63%;
+
+    .mb-3 {
+        width: 48.5%;
+    }
+}  
+
+.stick {
+    height: 160px;
+}
+
+.ename {
+    position: relative;
+}
+
+.ename::after{
+    content: "";
+    position: absolute;
+    border-right: 1px solid #b1b1b1;
+    margin-left: -12px;
+    margin-top: -64px;
+    height: 85px;
+}
+
+.notelist {
+    list-style: none;
+}
+
+.sno {
+    font-size: 14px;
+    font-family: none;
+    font-weight: 600;
+    color: #4f4c4c;
+}
+
+.notetext {
+    margin-left: -30px;
+    margin-top: -10px;
+}

@@ -1,0 +1,23 @@
+.bottom-spave {
+    height: 20px;
+}
+
+.btn_group{
+    display: flex;
+    gap:10px;
+    button {
+        padding: 7px 12px;
+        line-height: 20px;
+        max-width: 140px;
+    }
+    
+    .non-active-btn {
+        background-color: #6a6a6a;
+    }
+    
+    .btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+        color: var(--bs-btn-active-color);
+        background-color: #444444;
+        border-color: #444444;
+    }
+}

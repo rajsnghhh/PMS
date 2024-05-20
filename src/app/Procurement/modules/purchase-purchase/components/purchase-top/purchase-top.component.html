@@ -1,0 +1,229 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="creatematerial">
+      <h3>
+        <span *ngIf="scope == 'add'">Create </span>
+        <span *ngIf="scope == 'update'">Update</span>
+        <span *ngIf="scope == 'view'">View</span> Purchase
+      </h3>
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-12">
+          <div class="addressform">
+            <div class="row" *ngIf="scope == 'update' || scope == 'view' || scope == 'print'">
+              <div class="col-lg-2 col-md-2 col-12">
+                <label for="ssil">Request&nbsp;No.</label>
+              </div>
+              <div class="col-lg-7 col-md-7 col-12">
+                <input type="ssil" class="form-control" [disabled]="true" placeholder="SSIL" id="ssil" disabled name="request_number" [(ngModel)]="form.request_number" required #request_number="ngModel" [ngClass]="{ 'is-invalid': f.submitted && request_number.errors }">
+                <div *ngIf="f.submitted && request_number.errors" class="invalid-feedback">
+                  <div *ngIf="request_number.errors['required']">This is required !</div>
+                </div>
+              </div>
+              <!-- <div class="col-lg-3 col-md-3 col-12"><input type="ssil" class="form-control" placeholder="67" id="ssil"></div> -->
+            </div>
+          </div>
+          <div class="addressform">          
+                <label for="ssil">Vendor <span class="asterisk">*</span>
+                </label>
+                <div class="control-sect">
+                  <select class="form-control" [disabled]="disabledEdit" required name="vendor" [(ngModel)]="form.vendor" required #vendor="ngModel" [ngClass]="{ 'is-invalid': f.submitted && vendor.errors }" (change)="changeCustomer(form.vendor)">
+                    <option value="">Please Select</option>
+                    <option *ngFor="let depData of vendorList" [ngValue]="depData.id" value="{{depData.id}}">
+                      {{depData.vendor_master_data.vendor_name}}
+                    </option>
+                  </select>
+                  <div *ngIf="f.submitted && vendor.errors" class="invalid-feedback">
+                    <div *ngIf="vendor.errors['required']">This is required !</div>
+                  </div>
+                </div>             
+          </div>
+          <div class="addressform" *ngIf="gstScope">        
+                <label for="ssil">Vendor State <span class="asterisk">*</span>
+                </label>
+                <div class="control-sect">
+                  <select class="form-control" (change)="setIGSTsource()" [disabled]="disabledEdit" 
+                   name="vendor_state" [(ngModel)]="form.vendor_state" required #vendor_state="ngModel" 
+                   [ngClass]="{ 'is-invalid': f.submitted && vendor_state.errors }">
+                    <option value="">Please Select</option>
+                    <option *ngFor="let depData of statelist" value="{{depData.state_id}}">
+                      {{depData.name}}
+                    </option>
+                  </select>
+                  <div *ngIf="f.submitted && vendor_state.errors" class="invalid-feedback">
+                    <div *ngIf="vendor_state.errors['required']">This is required !</div>
+                  </div>
+                </div>
+          </div>
+          <div class="addressform" *ngIf="gstScope">           
+                <label for="ssil">Vendor Currency <span class="asterisk">*</span>
+                </label>
+                <div class="control-sect">
+                  <select class="form-control" [disabled]="disabledEdit" name="vendor_currency" [(ngModel)]="form.vendor_currency" required #vendor_currency="ngModel" [ngClass]="{ 'is-invalid': f.submitted && vendor_currency.errors }" (change)="changeCurrency()">
+                    <option value="">Please Select</option>
+                    <option *ngFor="let depData of currencyList" value="{{depData.id}}">
+                      {{depData.name}} ( {{depData.symbol}} )
+                    </option>
+                  </select>
+                  <div *ngIf="f.submitted && vendor_currency.errors" class="invalid-feedback">
+                    <div *ngIf="vendor_currency.errors['required']">This is required !</div>
+                  </div>
+                </div>
+          </div>
+       
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-12">
+                <div class="addressform">
+                <label for="ssil">Store&nbsp; <span class="asterisk">*</span>
+                </label>
+                <div class="control-sect">
+                  <select class="form-control" [disabled]="disabledEdit" name="store" [(ngModel)]="form.store" required #store="ngModel" [ngClass]="{ 'is-invalid': f.submitted && store.errors }">
+                    <option>Please Select</option>
+                    <option *ngFor="let storeData of storeList" [ngValue]="storeData.id">
+                      {{storeData.store_name}}
+                    </option>
+                  </select>
+                  <div *ngIf="f.submitted && store.errors" class="invalid-feedback">
+                    <div *ngIf="store.errors['required']">This is required !</div>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="addressform">
+              <div class="form-check check_box">
+                <input class="form-check-input" type="checkbox" value="" id="cash_payment" [disabled]="disabledEdit" name="cash_payment" [(ngModel)]="form.cash_payment">
+                <label class="form-check-label" for="cash_payment"> Cash Payment </label>
+              </div>
+              </div>
+            </div>
+         
+         
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="addressform">
+                    <label for="location">Date <span class="asterisk">*</span>
+                    </label>
+                    <input type="Date" class="form-control" [min]="mindate" [disabled]="disabledEdit" placeholder="" name="date" [(ngModel)]="form.date" required #date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && date.errors }">
+                    <div *ngIf="f.submitted && date.errors" class="invalid-feedback">
+                      <div *ngIf="date.errors['required']">This is required !</div>
+                    </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="addressform">
+         
+                    <label for="location">Time <span class="asterisk">*</span>
+                    </label>
+                    <input type="time" class="form-control" [disabled]="disabledEdit" placeholder="" name="time" [(ngModel)]="form.time" required #time="ngModel" [ngClass]="{ 'is-invalid': f.submitted && time.errors }">
+                    <div *ngIf="f.submitted && time.errors" class="invalid-feedback">
+                      <div *ngIf="time.errors['required']">This is required !</div>
+                    </div>          
+              
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="addressform">
+                    <label for="location">Bill Date <span class="asterisk">*</span>
+                    </label>
+                    <input type="Date" class="form-control" [min]="mindate" [disabled]="disabledEdit" placeholder="" name="party_bill_date" [(ngModel)]="form.party_bill_date" required #party_bill_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && party_bill_date.errors }">
+                    <div *ngIf="f.submitted && party_bill_date.errors" class="invalid-feedback">
+                      <div *ngIf="party_bill_date.errors['required']">This is required !</div>
+                    </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="addressform">            
+                    <label for="location">Party Bill no <span class="asterisk">*</span>
+                    </label>
+                    <input type="text" class="form-control" [disabled]="disabledEdit" placeholder="" name="party_bill_no" [(ngModel)]="form.party_bill_no" required #party_bill_no="ngModel" [ngClass]="{ 'is-invalid': f.submitted && party_bill_no.errors }">
+                    <div *ngIf="f.submitted && party_bill_no.errors" class="invalid-feedback">
+                      <div *ngIf="party_bill_no.errors['required']">This is required !</div>
+                    </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="addressform">
+                    <label for="ssil">WAY Bill Form&nbsp;</label>    
+                    <div class="control-sect">
+                      <select class="form-control" [disabled]="disabledEdit" name="way_bill_form" [(ngModel)]="form.way_bill_form" #way_bill_form="ngModel" [ngClass]="{ 'is-invalid': f.submitted && way_bill_form.errors }">
+                        <option value="">Please Select</option>
+                        <option *ngFor="let storeData of wayBillList" [ngValue]="storeData.id">
+                          {{storeData.way_bill_form_no}}
+                        </option>
+                      </select>
+                      <div *ngIf="f.submitted && way_bill_form.errors" class="invalid-feedback">
+                        <div *ngIf="way_bill_form.errors['required']">This is required !</div>
+                      </div>
+                    </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="addressform">       
+                    <label for="ssil">Job Site&nbsp;</label>     
+                    <div class="control-sect">
+                      <select class="form-control" [disabled]="disabledEdit" name="job_site" [(ngModel)]="form.job_site" #job_site="ngModel" [ngClass]="{ 'is-invalid': f.submitted && job_site.errors }" (change)="changeSite(form.job_site)">
+                        <option>Please Select</option>
+                        <option *ngFor="let siteData of siteList" [ngValue]="siteData.id">
+                          {{siteData.site_name}}
+                        </option>
+                      </select>
+                      <div *ngIf="f.submitted && job_site.errors" class="invalid-feedback">
+                        <div *ngIf="job_site.errors['required']">This is required !</div>
+                      </div>
+                    </div> 
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-12" *ngIf="!gstScope">
+              <!-- <div class="addressform"><div class="row"><div class="form-check"><input class="form-check-input" type="checkbox" value="" id="against_c_form" name="against_c_form" [(ngModel)]="form.against_c_form"><label class="form-check-label" for="against_c_form">
+                                      Against C Form
+                                  </label></div></div></div> -->
+              <div class="addressform">
+                <div class="row">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="cst_agst_e1_sale" name="cst_agst_e1_sale" [(ngModel)]="form.cst_agst_e1_sale">
+                    <label class="form-check-label" for="cst_agst_e1_sale"> CST Agst E1 Sale </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="addressform" *ngIf="gstScope">        
+        
+                  <label for="ssil">Site State <span class="asterisk">*</span>
+                  </label>                
+                  <div class="control-sect">
+                    <select class="form-control" [disabled]="disabledEdit" required name="site_state" [(ngModel)]="form.site_state" required #site_state="ngModel" (change)="setIGSTdestiny()" [ngClass]="{ 'is-invalid': f.submitted && site_state.errors }">
+                      <option value="">Please Select</option>
+                      <option *ngFor="let depData of statelist" [ngValue]="depData.state_id">
+                        {{depData.name}}
+                      </option>
+                    </select>
+                    <div *ngIf="f.submitted && site_state.errors" class="invalid-feedback">
+                      <div *ngIf="site_state.errors['required']">This is required !</div>
+                    </div>
+                  </div>
+             
+           
+            </div>
+            <div class="addressform" *ngIf="gstScope">    
+                  <label for="location">Exchange Rate <span class="asterisk" *ngIf="exchangeRateRequired">*</span>
+                  </label>   
+                  <input type="text" class="form-control" [required]="exchangeRateRequired" [disabled]="!exchangeRateRequired" amountNumber [disabled]="disabledEdit" placeholder="" name="exchange_rate" [(ngModel)]="form.exchange_rate" required #exchange_rate="ngModel" [ngClass]="{ 'is-invalid': f.submitted && exchange_rate.errors }">
+                  <div *ngIf="f.submitted && exchange_rate.errors" class="invalid-feedback">
+                    <div *ngIf="exchange_rate.errors['required']">This is required !</div>
+                  </div>
+            </div>
+          </div>
+        </div>
+        <button hidden #submitButton="" type="submit">Save</button>
+      </div>
+    </div>
+  </form>

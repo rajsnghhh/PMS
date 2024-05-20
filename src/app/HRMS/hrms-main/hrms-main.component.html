@@ -1,0 +1,10 @@
+<div class="product-main-body">
+    <app-hrms-header></app-hrms-header>
+    <section class="hrms-main-body">
+        <app-hrms-nav-position></app-hrms-nav-position>
+        <router-outlet *ngIf="loadRouterOutlate"></router-outlet>
+    </section>
+    <div class="common-footer">
+        Powered by <span (click)="openSFT()">Shyam Future Tech Private Limited</span>
+    </div>
+</div>

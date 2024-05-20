@@ -1,0 +1,142 @@
+<form name="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <div class="px-5 pt-3">
+        <h3><span  *ngIf="scope == 'add'">Add </span> <span  *ngIf="scope == 'update'">Update </span> <span  *ngIf="scope == 'view'">View </span>Way Bill</h3>
+        <div class="row pb-2">
+            <div class="col-md-6">
+                <div class="row ">
+                    <div class="col-md-12 pb-2">
+                        <label>Way Bill Form No.
+                            <span class="text-danger"
+                                *ngIf="Global.isInputRuleAvailable(formGroup,'way_bill_form_no','required')">*</span>
+
+                        </label>
+                        <input type="text" formControlName="way_bill_form_no"
+                            [class.is-invalid]="(!Global.isInputValid(formGroup,'way_bill_form_no'))"
+                            class="form-control" placeholder="">
+                        <div class="invalid-feedback"
+                            *ngIf="!Global.isInputRuleValid(formGroup,'way_bill_form_no','required')">
+                            <div>
+                                This field is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 pb-2">
+                        <div>
+                            <label class="form-check-label">
+                                Is Issued Party
+                            </label>
+                            <input formControlName="is_issued_by_party"
+                                [class.is-invalid]="(!Global.isInputValid(formGroup,'is_issued_by_party'))"
+                                class="form-check-input mx-2" type="checkbox">
+                        </div>
+                        <ng-select [clearable]="false" [class.is-invalid]="(!Global.isInputValid(formGroup,'vendor'))"
+                            placeholder="Select Vendor" formControlName="vendor">
+                            <ng-option *ngFor="let vendor of vendorList" [value]="vendor.id">
+                                {{vendor.vendor_master_data.vendor_name}}
+                            </ng-option>
+                        </ng-select>
+                        <div class="invalid-feedback"
+                            *ngIf="!Global.isInputRuleValid(formGroup,'vendor','required')">
+                            <div>
+                                This field is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pb-2">
+                        <label class="form-group">Issued Date
+                            <span class="text-danger"
+                                *ngIf="Global.isInputRuleAvailable(formGroup,'issued_date','required')">*</span>
+
+                        </label>
+                        <input type="date" formControlName="issued_date"
+                            [class.is-invalid]="(!Global.isInputValid(formGroup,'issued_date'))" class="form-control"
+                            placeholder="">
+                        <div class="invalid-feedback"
+                            *ngIf="!Global.isInputRuleValid(formGroup,'issued_date','required')">
+                            <div>
+                                This field is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pb-2">
+                        <div class="form-group">
+                            <label>Entry in State
+                                <span class="text-danger"
+                                    *ngIf="Global.isInputRuleAvailable(formGroup,'entry_in_state','required')">*</span>
+                            </label>
+                            <ng-select [clearable]="false" [class.is-invalid]="(!Global.isInputValid(formGroup,'entry_in_state'))"
+                                placeholder="Select State" formControlName="entry_in_state">
+                                <ng-option *ngFor="let state of stateList" [value]="state.state_id">
+                                    {{state.name}}
+                                </ng-option>
+                            </ng-select>
+                            <div class="invalid-feedback"
+                                *ngIf="!Global.isInputRuleValid(formGroup,'entry_in_state','required')">
+                                <div>
+                                    This field is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pb-2">
+                        <div>
+                            <label class="form-check-label">
+                                Is Used Date
+                            </label>
+                            <input formControlName="is_used_date"
+                                [class.is-invalid]="(!Global.isInputValid(formGroup,'is_used_date'))"
+                                class="form-check-input mx-2" type="checkbox">
+                        </div>
+                        <input type="date" formControlName="used_date"
+                            [class.is-invalid]="(!Global.isInputValid(formGroup,'used_date'))" class="form-control"
+                            placeholder="">
+                        <div class="invalid-feedback"
+                            *ngIf="!Global.isInputRuleValid(formGroup,'used_date','required')">
+                            <div>
+                                This field is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 pb-2">
+
+                <div class="row">
+                    <div class="col-md-12 pb-5 mb-3">
+
+                    </div>
+                    <div class="col-md-12 pb-2">
+                        <label class="form-group">
+                            Issued Details
+                        </label>
+                        <textarea formControlName="issue_details"
+                            [class.is-invalid]="(!Global.isInputValid(formGroup,'issue_details'))" class="form-control"
+                            placeholder=""></textarea>
+                        <div class="invalid-feedback"
+                            *ngIf="!Global.isInputRuleValid(formGroup,'issue_details','required')">
+                            <div>
+                                This field is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 pb-2">
+                        <label class="form-group">
+                            Used Details
+                        </label>
+
+                        <textarea formControlName="used_details"
+                            [class.is-invalid]="(!Global.isInputValid(formGroup,'used_details'))" class="form-control"
+                            placeholder=""></textarea>
+                        <div class="invalid-feedback"
+                            *ngIf="!Global.isInputRuleValid(formGroup,'used_details','required')">
+                            <div>
+                                This field is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button hidden #submitButton="" type="submit">Save</button>
+</form>

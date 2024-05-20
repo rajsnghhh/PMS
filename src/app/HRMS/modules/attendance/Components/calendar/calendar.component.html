@@ -1,0 +1,155 @@
+<div class="main-container">
+    <div class="menu">
+        <form role="form" [formGroup]="yearChangeForm">
+            <ul class="monthlist">
+                <select class="year" class="form-select" formControlName="year" [(ngModel)]="selectedyear"
+                    (change)="yearChange()">
+                    <option disabled value="">Select Year</option>
+                    <option *ngFor="let i of [0,1,2]">{{activeSession.SprintYear - i}}</option>
+                    <!-- <option>{{currentYear}}</option> -->
+                </select>
+                <li class="mnthrange" [ngClass]="{'active': index === indexValue }"
+                    *ngFor="let month of monthList; let index = index"
+                    (click)="AttendanceClick(month.fortnight_start_date,month.fortnight_end_date,month.second_fortnight_end,index)">
+                    {{month.start_month}} -
+                    {{month.end_month}}</li>
+            </ul>
+        </form>
+    </div>
+
+    <div class="secondheader">
+        <div>
+            <li class="firstrowhead">
+                <div class="headerline">
+                    <label class="daterow">Date
+                    </label>
+                    <label class="loginrow">Login
+                    </label>
+                    <label class="logoutrow">Logout
+                    </label>
+                    <label class="loggedrow">Time Logged In
+                    </label>
+                    <label class="deviationrow">Deviation
+                    </label>
+                </div>
+            </li>
+
+            <ul class="attendancebody">
+                <li class="firstrow" *ngFor="let item of attendanceList; let i = index">
+                    <div class="headerlinedata" [ngClass]='{"bg": item.attendance_remarks!=="Present"}'>
+                        <td class="daterow">
+                            <div class="datebtn" [ngClass]='{"bg": item.attendance_remarks!=="Present"}'>
+                                <h4 class="datenum">{{item.date | date:'dd'}}</h4>
+                                <span class="mnthtxt">{{item.date | date:'MMM'}}</span>
+                            </div>
+                        </td>
+                        <td class="loginrow">{{item.initial_login_time}}</td>
+                        <td class="loginrow2" *ngIf="item.is_present !== true"> ---- </td>
+                        <td class="logoutrow">{{item.initial_logout_time}}</td>
+                        <td class="loginrow2" *ngIf="item.is_present !== true"> ---- </td>
+                        <td class="loggedrow">{{item.duration_of_work}}</td>
+                        <td class="loginrow2" *ngIf="item.is_present !== true"> ---- </td>
+                        <td class="deviationrow">
+                            <div class="viewState">
+                                <div class="custom-section" *ngIf="item.is_present === true ">
+                                    <div class="dropdown">
+                                        <span><img src="assets/icons/info.png" /></span>
+                                        <div class="dropdown-content" *ngIf="item.deviation_details != ''">
+                                            <div class="img-container">
+                                                <div *ngFor="let tditem of item.deviation_details"><img
+                                                        src="assets/icons/point.png" />{{tditem.start_time}} -
+                                                    {{tditem.end_time}} <br> &nbsp; &nbsp; &nbsp;
+                                                    ({{tditem.justifications}})
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <!-- <td class="deviationrow" *ngIf="item.is_present !== true"> ---- </td> -->
+                        <td>
+                            <button class="addmore" *ngIf="item.is_present === true" data-bs-toggle="modal"
+                                data-bs-target="#deleteUser" (click)="createdeviation(item.id)"><img class="addbutton"
+                                    src="assets/icons/add1.png" alt=""></button>
+                        </td>
+                        <td class="status">{{item.attendance_remarks}}</td>
+
+                        <!-- <td class="status" *ngIf="item.is_present === true">Present</td>
+                        <td class="status" *ngIf="item.is_present !== true">Not Present</td> -->
+                    </div>
+                </li>
+            </ul>
+            <ul class="attendancebody" *ngIf="attendanceList.length == 0">
+                <li class="firstrow">
+                    <div class="headerlinedata2">
+                        <tr class="text-center">
+                            <td colspan="7">No data found.</td>
+                        </tr>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Deviation -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Add Deviation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <h3 class="cross">&times;</h3>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" [formGroup]="adddeviationForm">
+                    <div class="flex-div4">
+                        <div><input type="radio" value="MP" formControlName="deviationType"> MP</div>
+                        <div><input type="radio" value="OD" formControlName="deviationType"> OD</div>
+                        <div><input type="radio" value="HD" formControlName="deviationType"> HD</div>
+                        <div><input type="radio" value="FD" formControlName="deviationType"> FD</div>
+                    </div>
+                    <div class="flex-div">
+                        <div class="mb-3">
+                            <label class="floating-label">Start Time <span class="asterisk">*</span></label>
+                            <input type="time" class="form-control" formControlName="startTime"
+                                [ngClass]="displayFieldCss(adddeviationForm,'startTime')">
+                            <div class="required" *ngIf="isFieldValid(adddeviationForm,'startTime')">
+                                <span class="text-danger"
+                                    *ngIf="adddeviationForm.get('startTime')?.errors?.['required']">Start Time is
+                                    required</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="floating-label">End Time <span class="asterisk">*</span></label>
+                            <input type="time" class="form-control" formControlName="endTime"
+                                [ngClass]="displayFieldCss(adddeviationForm,'endTime')">
+                            <div class="required" *ngIf="isFieldValid(adddeviationForm,'endTime')">
+                                <span class="text-danger"
+                                    *ngIf="adddeviationForm.get('endTime')?.errors?.['required']">End Time is
+                                    required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="floating-label">Justification <span class="asterisk">*</span></label>
+                        <input type="text" class="form-control" formControlName="justification"
+                            [ngClass]="displayFieldCss(adddeviationForm,'justification')">
+                        <div class="required" *ngIf="isFieldValid(adddeviationForm,'justification')">
+                            <span class="text-danger"
+                                *ngIf="adddeviationForm.get('justification')?.errors?.['required']">Justification is
+                                required</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary applybtn"
+                    (click)="addDeviation()">APPLY</button>
+            </div>
+        </div>
+    </div>
+</div>

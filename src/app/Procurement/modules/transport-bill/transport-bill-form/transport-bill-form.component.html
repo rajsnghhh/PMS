@@ -1,0 +1,638 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Transport Bill (GRN & Issue)</h2>
+
+        <div class="action-button-container">
+            <button [routerLink]="['/pms/store/procurement/transport-bill/list']">List</button>
+        </div>
+    </div>
+    <div class="component-body">
+        <form name="form" #f="ngForm" (ngSubmit)="onSubmit()" novalidate>
+            <div class="creatematerial">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Invoice No.</label>
+                        <input type="text" name="invoice_no" [(ngModel)]="form.invoice_no " #invoice_no="ngModel"
+                            placeholder="" id="invoice_no" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Date</label>
+                        <input type="date" name="date " [(ngModel)]="form.date " #date="ngModel" placeholder=""
+                            id="date" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Rate Fill Type</label>
+                        <div class="checkbox_sec">
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" value="only_loc" name="rate_to_fill"
+                                        [(ngModel)]="form.rate_to_fill " #rate_to_fill="ngModel"
+                                        class="form-check-input">
+                                    Only Loc.
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" value="from_to_chainage" name="rate_to_fill"
+                                        [(ngModel)]="form.rate_to_fill " #rate_to_fill="ngModel"
+                                        class="form-check-input">
+                                    From-To Chainage
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" value="from_chainage" name="rate_to_fill"
+                                        [(ngModel)]="form.rate_to_fill " #rate_to_fill="ngModel"
+                                        class="form-check-input">
+                                    From Chainage
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" value="to_chainage" name="rate_to_fill"
+                                        [(ngModel)]="form.rate_to_fill " #rate_to_fill="ngModel"
+                                        class="form-check-input">
+                                    To Chainage
+                                </label>
+                            </div> 
+                        </div>
+                 
+
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Bill No.</label>
+                        <input type="text" name="bill_no" [(ngModel)]="form.bill_no " #bill_no="ngModel" placeholder=""
+                            id="bill_no" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Bill Date</label>
+                        <input type="date" name="bill_date " [(ngModel)]="form.bill_date " #bill_date="ngModel"
+                            placeholder="" id="bill_date" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Site</label>
+                        <input type="text" class="form-control" [disabled]="true" [value]="localStorageData?.site_data?.site_name"> 
+                        <!-- <mat-select name="site " [(ngModel)]="form.site " #site="ngModel" placeholder="Select Site"
+                            class="form-control" multiple>
+                            <input class="form-control w-100" name="siteName" [(ngModel)]="form.siteName "
+                                #siteName="ngModel" focused="'true'" type="text" autocomplete="off"
+                                placeholder="Search Site">
+                            <mat-divider></mat-divider>
+                            <mat-option *ngFor="let siteData of siteList" [value]="siteData.id">
+                                {{siteData.site_name}}
+                            </mat-option>
+                            <mat-option [value]="" *ngIf="siteList.length==0">
+                                No Records.
+                            </mat-option>
+                        </mat-select> -->
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>HSN/SAC Code</label>
+                        <input type="text" name="hsn_sac_code" [(ngModel)]="form.hsn_sac_code " #hsn_sac_code="ngModel"
+                            placeholder="" id="hsn_sac_code" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Transporter</label>
+                        <mat-select name="transporter" [(ngModel)]="form.transporter " #transporter="ngModel"
+                            placeholder="Transporter" class="form-control">
+                            <mat-option *ngFor="let vendorData of vendorList" [value]="vendorData.id">
+                                {{vendorData.vendor_master_data.vendor_name}}
+                            </mat-option>
+                            <mat-option [value]="" *ngIf="vendorList.length==0">
+                                No Records.
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Site State</label>
+                        <select name="site_state" [(ngModel)]="form.site_state " #site_state="ngModel"
+                            class="form-control">
+                            <option disabled>-- select --</option>
+                            <option value="{{stateData.state_id}}" *ngFor="let stateData of stateList">
+                                {{stateData.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Ttransporter State</label>
+                        <select name="transporter_state" [(ngModel)]="form.transporter_state "
+                            #transporter_state="ngModel" class="form-control">
+                            <option disabled>-- select --</option>
+                            <option value="{{stateData.state_id}}" *ngFor="let stateData of stateList">
+                                {{stateData.name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+                
+        </div>
+
+            <div class="gstable">
+                <table class="text-nowrap mt-4">
+                    <tr>
+                        <th>Sr.&nbsp;No</th>
+                        <th>From</th>
+                        <th>Date/Rec.Date</th>
+                        <th>Party</th>
+                        <th>Challan No./LR No.</th>
+                        <th>PB No./PO No.</th>
+                        <th>Item/HSN Code</th>
+                        <th>Disp Qty.</th>
+                        <th>Rec Qty.</th>
+                        <th>Tolererance.</th>
+                        <th>Shortage Qty.</th>
+                        <th>Excess Qty.</th>
+                        <th>Freight Rate</th>
+                        <th>KM. Run</th>
+                        <th>Amount</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr class="tablebg" *ngFor="let item of form.items; let i = index">
+                        <td>#{{i+1}}</td>
+                        <td>{{item.from}}</td>
+                        <td>
+                            <div>{{item.created_at | date:'dd-MM-yyyy'}}</div>
+                            <hr>
+                            <div>{{item.received_date | date:'dd-MM-yyyy'}}</div>
+                        </td>
+                        <td>{{item.vendorName}}</td>
+                        <td>
+                            <div>{{item.challanNo}}</div>
+                            <div>{{item.lrNo}}</div>
+                        </td>
+                        <td>
+                            <div>{{item.pbNo}}</div>
+                            <div>{{item.poNo}}</div>
+                        </td>
+
+                        <td>
+                            <div>{{item.material_details[0]?.material_name}}</div>
+                            <hr>
+                            <div class="tablegroup">
+                                <label>HSN CODE:</label>
+                                <input type="text" class="form-control" name="hsn_code{{i+1}}"
+                                    [(ngModel)]="form.items[i].hsn_code" #hsn_code="ngModel">
+
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder="" name="quantity{{i+1}}"
+                                    amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                                    [(ngModel)]="form.items[i].quantity" #quantity="ngModel"
+                                    (change)="calculateAmount(i)">
+                            </div>
+                            <div class="tablegroup">
+                                <input type="text" disabled class="form-control" id="data" placeholder=""
+                                    name="uom{{i+1}}" [(ngModel)]="form.items[i].uom" #uom="ngModel">
+                            </div>
+
+                        </td>
+
+                        <td>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="received_quantity{{i+1}}" amountNumber
+                                    pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                                    [(ngModel)]="form.items[i].received_quantity" #received_quantity="ngModel"
+                                    (change)="calculateAmount(i)">
+                            </div>
+                            <div class="tablegroup">
+                                <input type="text" disabled class="form-control" id="data" placeholder=""
+                                    name="uom{{i+1}}" [(ngModel)]="form.items[i].uom" #uom="ngModel">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder="" name="tolerance{{i+1}}"
+                                    amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                                    [(ngModel)]="form.items[i].tolerance" #tolerance="ngModel">
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="short_age_qty{{i+1}}" amountNumber
+                                    pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                                    [(ngModel)]="form.items[i].short_age_qty" #short_age_qty="ngModel">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="excess_qty{{i+1}}" amountNumber
+                                    pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                                    [(ngModel)]="form.items[i].excess_qty" #excess_qty="ngModel">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder="" name="rate{{i+1}}"
+                                    amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                                    [(ngModel)]="form.items[i].rate" #rate="ngModel" (change)="calculateAmount(i)">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder="" name="km_run{{i+1}}"
+                                    amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                                    [(ngModel)]="form.items[i].km_run" #km_run="ngModel" (change)="calculateAmount(i)">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder="" name="amount{{i+1}}"
+                                    amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                                    [(ngModel)]="form.items[i].amount" #amount="ngModel" disabled>
+                            </div>
+                        </td>
+                        <td class="align-middle">
+                            <a (click)="delete(i)" type="button" class="vector-delete">DEL <i class="fa"
+                                    aria-hidden="true"><img src="assets/img/vector-delete.png" alt=""></i></a>
+                        </td>
+                    </tr>
+                    <tr *ngIf="form.items.length==0">
+                        <td colspan="16" class="text-center">No Item Added Yet</td>
+                    </tr>
+                </table>
+            </div>
+
+            <table class="text-nowrap mt-4">
+                <tr>
+                    <th>Expense Type</th>
+                    <th>Calculate On Amount</th>
+                    <th>Percent</th>
+                    <th>Percent Amount</th>
+                    <th>GST Tax Type</th>
+                    <th>SGST</th>
+                    <th>CGST</th>
+                    <th>IGST</th>
+                    <th>Total Amount</th>
+                </tr>
+
+                <ng-container *ngIf="form.items.length>0">
+                    <tr class="tablebg" *ngFor="let item of form.expense_details; let i = index">
+
+                        <td>
+                            <div class="tablegroup">
+
+                                <select class="form-control" name="expense_head{{i+1}}"
+                                    [(ngModel)]="form.expense_details[i].expense_head" #expense_head="ngModel">
+                                    <option value="" disabled>Select Expense</option>
+                                    <option *ngFor="let expense of expenseList" [value]="expense.id">
+                                        {{expense.name}}</option>
+                                </select>
+                            </div>
+                            <div class="tablegroup">
+                                <label>SAC Code</label>
+                                <input type="text" class="form-control" id="data" placeholder="" name="sac_code{{i+1}}"
+                                    [(ngModel)]="form.expense_details[i].sac_code" #sac_code="ngModel">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablegroup">
+                                <input type="number" class="form-control" id="data" placeholder=""
+                                    name="calculate_on_amount{{i+1}}"
+                                    [(ngModel)]="form.expense_details[i].calculate_on_amount"
+                                    #calculate_on_amount="ngModel" (change)="calculateGrossAmount(i)">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablegroup">
+                                <input type="number" class="form-control" id="data" placeholder=""
+                                    name="expense_percentage{{i+1}}"
+                                    [(ngModel)]="form.expense_details[i].expense_percentage"
+                                    #expense_percentage="ngModel" (change)="calculateGrossAmount(i)">
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="tablegroup">
+                                <div class="tablegroup">
+                                    <input type="number" class="form-control" id="data" placeholder=""
+                                        name="expense_amount{{i+1}}"
+                                        [(ngModel)]="form.expense_details[i].expense_amount" #expense_amount="ngModel">
+                                </div>
+                            </div>
+
+                        </td>
+
+                        <td>
+                            <div class="tablegroup">
+                                <select class="form-control" name="tax_head{{i+1}}"
+                                    [(ngModel)]="form.expense_details[i].tax_head" #tax_head="ngModel"
+                                    (change)="taxMaterialExpense($event,i)">
+                                    <option value="" disabled>-- Tax --</option>
+                                    <option value="{{taxHead.id}}" *ngFor="let taxHead of gstTaxlist">{{taxHead.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.expense_details[i].sgst_percentage" #sgst_percentage="ngModel"
+                                    name="sgst_percentage{{i+1}}" readonly (ngModelChange)="calculateTotalAmount(i)">
+                            </div>
+
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder="" readonly
+                                    (ngModelChange)="calculateTotalAmount(i)"
+                                    [(ngModel)]="form.expense_details[i].sgst_amount" #sgst_amount="ngModel"
+                                    name="sgst_amount{{i+1}}">
+                            </div>
+                            <label>UTGST</label>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.expense_details[i].utgst_percentage" #utgst_percentage="ngModel"
+                                    name="utgst_percentage{{i+1}}" readonly (ngModelChange)="calculateTotalAmount(i)">
+                            </div>
+
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder="" readonly
+                                    (ngModelChange)="calculateTotalAmount(i)"
+                                    [(ngModel)]="form.expense_details[i].utgst_amount" #utgst_amount="ngModel"
+                                    name="utgst_amount{{i+1}}">
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.expense_details[i].cgst_percentage" #cgst_percentage="ngModel"
+                                    name="cgst_percentage{{i+1}}" readonly (ngModelChange)="calculateTotalAmount(i)">
+                            </div>
+
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.expense_details[i].cgst_amount" #cgst_amount="ngModel"
+                                    name="cgst_amount{{i+1}}" readonly (ngModelChange)="calculateTotalAmount(i)">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.expense_details[i].igst_percentage" #igst_percentage="ngModel"
+                                    readonly (ngModelChange)="calculateTotalAmount(i)" name="igst_percentage{{i+1}}">
+                            </div>
+
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.expense_details[i].igst_amount" #igst_amount="ngModel"
+                                    name="igst_amount{{i+1}}" readonly (ngModelChange)="calculateTotalAmount(i)">
+                            </div>
+
+                            <label>CESS</label>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.expense_details[i].cess_percentage" #cess_percentage="ngModel"
+                                    name="cess_percentage{{i+1}}" readonly (ngModelChange)="calculateTotalAmount(i)">
+                            </div>
+
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder="" readonly
+                                    (ngModelChange)="calculateTotalAmount(i)"
+                                    [(ngModel)]="form.expense_details[i].cess_amount" #cess_amount="ngModel"
+                                    name="cess_amount{{i+1}}">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="total_expense_amount{{i+1}}"
+                                    [(ngModel)]="form.expense_details[i].total_expense_amount"
+                                    [ngModelOptions]="{standalone: true}" readonly>
+                            </div>
+                        </td>
+
+                    </tr>
+                </ng-container>
+
+                <tr *ngIf="form.items.length==0">
+                    <td colspan="9" class="text-center">No Item Added Yet</td>
+                </tr>
+            </table>
+
+            <table class="text-nowrap mt-4" *ngFor="let item of form.tax; let i = index">
+                <tr>
+                    <td style="text-align: right;" colspan="2">(-)Shortage Charges</td>
+                    <td width="30%">
+                        <div class="tablegroup">
+                            <input type="number" name="shortage_charge{{i+1}}"
+                            [(ngModel)]="form.tax[i].shortage_charge" #shortage_charge="ngModel" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;" colspan="2">(-)Repair & Maintenance Amount</td>
+                    <td width="30%">
+                        <div class="tablegroup">
+                            <input type="number"name="repair_maintenance_amount{{i+1}}"
+                            [(ngModel)]="form.tax[i].repair_maintenance_amount" #repair_maintenance_amount="ngModel" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>GST:</p>
+                        <input type="radio" name="on_applicable_gst{{i+1}}" (change)="gstRadioChange(form.tax[i].on_applicable_gst)"
+                        [(ngModel)]="form.tax[i].on_applicable_gst" #on_applicable_gst="ngModel" value="onItem">
+                        <label>On Item</label><br>
+                        <input type="radio" name="on_applicable_gst{{i+1}}" (change)="gstRadioChange(form.tax[i].on_applicable_gst)"
+                        [(ngModel)]="form.tax[i].on_applicable_gst" #on_applicable_gst="ngModel" value="afterDeduction">
+                        <label>After Deduction</label><br>
+                    </td>
+                    <td>
+                        <div class="tablegroup">
+                            <label>GST Tax @</label>
+                            <select class="form-control" name="tax_head{{i+1}}" [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="form.tax[i].tax_head" #tax_head="ngModel"
+                            (change)="taxChangeMaterial($event,i)">
+                                <option value="" disabled>-- Tax --</option>
+                                <option value="{{taxHead.id}}" *ngFor="let taxHead of gstTaxlist">{{taxHead.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+                    <td width="30%"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;" width="60%">SGST Tax @</td>
+                    <td>
+                        
+                        <div class="tablegroup">
+                            <input type="number" readonly
+                            [(ngModel)]="form.tax[i].sgst_percentage" #sgst_percentage="ngModel"
+                            name="sgst_percentage{{i+1}}" [ngModelOptions]="{standalone: true}" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                    <td width="30%">
+                        <div class="tablegroup">
+                            <input type="number" readonly
+                            [(ngModel)]="form.tax[i].sgst_amount" #sgst_amount="ngModel"
+                            name="sgst_amount{{i+1}}" [ngModelOptions]="{standalone: true}" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">CGST Tax @</td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="number" readonly
+                            [(ngModel)]="form.tax[i].cgst_percentage" #cgst_percentage="ngModel"
+                            name="cgst_percentage{{i+1}}" [ngModelOptions]="{standalone: true}" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                    <td width="30%">
+                        <div class="tablegroup">
+                            <input type="number" readonly
+                            [(ngModel)]="form.tax[i].cgst_amount" #cgst_amount="ngModel"
+                            name="cgst_amount{{i+1}}" [ngModelOptions]="{standalone: true}" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">IGST Tax @</td>
+                    <td>
+                        <div class="tablegroup">
+                            <input type="number" readonly
+                            [(ngModel)]="form.tax[i].igst_percentage" #igst_percentage="ngModel"
+                            name="igst_percentage{{i+1}}" [ngModelOptions]="{standalone: true}" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                    <td width="30%">
+                        <div class="tablegroup">
+                            <input type="number" readonly
+                            [(ngModel)]="form.tax[i].igst_amount" #igst_amount="ngModel"
+                            name="igst_amount{{i+1}}" [ngModelOptions]="{standalone: true}" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">UTGST Tax @</td>
+                    <td>
+                        <div class="tablegroup">
+                            <input type="number" readonly
+                            [(ngModel)]="form.tax[i].utgst_percentage" #utgst_percentage="ngModel"
+                            name="utgst_percentage{{i+1}}" [ngModelOptions]="{standalone: true}" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                    <td width="30%">
+                        <div class="tablegroup">
+                            <input type="number" readonly
+                            [(ngModel)]="form.tax[i].utgst_amount" #utgst_amount="ngModel"
+                            name="utgst_amount{{i+1}}" [ngModelOptions]="{standalone: true}" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">CESSGST Tax @</td>
+                    <td>
+                        <div class="tablegroup">
+                            <input type="number" readonly
+                            [(ngModel)]="form.tax[i].cess_percentage" #cess_percentage="ngModel"
+                            name="cess_percentage{{i+1}}" [ngModelOptions]="{standalone: true}" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                    <td width="30%">
+                        <div class="tablegroup">
+                            <input type="number" readonly
+                            [(ngModel)]="form.tax[i].cess_amount" #cess_amount="ngModel"
+                            name="cess_amount{{i+1}}" [ngModelOptions]="{standalone: true}" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;" colspan="2">Round Off</td>
+                    <td width="30%">
+                        <div class="tablegroup">
+                            <input type="number" (change)="calculateInvoiceAmount()"
+                            [(ngModel)]="form.tax[i].round_off" #round_off="ngModel"
+                            name="round_off{{i+1}}" [ngModelOptions]="{standalone: true}" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;" colspan="2">Invoice Amount</td>
+                    <td width="30%">
+                        <div class="tablegroup">
+                            <input type="number" disabled  [(ngModel)]="form.tax[i].invoice_amount" #invoice_amount="ngModel"
+                            name="invoice_amount{{i+1}}" [ngModelOptions]="{standalone: true}" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;" colspan="2">Advance Amount</td>
+                    <td width="30%">
+                        <div class="tablegroup">
+                            <input type="number" (change)="calculateInvoiceAmount()"  [(ngModel)]="form.tax[i].advance_amount" #advance_amount="ngModel"
+                            name="advance_amount{{i+1}}" [ngModelOptions]="{standalone: true}" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;" colspan="2">Balance</td>
+                    <td width="30%">
+                        <div class="tablegroup">
+                            <input type="number" disabled  [(ngModel)]="form.tax[i].final_balance" #final_balance="ngModel"
+                            name="final_balance{{i+1}}" [ngModelOptions]="{standalone: true}" class="form-control" style="margin-bottom: 0;">
+                        </div>
+                    </td>
+                </tr>
+                
+            </table>
+
+            <div class="creatematerial">
+            <div class="row mt-4">
+
+                <div class="col-lg-6 col-md-6 col-6">
+                    <div class="adform">
+                        <label>Remark.</label>
+                        <textarea name="remarks" [(ngModel)]="form.remarks " #remarks="ngModel" placeholder=""
+                            id="remarks" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-6">
+                    <div class="adform">
+                        <label>Attach a File</label>
+                        <div class="custom-file">
+                            <input type="file" name="fileData " [(ngModel)]="form.fileData" (change)="uploadFile($event)"
+                            #fileData="ngModel" placeholder="" id="fileData" class="form-control">
+                        </div>
+                    
+                    </div>
+                </div>
+
+            </div>
+
+                
+        </div>
+            
+            <div class="text-center previewbtn mt-3">
+                <button type="submit" class="btn btn-primary list_btn">Save Bill</button>
+            </div>
+        </form>
+    </div>
+</div>

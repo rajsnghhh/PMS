@@ -1,0 +1,80 @@
+<div class="mb-3">
+    <input type="text" class="form-control" id="name" placeholder="Name / Email / Phone Number" name="search"
+        [(ngModel)]="searchUser.search">
+</div>
+
+<div class="mb-3">
+    <div>
+        <angular2-multiselect [data]="dropdownMultiselectDepartmentList" name="department"
+            [(ngModel)]="selectDepartment" [settings]="dropdownMultiSelectDepartmentSettings"
+            (onSelect)="onMultiSelectDepartment($event)" (onDeSelect)="OnMultiDeSelectDepartment($event)"
+            (onSelectAll)="onMultiSelectAllDepartment($event)" (onDeSelectAll)="onMultiDeSelectAllDepartment($event)">
+        </angular2-multiselect>
+    </div>
+
+</div>
+<div class="mb-3">
+    <select class="form-select" name="company" [(ngModel)]="searchUser.companyId" (change)="selectCompany()">
+        <option disabled value="">Select Company</option>
+        <option *ngFor="let comp of companyList" value={{comp.id}}>{{comp.name}}</option>
+    </select>
+</div>
+<div class="mb-3">
+    <div>
+        <angular2-multiselect [data]="dropdownMultiselectDesignationList" name="designation"
+            [(ngModel)]="selectDesignation" [settings]="dropdownMultiSelectDesignationSettings"
+            (onSelect)="onMultiSelectDesignation($event)" (onDeSelect)="OnMultiDeSelectDesignation($event)"
+            (onSelectAll)="onMultiSelectAllDesignation($event)" (onDeSelectAll)="onMultiDeSelectAllDesignation($event)">
+        </angular2-multiselect>
+    </div>
+</div>
+<div class="mb-3">
+    <div>
+        <angular2-multiselect [data]="dropdownMultiselectEmpTypeList" name="emptype" [(ngModel)]="selectEmpType"
+            [settings]="dropdownMultiSelectEmpTypeSettings" (onSelect)="onMultiSelectEmpType($event)"
+            (onDeSelect)="OnMultiDeSelectEmpType($event)" (onSelectAll)="onMultiSelectAllEmpType($event)"
+            (onDeSelectAll)="onMultiDeSelectAllEmpType($event)">
+        </angular2-multiselect>
+    </div>
+</div>
+<div class="mb-3">
+    <div>
+        <angular2-multiselect [data]="dropdownMultiselectZoneList" name="zone" [(ngModel)]="selectZone"
+            [settings]="dropdownMultiSelectZoneSettings" (onSelect)="onMultiSelectZone($event)"
+            (onDeSelect)="OnMultiDeSelectZone($event)" (onSelectAll)="onMultiSelectAllZone($event)"
+            (onDeSelectAll)="onMultiDeSelectAllZone($event)">
+        </angular2-multiselect>
+    </div>
+</div>
+<div class="mb-3">
+    <div>
+        <angular2-multiselect [data]="dropdownMultiselectRoleList" name="role" [(ngModel)]="selectRole"
+            [settings]="dropdownMultiSelectRoleSettings" (onSelect)="onMultiSelectRole($event)"
+            (onDeSelect)="OnMultiDeSelectRole($event)" (onSelectAll)="onMultiSelectAllRole($event)"
+            (onDeSelectAll)="onMultiDeSelectAllRole($event)">
+        </angular2-multiselect>
+    </div>
+</div>
+<div class="mb-3">
+    <div>
+        <angular2-multiselect [data]="dropdownMultiselectStateList" name="state" [(ngModel)]="selectState"
+            [settings]="dropdownMultiSelectStateSettings" (onSelect)="onMultiSelectState($event)"
+            (onDeSelect)="OnMultiDeSelectState($event)" (onSelectAll)="onMultiSelectAllState($event)"
+            (onDeSelectAll)="onMultiDeSelectAllState($event)">
+        </angular2-multiselect>
+    </div>
+</div>
+<div class="mb-3">
+    <div>
+        <angular2-multiselect [data]="dropdownMultiselectCityList" name="city" [(ngModel)]="selectCity"
+            [settings]="dropdownMultiSelectCitySettings" (onSelect)="onMultiSelectCity($event)"
+            (onDeSelect)="OnMultiDeSelectCity($event)" (onSelectAll)="onMultiSelectAllCity($event)"
+            (onDeSelectAll)="onMultiDeSelectAllCity($event)">
+        </angular2-multiselect>
+    </div>
+</div>
+<div class="bottom-spave"></div>
+<div class="btn_group">
+    <button type="submit" class="btn btn-primary" (click)="searchUserData()">SEARCH</button>
+    <button type="button" class="btn btn-primary non-active-btn" (click)="resetSearch()">Reset Search</button>
+</div>

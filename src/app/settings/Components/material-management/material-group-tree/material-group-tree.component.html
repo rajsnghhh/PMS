@@ -1,0 +1,103 @@
+<div class="main-container">
+  <div class="component-header">
+    <h2>Material Group Tree</h2>
+  </div>
+</div>
+
+<div class="component-body">
+
+  <form name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && onSearch()" novalidate>
+    <div class="row searchform">
+      <div class="mb-3 col-md-6">
+        <div class="empinfowth">
+        <label>Select Item Group </label>
+        <mat-select placeholder="Select Item Group" class="form-select"
+        name="itemgroup" [(ngModel)]="addUser.itemgroup"
+        #itemgroup="ngModel" [ngClass]="{ 'is-invalid': f.submitted && itemgroup.errors }">
+            <mat-option *ngFor="let category of allItemGroup" [value]="category.name">
+                <div class="country-item" [ngStyle]="setMyStyles(category.deafLevel)">
+                    <div *ngIf="!category.parent">
+                        <b> {{category.name}}</b>
+                    </div>
+                    <div *ngIf="category.parent">
+                        {{category.name}}
+                    </div>
+                </div>
+            </mat-option>
+        </mat-select>
+        <div *ngIf="f.submitted && itemgroup.errors" class="invalid-feedback">
+          <div *ngIf="itemgroup.errors['required']">Please select Item Group</div>
+        </div></div>
+
+
+      </div>
+      <div class="mb-3 col-md-6">
+        <div class="empinfowth">
+        <label>Select Item</label>
+
+        <select class="form-select" aria-label="Default select example" name="itemtype" [(ngModel)]="addUser.itemtype"
+          #itemtype="ngModel" [ngClass]="{ 'is-invalid': f.submitted && itemtype.errors }">
+          <option selected disabled value="">Select Item</option>
+          <option *ngFor="let material of materialList" value={{material.id}}>{{material.material_name}}</option>
+        </select>
+
+        <div *ngIf="f.submitted && itemtype.errors" class="invalid-feedback">
+          <div *ngIf="itemtype.errors['required']">Please select Item</div>
+        </div>
+      </div></div>
+    </div>
+    <div class="btd-section">
+    <button type="submit" class="btn-save">Search</button>
+    </div>
+  </form>
+
+
+  <div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>
+          <span [style.paddingLeft.px]="40"> Name </span>
+        </th>
+        <td mat-cell *matCellDef="let data">
+          <div style="font-weight: bold;" [ngClass]="{'fontView': data?.allItem==true}">
+            <button mat-icon-button class="matButton" [style.visibility]="!data.expandable ? 'hidden' : ''"
+              [style.marginLeft.px]="data.level * 32" (click)="treeControl.toggle(data)">
+              <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(data) ? 'expand_more' : 'chevron_right'}}
+              </mat-icon>
+            </button>
+            {{data.name}}
+          </div>
+  
+        </td>
+  
+      </ng-container>
+  
+      <ng-container matColumnDef="item_type">
+        <th mat-header-cell *matHeaderCellDef> Item Type </th>
+        <td mat-cell *matCellDef="let data"> {{data.item_type_details?.name}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="total_group">
+        <th mat-header-cell *matHeaderCellDef>Total Group</th>
+        <td mat-cell *matCellDef="let data"> {{data.total_group}} </td>
+      </ng-container>
+      <ng-container matColumnDef="item_in_group">
+        <th mat-header-cell *matHeaderCellDef> Items In Group </th>
+        <td mat-cell *matCellDef="let data"> {{data.item_in_group}} </td>
+      </ng-container>
+      <ng-container matColumnDef="item_in_subgroup">
+        <th mat-header-cell *matHeaderCellDef> Items In Sub-Groups </th>
+        <td mat-cell *matCellDef="let data"> {{data.item_in_subgroup}} </td>
+      </ng-container>
+      <ng-container matColumnDef="total_item">
+        <th mat-header-cell *matHeaderCellDef> Total Item </th>
+        <td mat-cell *matCellDef="let data"> {{data.total_item}} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+</div>

@@ -1,0 +1,182 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.tabs {
+  display: flex;
+  background-color: #f2f2f2;
+}
+
+.tab {
+  padding: 15px;
+  cursor: pointer;
+  flex: 1;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.tab:hover {
+  background-color: #ddd;
+}
+
+.tab-content {
+  display: none;
+  padding: 20px;
+}
+
+/* Default tab open */
+#tab1 {
+  display: block;
+}
+
+
+fieldset.scheduler-border {
+  border: 1px groove #ddd !important;
+  // padding: 0 1.4em 1.4em 1.4em !important;
+  margin: 0 0 1.5em 0 !important;
+}
+
+legend.scheduler-border {
+  border: 1px groove #ddd !important;
+  background-color: gray;
+  width: 200px;
+  color: #ddd;
+  font-size: 1.2em !important;
+  font-weight: bold !important;
+  font-family: ui-sans-serif;
+}
+
+.createtable-section {
+  width: 100%;
+  margin: 25px 0px;
+}
+
+.createtable-section table {
+  width: 100%;
+  padding-bottom: 35px;
+}
+
+.createtable-section table td {
+  font-size: 14px;
+  padding: 10px 10px !important;
+  font-weight: 300 !important;
+  min-height: auto !important;
+  vertical-align: top;
+}
+
+.createtable-section table td p {
+  font-size: 14px !important;
+  color: #666666;
+  font-weight: 300 !important;
+}
+
+.createtable-section table tr:nth-child(2n+1) {
+  background: #f8f8f8;
+}
+
+.createtable-section table th {
+	background-color: #5577ff;
+	color: white;
+	font-weight: 600 !important;
+	font-size: 14px !important;
+	line-height: 15px !important;
+	padding: 10px !important;
+}
+
+
+.createtable-section table td,
+.createtable-section table th {
+  border: 1px solid #D9D9D9;
+}
+
+.tablebtn-save {
+  background-image: linear-gradient(to right, #40d4e6, #6675fe);
+  font-weight: initial;
+  padding: 3px 16px;
+  border-radius: 28px;
+  border: none;
+  color: white;
+  line-height: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
+  gap: 5px;
+  align-items: baseline;
+  width: 81px;
+  text-decoration: none;
+}
+
+.tablebtn-save .fa {
+  width: 13px;
+}
+
+.tablebtn-save .fa img {
+  width: 13px;
+}
+
+.tablebtn-save:hover {
+  background-image: linear-gradient(to right, #6675fe, #40d4e6);
+  color: white;
+}
+
+.tablebg {
+  background: #f6f8ff;
+}
+
+.vector-delete {
+  background-image: linear-gradient(to right, #df2929, #ea4646);
+  font-weight: initial;
+  padding: 0px 16px;
+  border-radius:4px;
+  border: none;
+  color: white;
+  line-height: 30px;
+  font-size: 13px;
+  font-weight: 300;
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
+  gap: 5px;
+  align-items: baseline;
+  width: auto;
+  text-decoration: none;
+}
+
+.vector-delete .fa {
+  width: 11px;
+}
+
+.vector-delete .fa img {
+  width: 11px;
+}
+
+.vector-delete:hover {
+  background-image: linear-gradient(to right, #ea4646, #df2929);
+  color: white;
+}
+div.active{
+  background-color: #5577f5 !important
+}
+::ng-deep.createtable-section .form-control {
+	display: block;
+	width: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 3px 4px;
+	font-size: 11px;
+	font-weight: 300;
+	line-height: 15px;
+	color: #b1adad;
+	appearance: none;
+	background-color: var(--bs-body-bg);
+	background-clip: padding-box;
+	border: #b9b8b8 1px solid;
+	border-radius: 0px;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	position: relative;
+	margin-bottom: 9px;
+	appearance: auto;
+}

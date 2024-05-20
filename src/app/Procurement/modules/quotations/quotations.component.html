@@ -1,0 +1,448 @@
+<div class="view-details-main">
+    <h1 *ngIf="quoteList.length == 0">No Quote Added Yet !</h1>
+</div>
+
+
+<section class="quotation-comapair-container" *ngIf="quoteList.length > 0">
+    <section class="action-buttons">
+        <button class="exportbtn" (click)="generateexcel()">Export Excel</button>
+        <!-- <button class="exportbtn" (click)="DownloadPDF()">Download PDF</button> -->
+        <button class="exportbtn" #pdfExportButton hidden kendo-button (click)="pdf.saveAs('quotation_compare.pdf')">Download PDF</button>
+        <button class="exportbtn" (click)="generatPDF()">Export PDF</button>
+    </section>
+    <div id="table-scroll" class="table-scroll">
+        <kendo-pdf-export #pdf paperSize="A4" margin="1cm" [scale]="0.5" [landscape]="true">
+        <section #TABLE_CONTAINER>
+        <table id="main-table" class="main-table"  #TABLE table border="1">
+            <thead>
+                <tr class="main-header main-header1"  [ngClass]="{ 'print-now': !removeFromPrint }">
+                    <th scope="col" colspan="4" style=" min-width: 400px; ">
+                        <img src="assets/Logo/infraLogo.png" alt="" style=" max-width: 150px; padding: 5px; ">
+                    </th>
+                    <th scope="col" [attr.colspan]="4 * quoteList.length" style=" font-size: 20px; text-align: center; ">
+                        Comparative Statement For {{quotationData?.rfq_vendor_details?.project_details?.data?.project_name}} Project
+                    </th>
+                </tr>
+                <tr class="main-header" [ngClass]="{ 'print-now': !removeFromPrint }">
+                    <th scope="col" colspan="4" style=" min-width: 400px; ">{{localStorageData?.organisation_details[0].name}}</th>
+                    <th scope="col" colspan="4" *ngFor="let masterData of quoteList; let index = index">
+                        {{masterData?.vendor_details?.vendor_name}}
+                        <br>
+                        <button *ngIf="removeFromPrint" class="action-button" (click)="gotoViewQuotation(masterData.id)">View Quotation</button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th colspan="4">
+                        MR No : {{quotationData?.material_request_details?.request_code}}
+                        <br>
+                        MR Date : {{quotationData?.material_request_details?.date | date :"dd-MM-y"}}
+                        <br>
+                        <br>
+                        Indent No : {{quotationData?.indent_details?.request_code}}
+                        <br>
+                        Indent Date : {{quotationData?.indent_details?.date | date :"dd-MM-y"}}
+                    </th>
+                    <td colspan="4" *ngFor="let masterData of quoteList; let index = index">
+                        Contact No : {{masterData?.vendor_details?.vendor_contact_no}}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4">
+                        CS No : {{getCsNo()}}
+                        <br>
+                        CS Date : {{getCSNoDate('date') | date :"dd-MM-y"}}
+                    </th>
+                    <td colspan="4" *ngFor="let masterData of quoteList; let index = index">
+                        Contact Person : {{masterData?.vendor_details?.contact_person}}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" rowspan="3"></th>
+                    <td colspan="4" *ngFor="let masterData of quoteList; let index = index">
+                        E-Mail: {{masterData?.vendor_details?.vendor_email_id}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" *ngFor="let masterData of quoteList; let index = index">
+                        Quotation : {{masterData?.request_code}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" *ngFor="let masterData of quoteList; let index = index">
+                        Quotation Date : {{masterData?.created_at | date:'MMM d,y'}}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" class="item-table">
+                        <table>
+                            <tr>
+                                <td >Sl. No.</td>
+                                <td >Item Description</td>
+                                <td >UOM</td>
+                                <td >Qty</td>
+                            </tr>
+                        </table>
+                    </th>
+                   
+                    <ng-container *ngFor="let masterData of quoteList; let index = index">
+                        <td>Quoted Price</td>
+                        <td>Discount</td>
+                        <td>Final Rate</td>
+                        <td>Basic Amount</td>
+                    </ng-container>
+                </tr>
+
+                <tr *ngFor="let itemData of quotationData?.rfq_vendor_details?.items; let itemindex = index">
+                    <th colspan="4" class="item-table">
+                        <table>
+                            <tr>
+                                <td >#{{itemindex+1}}</td>
+                                <td >{{itemData.material_details.material_name}}</td>
+                                <td >{{itemData.material_details.unit_of_mesurement_name}}</td>
+                                <td >{{itemData.quantity}}</td>
+                            </tr>
+                        </table>
+                    </th>
+        
+                    <ng-container *ngFor="let masterData of quoteList">
+                        <td>{{ filteredData(itemData,masterData,'price') |inr}}</td>
+                        <td>{{ filteredData(itemData,masterData,'discount') |inr}}
+                            <br>
+                            @{{filteredData(itemData,masterData,'discountP' )}}%
+                        </td>
+                        <td>{{ filteredData(itemData,masterData,'Final') |inr}}</td>
+                        <td>{{ filteredData(itemData,masterData,'amount') |inr}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <th colspan="4" >Remarks</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{masterData?.remarks}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th colspan="4">Total Basic Amount</th>
+                    <td class="highlight-row" colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{ masterData.total_item_taxable_amount | inr }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >Packing & Forwarding</th>
+                    <ng-container *ngFor="let masterData of quoteList">
+                        <td colspan="4">
+                            <span>{{getexpanceData(masterData,'Packing & Forwarding','amount') | inr}}</span>
+                            <br>
+                            <span>{{getexpanceData(masterData,'Packing & Forwarding','parcent')}}</span>
+                        </td>
+                    </ng-container>
+                </tr>
+                <tr>
+                    <th colspan="4" >Transportation Charges</th>
+                    <ng-container *ngFor="let masterData of quoteList">
+                        <td colspan="4">
+                            <span>{{getexpanceData(masterData,'Transportation Charges','amount') | inr}}</span>
+                            <br>
+                            <span>{{getexpanceData(masterData,'Transportation Charges','parcent')}}</span>
+                        </td>
+                    </ng-container>
+                </tr>
+                
+                <tr>
+                    <th colspan="4" >CGST</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{masterData?.total_tax_cgst_amount + masterData?.total_item_cgst_amount + masterData?.total_expense_cgst_amount | inr }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >SGST</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{masterData?.total_tax_sgst_amount + masterData?.total_item_sgst_amount + masterData?.total_expense_sgst_amount | inr }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >IGST</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{masterData?.total_tax_igst_amount + masterData?.total_item_igst_amount + masterData?.total_expense_igst_amount | inr }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >Other Charges (If any)</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{getCharges(masterData)| inr }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >Grand Total</th>
+                    <td colspan="4" class="highlight-row" *ngFor="let masterData of quoteList; let index = index">
+                        {{ masterData.total_amount | inr }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >GST Input Credit</th>
+                    <td colspan="4" class="highlight-row" *ngFor="let masterData of quoteList; let index = index">
+                        {{ masterData?.total_tax_cgst_amount + masterData?.total_item_cgst_amount + masterData?.total_expense_cgst_amount + masterData?.total_tax_sgst_amount + masterData?.total_item_sgst_amount + masterData?.total_expense_sgst_amount + masterData?.total_tax_igst_amount + masterData?.total_item_igst_amount + masterData?.total_expense_igst_amount | inr }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >Payment Terms (in Days)</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{masterData.payment_days}}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >Delivery Period (in Days)</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{masterData.delivery_days}}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >Rate Validity</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">-</td>
+                </tr>
+                <tr>
+                    <th colspan="4" >Warranty/Guarantee</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">-</td>
+                </tr>
+                
+                <tr>
+                    <th colspan="4" >Commercial Ranking from the Lowest</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index"><b>L-{{index+1}}</b></td>
+                </tr>
+                <tr>
+                    <th colspan="4" >&nbsp;&nbsp;</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+
+                        <div class="checkbox-container">
+                            <input type="radio" id="myCheckbox" [disabled]="purchased" [(ngModel)]="selected_quotation_id" name="selected_quotation_id" value="{{masterData.id}}" class="custom-checkbox">
+                            <label for="myCheckbox" class="checkbox-label">Selected</label>
+                        </div>
+                        <section *ngIf="masterData.id == selected_quotation_id && !purchased">
+                            <button class="action-button" (click)="poByIDs(masterData.id)">Purchase</button>
+                            <button class="action-button" (click)="pogstByIDs(masterData.id)">Purchase (GST)</button>
+                        </section>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="main-excel-table" hidden class="main-table"  #EXCELTABLE table border="1">
+            <thead>
+                <tr class="main-header">
+                    <th scope="col" colspan="4" style=" min-width: 400px; ">
+                    </th>
+                    <th scope="col" [attr.colspan]="4 * quoteList.length" style=" font-size: 20px; text-align: center; ">
+                        Comparative Statement For {{quotationData?.rfq_vendor_details?.project_details?.data?.project_name}} Project
+                    </th>
+                </tr>
+                <tr class="main-header">
+                    <th scope="col" colspan="4" style=" min-width: 400px; ">{{localStorageData?.organisation_details[0].name}}</th>
+                    <th scope="col" colspan="4" *ngFor="let masterData of quoteList; let index = index">
+                        {{masterData?.vendor_details?.vendor_name}}
+                        <br>
+                        <button class="action-button" (click)="gotoViewQuotation(masterData.id)">&nbsp;&nbsp;</button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th colspan="4">
+                        MR No : {{quotationData?.material_request_details?.request_code}}
+                        <br>
+                        MR Date : {{quotationData?.material_request_details?.date | date :"dd-MM-y"}}
+                        <br>
+                        <br>
+                        Indent No : {{quotationData?.indent_details?.request_code}}
+                        <br>
+                        Indent Date : {{quotationData?.indent_details?.date | date :"dd-MM-y"}}
+                    </th>
+                    <td colspan="4" *ngFor="let masterData of quoteList; let index = index">
+                        Contact No : {{masterData?.vendor_details?.vendor_contact_no}}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4">
+                        CS No : {{getCsNo()}}
+                        <br>
+                        CS Date : {{getCSNoDate('date') | date :"dd-MM-y"}}
+                    </th>
+                    <td colspan="4" *ngFor="let masterData of quoteList; let index = index">
+                        Contact Person : {{masterData?.vendor_details?.contact_person}}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" rowspan="3"></th>
+                    <td colspan="4" *ngFor="let masterData of quoteList; let index = index">
+                        E-Mail: {{masterData?.vendor_details?.vendor_email_id}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" *ngFor="let masterData of quoteList; let index = index">
+                        Quotation : {{masterData?.request_code}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" *ngFor="let masterData of quoteList; let index = index">
+                        Quotation Date : {{masterData?.created_at | date:'MMM d,y'}}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" class="item-table">
+                        <table>
+                            <tr>
+                                <td >Sl. No.</td>
+                                <td >Item Description</td>
+                                <td >UOM</td>
+                                <td >Qty</td>
+                            </tr>
+                        </table>
+                    </th>
+                   
+                    <ng-container *ngFor="let masterData of quoteList; let index = index">
+                        <td>Quoted Price</td>
+                        <td>Discount</td>
+                        <td>Final Rate</td>
+                        <td>Basic Amount</td>
+                    </ng-container>
+                </tr>
+
+                <tr *ngFor="let itemData of quotationData?.rfq_vendor_details?.items; let itemindex = index">
+                    <th colspan="4" class="item-table">
+                        <table>
+                            <tr>
+                                <td >#{{itemindex+1}}</td>
+                                <td >{{itemData.material_details.material_name}}</td>
+                                <td >{{itemData.material_details.unit_of_mesurement_name}}</td>
+                                <td >{{itemData.quantity}}</td>
+                            </tr>
+                        </table>
+                    </th>
+        
+                    <ng-container *ngFor="let masterData of quoteList">
+                        <td>{{ filteredData(itemData,masterData,'price') |inr}}</td>
+                        <td>{{ filteredData(itemData,masterData,'discount') |inr}}
+                            <br>
+                            @{{filteredData(itemData,masterData,'discountP' )}}%
+                        </td>
+                        <td>{{ filteredData(itemData,masterData,'Final') |inr}}</td>
+                        <td>{{ filteredData(itemData,masterData,'amount') |inr}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <th colspan="4" >Remarks</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{masterData?.remarks}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th colspan="4">Total Basic Amount</th>
+                    <td class="highlight-row" colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{ masterData.total_item_taxable_amount | inr }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >Packing & Forwarding</th>
+                    <ng-container *ngFor="let masterData of quoteList">
+                        <td colspan="4">
+                            <span>{{getexpanceData(masterData,'Packing & Forwarding','amount') | inr}}</span>
+                            <br>
+                            <span>{{getexpanceData(masterData,'Packing & Forwarding','parcent')}}</span>
+                        </td>
+                    </ng-container>
+                </tr>
+                <tr>
+                    <th colspan="4" >Transportation Charges</th>
+                    <ng-container *ngFor="let masterData of quoteList">
+                        <td colspan="4">
+                            <span>{{getexpanceData(masterData,'Transportation Charges','amount') | inr}}</span>
+                            <br>
+                            <span>{{getexpanceData(masterData,'Transportation Charges','parcent')}}</span>
+                        </td>
+                    </ng-container>
+                </tr>
+                
+                <tr>
+                    <th colspan="4" >CGST</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{masterData?.total_tax_cgst_amount + masterData?.total_item_cgst_amount + masterData?.total_expense_cgst_amount | inr }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >SGST</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{masterData?.total_tax_sgst_amount + masterData?.total_item_sgst_amount + masterData?.total_expense_sgst_amount | inr }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >IGST</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{masterData?.total_tax_igst_amount + masterData?.total_item_igst_amount + masterData?.total_expense_igst_amount | inr }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >Other Charges (If any)</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{getCharges(masterData)| inr }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >Grand Total</th>
+                    <td colspan="4" class="highlight-row" *ngFor="let masterData of quoteList; let index = index">
+                        {{ masterData.total_amount | inr }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >GST Input Credit</th>
+                    <td colspan="4" class="highlight-row" *ngFor="let masterData of quoteList; let index = index">
+                        {{ masterData?.total_tax_cgst_amount + masterData?.total_item_cgst_amount + masterData?.total_expense_cgst_amount + masterData?.total_tax_sgst_amount + masterData?.total_item_sgst_amount + masterData?.total_expense_sgst_amount + masterData?.total_tax_igst_amount + masterData?.total_item_igst_amount + masterData?.total_expense_igst_amount | inr }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >Payment Terms (in Days)</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{masterData.payment_days}}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >Delivery Period (in Days)</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+                        {{masterData.delivery_days}}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" >Rate Validity</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">-</td>
+                </tr>
+                <tr>
+                    <th colspan="4" >Warranty/Guarantee</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">-</td>
+                </tr>
+                
+                <tr>
+                    <th colspan="4" >Commercial Ranking from the Lowest</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index"><b>L-{{index+1}}</b></td>
+                </tr>
+                <tr>
+                    <th colspan="4" >&nbsp;&nbsp;</th>
+                    <td colspan="4"  *ngFor="let masterData of quoteList; let index = index">
+
+                        <div class="checkbox-container">
+                            <input type="radio" id="myCheckbox" [disabled]="purchased" [(ngModel)]="selected_quotation_id" name="selected_quotation_id" value="{{masterData.id}}" class="custom-checkbox">
+                            <label for="myCheckbox" class="checkbox-label">Selected</label>
+                        </div>
+                        <section *ngIf="masterData.id == selected_quotation_id && !purchased">
+                            <button class="action-button" (click)="poByIDs(masterData.id)">Purchase</button>
+                            <button class="action-button" (click)="pogstByIDs(masterData.id)">Purchase (GST)</button>
+                        </section>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </section>
+        </kendo-pdf-export>
+    </div>
+</section>

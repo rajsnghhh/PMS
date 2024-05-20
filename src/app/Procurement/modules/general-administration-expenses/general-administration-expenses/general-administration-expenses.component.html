@@ -1,0 +1,94 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>General Administration Expenses List</h2>
+
+        <div hidden class="action-button-container">
+            <button [routerLink]="['/pms/store/procurement/general-administration-expenses/add']">ADD NEW <img
+                    src="assets/header/add.png" alt=""></button>
+
+        </div>
+    </div>
+
+    <div class="main-body-container table-responsive">
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th scope="col">Sr No</th>
+                    <th>Vch. No.</th>
+                    <th>Date</th>
+                    <th>Particular</th>
+                    <th>P.B. No.</th>
+                    <th>Taxable Amount</th>
+                    <th>Tax Amount</th>
+                    <th>Total Value</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of generalAdminExpensesList;index as i">
+                    <td>{{i+1}}</td>
+                    <td>{{ item.voucher_no }}</td>
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.narration }}</td>
+                    <td>{{ item.party_bill_no }}</td>
+                    <td>{{ item.total_amount }}</td>
+                    <td>{{ item.total_amount_with_all_taxes - item.total_amount }}</td>
+                    <td>{{ item.total_amount_with_all_taxes }}</td>
+                    <td>
+                        <div class="table-action">
+                            <img src="assets/icons/dots.png" alt="">
+                            <ul>
+                                <!-- <li (click)="viewByID(item.mr_id)">View <span>
+                                    <img class="eye-docicon" src="assets/icons/eye.png" alt=""></span>
+                                </li> -->
+                                <li (click)="updateByID(item.id)" >Update <span><img src="assets/icons/amend.jpg" alt=""></span>
+                                </li>
+
+                                <li (click)="deleteAlertBrand(item)" data-bs-toggle="modal" data-bs-target="#deleteUser">
+                                    Delete <span><img src="assets/icons/delete.png" alt=""></span>
+                                </li>
+
+                                <!-- <li (click)="checkByID(item.mr_id)" 
+                                    *ngIf="item.status=='pending' && isMR_Checker">Check <span><img src="assets/icons/amend.jpg" alt=""></span>
+                                </li> -->
+                                <!-- <li (click)="approveRejectByID(item.mr_id)" 
+                                    *ngIf="item.status=='checked' && isMR_Approver">Approve / Reject <span><img src="assets/icons/amend.jpg" alt=""></span>
+                                </li> -->
+                                <!-- <li (click)="printByID(item.mr_id)">Print Preview<span><img src="assets/icons/print.png" alt=""></span></li>
+                                <li *ngIf="item.status=='approved'" (click)="createGRN(item.mr_id)">Create GRN </li> -->
+                                
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+
+                <!-- <tr class="text-center">
+                    <td colspan="15" *ngIf="generalAdminExpensesList.length == 0">No data found.</td>
+                </tr> -->
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this general administration expense ?
+            </div>
+            <div class="modal-footer">
+                <button (click)="deleteBrand()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>

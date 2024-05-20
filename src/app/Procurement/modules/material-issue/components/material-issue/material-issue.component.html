@@ -1,0 +1,17 @@
+<div class="createrequisition-section">
+
+    <app-material-issue-top-card (parrentAction)="appendData($event)" [preFieldData]="preFieldData"
+        [scope]="scope"></app-material-issue-top-card>
+    <app-form-table-below-material-issue (parrentAction)="appendData($event)" [selectedMRDetails]="selectedMRDetails"
+        *ngIf="selectedMRDetails.length>0 || preFieldData || scope == 'add-new'" [scope]="scope"
+        [preFieldData]="preFieldData"></app-form-table-below-material-issue>
+
+    <app-form-data-below-material-issue (parrentAction)="appendData($event)" [preFieldData]="preFieldData"
+        [scope]="scope"></app-form-data-below-material-issue>
+
+    <div class="btd-section">
+        <button type="button" (click)="backtolist()" class="btn-cancel">CANCEL</button>
+        <button type="submit" *ngIf="scope == 'add' || scope == 'add-new'" class="btn-save" (click)="createMaterialIssue()">SAVE</button>
+        <!-- <button type="submit" *ngIf="scope == 'update'" class="btn-save" (click)="updateIndent()">UPDATE</button>\ -->
+    </div>
+</div>

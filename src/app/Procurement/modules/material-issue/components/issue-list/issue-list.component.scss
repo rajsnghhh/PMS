@@ -1,0 +1,22 @@
+.createrequisition-section {
+	margin: 12px 12px;
+	padding: 0px 0px;
+	width: auto;
+	position: relative;
+   }
+.component-header {
+	height: auto !important;
+	margin-bottom: 0px !important;
+    }
+::ng-deep.main-body-container table th {
+	font-weight: 600 !important;
+	font-size: 14px !important;
+	padding: 10px;
+	line-height: 15px;
+	}
+	.main-body-container table td{
+		font-family: Arial, Helvetica, sans-serif;
+		font-weight: 300 !important;
+		font-size: 12px !important;
+		line-height: 15px !important;
+	}

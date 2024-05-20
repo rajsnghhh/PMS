@@ -1,0 +1,8 @@
+<div class="survey-main" *ngIf="continueSurvey">
+    <div class="survey-progress">
+        <app-survey-progress-nav [dataList]="formFieldList"></app-survey-progress-nav>
+    </div>
+    <div class="survey-content">
+        <app-survey-content [dataList]="formFieldList"></app-survey-content>
+    </div>
+</div>

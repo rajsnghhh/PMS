@@ -1,0 +1,47 @@
+<form role="form" [formGroup]="zoneForm">
+
+    <div class="mb-3" [ngClass]="{ 'float-now': previouszonename != '' }">
+        <input type="text" class="form-control" formControlName="zone_name" [(ngModel)]="previouszonename"
+        [ngClass]="displayFieldCss(zoneForm,'zone_name')" id="role">
+        <label class="floating-label">Enter Zone Name <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(zoneForm,'zone_name')">
+            <span class="text-danger" *ngIf="zoneForm.get('zone_name')?.errors?.['required']">Zone Name is required</span>
+          </div>
+    </div>
+    <div class="mb-3">
+        <select class="form-select countryselect"  formControlName="country" [(ngModel)]="prevCountry"
+        [ngClass]="displayFieldCss(zoneForm,'country')" (change)="changeCountry()" aria-label="Default select example">
+            <option value="" selected disabled>Select Country <span class="asterisk">*</span></option>
+            <option *ngFor="let country of countrylist" value={{country.id}}>{{country.name}}</option>
+        </select>
+        <label class="floating-label-select" [ngClass]="{'insideDropdown': prevCountry =='' }">Select Country <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(zoneForm,'country')">
+            <span class="text-danger" *ngIf="zoneForm.get('country')?.errors?.['required']">Country is required</span>
+          </div>
+    </div>
+
+    <div class="mb-3">
+        <angular2-multiselect formControlName="state"
+        [ngClass]="displayFieldCss(zoneForm,'state')" [data]="dropdownStateList" [(ngModel)]="selectedStates"
+            [settings]="dropdownStateSettings" (onSelect)="onStateSelect($event)" (onDeSelect)="OnStateDeSelect($event)"
+            (onSelectAll)="onStateSelectAll($event)" (onDeSelectAll)="onStateDeSelectAll($event)">
+        </angular2-multiselect>
+        <label class="floating-label-select" [ngClass]="{'insideDropdown': selectedStates =='' }" *ngIf="selectedStates !=''">Select State <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(zoneForm,'state')">
+            <span class="text-danger" *ngIf="zoneForm.get('state')?.errors?.['required']">State is required</span>
+          </div>
+    </div>
+    <div class="mb-3">
+        <angular2-multiselect formControlName="city"
+        [ngClass]="displayFieldCss(zoneForm,'city')" [data]="dropdownCityList" [(ngModel)]="selectedCity"
+            [settings]="dropdownCitySettings" (onSelect)="onCitySelect($event)" (onDeSelect)="OnCityDeSelect($event)"
+            (onSelectAll)="onCitySelectAll($event)" (onDeSelectAll)="onCityDeSelectAll($event)">
+        </angular2-multiselect>
+        <label class="floating-label-select" [ngClass]="{'insideDropdown': selectedCity =='' }">Select City <span class="asterisk">*</span></label>
+    </div>
+    <div class="required" *ngIf="isFieldValid(zoneForm,'city')">
+        <span class="text-danger" *ngIf="zoneForm.get('city')?.errors?.['required']">City is required</span>
+      </div>
+
+    <button type="submit" class="btn btn-primary" (click)="updateZone()">UPDATE</button>
+</form>

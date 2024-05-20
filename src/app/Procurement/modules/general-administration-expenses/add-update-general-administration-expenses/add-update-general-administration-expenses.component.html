@@ -1,0 +1,346 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Add Fabrication</h2>
+    </div>
+    <div class="component-body">
+        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Voucher No.</label>
+                        <input type="text" name="voucher_no " [(ngModel)]="form.voucher_no " #voucher_no="ngModel"
+                            placeholder="" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Date<span class="asterisk">*</span></label>
+                        <input type="date" name="date" [(ngModel)]="form.date" #date="ngModel"
+                            placeholder="" class="form-control" [ngClass]="{ 'is-invalid': f.submitted && date.errors }" required>
+                        <div *ngIf="f.submitted && date.errors" class="invalid-feedback">
+                            <div *ngIf="date.errors['required']">Date is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Party Bill No.</label>
+                        <input type="text" name="party_bill_no"  id="party_bill_no" [(ngModel)]="form.party_bill_no "
+                            #party_bill_no="ngModel" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Party Bill Date<span class="asterisk">*</span></label><input type="date" name="p_b_date " [(ngModel)]="form.p_b_date "
+                            #p_b_date="ngModel" placeholder="" class="form-control" [ngClass]="{ 'is-invalid': f.submitted && p_b_date.errors }" required>
+                        <div *ngIf="f.submitted && p_b_date.errors" class="invalid-feedback">
+                            <div *ngIf="p_b_date.errors['required']">Party Bill Date is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Vendor/Customer Name<span class="asterisk">*</span></label>
+                        <select name="vendor" class="form-control" ngDefaultControl [(ngModel)]="form.vendor " #vendor="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && vendor.errors }" required>
+                            <option value="">-- select --</option>
+                            <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                                {{vendor.vendor_master_data.vendor_name}}
+                            </option>
+                        </select>
+                        <div *ngIf="f.submitted && vendor .errors" class="invalid-feedback">
+                            <div *ngIf="vendor .errors['required']">Vendor is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Vendor/Customer State<span class="asterisk">*</span></label>
+                        <select class="form-control" name="vendor_state" [(ngModel)]="form.vendor_state"
+                        #vendor_state="ngModel" [ngModelOptions]="{standalone: true}"  required
+                        [ngClass]="{ 'is-invalid': f.submitted && vendor_state.errors }">
+                        <option disabled>-- select --</option>
+                        <option value="{{stateData.state_id}}" *ngFor="let stateData of stateList">
+                            {{stateData.name}}</option>
+                    </select>
+                        <div *ngIf="f.submitted && vendor_state .errors" class="invalid-feedback">
+                            <div *ngIf="vendor_state .errors['required']">Vendor state is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Vendor/Customer GSTIN No.<span class="asterisk">*</span></label>
+                        <input type="text" name="vendor_state_gstin" [(ngModel)]="form.vendor_state_gstin"
+                        #vendor_state_gstin="ngModel" [ngClass]="{ 'is-invalid': f.submitted && vendor_state_gstin.errors }" class="form-control" required>
+                        <div *ngIf="f.submitted && vendor_state_gstin .errors" class="invalid-feedback">
+                            <div *ngIf="vendor_state_gstin .errors['required']">Vendor/Customer GSTIN No. is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>State<span class="asterisk">*</span></label>
+                        <select class="form-control" name="site_state" [(ngModel)]="form.site_state"
+                        #site_state="ngModel" [ngModelOptions]="{standalone: true}"  required
+                        [ngClass]="{ 'is-invalid': f.submitted && site_state.errors }">
+                        <option disabled>-- select --</option>
+                        <option value="{{stateData.state_id}}" *ngFor="let stateData of stateList">
+                            {{stateData.name}}</option>
+                    </select>
+                        <div *ngIf="f.submitted && site_state .errors" class="invalid-feedback">
+                            <div *ngIf="site_state .errors['required']">State is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>GSTIN No.<span class="asterisk">*</span></label>
+                        <input type="text" name="site_state_gstin" [(ngModel)]="form.site_state_gstin"
+                        #site_state_gstin="ngModel" [ngClass]="{ 'is-invalid': f.submitted && site_state_gstin.errors }" class="form-control" required>
+                        <div *ngIf="f.submitted && site_state_gstin .errors" class="invalid-feedback">
+                            <div *ngIf="site_state_gstin .errors['required']">GSTIN No. is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Sale-Pur Transaction Type</label>
+                        <input type="text" name="sale_pur_trans_type" [(ngModel)]="form.sale_pur_trans_type"
+                        #sale_pur_trans_type="ngModel" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        Apply Forcefully RCM <input type="checkbox" name="apply_forcefully_rcm" [(ngModel)]="form.apply_forcefully_rcm"
+                        #apply_forcefully_rcm="ngModel">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        Place of Supply (company) Different <input type="checkbox" name="is_place_of_supply_different" [(ngModel)]="form.is_place_of_supply_different"
+                        #is_place_of_supply_different="ngModel">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="createtable-section">
+                        <!-- <div class="tableMenu">Raw Material</div> -->
+                        <table>
+                            <tr>
+                                <th>Account/HSN - SAC/GST/Remark</th>
+                                <th>Amount</th>
+                                <th>DR/CR</th>
+                                <th>SGST Rate/Amt.</th>
+                                <th>CGST Rate/Amt.</th>
+                                <th>IGST Rate/Amt.</th>
+                                <th>Action</th>
+                            </tr>
+
+                            <tr class="tablebg" *ngFor="let item of form.items; let i = index">
+                                <td style="width: 30%;">
+                                    <div class="tablegroup">
+                                        <label for="">Account</label>
+                                        <select class="form-control mb-3" name="account{{i+1}}" 
+                                        [ngClass]="{ 'is-invalid': f.submitted && account.errors }"
+                                        [(ngModel)]="form.items[i].account" 
+                                        #account="ngModel" 
+                                        >
+                                            <option value="">Select Account</option>
+                                            <option value="{{materialGroup.id}}" *ngFor="let materialGroup of accountList">{{materialGroup.name}}</option>
+                                        </select>
+                                        <!-- <div *ngIf="f.submitted && account.errors" class="invalid-feedback">
+                                            <div *ngIf="account.errors['required']">This is required !</div>
+                                        </div> -->
+                                    </div>
+                                    <div class="tablegroup">
+                                        <label for="">HSN</label>
+                                        <select class="form-control mb-3"
+                                            aria-label="Default select example" 
+                                            name="account_hsn_code{{i+1}}"
+                                            [(ngModel)]="form.items[i].account_hsn_code" 
+                                            #account_hsn_code="ngModel" 
+                                            [ngClass]="{ 'is-invalid': f.submitted && account_hsn_code.errors }"
+                                        >
+                                            <option selected disabled value="">Select HSN</option>
+                                            <option value="{{hsnData.id}}" *ngFor="let hsnData of HSN_List">{{hsnData.hsn_code}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="tablegroup">
+                                        <label for="">Remarks</label>
+                                        <textarea name="remarks{{i+1}}" [(ngModel)]="form.items[i].remarks" 
+                                        #remarks="ngModel" cols="10" rows="05" class="form-control"></textarea>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <input type="number" name="amount{{i+1}}" [(ngModel)]="form.items[i].amount" 
+                                        #amount="ngModel" class="form-control" placeholder="Amount" (change)="calculateAllTaxes(i)">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <select name="debit_credit{{i+1}}" [(ngModel)]="form.items[i].debit_credit" 
+                                        #debit_credit="ngModel" class="form-control" [ngClass]="{ 'is-invalid': f.submitted && site_state_gstin.errors }" required>
+                                            <option value="de">Debit</option>
+                                            <option value="cr">Credit</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <label for="">SGST</label>
+                                        <input type="number" name="sgst_percentage{{i+1}}" [(ngModel)]="form.items[i].sgst_percentage" 
+                                        #sgst_percentage="ngModel" class="form-control" placeholder="Percentage" (change)="calculateAllTaxes(i)">
+
+                                        <input type="number" name="sgst_amount{{i+1}}" [(ngModel)]="form.items[i].sgst_amount" 
+                                        #sgst_amount="ngModel" class="form-control" placeholder="Amount" disabled="true">
+                                    </div>
+                                    <div class="tablegroup">
+                                        <label for="">UTGST</label>
+                                        <input type="number" name="utgst_percentage{{i+1}}" [(ngModel)]="form.items[i].utgst_percentage" 
+                                        #utgst_percentage="ngModel" class="form-control" placeholder="Percentage" (change)="calculateAllTaxes(i)">
+
+                                        <input type="number" name="utgst_amount{{i+1}}" [(ngModel)]="form.items[i].utgst_amount" 
+                                        #utgst_amount="ngModel" class="form-control" placeholder="Amount" disabled="true">
+
+                                        <!-- <input type="number" name="utgst_amount" [(ngModel)]="form.items[i].utgst_amount"> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <label for="">CGST</label>
+                                        <input type="number" name="cgst_percentage{{i+1}}" [(ngModel)]="form.items[i].cgst_percentage" 
+                                        #cgst_percentage="ngModel" class="form-control" placeholder="Percentage" (change)="calculateAllTaxes(i)">
+
+                                        <input type="number" name="cgst_amount{{i+1}}" [(ngModel)]="form.items[i].cgst_amount" 
+                                        #cgst_amount="ngModel" class="form-control" placeholder="Amount" disabled="true">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <label for="">IGST</label>
+                                        <input type="number" name="igst_percentage{{i+1}}" [(ngModel)]="form.items[i].igst_percentage" 
+                                        #igst_percentage="ngModel" class="form-control" placeholder="Percentage" (change)="calculateAllTaxes(i)">
+
+                                        <input type="number" name="igst_amount{{i+1}}" [(ngModel)]="form.items[i].igst_amount" 
+                                        #igst_amount="ngModel" class="form-control" placeholder="Amount" disabled="true">
+                                    </div>
+                                    <div class="tablegroup">
+                                        <label for="">CESS</label>
+                                        <input type="number" name="cess_percentage{{i+1}}" [(ngModel)]="form.items[i].cess_percentage" 
+                                        #cess_percentage="ngModel" class="form-control" placeholder="Percentage" (change)="calculateAllTaxes(i)">
+
+                                        <input type="number" name="cess_amount{{i+1}}" [(ngModel)]="form.items[i].cess_amount" 
+                                        #cess_amount="ngModel" class="form-control" placeholder="Amount" disabled="true">
+                                    </div>
+                                </td>
+                                <td class="align-middle" style="width: 4%;">
+                                    <a *ngIf="i>0" (click)="deleteRawMaterial(i)" type="submit"
+                                        class="vector-delete">DEL <i class="fa" aria-hidden="true"><img
+                                                src="assets/img/vector-delete.png" alt=""></i></a>
+
+                                    <a *ngIf="i==0" (click)="addRawMaterial()" type="submit" class="tablebtn-save">ADD
+                                        <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png"
+                                                alt=""></i></a>
+                                </td>
+                            </tr>
+
+                            <tr style="background-color: beige;">
+                                <td>
+                                    <div class="tablegroup">
+                                        <label for="">Total</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <input type="text" name="total_amount" [(ngModel)]="form.total_amount" 
+                                        #total_amount="ngModel" class="form-control" disabled>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <label for="">Total SGST Amount</label>
+                                        <input type="text" name="sgst_amount" [(ngModel)]="form.total_sgst_amount" 
+                                        #sgst_amount="ngModel" class="form-control" disabled>
+                                    </div>
+                                        
+                                    <div class="tablegroup">
+                                        <label for="">Total UTGST Amount</label>
+                                        <input type="text" name="utgst_amount" [(ngModel)]="form.total_utgst_amount" 
+                                        #utgst_amount="ngModel" class="form-control" disabled>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <label for="">Total CGST Amount</label>
+                                        <input type="text" name="cgst_amount" [(ngModel)]="form.total_cgst_amount" 
+                                        #cgst_amount="ngModel" class="form-control" disabled>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <label for="">Total IGST Amount</label>
+                                        <input type="text" name="igst_amount" [(ngModel)]="form.total_igst_amount" 
+                                        #igst_amount="ngModel" class="form-control" disabled>
+                                    </div>
+                                    <div class="tablegroup">
+                                        <label for="">Total CESS Amount</label>
+                                        <input type="text" name="cess_amount" [(ngModel)]="form.total_cess_amount" 
+                                        #cess_amount="ngModel" class="form-control" disabled>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr style="background-color: beige;">
+                                <td colspan="1"></td>
+                                <td colspan="2">
+                                    <div class="tablegroup">
+                                        <label for="">Total Amount With All Taxes</label>
+                                    </div>
+                                </td>
+                                <td colspan="3">
+                                    <div class="tablegroup">
+                                        <input type="text" name="total_with_tax" [(ngModel)]="form.total_with_tax" 
+                                        #total_with_tax="ngModel" class="form-control" disabled>
+                                    </div>
+                                </td>
+                                <td colspan="1"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 col-md-6 col-6">
+                    <div class="adform">
+                        <label>Narration</label>
+                        <textarea type="text" name="narration " [(ngModel)]="form.narration " #narration="ngModel" placeholder="" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-6">
+                    <div class="adform">
+                        <label>Attach File</label>
+                        <input type="file" name="fileData " [(ngModel)]="form.fileData" (change)="uploadFile($event)" #fileData="ngModel"
+                            placeholder="" id="fileData" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-12 col-md-12 col-12">
+                <div class="btd-section">
+                    <button type="submit" class="btn-save">SAVE</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="creatematerial mt-4 hideOnPrintScreen">
+ <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="row">
+
+      <div class="col-lg-6 col-md-6 col-12">
+
+        <div class="addressform">
+              <label for="text">Indent&nbsp;By</label>      
+              <select class="form-control" id="sel1" name="created_by" [(ngModel)]="form.created_by" required
+                #created_by="ngModel" disabled="">
+                <option value="">-- select --</option>
+                <option *ngFor="let userData of userlist" value="{{userData.id}}">{{userData.full_name}}</option>
+              </select>
+        </div>
+        
+        <div class="addressform">         
+           <label for="text">Line&nbsp;In&nbsp;bottom</label>
+            <input type="text" class="form-control" placeholder="" id="text"
+                name="line_in_bottom" [disabled]="disabledEdit" [(ngModel)]="form.line_in_bottom" [disabled]="disabledEdit">
+        </div>
+
+      </div>
+
+
+      <div class="col-lg-6 col-md-6 col-12">
+
+          <div class="addressform">
+    
+                <label for="request">Attach&nbsp;a&nbsp;File</label>
+        
+                    <div class="custom-file">
+                      <!-- <input [disabled]="disabledEdit" type="file" multiple="multiple" (change)="handleUpload($event)" class="custom-file-input" id="customFile" > -->
+                        <input [disabled]="disabledEdit" type="file" multiple="multiple" (change)="handleUpload($event)" class="custom-file-input" id="customFile" [ngClass]="{ 'is-invalid': f.submitted && form.attachments.length == 0 }">
+                      </div>
+                    <section *ngIf="prefieldData?.attachments">
+                        <a href="{{docUrl}}{{attachmentdata.attachment}}" target="_blank" *ngFor="let attachmentdata of prefieldData?.attachments" ><img src="assets/icons/eye.png" alt=""></a>
+                    </section>
+                                  
+            
+        </div> 
+
+        <div class="addressform">
+            <label for="text" class="">Remarks</label>
+           <input type="text" [disabled]="disabledEdit" class="form-control" placeholder="Type here..."
+                id="text" name="remarks" [(ngModel)]="form.remarks">
+         </div>
+
+        <div class="addressform">
+          <!-- <div class="row">
+            <div class="col-lg-2 col-md-2 col-12"> </div>
+            <div class="col-lg-10 col-md-10 col-12">
+              <div class="form-check-inline">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" value="" name="isFwdToOtherSite"
+                    [(ngModel)]="form.isFwdToOtherSite"> Is
+                  Forwarded to Other Site
+                </label>
+              </div>
+              <div class="form-check-inline">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" value="" name="printIndentAfterSave"
+                    [(ngModel)]="form.printIndentAfterSave"> Print
+                  Indent After Save
+                </label>
+              </div>
+            </div>
+          </div> -->
+        </div>
+
+
+      </div>
+
+
+    </div>
+    <button hidden #submitButton="" type="submit">Save</button>
+
+  </form>
+</div>

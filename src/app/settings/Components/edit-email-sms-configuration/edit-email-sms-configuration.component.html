@@ -1,0 +1,99 @@
+<form role="form" [formGroup]="editEmailTemplateForm">
+    <div class="flex-div">
+        <div class="mb-3" [ngClass]="{ 'float-now': gettemplatename != '' }">
+            <input type="text" class="form-control" id="role" formControlName="Templatename"
+                [(ngModel)]="gettemplatename"
+                [ngClass]="displayFieldCss(editEmailTemplateForm,'Templatename')">
+            <label class="floating-label">Enter Template Name <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(editEmailTemplateForm,'Templatename')">
+                <span class="text-danger"
+                    *ngIf="editEmailTemplateForm.get('Templatename')?.errors?.['required']">Template Name is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': getfromemail != '' }">
+            <input type="text" class="form-control" id="role" formControlName="Fromemail"
+                [(ngModel)]="getfromemail" [ngClass]="displayFieldCss(editEmailTemplateForm,'Fromemail')">
+            <label class="floating-label">Enter From Email <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(editEmailTemplateForm,'Fromemail')">
+                <span class="text-danger" *ngIf="editEmailTemplateForm.get('Fromemail')?.errors?.['required']">From
+                    Email is required</span>
+                <span class="text-danger" *ngIf="editEmailTemplateForm.get('Fromemail')?.errors?.['pattern']">Enter a valid email
+                    address</span>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': getfromname != '' }">
+            <input type="text" class="form-control" id="role" formControlName="Fromname"
+                [(ngModel)]="getfromname" [ngClass]="displayFieldCss(editEmailTemplateForm,'Fromname')">
+            <label class="floating-label">Enter From Name <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(editEmailTemplateForm,'Fromname')">
+                <span class="text-danger" *ngIf="editEmailTemplateForm.get('Fromname')?.errors?.['required']">From Name
+                    is required</span>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" formControlName="Templatetype" [(ngModel)]="getTemplatetype"
+                [ngClass]="displayFieldCss(editEmailTemplateForm,'Templatetype')" aria-label="Default select example">
+                <option value="" selected disabled>Select Template Type <span class="asterisk">*</span></option>
+                <option *ngFor="let template of templateList" value={{template.id}}>{{template.emtp_type_name}}</option>
+            </select>
+            <label class="floating-label-select"
+                [ngClass]="{'insideDropdown': getTemplatetype =='' }">Select Template Type <span
+                    class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(editEmailTemplateForm,'Templatetype')">
+                <span class="text-danger"
+                    *ngIf="editEmailTemplateForm.get('Templatetype')?.errors?.['required']">Template Type is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': getSubject != '' }">
+            <input type="text" class="form-control" id="role" formControlName="Subject"
+                [(ngModel)]="getSubject" [ngClass]="displayFieldCss(editEmailTemplateForm,'Subject')">
+            <label class="floating-label">Enter Subject <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(editEmailTemplateForm,'Subject')">
+                <span class="text-danger" *ngIf="editEmailTemplateForm.get('Subject')?.errors?.['required']">Subject is
+                    required</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- <div class="mb-3">
+        <select class="form-select" formControlName="Tagtype" [(ngModel)]="getTagtype"
+            [ngClass]="displayFieldCss(editEmailTemplateForm,'Tagtype')" aria-label="Default select example">
+            <option value="" selected disabled>Select Tag <span class="asterisk">*</span></option>
+            <option *ngFor="let tag of tagList" value={{tag.id}}>{{tag.name}}</option>
+        </select>
+        <label class="floating-label-select" [ngClass]="{'insideDropdown': getTagtype =='' }">Select
+            Tag <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(editEmailTemplateForm,'Tagtype')">
+            <span class="text-danger" *ngIf="editEmailTemplateForm.get('Tagtype')?.errors?.['required']">Tag is
+                required</span>
+        </div>
+    </div> -->
+
+    <div class="form-control custom1" >
+        <label class="taglevel">Select Tags : </label> 
+        <ul class="taglistul">
+            <li *ngFor="let tag of tagList" (click)="onClickTag(tag.name)" class="taglistli">{{tag.name}}</li>
+        </ul>
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': getBody != '' }">
+        <ckeditor #ckEditorContent [editor]="Editor" class="form-control custom2" id="role" formControlName="Body" [(ngModel)]="getBody"
+            [ngClass]="displayFieldCss(editEmailTemplateForm,'Body')" aria-hidden="false" (ready)="onReady($event)">
+        </ckeditor>
+        <div class="required" *ngIf="isFieldValid(editEmailTemplateForm,'Body')">
+            <span class="text-danger" *ngIf="editEmailTemplateForm.get('Body')?.errors?.['required']">Email Body is
+                required</span>
+        </div>
+    </div>
+
+    <!-- {{model.editorData|json}} -->
+    <button type="submit" class="btn btn-primary" (click)="editEmailSmsTemplate()">UPDATE</button>
+</form>
+
+<!-- <div [innerHtml]="getBody | safehtml"> -->

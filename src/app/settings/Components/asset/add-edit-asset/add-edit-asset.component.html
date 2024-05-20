@@ -1,0 +1,171 @@
+<form name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+
+    <div class="flex-div">
+
+        <div class="mb-3">
+            <select class="form-select" required aria-label="Default select example" name="item"
+                [(ngModel)]="addUser.item" #item="ngModel" [ngClass]="{ 'is-invalid': f.submitted && item.errors }">
+                <option selected disabled value="">Select Item</option>
+                <option *ngFor="let account of itemList" value={{account.id}}>{{account.material_name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.item =='' }">Select Item <span
+                    class="asterisk">*</span>
+            </label>
+            <div *ngIf="f.submitted && item.errors" class="invalid-feedback">
+                <div *ngIf="item.errors['required']">Please select Item</div>
+            </div>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.asset_no  != ''}">
+            <input type="text" required onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                class="form-control" id="add1" name="asset_no " [(ngModel)]="addUser.asset_no " #asset_no="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && asset_no .errors }">
+            <label class="floating-label">Asset No.<span class="asterisk">*</span></label>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.auto_assets_np  != ''}">
+            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control"
+                id="add1" name="auto_assets_np " [(ngModel)]="addUser.auto_assets_np " #auto_assets_np="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && auto_assets_np .errors }">
+            <label class="floating-label">Auto Assets SNO</label>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.status  != ''}">
+            <select class="form-select" aria-label="Default select example" name="status " [(ngModel)]="addUser.status "
+                #status="ngModel" [ngClass]="{ 'is-invalid': f.submitted && status .errors }">
+                <option selected disabled value="">Select Status</option>
+                <option value="active">ACTIVE</option>
+                <option value="inactive">INACTIVE</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.status  =='' }">Select Status
+            </label>
+            <div *ngIf="f.submitted && status .errors" class="invalid-feedback">
+                <div *ngIf="status .errors['required']">Please select Status</div>
+            </div>
+
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" required aria-label="Default select example" name="location"
+                [(ngModel)]="addUser.location" #location="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && location.errors }">
+                <option selected disabled value="">Select Location</option>
+                <option *ngFor="let account of siteList" value={{account.id}}>{{account.location}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.location =='' }">Select Location
+                <span class="asterisk">*</span>
+            </label>
+            <div *ngIf="f.submitted && location.errors" class="invalid-feedback">
+                <div *ngIf="location.errors['required']">Please select Location</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" (change)="changeDepreciation(addUser.depreciation_group)" required aria-label="Default select example" name="depreciation_group"
+                [(ngModel)]="addUser.depreciation_group" #depreciation_group="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && depreciation_group.errors }">
+                <option selected disabled value="">Select Depreciation Group</option>
+                <option *ngFor="let account of depreciationList" value={{account.id}}>{{account.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.depreciation_group =='' }">Select
+                Depreciation Group <span class="asterisk">*</span>
+            </label>
+            <div *ngIf="f.submitted && depreciation_group.errors" class="invalid-feedback">
+                <div *ngIf="depreciation_group.errors['required']">Please select Depreciation Group</div>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.depreciation != ''}">
+            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control"
+                id="add1" name="depreciation" [(ngModel)]="addUser.depreciation" #depreciation="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && depreciation.errors }">
+            <label class="floating-label">Depreciation %</label>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.use_full_life  != ''}">
+            <input type="text" required onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                class="form-control" id="add1" name="use_full_life " [(ngModel)]="addUser.use_full_life "
+                #use_full_life="ngModel" [ngClass]="{ 'is-invalid': f.submitted && use_full_life .errors }">
+            <label class="floating-label">Use Full Life in Days <span class="asterisk">*</span></label>
+
+            <div *ngIf="f.submitted && use_full_life.errors" class="invalid-feedback">
+                <div *ngIf="use_full_life.errors['required']">Use Full Life is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.max_depreciation  != ''}">
+            <input type="text" required onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                class="form-control" id="add1" name="max_depreciation " [(ngModel)]="addUser.max_depreciation "
+                #max_depreciation="ngModel" [ngClass]="{ 'is-invalid': f.submitted && max_depreciation .errors }">
+            <label class="floating-label">Max Depreciation<span class="asterisk">*</span></label>
+
+            <div *ngIf="f.submitted && max_depreciation.errors" class="invalid-feedback">
+                <div *ngIf="max_depreciation.errors['required']">Max Depreciation is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="vendor" [(ngModel)]="addUser.vendor"
+                #vendor="ngModel" [ngClass]="{ 'is-invalid': f.submitted && vendor.errors }">
+                <option selected disabled value="">Select Vendor</option>
+                <option *ngFor="let account of vendorList" value={{account.id}}>{{account.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.vendor =='' }">Select Vendor
+            </label>
+            <div *ngIf="f.submitted && vendor.errors" class="invalid-feedback">
+                <div *ngIf="vendor.errors['required']">Please select Vendor</div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <select class="form-select" required aria-label="Default select example" name="asset_account"
+                [(ngModel)]="addUser.asset_account" #asset_account="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && asset_account.errors }">
+                <option selected disabled value="">Select Asset Account</option>
+                <option *ngFor="let account of accountNameList" value={{account.id}}>{{account.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.asset_account =='' }">Select
+                Asset Account<span class="asterisk">*</span>
+            </label>
+            <div *ngIf="f.submitted && asset_account.errors" class="invalid-feedback">
+                <div *ngIf="asset_account.errors['required']">Please select Asset Account</div>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.purchase_date  != ''}">
+            <input type="date" required class="form-control" id="add1" name="purchase_date "
+                [(ngModel)]="addUser.purchase_date " #purchase_date="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && purchase_date .errors }">
+            <label class="floating-label">Purchase Date<span class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && purchase_date.errors" class="invalid-feedback">
+                <div *ngIf="purchase_date.errors['required']">Purchase Date is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.pur_amt  != ''}">
+            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control"
+                required id="add1" name="pur_amt " [(ngModel)]="addUser.pur_amt " #pur_amt="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && pur_amt .errors }">
+            <label class="floating-label">Pur Amt</label>
+        </div>
+
+        <div class="mb-3" style="padding: 8px;">
+            <input type="checkbox" name="wdv" [(ngModel)]="addUser.wdv" #wdv="ngModel">
+            <label for="wdv">Add Op. WDV</label>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.sale_date  != ''}">
+            <input type="date" class="form-control" id="add1" name="sale_date " [(ngModel)]="addUser.sale_date "
+                #sale_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && sale_date .errors }">
+            <label class="floating-label">Sale Date</label>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.sale_amt  != ''}">
+            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control"
+                required id="add1" name="sale_amt " [(ngModel)]="addUser.sale_amt " #sale_amt="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && sale_amt .errors }">
+            <label class="floating-label">Sale Amt</label>
+        </div>
+
+    </div>
+        <div class="action-button-container">
+            <button type="submit" class="btn btn-primary" *ngIf="scope == 'add'">SAVE</button>
+            <button type="submit" class="btn btn-primary" *ngIf="scope == 'edit'">UPDATE</button>
+            <button type="button" class="btn btn-primary non-active-btn" (click)="resetADD(f)">BACK</button>
+        </div>
+</form>

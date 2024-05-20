@@ -1,0 +1,21 @@
+<div class="createrequisition-section">
+
+
+  <app-quotation-top-card [urlIds]="urlIds" (parrentAction)="appendData($event)" [prefieldData]="prefieldData"
+    ></app-quotation-top-card>
+  <app-quotation-table *ngIf="!gstScope" (parrentAction)="appendData($event)" [scope]="scope" [prefieldData]="prefieldData" [reload]="reload" [isPurchase_Approver]="isPurchase_Approver"
+    ></app-quotation-table>
+  <app-quotation-gst-table *ngIf="gstScope" (parrentAction)="appendData($event)" [scope]="scope" [prefieldData]="prefieldData" [reload]="reload" [isPurchase_Approver]="isPurchase_Approver"
+    ></app-quotation-gst-table>
+
+
+  <div class="btd-section">
+    <span class="lead alert alert-success" style="width: 100%; text-align: center;" *ngIf="!quotationId && prefieldData.id">You have already submitted quotation details. We will get back to you shortly..!!</span>
+    <button type="submit" class="btn-save" (click)="addQuotation()" *ngIf="!(!quotationId && prefieldData.id)">
+      <span *ngIf="scope == 'update'">Update</span>
+      <span *ngIf="scope == 'add'">SAVE</span>
+    </button>
+  </div>
+  <br>
+  <br>
+</div>

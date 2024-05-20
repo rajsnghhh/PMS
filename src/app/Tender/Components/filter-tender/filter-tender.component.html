@@ -1,0 +1,61 @@
+<form role="form" [formGroup]="filterForm">
+    <div class="mb-3" [ngClass]="{ 'float-now': floatTender.Dept != '' }">
+        <div class="adform">
+            <label class="">Department <span class="asterisk">*</span></label>   
+            <input type="text" class="form-control" formControlName="department" [(ngModel)]="floatTender.Dept"
+            [ngClass]="displayFieldCss(filterForm,'department')" id="role">
+        </div>
+
+        <div class="required" *ngIf="isFieldValid(filterForm,'department')">
+            <span class="text-danger" *ngIf="filterForm.get('department')?.errors?.['required']">Department is required</span>
+          </div>
+    </div>
+
+    <div class="">
+        <div class="mb-3" [ngClass]="{ 'float-now': floatTender.Fyear != '' }">
+            <!-- <label>Financial Year <span class="asterisk">*</span></label>
+            <input type="text" charOnly class="form-control" id="fname" name="first_name"> -->
+            <div class="adform">
+                <label class="">Financial Year <span class="asterisk">*</span></label>
+                <input type="text" class="form-control" formControlName="financialyear" [(ngModel)]="floatTender.Fyear"
+                [ngClass]="displayFieldCss(filterForm,'financialyear')" id="role">          
+            </div>
+
+            <div class="required" *ngIf="isFieldValid(filterForm,'financialyear')">
+                <span class="text-danger" *ngIf="filterForm.get('financialyear')?.errors?.['required']">Financial Year is required</span>
+              </div>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': floatTender.Period != '' }">
+            <!-- <label>Period <span class="asterisk">*</span></label>
+            <input type="text" charOnly class="form-control" id="fname" name="first_name"> -->
+            <div class="adform">
+                <label class="">Period <span class="asterisk">*</span></label>
+                <input type="text" class="form-control" formControlName="period" [(ngModel)]="floatTender.Period"
+                [ngClass]="displayFieldCss(filterForm,'period')" id="role">
+                
+            </div>
+      
+            <div class="required" *ngIf="isFieldValid(filterForm,'period')">
+                <span class="text-danger" *ngIf="filterForm.get('period')?.errors?.['required']">Period is required</span>
+              </div>
+        </div>
+    </div>
+
+    <div class="mb-3" [ngClass]="{ 'float-now': floatTender.Division != '' }">
+        <div class="adform">
+            <label class="">Division <span class="asterisk">*</span></label>
+            <input type="text" class="form-control" formControlName="division" [(ngModel)]="floatTender.Division"
+            [ngClass]="displayFieldCss(filterForm,'division')" id="role">
+
+        </div>
+      
+        <div class="required" *ngIf="isFieldValid(filterForm,'division')">
+            <span class="text-danger" *ngIf="filterForm.get('division')?.errors?.['required']">Division is required</span>
+          </div>
+    </div>
+<div class="filter_btns">
+    <button type="submit" class="btn btn-primary" (click)="tenderFilter()">FILTER</button>
+    <button type="button" class="btn btn-primary non-active-btn">BACK</button>
+</div>
+   
+</form>

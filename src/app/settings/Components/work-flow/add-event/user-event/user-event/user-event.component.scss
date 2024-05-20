@@ -1,0 +1,103 @@
+.mb-3 .required {
+    font-size: 11px;
+}
+
+.mb-3 .invalid-feedback {
+    position: absolute;
+    top: 32px;
+    font-size: 12px;
+}
+
+input[type="datetime-local"] {
+    color: transparent;
+}
+
+.hiddeninput {
+    color: #212529;
+    font-size: 12px;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    background: white;
+}
+
+.mb-3 label {
+    background: white;
+}
+.statusInput{
+    display: flex;
+    flex-wrap: wrap;
+    .label{
+      width: 14%;
+      margin-left: 11px;
+      font-size: 12px !important;
+      color: #424242;
+      margin-bottom: 11px;
+      margin-top: 2px !important;
+    }
+    .activeRadio{
+        width: 20%;
+    }
+    .inActiveRadio{
+        width: 20%;
+    }
+}
+.assigneeInput{
+    display: flex;
+    flex-wrap: wrap;
+    .label{
+      width: 29%;
+      margin-left: 11px;
+      font-size: 12px !important;
+      color: #424242;
+      margin-bottom: 15px;
+      margin-top: 2px !important;
+    }
+    .activeRadio{
+        width: 20%;
+    }
+    .inActiveRadio{
+        width: 20%;
+    }
+}
+
+.option {
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+.option-input {
+    width: 95%;
+}
+
+.RemoveBtn {
+    width: 5%;
+
+    img {
+        height: 30px;
+        width: 30px;
+        margin-top: 2px;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+}
+
+.AddBtn {
+    width: 5%;
+
+    img {
+        height: 30px;
+        width: 30px;
+        margin-top: 2px;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+}
+h1 {
+    font-size: 14px;
+    margin: 10px 0px 30px 0px;
+}
+
+form{
+    margin-bottom: 1px !important;
+}

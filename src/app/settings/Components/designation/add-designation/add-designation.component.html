@@ -1,0 +1,31 @@
+<form role="form" [formGroup]="adddesignationForm">
+  <div class="mb-3">
+    <select class="form-select" formControlName="roleid" [(ngModel)]="parrentid"
+      [ngClass]="displayFieldCss(adddesignationForm,'roleid')" style=" pointer-events: none; ">
+      <option selected value="">Select Parent Role</option>
+      <option *ngFor="let designation of roleListValue" value="{{designation.id}}">{{designation.designation}}</option>
+    </select>
+    <label class="floating-label-select" [ngClass]="{'insideDropdown': parrentid =='' }">Select Parent Role<span class="asterisk">*</span></label>
+    <div class="required" *ngIf="isFieldValid(adddesignationForm,'roleid')">
+      <span class="text-danger" *ngIf="adddesignationForm.get('roleid')?.errors?.['required']">Parent Role is
+        required</span>
+    </div>
+  </div>
+  <div class="mb-3" [ngClass]="{ 'float-now': addDesignation.name!= '' }">
+    <!-- <label for="">Zone Name</label> -->
+    <input type="text" class="form-control" id="role" formControlName="name" [(ngModel)]="addDesignation.name"
+      [ngClass]="displayFieldCss(adddesignationForm,'name')">
+      <label class="floating-label">Enter Role Name <span class="asterisk">*</span></label>
+    <div class="required" *ngIf="isFieldValid(adddesignationForm,'name')">
+      <span class="text-danger" *ngIf="adddesignationForm.get('name')?.errors?.['required']">Role Name is
+        required</span>
+    </div>
+  </div>
+
+  <div class="mb-3" [ngClass]="{ 'float-now': addDesignation.description!= '' }">
+    <!-- <label for="">Zone Name</label> -->
+    <input type="text" class="form-control" id="description" formControlName="description" [(ngModel)]="addDesignation.description">
+      <label class="floating-label">Enter Description</label>
+  </div>
+
+  <button type="submit" class="btn btn-primary" (click)="addnewDesignation()">ADD</button>

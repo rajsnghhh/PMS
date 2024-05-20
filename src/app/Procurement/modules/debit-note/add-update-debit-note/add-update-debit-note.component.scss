@@ -1,0 +1,446 @@
+ .createtable-section {
+   width: 100%;
+   margin: 25px 0px;
+ }
+
+ .createtable-section table {
+   width: 100%;
+   padding-bottom: 35px;
+ }
+
+ .createtable-section table td {
+   font-size: 12px;
+   padding: 11px 10px;
+   font-weight: 400;
+   min-height: 42px;
+   vertical-align: top;
+ }
+
+ .createtable-section table td p {
+   font-size: 14px;
+   color: #666666;
+   font-weight: 400;
+ }
+
+ .createtable-section table tr:nth-child(2n+1) {
+   background: #f8f8f8;
+ }
+
+ .createtable-section table th {
+   background-color: #5577ff;
+   color: white;
+   font-size: 14px;
+   padding: 13px;
+   font-weight: 500;
+ }
+
+ .createtable-section table td,
+ .createtable-section table th {
+   border: 1px solid #D9D9D9;
+ }
+
+ .tablebtn-save {
+   background-image: linear-gradient(to right, #40d4e6, #6675fe);
+   font-weight: initial;
+   padding: 3px 16px;
+   border-radius: 28px;
+   border: none;
+   color: white;
+   line-height: 30px;
+   font-size: 16px;
+   font-weight: 600;
+   display: flex;
+   justify-content: center;
+   justify-content: space-between;
+   gap: 5px;
+   align-items: baseline;
+   width: 81px;
+   text-decoration: none;
+ }
+
+ .tablebtn-save .fa {
+   width: 13px;
+ }
+
+ .tablebtn-save .fa img {
+   width: 13px;
+ }
+
+ .tablebtn-save:hover {
+   background-image: linear-gradient(to right, #6675fe, #40d4e6);
+   color: white;
+ }
+
+ .tablebg {
+   background: #f6f8ff;
+ }
+
+ .vector-delete {
+   background-image: linear-gradient(to right, #df2929, #ea4646);
+   font-weight: initial;
+   padding: 5px 16px;
+   border-radius: 28px;
+   border: none;
+   color: white;
+   line-height: 30px;
+   font-size: 16px;
+   font-weight: 600;
+   display: flex;
+   justify-content: center;
+   justify-content: space-between;
+   gap: 5px;
+   align-items: baseline;
+   width: auto;
+   text-decoration: none;
+ }
+
+ .vector-delete .fa {
+   width: 11px;
+ }
+
+ .vector-delete .fa img {
+   width: 11px;
+ }
+
+ .vector-delete:hover {
+   background-image: linear-gradient(to right, #ea4646, #df2929);
+   color: white;
+ }
+
+ .form-control-num {
+   text-align: right;
+   display: block;
+   width: 100%;
+   padding: 6px 6px;
+   font-size: 13px;
+   font-weight: 300;
+   line-height: 1.5;
+   color: #b1adad;
+   appearance: none;
+   background-color: var(--bs-body-bg);
+   background-clip: padding-box;
+   border: #b9b8b8 1px solid;
+   border-radius: 5px;
+   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+   position: relative;
+   margin-bottom: 9px;
+   appearance: auto;
+ }
+
+ input[type="number"]::-webkit-outer-spin-button,
+ input[type="number"]::-webkit-inner-spin-button {
+   -webkit-appearance: none;
+   margin: 0;
+ }
+
+ input[type="number"] {
+   -moz-appearance: textfield;
+ }
+
+ .tablegroup .form-control2 {
+   // background: #EFEFEF;
+   border: #EFEFEF 1px solid;
+ }
+
+ .tablegroup-text {
+   display: flex;
+   align-items: center;
+   justify-content: flex-start;
+   gap: 5px;
+   margin-top: 6px;
+ }
+
+ .tablegroup-text .form-control2 {
+   background: #EFEFEF;
+   padding: 4px 8px;
+   border: #EFEFEF 1px solid;
+ }
+
+ .tablegroup-text h2 {
+   margin: 0px 0px;
+   padding: 0px 0px;
+   font-size: 15px;
+   color: #666666;
+   font-weight: 500;
+ }
+
+ .creatematerial {
+   margin: 0px 0px 20px 0px;
+   padding: 23px 15px;
+   background: #f4f4f4;
+   width: 100%;
+   position: relative;
+ }
+
+ .createrequisition-section {
+   margin: 12px;
+   padding: 0px;
+   width: auto;
+   position: relative;
+ }
+
+ .addressform {
+   margin-top: 16px;
+   position: relative;
+   display: flex;
+   width: 100%;
+   align-items: center;
+   justify-content: flex-start;
+   gap: 12px;
+
+   label {
+     display: inline-block;
+     font-family: Arial, Helvetica, sans-serif;
+     line-height: 14px;
+     font-size: 12px;
+     color: #363636;
+ 
+     font-weight: 400;
+     margin: 0px 0px;
+     vertical-align: middle;
+     text-align: right;
+     min-width: 110px;
+   }
+
+   .form-control {
+     display: block;
+     width: 100%;
+     font-family: Arial, Helvetica, sans-serif;
+     padding: 7px 8px;
+     font-size: 14px;
+     font-weight: 300;
+     line-height: 15px;
+     color: #9D9D9D;
+     appearance: none;
+     background-color: var(--bs-body-bg);
+     background-clip: padding-box;
+     border: var(--bs-border-width) solid var(--bs-border-color);
+     border-radius: 0px;
+     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+     position: relative;
+     appearance: auto;
+   }
+ }
+
+ .createtable-section {
+   margin: 25px 0px;
+   
+
+   table {
+     width: 100%;
+     padding-bottom: 35px;
+
+     tr:nth-child(2n+1) {
+       background: #f8f8f8;
+     }
+
+     th {
+       background-color: #5577ff;
+       color: white;
+       font-size: 14px;
+       padding: 10px;
+       font-weight: 500;
+       border: 1px solid #D9D9D9;
+       white-space: nowrap;
+     }
+
+     td {
+       font-family: Arial, Helvetica, sans-serif;
+       font-weight: 300;
+       font-size: 12px;
+       line-height: 15px;
+     }
+   }
+ }
+
+ // table design
+ .createtable-section table td {
+   font-size: 12px;
+   padding: 11px 10px;
+   font-weight: 400;
+   min-height: 42px;
+   vertical-align: top;
+ }
+
+ .createtable-section table td p {
+   font-size: 14px;
+   color: #666666;
+   font-weight: 400;
+ }
+
+
+
+ .createtable-section table td,
+ .createtable-section table th {
+   border: 1px solid #D9D9D9;
+ }
+
+ .tablegroup {
+   margin: 0px 0px;
+   padding: 0px 0px;
+   position: relative;
+ }
+
+
+
+ .tablegroup .form-control {
+   display: block;
+   width: auto;
+   font-family: Arial, Helvetica, sans-serif;
+   padding: 3px 4px;
+   font-size: 11px;
+   font-weight: 300;
+   line-height: 15px;
+   color: #6d6d6d;
+   appearance: none;
+   background-color: var(--bs-body-bg);
+   background-clip: padding-box;
+   border: #b9b8b8 1px solid;
+   border-radius: 0px;
+   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+   position: relative;
+   margin-bottom: 9px;
+   appearance: auto;
+ }
+
+ .tablegroup .form-control2 {
+   // background: #EFEFEF;
+   border: #EFEFEF 1px solid;
+ }
+
+ .tablegroup-text {
+   display: flex;
+   align-items: center;
+   justify-content: flex-start;
+   gap: 5px;
+   margin-top: 6px;
+ }
+
+ .tablegroup-text .form-control2 {
+   background: #EFEFEF;
+   padding: 4px 8px;
+   border: #EFEFEF 1px solid;
+ }
+
+ .tablegroup-text h2 {
+   margin: 0px 0px;
+   padding: 0px 0px;
+   font-size: 15px;
+   color: #666666;
+   font-weight: 500;
+ }
+
+ .tablebg {
+   background: #f6f8ff;
+ }
+
+ .tablebtn-save {
+   background-image: linear-gradient(to right, #40d4e6, #6675fe);
+   font-weight: initial;
+   padding: 0px 16px;
+   border-radius: 4px;
+   border: none;
+   color: white;
+   line-height: 30px;
+   font-size: 13px;
+   font-weight: 400;
+   display: flex;
+   justify-content: center;
+   justify-content: space-between;
+   gap: 5px;
+   align-items: baseline;
+   width: auto;
+   text-decoration: none;
+ }
+
+ .tablebtn-save .fa {
+   width: 13px;
+ }
+
+ .tablebtn-save .fa img {
+   width: 13px;
+ }
+
+ .tablebtn-save:hover {
+   background-image: linear-gradient(to right, #6675fe, #40d4e6);
+   color: white;
+ }
+
+ .vector-delete {
+   background-image: linear-gradient(to right, #df2929, #ea4646);
+   font-weight: initial;
+   padding: 0px 16px;
+   border-radius: 4px;
+   border: none;
+   color: white;
+   line-height: 30px;
+   font-size: 13px;
+   font-weight: 400;
+   display: flex;
+   justify-content: center;
+   justify-content: space-between;
+   gap: 5px;
+   align-items: baseline;
+   width: auto;
+   text-decoration: none;
+ }
+
+ .vector-delete .fa {
+   width: 11px;
+ }
+
+ .vector-delete .fa img {
+   width: 11px;
+ }
+
+ .vector-delete:hover {
+   background-image: linear-gradient(to right, #ea4646, #df2929);
+   color: white;
+ }
+
+ .chackbox-container {
+   display: flex;
+   align-items: baseline;
+
+   p {
+     margin-left: 5px;
+   }
+ }
+
+
+
+
+ ::ng-deep .tablegroup .ng-select .ng-select-container {
+   border-radius: 0px;
+   border: 1px solid #ccc;
+   min-height: 26px;
+ }
+
+ ::ng-deep .tablegroup .ng-select.ng-select-single .ng-select-container {
+   height: 20px;
+ }
+
+ ::ng-deep .tablegroup-text h2 {
+   font-size: 12px !important;
+ }
+
+ .save_btn button {
+   margin: 20px auto;
+ }
+
+ .custom-file {
+   width: 100%;
+
+   .custom-file-input {
+     background: #fff;
+     margin: 0px 0px;
+     padding: 7px 8px;
+     border-radius: 0px;
+     border: #dee2e6 1px solid;
+     width: 100%;
+     font-size: 13px;
+     font-weight: 300;
+     line-height: 15px;
+     color: #9D9D9D;
+   }
+ }

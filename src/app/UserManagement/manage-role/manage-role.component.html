@@ -1,0 +1,193 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Manage Profile & Permission</h2>
+        <div class="action-button-container">
+            <button class="table-filter" [ngClass]="{'active': query.is_active==null }" (click)="getAllUserList()">All Permissions</button>
+            <button class="table-filter" [ngClass]="{'active': query.is_active==true }" (click)="getactiveUserList()">Active Permissions({{activeCount}})</button>
+            <button class="table-filter" [ngClass]="{'active': query.is_active==false }" (click)="getinactiveUserList()">Inactive Permissions({{inactiveCount}})</button>
+            <button class="btn btn-secondary" type="button" *ngIf="userPermissions.export" id="dropdownSelectColoum" data-bs-toggle="dropdown" aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>  
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span><img src="assets/usermanagement/download_csv.png"  class="export" ><strong>CSV</strong> </span>
+                </li>
+            </ul>  
+            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole" (click)="addRoleopenCanvas()" *ngIf="userPermissions.add">ADD PROFILE <img src="assets/header/add.png" alt=""></button>
+            <button hidden class="btn btn-secondary dropdown-toggle" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown" aria-expanded="false">Select Coloum</button>
+            
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum">
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="RollName">
+                    <label class="" for="RollName">
+                        Profile Name
+                    </label>
+                </li>
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Permissions">
+                    <label class="" for="Permissions">
+                        Permissions
+                    </label>
+                </li>    
+            </ul>
+            
+        </div>
+    </div>
+    <div class="component-body">
+        <table>
+            
+            <tr>
+                <th>S.No</th>
+                <th>Profile</th>
+                <th>Users</th>
+                <th>Permissions</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            
+            <tr *ngFor="let permission of permissionlist; let i = index" [attr.data-index]="i" [ngClass]="{'disabled': !permission.Status}"> 
+                <td>{{ (pageSize*(page-1)) + i+1.}}</td>
+                <td class="desctabel">
+                   <div class="role"> <img src="assets/usermanagement/suitcase.png" class="table-inde-icon" alt=""> {{permission.role_name}}</div>
+                    <div class="desc">
+                     {{permission.description}}
+                    </div>
+                </td>
+                <td>
+                    <span class="userSeen">
+                        {{permission.user_count}} Users &nbsp;&nbsp;
+                        <img data-bs-toggle="modal" (click)="SetUsers(permission.user_list)" data-bs-target="#UserView" *ngIf="permission.user_count > 0" class="viewIcon" src="assets/icons/eye.png" alt="">    
+                    </span>
+                </td>
+                <td class="viewAll">
+                    {{permission.user_permissions_details.concat(permission.user_administrative_permissions)[0].itemName}}
+                    <div class="custom-section">
+                        <div class="dropdown" style=" margin-top: -50px; ">
+                            <span class="dropbtn">...</span>
+                            <div class="dropdown-content" style=" max-height: 110px; overflow-y: scroll; ">
+                                <div class="img-container">
+                                    <span *ngFor="let viewdata of permission.user_permissions_details.concat(permission.user_administrative_permissions)"><label>{{viewdata.itemName}}</label></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="actionimage">
+                        <img (click)="toggleRole(permission.id,permission.role_name,permission.is_active)" class="status" src="assets/usermanagement/on-button.png" alt="" *ngIf="permission.is_active">
+                        <img (click)="toggleRole(permission.id,permission.role_name,permission.is_active)" class="status" src="assets/usermanagement/off-button.png" alt="" *ngIf="!permission.is_active">
+                    </div>
+                </td>
+                <td>
+                    <div class="custom-section">
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                            <div class="dropdown-content">
+                                <div class="img-container">
+                                    <span data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightEditRole" *ngIf="userPermissions.edit" (click)="editRole(permission.id)"><img src="assets/usermanagement/edit.png" alt="">&nbsp;&nbsp;<label>Edit Profile</label></span>
+                                    <!-- <span  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightRoleSetting"><img src="assets/usermanagement/profilesetting.png" alt="" (click)="editProfileSetting(permission.id)" aria-controls="offcanvasRight">&nbsp;&nbsp;<label>Manage Permissions</label></span> -->
+                                    <span *ngIf="userPermissions.delete" (click)="deleteRole(permission.id)"><img src="assets/usermanagement/delete.png" alt="">&nbsp;&nbsp;<label>Delete Profile</label></span>
+                                    <!-- <span data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightRoleSetting"><img src="assets/usermanagement/userimage.png" alt="" (click)="editProfileSetting(permission.id)"  aria-controls="offcanvasRight">&nbsp;&nbsp;<label>Assign Users</label></span> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            
+            </tr>
+            <tr class="text-center">
+                <td colspan="6" *ngIf="permissionlist.length == 0">No data found.</td>
+            </tr>
+            
+        </table>
+    
+    </div>
+    <app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLabeladdrole" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Add New Profile</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-add-role (parentFun)="closeRoleCanvas()"></app-add-role>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightEditRole" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Edit Permission</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-edit-permission (parentFun)="closeEditRole()" (getroleData)="getroleDetails()" #editPermission></app-edit-permission>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightRoleSetting" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">User Setting</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-user-setting></app-user-setting>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteRole" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="">Are you sure ?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Do you want to remove this Profile ?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="confirmDelete()">Yes</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deactiveRole" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="">Are you sure ?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Do you want to change this profile status ?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="confirmDeactive()">Yes</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="UserView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-user modal-dialog-centered">
+        <div class="modal-content user">
+            <div class="modal-header userHeader custommodal-header">
+                <h5>Users</h5>
+                <button type="button" class="btn-close close-user text-reset" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body userBody mt-2">
+                    <div class="column-devider" *ngFor="let roleUser of roleUsers">
+                          <label class="container customcontainer">{{roleUser.first_name + ' ' + roleUser.last_name}}
+                            <input type="checkbox" checked="checked" disabled>
+                            <span class="checkmark customcheckmark"></span>
+                          </label>
+                    </div>   
+            </div>
+        </div>
+    </div>
+</div>

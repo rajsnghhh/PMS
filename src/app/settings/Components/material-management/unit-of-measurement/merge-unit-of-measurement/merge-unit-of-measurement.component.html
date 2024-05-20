@@ -1,0 +1,65 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Item Unit Merge</h2>
+    </div>
+    <div class="component-body">
+    </div>
+</div>
+
+<form name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && mergeData()" novalidate>
+    <div class="flex-div boxview">
+
+        <div class="mb-3">
+            <div class="addressform">
+                <label class="" [ngClass]="{'insideDropdown': addUser.unitfrom =='' }">Source/From Unit<span class="asterisk">*</span>
+                </label>
+                <select class="form-control" required aria-label="Default select example" name="unitfrom"
+                [(ngModel)]="addUser.unitfrom" (click)="unitSelect()" #unitfrom="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && unitfrom.errors }">
+                <option selected disabled value="">Source/From Unit</option>
+                <option value="{{item.id}}" *ngFor="let item of uomListFrom">{{item.formal_name}}</option>
+            </select>
+      
+            </div>
+    
+            <div *ngIf="f.submitted && unitfrom.errors" class="invalid-feedback">
+                <div *ngIf="unitfrom.errors['required']">Please select From Unit</div>
+            </div>
+
+            <div style="padding: 8px;margin-left: 30px;">
+                <div class="addressform">
+                    
+                    <label for="vatax">Delete This Unit Name From Master</label>
+                    <input type="checkbox"  name="vatax" [(ngModel)]="addUser.vatax"
+                    #vatax="ngModel">
+                </div>
+            </div>
+            <div class="text-danger" style="font-size: 12px;margin-left: 30px;font-weight: bold;">
+                <p style="margin: 0;">*Click to Merge 2 Same Nature Unit Masters</p>
+                <p style="margin: 0;">*All Entry Transfer 'Source Unit Master' To 'Destination Unit Master'</p>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="addressform">
+                <label class="" [ngClass]="{'insideDropdown': addUser.unitto =='' }">Destination/To Unit<span class="asterisk">*</span>
+                </label>
+                <select class="form-control" required aria-label="Default select example" name="unitto"
+                    [(ngModel)]="addUser.unitto" (click)="unitSelect()" #unitto="ngModel"
+                    [ngClass]="{ 'is-invalid': f.submitted && unitto.errors }">
+                    <option selected disabled value="">Destination/To Unit</option>
+                    <option value="{{item.id}}" *ngFor="let item of uomList">{{item.formal_name}}</option>              
+                 </select>
+           
+            </div>
+            <div *ngIf="f.submitted && unitto.errors" class="invalid-feedback">
+                <div *ngIf="unitto.errors['required']">Please select To Unit</div>
+            </div>
+            <div class="text-danger mt-2" style="font-size: 12px;margin-left: 20px;font-weight: bold;">
+                <p style="margin: 0;">*Note (1):Data Merge of (All Company/All Site/All Year)</p>
+                <p style="margin: 0;">*Note (2):Once Data Merge then data can't be reversed.</p>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="float: left; margin-left: 45%;">Merge</button>
+    </div>
+
+</form>

@@ -1,0 +1,73 @@
+<div class="survey-body">
+    <form name="exi_Committee" #f="ngForm" (ngSubmit)="submitTenderData()" novalidate>
+        <div class="survey-header">
+            <h1 >{{CommtteeSatus}}</h1>   
+        </div>
+        <div class="flex-div">
+            <div class="mb-3" *ngIf="!waitingForApproval">
+                <label for="selectGroup">Select Committee <span class="asterisk">*</span></label>
+                <select [(ngModel)]="Committe" [ngModelOptions]="{standalone: true}" name="Committe" #CommitteName="ngModel" (change)="changeCommitte()"
+                    disabled={{waitingForApproval}}
+                    required>
+                    <option value="" disabled selected>Select Committee</option>
+                    <option value={{group.id}} *ngFor="let group of gropuList">{{group.group_name}}</option>
+                </select>
+                <div *ngIf="f.submitted && CommitteName.errors" class="invalid-feedback">
+                    <div *ngIf="CommitteName.errors['required']">Please select the committee.</div>
+                </div>
+            </div>
+            <div class="mb-3 member-input" *ngIf="Committe != ''">
+                <label for="selectGroup" *ngIf="!waitingForApproval">Select Members <span class="asterisk">*</span></label>
+                <label for="selectGroup" *ngIf="waitingForApproval">Approval Requested From</label>
+                <section class="member-selection">
+                    <section *ngFor="let avliableMember of avliableMembers" class="user-lable" [ngClass]="{'hidden': waitingForApproval && !avliableMember.selected }">
+                        <label class="container">{{avliableMember.full_name}}
+                            <input type="checkbox" disabled={{waitingForApproval}} checked="checked" (change)="selectunselet()" [(ngModel)]="avliableMember.selected" [ngModelOptions]="{standalone: true}">
+                            <span class="checkmark"></span>
+                        </label>
+                        <select class="level-dropdown" disabled={{waitingForApproval}} name="" id="" [(ngModel)]="avliableMember.userLevel" [ngModelOptions]="{standalone: true}">
+                            <option value="{{index+1}}" *ngFor="let user_lvl of userLevel; let index = index">{{user_lvl}}</option>
+                        </select>
+                        <span class="appraval-status">
+                            {{avliableMember.approved_message}}
+                            <span class="approvar-remarks">{{avliableMember.approved_Remarks}}</span>
+                        </span>
+                    </section>
+                </section>
+                <div class="invalid" *ngIf="memberListError">
+                    Please select atleast one member to proceed.
+                </div>
+            </div>
+        </div>
+        <button type="submit" *ngIf="!waitingForApproval">Sent for VGA Approval</button>
+        <button type="button" *ngIf="resendApproval" (click)="resendForApproval()">Resend for VGA Approval</button>
+    </form>
+    <form #approval="ngForm" (ngSubmit)="approval.form.valid && submitApproval()" novalidate *ngIf="waitingForApproval && is_approval_user" class="approvar-form">
+        <div class="survey-header">
+            <h1 >Approve / Reject Now</h1>   
+        </div>
+        <div class="flex-div">
+            <div class="mb-3">
+                <label for="selectGroup">Remarks <span class="asterisk">*</span></label>
+                <textarea [ngModelOptions]="{standalone: true}" #remarkss="ngModel" required name="" id="" cols="30" rows="5" [(ngModel)]="remarks"></textarea>
+                <div *ngIf="approval.submitted && remarkss.errors" class="invalid-feedback">
+                    <div *ngIf="remarkss.errors['required']">This is required.</div>
+                </div>
+            </div>
+            <div class="mb-3 member-input">
+                <section class="custom-section" >
+                    <label class="container">I have verified all the documents and sending for approval.
+                        <input type="checkbox" #checkboxChecked="ngModel" required  name="sentForApproval" [ngModelOptions]="{standalone: true}" [(ngModel)]="Accepted">
+                        <span class="checkmark"></span>
+                    </label>
+                </section>
+                <div *ngIf="approval.submitted && checkboxChecked.errors" class="invalid-feedback">
+                    <div *ngIf="checkboxChecked.errors['required']">Please check to proceed.</div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" (click)="changeStatus('approved')"> Approve</button>
+        <button type="submit" class="reject-button" (click)="changeStatus('reject')"> Reject</button>
+        <button type="submit" class="reject-button resend" (click)="changeStatus('resend')"> Resend For Recommendation</button>
+    </form>
+</div>

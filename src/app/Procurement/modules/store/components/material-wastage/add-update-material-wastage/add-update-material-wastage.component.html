@@ -1,0 +1,183 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && addUpdateMaterialWastage()" novalidate>
+    <!-- <div class="mb-3 float-now" >        
+        <select class="form-select" name="financialyear" [ngClass]="{ 'is-invalid': f.submitted && financialyear.errors }"
+            [(ngModel)]="form.financialyear" required #financialyear="ngModel" disabled>
+            <option value="">Financial Year</option>
+            <option value="{{projectSite.id}}" *ngFor="let projectSite of financialYearData">{{projectSite.description}}</option>
+        </select>
+        <label class="floating-label">Financial Year <span class="asterisk">*</span></label>
+    </div> -->
+    <div class="mb-3">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="addressform">
+                <input type="text" placeholder="Material Wast. Code" name="material_waste_code" class="form-control" [(ngModel)]="form.material_waste_code" #material_waste_code="ngModel">
+            </div></div>
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="addressform">
+                <input type="number" placeholder="Material Wast. No." name="material_waste_no" class="form-control" [(ngModel)]="form.material_waste_no" #material_waste_no="ngModel">
+            </div></div>
+        </div>
+        <!-- <input type="text" name="material_waste_no" class="form-control"> -->
+    </div>
+    <div class="mb-3 float-now" >        
+        <input type="date" name="date" class="form-control" [(ngModel)]="form.date" #date="ngModel">
+        <label class="floating-label">Date</label>
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': form.wastage_type != '' }">
+        <label class="">Wastage Type</label>
+        <div class="row">
+            <div class="col-md-6">
+                <input type="radio" name="wastage_type" [(ngModel)]="form.wastage_type" #wastage_type="ngModel" value="self"> Self 
+            </div>
+            <div class="col-md-6">
+                <input type="radio" name="wastage_type" [(ngModel)]="form.wastage_type" #wastage_type="ngModel" value="party"> Party
+            </div>
+        </div>
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': form.location != '' }">
+        <select class="form-control" name="location" [(ngModel)]="form.location" required #location="ngModel" [ngClass]="{ 'is-invalid': f.submitted && location.errors }" 
+        >
+            <option disabled>-- select --</option>
+            <option *ngFor="let storeData of storeList" value="{{storeData.id}}">
+                {{storeData.store_name}}</option>
+        </select>
+        <label class="floating-label-select">Location<span class="asterisk">*</span></label>
+        <div *ngIf="f.submitted && location.errors" class="invalid-feedback" style="display: block;">
+            <div *ngIf="location.errors['required']">Location is required</div>
+        </div>
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': form.is_stock_effect_required != '' }">
+        Is Stock Effect Required <input type="checkbox" name="is_stock_effect_required" [(ngModel)]="form.is_stock_effect_required" #is_stock_effect_required="ngModel"> 
+    </div>
+
+    <div class="createtable-section table-responsive">
+        <table class="text-nowrap">
+            <tr>
+                <th colspan="1" style="min-width: 150px;">Item</th>
+                <th colspan="1" style="min-width: 90px;">Qty./Unit</th>
+                <th colspan="1" style="min-width: 90px;">Weight/Unit</th>
+                <th colspan="1" style="min-width: 100px;">Rate</th>
+                <th colspan="1" style="min-width: 100px;">Amount</th>
+                <th colspan="1" style="min-width: 90px;">Type</th>
+                <th colspan="1" style="min-width: 150px;">Remark</th>
+                <th>Action</th>
+            </tr>
+            <tr class="">
+                <td colspan="1"></td>
+                <td colspan="1"></td>
+                <td colspan="1"></td>
+                <td colspan="1"></td>
+                <td colspan="1"></td>
+                <td colspan="1"></td>
+                <td colspan="1"></td>
+                <td class="align-middle">
+                    <a  (click)="addItem()" class="tablebtn-save">ADD <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png" alt=""></i></a>
+                </td>
+            </tr>
+            <tr class="tablebg" *ngFor="let item of form.requested_items; let i = index">
+                <td colspan="1">
+                    <div class="mb-3" >
+                        <!-- setMaterialSubGroup(i) -->
+                        <ng-select  class=""  name="requested_material_group{{i+1}}" [(ngModel)]="form.requested_items[i].requested_material_group" [ngModelOptions]="{standalone: true}"  #requested_material_group="ngModel" (change)="groupTypeChange(form.requested_items[i].requested_material_group, i)">
+                            <ng-option *ngFor="let materialGroup of masterlist" [value]="materialGroup.id">{{materialGroup.name}}</ng-option>
+                        </ng-select>
+                        <label class="floating-label-select">Item Group
+                            <!-- <span class="asterisk">*</span> -->
+                        </label>
+                    </div>
+                    <div class="mb-3" [ngClass]="{ 'float-now': form.requested_items[i].requested_material_sub_group != '' }">
+                        <!-- (change)="setMaterialList(i)" -->
+                        <!-- {{form.requested_items[i].requested_material_sub_group}} -->
+                        <ng-select  class="" name="requested_material_sub_group{{i+1}}" [(ngModel)]="form.requested_items[i].requested_material_sub_group" [ngModelOptions]="{standalone: true}" #requested_material_sub_group="ngModel" (change)="subTypeChange(form.requested_items[i].requested_material_sub_group, i)">
+                            <ng-option *ngFor="let subGroup of form.requested_items[i].MaterilSubGroupList" [value]="subGroup.id">{{subGroup.name}}</ng-option>
+                        </ng-select>
+
+                        <label class="floating-label-select">Item Sub Group
+                            <!-- <span class="asterisk">*</span> -->
+                        </label>
+                    </div>
+                    <div class="mb-3" [ngClass]="{ 'float-now': form.requested_items[i].requested_material != '' }">
+                        <!-- (change)="setMaterialMasterData(i, false)" -->
+                        <ng-select  class="" name="requested_material{{i+1}}" [(ngModel)]="form.requested_items[i].requested_material" [ngModelOptions]="{standalone: true}" required #requested_material="ngModel" (change)="changeItem(i)">
+                            <ng-option *ngFor="let masterData of form.requested_items[i].MaterilFilterList" [value]="masterData.id">{{masterData.material_name}}</ng-option>
+                        </ng-select>
+
+                        <label class="floating-label-select">Item
+                            <!-- <span class="asterisk">*</span> -->
+                        </label>
+                    </div>
+                </td>
+                <td colspan="1">
+                    <div class="mb-3" [ngClass]="{ 'float-now': form.requested_items[i].quantity != '' }">
+                        <input type="number" name="quantity{{i+1}}" class="form-control" [(ngModel)]="form.requested_items[i].quantity" required #quantity="ngModel" (change)="calculateAmount(i)">
+                        <label class="floating-label">Qty.</label>
+                    </div>
+                    <div class="mb-3" [ngClass]="{ 'float-now': form.requested_items[i].unit != '' }">
+                        <select class="form-control" name="unit{{i+1}}" [(ngModel)]="form.requested_items[i].unit" #unit="ngModel">
+
+                            <option *ngFor="let unit of uomList; let i = index" value="{{unit.id}}">{{unit.symbol}}</option>
+                        </select>
+                        <label class="floating-label-select">Unit
+                            <!-- <span class="asterisk">*</span> -->
+                        </label>
+                    </div>
+                </td>
+                <td colspan="1">
+                    <div class="mb-3" [ngClass]="{ 'float-now': form.requested_items[i].weight != '' }">
+                        <input type="number" name="weight{{i+1}}" class="form-control" [(ngModel)]="form.requested_items[i].weight" required #weight="ngModel">
+                        <label class="floating-label">Weight</label>
+                    </div>
+                    <div class="mb-3" [ngClass]="{ 'float-now': form.requested_items[i].weight_uom != '' }">
+                        <select class="form-control" name="weight_uom{{i+1}}" [(ngModel)]="form.requested_items[i].weight_uom" #weight_uom="ngModel">
+
+                            <option *ngFor="let unit of uomList; let i = index" value="{{unit.id}}">{{unit.symbol}}</option>
+                        </select>
+                        <label class="floating-label-select">Unit
+                            <!-- <span class="asterisk">*</span> -->
+                        </label>
+                    </div>
+                </td>
+                <td colspan="1">
+                    <div class="mb-3" [ngClass]="{'float-now': form.requested_items[i].rate != ''}">
+                        <input type="number" name="rate" class="form-control" [(ngModel)]="form.requested_items[i].rate" #rate="ngModel" (change)="calculateAmount(i)">
+                        <label class="floating-label">Rate</label>
+                    </div>
+                </td>
+                <td colspan="1">
+                    <div class="mb-3" [ngClass]="{'float-now': form.requested_items[i].amount != ''}">
+                        <input type="number" name="amount" class="form-control" [(ngModel)]="form.requested_items[i].amount" #amount="ngModel">
+                        <label class="floating-label">Amount</label>
+                    </div>
+                </td>
+                <td colspan="1">
+                    <div class="mb-3" [ngClass]="{'float-now': form.requested_items[i].type != ''}">
+                        <input type="radio" name="type{{i}}" value="wastage" [(ngModel)]="form.requested_items[i].type" #type="ngModel" > Wastage <br>
+                        <input type="radio" name="type{{i}}" value="shortage" [(ngModel)]="form.requested_items[i].type" #type="ngModel" > Shortage
+                    </div>
+                </td>
+                <td colspan="1">
+                    <div class="mb-3" [ngClass]="{'float-now': form.requested_items[i].remark != ''}">
+                        <input type="text" name="remark" class="form-control" [(ngModel)]="form.requested_items[i].remark" #remark="ngModel">
+                        <label class="floating-label">Remark</label>
+                    </div>
+                </td>
+                <td class="align-middle">
+                    <a (click)="delete(i)" type="submit" class="vector-delete">DEL <i class="fa" aria-hidden="true"><img src="assets/img/vector-delete.png" alt=""></i></a>
+                    
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="mb-3 eachfield">
+        <!-- multiple="multiple" -->
+        <label >Attachments <span class="asterisk" style="color: crimson;">*</span></label>
+        <input type="file" multiple="multiple" (change)="handleUpload($event)" class="custom-file-input" id="customFile">
+    </div>
+
+    <div class="pull-right">
+        <button type="submit">Save</button>
+    </div>
+</form>
+    

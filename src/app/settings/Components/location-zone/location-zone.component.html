@@ -1,0 +1,135 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Zone List</h2>
+
+        <div class="action-button-container">  
+            <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown" aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>  
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span><img src="assets/usermanagement/download_csv.png"  class="export" ><strong>CSV</strong> </span>
+                </li>
+            </ul>           
+            <button data-bs-toggle="offcanvas" data-bs-target="#addZone" aria-controls="offcanvasRight">ADD NEW <img src="assets/header/add.png" alt=""></button>
+        </div>
+    </div>
+    <div class="component-body">
+        <table>
+            
+            <tr>
+                <th>S.No</th>
+                <!-- <th>Location ID</th> -->
+                <th>Zone</th>
+                <th>State</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Action </th>
+            </tr>
+            
+            <tr *ngFor="let permission of zoneList; let i = index" [attr.data-index]="i" [ngClass]="{'disabled': !permission.Status}"> 
+                <td>{{ (pageSize*(page-1)) + i+1.}}</td>
+                <!-- <td>{{permission.id}}</td> -->
+                <td>
+                     {{permission.zone_name}}
+                </td>
+                <td>
+                    <div class="viewState">
+                        <span class="button">{{permission.state_name_zone[0].name}}</span>
+                        <span class="button" *ngIf="permission.state_name_zone.length>1">{{permission.state_name_zone[1].name}}</span>
+                        <div class="custom-section" *ngIf="permission.state_name_zone.length>2">
+                            <div class="dropdown">
+                                <span class="button">...</span>
+                                <div class="dropdown-content" style=" max-height: 110px; overflow-y: scroll; ">
+                                    <div class="img-container">
+                                        <div *ngFor="let state of permission.state_name_zone;">{{state.name}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="viewAll">
+                        <span class="button" *ngIf="permission.city_name_zone.length>0">{{permission.city_name_zone[0].name}}</span>
+                        <span class="button" *ngIf="permission.city_name_zone.length>1">{{permission.city_name_zone[1].name}}</span>
+                        <div class="custom-section" *ngIf="permission.city_name_zone.length>2">
+                            <div class="dropdown">
+                                <span class="button">...</span>
+                                <div class="dropdown-content" style=" max-height: 110px; overflow-y: scroll; ">
+                                    <div class="img-container">
+                                        <div *ngFor="let city of permission.city_name_zone;">{{city.name}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {{permission.country.name}}
+                </td>
+                <td>
+                    <div class="custom-section">
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                            <div class="dropdown-content">
+                                <div class="img-container">
+                                    <span (click)="editZone(permission.id)" class="mt-2" data-bs-toggle="offcanvas" data-bs-target="#editZone"><img src="assets/usermanagement/edit.png" alt=""  aria-controls="offcanvasRight">&nbsp;&nbsp;<label>Edit Zone</label></span>
+                                    <span (click)="deleteZone(permission.id)" data-bs-toggle="modal" data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png" alt="">&nbsp;&nbsp;<label>Delete Zone</label></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            
+            </tr>
+            <tr class="text-center">
+                <td colspan="6" *ngIf="zoneList.length == 0">No data found.</td>
+            </tr>
+            
+        </table>
+    
+    </div>
+<!-- <app-table-paginate></app-table-paginate> -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="addZone" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Add Zone</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-add-location></app-add-location>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="editZone" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Edit Zone</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-edit-location #editLocation></app-edit-location>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="">Are You Sure ?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Do you want to delete this Zone ?
+        </div>
+        <div class="modal-footer">
+            <button (click)="deleteZoneModel()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

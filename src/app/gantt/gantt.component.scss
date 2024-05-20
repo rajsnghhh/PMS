@@ -1,0 +1,72 @@
+ng-gantt>div {
+    height: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.noboq-found {
+    display: flex;
+    justify-content: center;
+    background: #ecf4ff;
+    padding: 10%;
+    margin-top: 0px;
+    flex-wrap: wrap;
+
+    button {
+        margin: auto;
+    }
+
+    h1 {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+input {
+    background: transparent;
+}
+
+.delete {
+    background-image: unset;
+}
+.lmpi-scope {
+    background: #dddcdc;
+    padding: 5px;
+    box-shadow: 1px 1px 1px 1px #ababab;
+}
+
+.lmpi-header {
+    display: flex;
+
+    section {
+        background: #d5e6ff;
+        border: 5px solid #0168ff;
+        font-size: 12px;
+        padding: 5px 10px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    .active {
+        background: #0168ff;
+        color: white;
+        font-weight: 700;
+    }
+}
+
+::ng-deep.onlygantt {
+    .gspanning {
+        opacity: 0;
+        pointer-events: none;
+    }
+    .gmainright {
+        display: none;
+    }
+}
+
+button {
+    max-width: unset !important;
+    float: right;
+}

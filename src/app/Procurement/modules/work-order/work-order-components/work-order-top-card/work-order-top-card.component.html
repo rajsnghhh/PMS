@@ -1,0 +1,168 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="createrequisition-section">
+        <div class="creatematerial">
+            <h3><span *ngIf="scope == 'add'">Create </span> <span *ngIf="scope == 'update'">Update </span> <span
+                    *ngIf="scope == 'view'">View </span>Work Order</h3>
+
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-12">
+
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">Project</label>
+                                <input type="text" class="form-control" [disabled]="true" [value]="localStorageData?.project_data?.project_data[1].value">
+                                <!-- <select id="sel1" class="form-control" name="project" [(ngModel)]="form.project"
+                                    required #project="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && project.errors }"
+                                    (change)="getProjeDependentSiteData()">
+                                    <option disabled>-- select --</option>
+                                    <option *ngFor="let project of projectList" value="{{project.id}}">
+                                        {{project.project_data[1]?.value}}</option>
+                                </select>
+
+                                <div *ngIf="f.submitted && project.errors" class="invalid-feedback">
+                                    <div *ngIf="project.errors['required']">This is required !</div>
+                                </div> -->
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">Site</label>
+                                <input type="text" class="form-control" [disabled]="true" [value]="localStorageData?.site_data?.site_name">
+                                <!-- <select id="sel1" class="form-control" name="site"
+                                    [(ngModel)]="form.site" required #site="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && site.errors }">
+                                    <option disabled>-- select --</option>
+                                    <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                        {{siteData.site_name}}</option>
+                                </select>
+                                <div *ngIf="f.submitted && site.errors" class="invalid-feedback">
+                                    <div *ngIf="site.errors['required']">This is required !</div>
+                                </div> -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">WO&nbsp;No.</label>
+                        <input type="text" placeholder="" id="text" class="form-control" [(ngModel)]="form.wo_no"
+                            #wo_no="ngModel" name="wo_no">
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="date">WO&nbsp;Date</label>
+                        <input type="date" placeholder="" class="form-control" id="date" name="date"
+                            [(ngModel)]="form.date" required #date="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && date.errors }">
+                        <div *ngIf="f.submitted && date.errors" class="invalid-feedback">
+                            <div *ngIf="date.errors['required']">This is required !</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Location</label>
+                        <input type="text" placeholder="" id="text" class="form-control" [(ngModel)]="form.location"
+                            #location="ngModel" name="location">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Party&nbsp;Vendor</label>
+                        <select id="sel1" class="form-control" name="party" [(ngModel)]="form.party" #party="ngModel"
+                            [ngModelOptions]="{standalone: true}" required
+                            [ngClass]="{ 'is-invalid': f.submitted && party.errors }">
+                            <option disabled>-- select --</option>
+                            <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                                {{vendor.vendor_master_data.vendor_name}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && party.errors" class="invalid-feedback">
+                            <div *ngIf="party.errors['required']">This is required !</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Work&nbsp;Desc./Subject</label>
+                        <input type="text" placeholder="" id="text" class="form-control"
+                            [(ngModel)]="form.work_description" #work_description="ngModel" name="work_description"
+                            [ngClass]="{ 'is-invalid': f.submitted && work_description.errors }" required>
+                        <div *ngIf="f.submitted && work_description.errors" class="invalid-feedback">
+                            <div *ngIf="work_description.errors['required']">This is required !</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Kind&nbsp;Attn.</label>
+                        <input type="text" placeholder="" id="text" class="form-control" [(ngModel)]="form.kind_attn"
+                            #kind_attn="ngModel" name="kind_attn">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">SD&nbsp;(%)</label>
+                        <input type="text" placeholder="" id="text" class="form-control"
+                            [(ngModel)]="form.sd_percentage" #sd_percentage="ngModel" name="sd_percentage">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Retention&nbsp;(%)</label>
+                        <input type="text" placeholder="" id="text" class="form-control"
+                            [(ngModel)]="form.retention_percentage" #retention_percentage="ngModel"
+                            name="retention_percentage">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Buyer&nbsp;Order No. [Ref No.]</label>
+                        <input type="text" placeholder="" id="text" class="form-control"
+                            [(ngModel)]="form.buyer_order_no" #buyer_order_no="ngModel" name="buyer_order_no">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Billing&nbsp;Site</label>
+                        <select id="sel1" class="form-control" name="billing_site" [(ngModel)]="form.billing_site"
+                            #billing_site="ngModel">
+                            <option disabled>-- select --</option>
+                            <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                {{siteData.site_name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <button hidden #submitButton="" type="submit">Save</button>
+
+</form>

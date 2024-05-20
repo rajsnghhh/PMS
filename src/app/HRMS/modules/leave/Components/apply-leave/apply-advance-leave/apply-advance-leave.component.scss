@@ -1,0 +1,294 @@
+.fullpage {
+
+    height: 100%;
+
+    .headerportion {
+        display: flex;
+        width: 100%;
+        height: 16%;
+        border-bottom: 1px solid #D9D9D9;
+
+        .topheader {
+            display: flex;
+            flex-wrap: wrap;
+            width: 25%;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+
+            h1 {
+                margin: 11px 13px;
+                color: #89838394;
+                font-size: 12px;
+            }
+
+            .headerActive {
+                color: rgb(14 96 217 / 95%) !important;
+            }
+        }
+
+        .buttomActive {
+            border-bottom: 1px solid blue;
+        }
+
+    }
+
+    .mainbody {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        height: 75%;
+        padding: 2%;
+
+        .leftBody {
+            display: flex;
+            flex-wrap: wrap;
+            width: 35%;
+
+            .fieldValue {
+                display: flex;
+                flex-wrap: wrap;
+                margin: 0px 5px;
+                width: 45%;
+                height: 50px;
+
+                label {
+                    color: grey;
+                    font-size: 12px;
+                }
+
+                .inputcss {
+                    width: 95%;
+                    height: 56%;
+                    border: 1px solid #8080802b;
+                    border-radius: 3px;
+                    margin-top: 7px;
+                    font-size: 11px;
+                    padding: 0px 5px;
+                    box-shadow: 0px 0px 2px 0px rgba(136, 136, 136, 0.46);
+                }
+            }
+
+            .uploadDoc {
+                display: flex;
+                flex-wrap: wrap;
+                margin: 17px 5px;
+                width: 100%;
+                height: 60%;
+
+                label {
+                    color: grey;
+                    font-size: 12px;
+                    height: 3px;
+                }
+
+                .docbtn {
+                    width: 98%;
+                    height: 52%;
+                    border: 1px solid #8080802b;
+                    border-radius: 3px;
+                    cursor: pointer;
+                    font-size: 11px;
+                    padding: 0px 11px;
+                    box-shadow: 0px 0px 2px 0px rgba(136, 136, 136, 0.46);
+                }
+            }
+        }
+
+        .rightBody {
+            display: flex;
+            flex-wrap: wrap;
+            width: 65%;
+            padding: 0px 13px;
+
+            .fieldrightValue {
+                display: flex;
+                flex-wrap: wrap;
+                margin: 0px 5px;
+                width: 100%;
+                height: 30%;
+
+                .uploadleavetype {
+                    color: grey;
+                    font-size: 12px;
+                    width: 100%;
+                }
+
+                .radiobtn {
+                    width: 100%;
+                    display: flex;
+                    font-size: 12px;
+                    color: grey;
+                    align-items: center;
+                    margin: 7px -10px;
+
+                    label {
+                        display: inline-block;
+                        margin: 0px 9px;
+                        font-size: 11px;
+                    }
+
+                    .leavebtn {
+                        display: flex;
+                        flex-wrap: wrap;
+                        width: 25%;
+                        height: 30px;
+                        position: relative;
+                        margin: 0px 12px;
+                        background-color: rgba(128, 128, 128, 0.1490196078);
+                        border: 1px solid rgba(128, 128, 128, 0.168627451);
+                        border-radius: 3px;
+                        padding-left: 13px;
+
+                        label {
+                            display: inline-block;
+                            font-size: 11px;
+                            cursor: pointer;
+                            position: absolute;
+                            top: 5px;
+                        }
+                    }
+
+                }
+            }
+
+            .uploadDoc {
+                display: flex;
+                flex-wrap: wrap;
+                margin: 25px 5px;
+                width: 100%;
+                height: 60%;
+
+                label {
+                    color: grey;
+                    font-size: 12px;
+                    height: 3px;
+                }
+
+                .textareafield {
+                    width: 98%;
+                    height: 52%;
+                    border: 1px solid #8080802b;
+                    border-radius: 3px;
+                    font-size: 11px;
+                    padding: 0px 11px;
+                    box-shadow: 0px 0px 2px 0px rgba(136, 136, 136, 0.46);
+                }
+            }
+
+
+        }
+
+    }
+}
+
+.applydiv {
+
+    .docbtnapply {
+        color: white;
+        background-color: #3F65FF;
+        border: unset;
+        font-size: 11px;
+        padding: 8px 30px;
+        border-radius: 56px;
+        float: right;
+        margin-right: 10%;
+    }
+}
+
+.appliedleaveBody {
+    padding: 3%;
+    height: 100%;
+    max-height: 216px;
+    overflow-y: scroll;
+
+    .tableBody {
+        width: 100%;
+        padding-bottom: 35px;
+
+        tr {
+            background: #f8f8f8;
+
+            th {
+                background-color: #5577ff;
+                color: white;
+                font-size: 11px;
+                padding: 7px;
+                font-weight: 500;
+                border: 1px solid #D9D9D9;
+            }
+
+            td {
+                font-size: 11px;
+                color: #746868;
+                padding: 5px 10px;
+                font-weight: 400;
+                border: 1px solid #D9D9D9;
+
+                img {
+                    height: 11px;
+                    width: 10px;
+                    float: right;
+                }
+            }
+        }
+    }
+}
+
+
+
+.leavebtn:has(> input:checked) {
+    border: 1px solid #5577FF !important;
+    background-color: #5577FF !important;
+    color: white;
+}
+
+.leavebtn input {
+    cursor: pointer;
+    margin-left: -7px;
+}
+
+.required {
+    font-size: 10px;
+    position: absolute;
+    margin-top: 52px;
+}
+
+.fileposition {
+    margin-top: 65px;
+}
+
+.asterisk {
+    color: red;
+}
+
+.filedisplay {
+    display: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 0px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #6676FF;
+    border-radius: 0px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #6676FF;
+    border-radius: 0px;
+}
+
+#special {
+    margin-top: 20px;
+}

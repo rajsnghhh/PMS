@@ -1,0 +1,17 @@
+<div class="notice-container">
+    <h1><img class="iocn" src="assets/icons/cake.png" alt=""> Birthdays in next 30 days</h1>
+    <owl-carousel-o [options]="noticeBoard">
+        <ng-template carouselSlide *ngFor="let user of birthdayList">
+            <div class="birth-item1">
+                <span class="ProfileIcon" *ngIf="false"></span>
+                <img class="profile" src="assets/usermanagement/face.png" alt="">
+                <h4>{{user.name}}</h4>
+                <p>{{user.department}}</p>
+                <img src="assets/icons/cake-candle.png" alt="">
+                <h5 *ngIf="user.date_of_birth.includes(currentDate)">Happy Birthday</h5>
+                <h5 *ngIf="!user.date_of_birth.includes(currentDate)">On {{user.date_of_birth | date :  "d MMM"}}</h5>
+            </div>
+        </ng-template>
+        
+    </owl-carousel-o>
+</div>

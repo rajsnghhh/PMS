@@ -1,0 +1,242 @@
+.required {
+  font-size: 12px;
+  top: 33px;
+  margin-left: 12px;
+}
+
+.asterisk {
+  color: red;
+}
+
+.issuewidth {
+  margin-top: 20px !important;
+  margin-left: 10px !important;
+  width: 96% !important;
+}
+
+.floating-label-select {
+  top: 15px !important;
+}
+
+.flex-div {
+  width: 94%;
+  margin-left: 14px;
+}
+
+.allfield {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 8px 0px -20px 0px;
+
+  .field {
+    display: flex;
+    width: 40%;
+    margin-right: 1.33%;
+
+    .fieldValue {
+      width: 100%;
+
+      label {
+        color: grey;
+        margin-left: 8px;
+        font-size: 12px;
+      }
+    }
+  }
+  .fieldbtn{
+    display: flex;
+    width: 15%;
+    margin-right: 1.33%;
+  }
+}
+
+.RemoveBtn {
+  width: 5%;
+
+  img {
+    height: 25px;
+    width: 25px;
+    margin-left: 60px;
+    margin-top: 5px;
+    cursor: pointer;
+  }
+}
+
+.AddBtn {
+  width: 5%;
+
+  img {
+    height: 25px;
+    width: 25px;
+    margin-left: 60px;
+    margin-top: 5px;
+    cursor: pointer;
+  }
+}
+
+.RemoveBtn2 {
+  width: 5%;
+
+  img {
+    height: 30px;
+    width: 30px;
+    float: left;
+    margin-left: 685px;
+    margin-top: -95px;
+    cursor: pointer;
+  }
+}
+
+.AddBtn2 {
+  width: 5%;
+
+  img {
+    height: 30px;
+    width: 30px;
+    float: left;
+    margin-left: 685px;
+    margin-top: -95px;
+    cursor: pointer;
+  }
+}
+
+.heading {
+  color: grey;
+  display: flex;
+  width: 100%;
+  font-size: 14px;
+}
+
+.lebelheading {
+  color: grey;
+  font-size: 12px !important;
+  margin: unset !important;
+}
+.required{
+  font-size: 11px;
+  top: 105px;
+  margin-left: 21px;
+}
+
+.mainuomtable {
+  border: 1px solid #d2cccc;
+  //border-radius: 20px;
+  margin-bottom: 10px;
+  width: 96%;
+  margin-left: 10px;
+}
+
+.prmrate {
+  margin-left: 25px !important;
+}
+
+.symbl {
+  margin-left: 20px !important;
+}
+
+.conrate {
+  margin-left: 15px !important;
+}
+
+.scnduom {
+  margin-left: 16px !important;
+}
+
+.primryfloat {
+  color: #424242;
+  position: absolute;
+  pointer-events: none;
+  top: -7px;
+  left: 7px;
+  transition: all 0.2s ease;
+  padding: 0px 5px 0 3px;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  background: white;
+  margin: 0px 0px 5px 20px !important;
+}
+
+.primrayfloat {
+  color: #424242;
+  position: absolute;
+  pointer-events: none;
+  top: 0px;
+  left: 7px;
+  transition: all 0.2s ease;
+  padding: 0px 5px 0 3px;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  background: white;
+  margin: 0px 0px 5px 20px !important;
+}
+
+.convfloat {
+  color: #424242;
+  position: absolute;
+  pointer-events: none;
+  top: -7px;
+  left: 7px;
+  transition: all 0.2s ease;
+  padding: 0px 5px 0 3px;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  background: white;
+  margin: 0px 0px 5px 45px !important;
+}
+
+.scnduomfloat {
+  color: #424242;
+  position: absolute;
+  pointer-events: none;
+  top: -7px;
+  left: 7px;
+  transition: all 0.2s ease;
+  padding: 0px 5px 0 3px;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  background: white;
+  margin: 0px 0px 5px 47px !important;
+}
+
+.range {
+  padding: 10px 10px;
+  width: 125%;
+  margin-left: -10px;
+}
+
+.range1 {
+  padding: 10px 10px;
+  width: 100%;
+  margin-left: 25px;
+}
+
+.range2 {
+  padding: 10px 15px;
+  width: 110%;
+  margin-left: 25px;
+}
+
+.mbwidth {
+  margin: 0px 0px 5px -10px;
+}
+
+.maincontainer {
+  width: 90%;
+  padding: 0px 0px 5px 0px;
+  margin: 5px 10px;
+  border: 1px solid #cdcdcd;
+  //border-radius: 20px;
+}
+
+.submitbtn {
+  margin-left: 20px;
+}
+
+.issueheight {
+  margin-top: 10px !important;
+}
+
+.form-control.is-invalid {
+  position: unset !important;
+}

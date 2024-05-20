@@ -1,0 +1,50 @@
+<form role="form" [formGroup]="addUpdateRackSettingForm">
+
+    <div class="flex-div">
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addRackTemplate.StoreLocation != '' }">
+            <select id="sel1" class="form-control" name="StoreLocation" formControlName="StoreLocation">
+                <option disabled>-- Select --</option>
+                <option *ngFor="let storeData of storeList" value="{{storeData.id}}">
+                    {{storeData.store_name}}
+                </option>
+            </select>
+            <label class="floating-label-select">Choose Store Location<span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addUpdateRackSettingForm,'StoreLocation')">
+                <span class="text-danger" *ngIf="addUpdateRackSettingForm.get('StoreLocation')?.errors?.['required']">Store Location is required</span>
+            </div>
+        </div>
+        
+        <div class="mb-3" [ngClass]="{ 'float-now': addRackTemplate.RackName != '' }">
+            <select id="sel2" class="form-control" name="RackName" formControlName="RackName">
+                <option disabled>-- Select --</option>
+                <option *ngFor="let rackData of rackList" value="{{rackData.id}}">
+                    {{rackData.section_name}}
+                </option>
+            </select>
+            <label class="floating-label-select">Choose Rack<span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addUpdateRackSettingForm,'RackName')">
+                <span class="text-danger" *ngIf="addUpdateRackSettingForm.get('RackName')?.errors?.['required']">Rack is required</span>
+            </div>
+        </div>
+        
+        <div class="mb-3" [ngClass]="{ 'float-now': addRackTemplate.Items != '' }">
+            <angular2-multiselect 
+                formControlName="Items"
+                [data]="dropdownMultiselectAddItemList" 
+                [(ngModel)]="selectedMultipleItemData"
+                [settings]="dropdownMultiselectAddItemListSettings" 
+                (onSelect)="onMultiSelectAddItem($event)" 
+                (onDeSelect)="OnMultiDeSelectAddItem($event)"
+                (onSelectAll)="onMultiSelectAddItemAll($event)" 
+                (onDeSelectAll)="onMultiDeSelectAddItemAll($event)"
+            >
+            </angular2-multiselect>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': selectedMultipleItemData =='' }">Select Items <span class="asterisk">*</span></label>
+        </div>
+
+    </div> 
+    
+
+    <button type="submit" class="btn btn-primary" (click)="addUpdateRackMaster()" *ngIf="this.onEditAccess != 'view'">{{addUpdateButton}}</button>
+</form>

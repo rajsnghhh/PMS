@@ -1,0 +1,88 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Depreciation Group Master</h2>
+    </div>
+    <form class="mainform" name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+        <div class="flex-div">
+
+            <div class="mb-3" [ngClass]="{ 'float-now': addUser.name  != ''}">
+                <input type="text" required class="form-control" id="add1" name="name " [(ngModel)]="addUser.name "
+                    #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name .errors }">
+                <label class="floating-label">Depreciation Group<span class="asterisk">*</span></label>
+
+                <div *ngIf="f.submitted && name.errors" class="invalid-feedback">
+                    <div *ngIf="name.errors['required']">Depreciation Group is required</div>
+                </div>
+            </div>
+
+            <div class="mb-3" [ngClass]="{ 'float-now': addUser.depr_grp_per  != ''}">
+                <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control"
+                    id="add1" name="depr_grp_per " [(ngModel)]="addUser.depr_grp_per " #depr_grp_per="ngModel"
+                    [ngClass]="{ 'is-invalid': f.submitted && depr_grp_per .errors }">
+                <label class="floating-label">Depreciation (%)</label>
+            </div>
+
+        </div>
+        <div class="text-center">
+            <button *ngIf="selectedId==''" type="submit" class="btn btn-primary" style="float: left; margin-left: 45%;">Save</button>
+            <button *ngIf="selectedId!=''" type="submit" class="btn btn-primary" style="float: left; margin-left: 45%;">Update</button>
+        </div>
+    </form>
+    <div class="component-body">
+        <table>
+            <tr>
+                <th class="actionbutton">S.No</th>
+                <th>Depreciation Group</th>
+                <th>Depreciation (%)</th>
+                <th class="actionbutton">Action</th>
+            </tr>
+
+            <tr *ngFor="let item of depreciationList; let i = index">
+                <td class="actionbutton">{{ (pageSize*(page-1)) + i+1.}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.depr_grp_per}}</td>
+                <td class="actionbutton materialbutton">
+                    <div class="custom-section">
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                            <div class="dropdown-content editwidth">
+                                <div class="img-container">
+                                    <span class="mt-2" (click)="editTaxid(item.id)"><img
+                                            src="assets/usermanagement/edit.png" alt="">&nbsp;&nbsp;<label>Edit
+                                            Depreciation Group</label></span>
+                                    <span (click)="deleteTaxid(item.id)" data-bs-toggle="modal"
+                                        data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png"
+                                            alt="">&nbsp;&nbsp;<label>Delete Depreciation Group</label></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="text-center" *ngIf="depreciationList?.length == 0">
+                <td colspan="4">No data found.</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this Depreciation Group ?
+            </div>
+            <div class="modal-footer">
+                <button (click)="deleteAlertCompany()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>

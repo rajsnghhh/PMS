@@ -1,0 +1,25 @@
+<div class="leave-preview">
+    <div class="leave-header">
+        <div class="left">
+            <h1>Total Leave Count</h1>
+        </div>
+        <div class="right">
+            <!-- <h2>Salary Type : 12.5(New)</h2> -->
+            <h2>FY : {{activeSession.FinancialStart}} - {{activeSession.FinancialEnd}}</h2>
+        </div>
+    </div>
+    <table>
+        <tr>
+            <td>Carry Forward <span class="count">AL {{leaveData?.carry_forward}}</span></td>
+            <td>Consumption <span class="count">AL {{leaveData?.consumption}}</span></td>
+        </tr>
+        <tr>
+            <td>Eligiblity <span class="count">AL {{leaveData?.eligibility}}</span></td>
+            <td>Balance <span class="count">AL {{leaveData?.leave_balance}}</span></td>
+        </tr>
+        <tr>
+            <td>Accumulation (Prorate) <span class="count">AL {{leaveData?.accumulation}}</span></td>
+            <td>Absent <span class="count">13</span></td>
+        </tr>
+    </table>
+</div>

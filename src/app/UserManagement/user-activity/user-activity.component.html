@@ -1,0 +1,26 @@
+<div class="component-body">
+    <table>
+        
+        <tr>
+            <th>S.No</th>
+            <th>Browser Name</th>
+            <th>IP Address</th>
+            <th>Login Time</th>
+            <th>OS Name</th>
+        </tr>
+        
+        <tr *ngFor="let activity of ActivityList; let i = index" [attr.data-index]="i"> 
+            <td>{{ (pageSize*(page-1)) + i+1.}}</td>
+            <td>{{activity.browser_name}}</td>
+            <td>{{activity.ip_address}}</td>
+            <td>{{activity.login_time | date:'dd/MM/yyyy'}} &nbsp;&nbsp; {{activity.login_time | date:'shortTime'}} </td>
+            <td>{{activity.os_name}}</td>
+        </tr>
+        <tr class="text-center">
+            <td colspan="5" *ngIf="ActivityList == ''">No data found.</td>
+        </tr>
+
+    </table>
+
+</div>
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

@@ -1,0 +1,13 @@
+<div class="notice-container onboarding">
+    <h1><img class="iocon" src="assets/icons/tabler_briefcase.png" alt=""> Wellcome Onboard</h1>
+    <owl-carousel-o [options]="noticeBoard">
+        <ng-template carouselSlide *ngFor="let user of newJoineeList">
+            <div class="birth-item">
+                <span class="ProfileIcon" *ngIf="user.image == null"></span>
+                <img class="profile" *ngIf="user.image != null" src="{{environment+user.image}}" alt="">
+                <h4>{{user.first_name + ' ' +user.last_name}}</h4>
+                <p>{{user.designation}}</p> 
+            </div>
+        </ng-template>
+    </owl-carousel-o>
+</div>

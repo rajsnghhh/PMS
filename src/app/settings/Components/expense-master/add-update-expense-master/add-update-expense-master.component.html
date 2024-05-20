@@ -1,0 +1,46 @@
+<form name="addUpdateBrandForm" #f="ngForm" (ngSubmit)="f.form.valid && addUpdateExpense()" novalidate>
+
+    <div class="flex-div">
+        <div class="mb-3 float-now">
+            <input type="text" name="name" class="form-control" [(ngModel)]="addBrandTemplate.name" #name="ngModel">
+            <label class="floating-label">Name</label>
+        </div>
+        <div class="mb-3 float-now">
+            <select name="tax_head" [(ngModel)]="addBrandTemplate.tax_head" #tax_head="ngModel" class="form-control">
+                <option value="" disabled>-- Tax --</option>
+                <option value="{{tax.id}}" *ngFor="let tax of taxHeads">{{tax.name}}
+                </option>
+            </select>
+            <label class="floating-label">GST Tax</label>
+        </div>
+
+        <div class="mb-3 float-now">
+            <select name="account" [(ngModel)]="addBrandTemplate.account" #account="ngModel" class="form-control">
+                <option value="">Select</option>
+                <option *ngFor="let vendor of accountNameList" [value]="vendor.id">{{vendor.name}}</option>
+            </select>
+            <label class="floating-label">Account</label>
+        </div>
+
+
+
+        <div class="mb-3 float-now">
+            <input type="number" name="percentage" class="form-control" [(ngModel)]="addBrandTemplate.percentage"
+                #percentage="ngModel">
+            <label class="floating-label">Percentage</label>
+        </div>
+        <div class="mb-3 float-now">
+            <input type="number" name="amount" class="form-control" [(ngModel)]="addBrandTemplate.amount"
+                #amount="ngModel">
+            <label class="floating-label">Amount</label>
+
+            <!-- <div *ngIf="f.submitted && brandCode.errors" class="invalid-feedback">
+                <div *ngIf="brandCode.errors['required']">Brand Code is required</div>
+            </div> -->
+        </div>
+
+    </div>
+
+
+    <button type="submit" class="btn btn-primary" *ngIf="this.onEditAccess != 'view'">{{addUpdateButton}}</button>
+</form>

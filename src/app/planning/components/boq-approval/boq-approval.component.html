@@ -1,0 +1,88 @@
+<div class="survey-body" *ngIf="boqVersionStatus == 'blank'">
+    <div class="survey-header">
+        <h1>No BOQ Found for this Project.</h1>
+    </div>
+</div>
+<!-- {{boqVersionStatus}} -->
+<div class="survey-body" *ngIf="boqVersionStatus == 'edit'">
+    <form name="exi_Committee" #f="ngForm" (ngSubmit)="f.form.valid && submitData()" novalidate>
+        <div class="survey-header">
+            <h1 class="text-capitalize">Status : {{serlectedBoqData.status}}</h1>
+            <h2 class="text-capitalize">Name : {{serlectedBoqData.name}}</h2>
+            <h2 class="text-capitalize">Version : {{serlectedBoqData.version}}</h2>
+            <h2 class="text-capitalize">Create Date : {{serlectedBoqData.created_at | date:'dd MMM, yyyy'}}</h2>
+            <h2 class="text-capitalize">Start Date : {{serlectedBoqData.start_date | date:'dd MMM, yyyy'}}</h2>
+            <h2 class="text-capitalize">End Date : {{serlectedBoqData.end_date | date:'dd MMM, yyyy'}}</h2>
+        </div>
+        <div class="flex-div approverbox">
+            <div class="mb-3 approver_box">
+                <label for="selectGroup">Select Approver<span class="asterisk">*</span></label>
+                <ng-select [items]="boqApproverList" bindLabel="full_name" bindValue="user_id" [multiple]="true"
+                    [disabled]="serlectedBoqData.status != 'pending'" [(ngModel)]="Committe" required
+                    name="CommitteName" #CommitteName="ngModel">
+                </ng-select>
+                <div *ngIf="f.submitted && (Committe == '' || !Committe )" class="invalid-feedback">
+                    <div>Please select atleast one approver to proceed.</div>
+                </div>
+            </div>
+            <div class="approve_btn">
+                <button type="submit" *ngIf="waitingForApproval && serlectedBoqData.status == 'pending'">Sent for BOQ
+                    Approval</button>
+            </div>
+        </div>
+        <!-- <button type="submit" *ngIf="resendApproval && serlectedBoqData.status == 'pending'">Resend for BOQ Approval</button> -->
+    </form>
+    <div class="card custom-card" *ngIf="serlectedBoqData?.approver.length > 0">
+        <div class="card-body">
+            <h1>Approvers Status :</h1>
+            <table class="table table-bordered border-primary">
+                <tr>
+                    <th>#</th>
+                    <th>Approver</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
+                </tr>
+                <tr *ngFor="let approverData of serlectedBoqData?.approval_details; let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{getUserName(approverData.created_by)}}</td>
+                    <td class=" table-bordered border-primary text-capitalize">{{approverData.status}}</td>
+                    <td>{{approverData.description}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <form #approval="ngForm" (ngSubmit)="approval.form.valid && submitApproval()" novalidate
+        *ngIf="resendApproval && is_approval_user && !approvedRejectedUserList.includes(localStorageData?.user_id)"
+        class="approvar-form">
+        <div class="survey-header survy_border">
+            <h3>Approve / Reject Now</h3>
+        </div>
+        <div class="flex-div mt-3">
+            <div class="mb-3">
+                <label for="selectGroup">Remarks <span class="asterisk">*</span></label>
+                <textarea #remarkss="ngModel" required name="remarks" id="" cols="30" rows="5"
+                    [(ngModel)]="remarks"></textarea>
+                <div *ngIf="approval.submitted && remarkss.errors" class="invalid-feedback">
+                    <div *ngIf="remarkss.errors['required']">This is required.</div>
+                </div>
+            </div>
+            <div class="mb-3 member-input">
+                <section class="custom-section">
+                    <label class="container">I have verified the BOQ ( Version: {{serlectedBoqData.version}}, Name:
+                        {{serlectedBoqData.name}} ) and approving the same.
+                        <input type="checkbox" #checkboxChecked="ngModel" required name="sentForApproval"
+                            [(ngModel)]="Accepted">
+                        <span class="checkmark"></span>
+                    </label>
+                </section>
+                <div *ngIf="approval.submitted && checkboxChecked.errors" class="invalid-feedback">
+                    <div *ngIf="checkboxChecked.errors['required']">Please check to proceed.</div>
+                </div>
+            </div>
+        </div>
+        <div class="btn_wrap">
+            <button type="submit" (click)="changeStatus('approved')"> Approve</button>
+            <button type="submit" class="reject-button" (click)="changeStatus('rejected')"> Reject</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,143 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Physical Stock Posting</h2>  
+    </div>
+    <div class="component-body">
+
+        <form name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && onSearch()" novalicreateDate>
+            <div class="row ">
+
+                <div class="col-lg-6 col-md-6 col-12">
+                <div class="row">
+                   <div class="col-lg-6 col-md-6 col-12" [ngClass]="{ 'float-now': addUser.fromDate  != ''}">
+                    <div class="searchform">
+                    <label class="floating-label">From Date</label>
+                    <input type="date" class="form-control" id="add1" name="fromDate "
+                        [(ngModel)]="addUser.fromDate " #fromDate="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && fromDate .errors }">
+                   </div>
+                   </div>
+
+                <div class="col-lg-6 col-md-6 col-12" [ngClass]="{ 'float-now': addUser.toDate  != ''}">
+                    <div class="searchform">
+                    <label class="floating-label">To Date</label>
+                    <input type="date" class="form-control" id="add1" name="toDate "
+                        [(ngModel)]="addUser.toDate " #toDate="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && toDate .errors }">
+                </div></div>
+
+                </div>
+               </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="searchform">
+                    <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.location =='' }">Select Location
+                    </label>
+                    <select class="form-select" disabled aria-label="Default select example" name="location" [(ngModel)]="addUser.location"
+                        #location="ngModel" [ngClass]="{ 'is-invalid': f.submitted && location.errors }">
+                        <option selected disabled value="">Select Location</option>
+                        <option *ngFor="let account of locationList" value={{account.id}}>{{account.location}} ({{account.site_name}})</option>
+                    </select>
+                    </div>
+                </div>
+
+        <div class="col-lg-6 col-md-6 col-12">
+                <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="searchform">
+                    <label>Select Group </label>
+                    <angular2-multiselect [data]="dropdownMultiselectGroupList" [(ngModel)]="addUser.itemgroup" [ngModelOptions]="{standalone: true}"
+                        [settings]="dropdownMultiselectGroupListSettings" (onSelect)="onMultiSelectAddUser($event)"
+                        (onDeSelect)="OnMultiDeSelectAddUser($event)" (onSelectAll)="onMultiSelectAddUserAll($event)"
+                        (onDeSelectAll)="onMultiDeSelectAddUserAll($event)">
+                    </angular2-multiselect>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-12" >
+                    <div class="searchform">
+                            <label>Post Voucher</label>&nbsp;&nbsp;
+                            <input type="radio" name="accountShow" [(ngModel)]="addUser.postStatus " #toDate="ngModel" value="">&nbsp; All
+                            <input type="radio" name="accountShow" [(ngModel)]="addUser.postStatus " #toDate="ngModel" value="post">&nbsp;Post
+                            <input type="radio" name="accountShow" [(ngModel)]="addUser.postStatus " #toDate="ngModel" value="unpost">&nbsp;Unpost
+                        </div>
+                </div>
+               </div>
+            </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="searchform">
+                    <label>Select Item</label>
+                    <angular2-multiselect [data]="dropdownMultiselectSiteList" [(ngModel)]="addUser.item" [ngModelOptions]="{standalone: true}"
+                        [settings]="dropdownMultiselectSiteListSettings" (onSelect)="onMultiSelectAddUser2($event)"
+                        (onDeSelect)="OnMultiDeSelectAddUser2($event)" (onSelectAll)="onMultiSelectAddUserAll2($event)"
+                        (onDeSelectAll)="onMultiDeSelectAddUserAll2($event)">
+                    </angular2-multiselect>
+                    </div>
+                </div>
+            </div>
+            <div class="btd-section">
+                <button type="submit" class="btn-save">Search</button>
+            </div>
+            
+        </form>
+
+        <table class="table">
+            <tr>
+                <th>Sl No.</th>
+                <th>Stock Date</th>
+                <th>Location</th>
+                <th>Item Group</th>
+                <th>Item Sub Group</th>
+                <th>Item Name</th>
+                <th>Item Code</th>
+                <th>Unit Name</th>
+                <th>Physical Qty</th>
+                <th>ERP Actual Qty</th>
+                <th>Deviation Qty</th>
+                <th>ERP Actual Rate</th>
+                <th>Deviation Rate</th>
+                <th>ERP Amt</th>
+                <th>Physical Amt</th>
+                <th>Deviation Amt</th>
+                <th>Post Status</th>
+                <th>Remark</th>
+            </tr>
+            <tr *ngFor="let data of physicalStockList;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{data.created_at | date:'dd-MM-yyyy'}}</td>
+                <td>
+                    <div *ngIf=data.inventory_details.store>{{data.inventory_details?.store_name}}</div>
+                    <div *ngIf=data.inventory_details.site>{{data.inventory_details?.site_name}}</div>
+                </td>
+                <td>{{data.inventory_details.item_group}}</td>
+                <td>{{data.inventory_details.item_sub_group}}</td>
+                <td>{{data.inventory_details.item_name}}</td>
+                <td>{{data.inventory_details.item_code}}</td>
+                <td>{{data.inventory_details.uom}}</td>
+                <td>{{data.physical_qty}}</td>
+                <td>{{data.actual_qty}}</td>
+                <td>{{data.diff_qty}}</td>
+                <td>{{data.actual_rate}}</td>
+                <td>{{data.diff_rate}}</td>
+                <td>{{data.actual_amt}}</td>
+                <td>{{data.physical_amt}}</td>
+                <td>{{data.diff_amt}}</td>
+                <td>
+                   <div *ngIf="data.status=='unpost'">
+                    <input type="checkbox" (change)="changeCheckbox($event,data.id)">
+                   </div>
+                    {{data.status}}
+                </td>
+                <td>{{data.remarks}}</td>
+            </tr>
+            <tr *ngIf="physicalStockList?.length==0">
+                <td colspan="18" class="text-center">No Data Found.</td>
+            </tr>
+        </table>
+
+        <div class="btd-section" *ngIf="requestPostArray.length>0">
+            <button type="button" class="btn-save" (click)="postPhysicalStock()">Post</button>
+         </div>
+    </div>
+</div> 

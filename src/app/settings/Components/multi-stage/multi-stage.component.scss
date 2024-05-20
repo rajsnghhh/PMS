@@ -1,0 +1,100 @@
+::ng-deep.ng-select {
+    background: transparent !important;
+    .ng-select-container {
+        border: none;
+        padding: 0;
+        margin: 0;
+        background: transparent !important;
+    } 
+}
+.floating-label {
+    z-index: 9;
+}
+form {
+    margin: 0 15px 60px 15px;
+}
+
+td img {
+    margin: auto;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.mb-3 {
+    label {
+        margin: 0px 0px 5px 8px !important;
+        background: white;
+    }
+}
+
+
+
+
+
+
+::ng-deep .fieldValue .form-control{
+    display: block;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 8px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    appearance: auto;
+    margin: 0px 0px 10px 0px;
+    }
+
+
+    .flex-div {
+         padding: 0% 2%;
+    }
+
+
+
+    .fieldValue input, select, textarea {
+        border-radius: 0px !important;
+        font-size: 12px;
+        padding: 10px 20px;
+    }  
+    
+    
+    ::ng-deep .ng-select {
+        background: transparent !important;
+        border-radius: 0px;
+        padding: 1px 8px !important;
+    }
+
+
+    .component-body table { margin-top: 50px;}
+
+
+    .component-body table th {
+        background-color: #5577ff;
+        color: white;
+        font-size: 13px;
+        padding: 10px;
+        font-weight: 500;
+        line-height: 15px;
+    }
+    
+    
+    .component-body table td {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 300 !important;
+        font-size: 12px !important;
+        line-height: 15px !important;
+    }
+
+
+
+    .save { margin: 0px 0px 0px 20px;}
+    

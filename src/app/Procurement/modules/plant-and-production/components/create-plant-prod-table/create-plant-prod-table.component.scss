@@ -1,0 +1,252 @@
+.createtable-section {
+    // width: 100%;
+    // overflow-x: scroll;
+    margin: 25px 0px;
+}
+
+.createtable-section table {
+    width: 100%;
+    padding-bottom: 35px;
+}
+
+.createtable-section table td {
+    font-size: 12px;
+    padding: 11px 10px;
+    font-weight: 400;
+    min-height: 42px;
+    vertical-align: top;
+}
+
+.createtable-section table td p {
+    font-size: 14px;
+    color: #666666;
+    font-weight: 400;
+}
+
+.createtable-section table tr:nth-child(2n+1) {
+    background: #f8f8f8;
+}
+
+.createtable-section table th {
+    background-color: #5577ff;
+    color: white;
+    font-size: 14px;
+    padding: 13px;
+    font-weight: 500;
+}
+
+.createtable-section table td,
+.createtable-section table th {
+    border: 1px solid #D9D9D9;
+}
+
+.tablegroup {
+    margin: 0px 0px;
+    padding: 0px 0px;
+    position: relative;
+}
+
+.tablegroup label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #9D9D9D;
+    font-weight: 300;
+    line-height: 15px;
+    }
+    ::ng-deep.tablegroup .ng-select.ng-select-single .ng-select-container {
+    height: 28px;
+    }
+    ::ng-deep.tablegroup .ng-select .ng-select-container {
+    border-radius: 0px;
+    border: 1px solid #ccc;
+    min-height: 15px;
+    }
+.tablegroup .form-control {
+    display: block;
+    width: 100%;
+    padding: 4px 10px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 15px;
+    color: #b1adad;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: #b9b8b8 1px solid;
+    border-radius: 0px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    margin-bottom: 9px;
+    appearance: auto;
+}
+
+.tablegroup .form-control2 {
+    // background: #EFEFEF;
+    border: #EFEFEF 1px solid;
+}
+
+.tablegroup-text {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    margin-top: 6px;
+}
+
+.tablegroup-text .form-control2 {
+    background: #EFEFEF;
+    padding: 4px 8px;
+    border: #EFEFEF 1px solid;
+}
+
+.tablegroup-text h2 {
+    margin: 0px 0px;
+    padding: 0px 0px;
+    font-size: 15px;
+    color: #666666;
+    font-weight: 500;
+}
+.tablegroup-text h2 {
+	font-size: 12px;
+	color: #666666;
+	font-weight: 500;
+}
+.tablebg {
+    background: #f6f8ff;
+}
+
+.tablebtn-save {
+    background-image: linear-gradient(to right, #40d4e6, #6675fe);
+    font-weight: initial;
+    padding: 0px 16px;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    line-height: 30px;
+    font-size: 13px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: baseline;
+    max-width: 79px;
+    text-decoration: none;
+}
+
+.tablebtn-save .fa {
+    width: 13px;
+}
+
+.tablebtn-save .fa img {
+    width: 13px;
+}
+
+.tablebtn-save:hover {
+    background-image: linear-gradient(to right, #6675fe, #40d4e6);
+    color: white;
+}
+
+.vector-delete {
+    background-image: linear-gradient(to right, #df2929, #ea4646);
+    font-weight: initial;
+    padding: 0px 16px;
+    border-radius:4px;
+    border: none;
+    color: white;
+    line-height: 30px;
+    font-size: 13px;
+    font-weight: 300;
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: baseline;
+    max-width: 79px;
+    text-decoration: none;
+}
+
+.vector-delete .fa {
+    width: 11px;
+}
+
+.vector-delete .fa img {
+    width: 11px;
+}
+
+.vector-delete:hover {
+    background-image: linear-gradient(to right, #ea4646, #df2929);
+    color: white;
+}
+
+.chackbox-container {
+    display: flex;
+    align-items: baseline;
+
+    p {
+        margin-left: 5px;
+    }
+}
+
+.boq-material-details {
+    position: relative;
+    width: 20px;
+    cursor: pointer;
+
+    img {
+        height: 20px;
+    }
+
+    table {
+        position: absolute;
+        display: none;
+        padding: 0px;
+        left: 0;
+        box-shadow: 1px 1px 15px gray;
+        width: auto;
+        border-radius: 15px;
+        border: 1px solid #5577ff;
+        border-top-left-radius: 0;
+        z-index: 99999;
+        top: 0;
+        background: white;
+
+        th,
+        td {
+            font-size: 10px;
+            min-width: 120px;
+        }
+
+        tr:first-child {
+            border-radius: inherit;
+
+            th:first-child {
+                border-radius: inherit;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                border-top-right-radius: 0;
+            }
+
+            th:last-child {
+                border-radius: inherit;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+    }
+}
+
+.boq-material-details:hover table {
+    display: block;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.approve-rej {
+    margin: 10px;
+    font-size: 14px;
+    font-weight: 400;
+}

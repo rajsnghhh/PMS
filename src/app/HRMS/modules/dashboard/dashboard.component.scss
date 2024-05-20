@@ -1,0 +1,32 @@
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 15px 20px;
+    .container {
+        width: 33.333333%;
+        padding: 0;
+        margin: 0;
+    }
+    .navtab {
+        width: 30%;
+    }
+    .ftn8 {
+        width: 35%;
+    }
+    .notice {
+        width: 35%;
+    }
+    .fortnight {
+        width: 35%;
+    }
+    .holiday {
+        width: 29%;
+    }
+    .leavegraph {
+        width: 36%;
+    }
+    .onboardiong-container {
+        width: 66%;
+    }
+}

@@ -1,0 +1,75 @@
+<div id="mySidebar" class="sidebar">
+    <div class="roundShape">
+        <img src="assets/icons/solar_clipboard-bold.png">
+        <select class="selectbox" [(ngModel)]="activeModuleData" (change)="moduleChange(true)">
+            <option *ngIf="getPermissionchild('Dashboard','')" value="Dashboard">DASHBOARD</option>
+            <option *ngIf="getPermissionchild('Purchase','')" value="Purchase">PURCHASE</option>
+            <option *ngIf="getPermissionchild('User Management','')" value="User Management">USER MANAGEMENT</option>
+            <option *ngIf="getPermissionchild('Store','')" value="Store">STORE</option>
+            <option *ngIf="getPermissionchild('Tender','')" value="Tender">TENDER</option>
+            <option *ngIf="getPermissionchild('Project','')" value="Project">PROJECT</option>
+            <option *ngIf="getPermissionchild('Plant & Machinery','')" value="Plant & Machinery">PLANT & MACHINERY</option>
+            <option *ngIf="getPermissionchild('Insurance','')" value="Insurance">INSURANCE</option>
+        </select>
+    </div>
+
+    <ng-container *ngFor="let menu of sidebarMenu;let i=index">
+        <div class="sideIcon" [ngClass]="{'arrowIcon':menu.subItem.length==0}">
+            <details [attr.open]="openMainMenu(menu.name) ? 'open' : null">
+                <summary [ngClass]="{'active-menu': router.url == menu.url}" (click)="routeTransfer(menu.url)"><img
+                        src="{{menu.image}}"><span [ngClass]="{'menuHide':titleDisplay==false}">{{menu.name}}</span>
+                </summary>
+
+                <ng-container *ngIf="menu.subItem?.length > 0">
+                    <div>
+                        <p *ngFor="let master of menu.subItem">
+                            <ng-container *ngIf="menu.name=='Master'">
+                                <div class="submenuArrow">
+                                    <details [ngClass]="{'active-menu': router.url == master.slug }"
+                                        style="font-size: smaller;"
+                                        *ngIf="getPermissionchild('Setting '+master.name,'')"
+                                        (click)="NavigateToSetting(master.slug,master.name)">
+                                        <summary style="padding: 0px 37px;"><span
+                                                [ngClass]="{'menuHide':titleDisplay==false}">{{master.name}}</span>
+                                        </summary>
+                                        <!-- <p>Add New</p> -->
+                                    </details>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="menu.name!='Master'">
+                                <details [attr.open]="openMenu(router.url,master) ? 'open' : null"
+                                    [ngClass]="{'active-menu': router.url == master.slug}" style="font-size: smaller;"
+                                    *ngIf="getPermissionchild(master.permission,'')"
+                                    (click)="routeTransfer(master.slug)">
+
+                                    <summary style="padding: 0px 37px;"><span
+                                            [ngClass]="{'menuHide':titleDisplay==false}">{{master.name}}</span>
+                                    </summary>
+
+                                    <ng-container *ngIf="master.childMenu?.length > 0">
+                                        <div ngClass="submenuArrow">
+                                            <p *ngFor="let eachchild of master.childMenu">
+                                            <details [ngClass]="{'active-menu': router.url == eachchild.url }"
+                                                style="font-size: smaller;"
+                                                *ngIf="getPermissionchild(eachchild.permission,eachchild.scope)"
+                                                (click)="routeTransfer(eachchild.url)">
+                                                <summary style="padding: 0px 37px;"><span
+                                                        [ngClass]="{'menuHide':titleDisplay==false}">{{eachchild.name}}</span>
+                                                </summary>
+                                            </details>
+                        </p>
+                    </div>
+                </ng-container>
+
+
+            </details>
+    </ng-container>
+    </p>
+</div>
+</ng-container>
+
+</details>
+</div>
+</ng-container>
+
+</div>

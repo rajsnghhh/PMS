@@ -1,0 +1,185 @@
+<div class="top-space"></div>
+<h1>
+    Status : {{BOQDetailsList.status}}
+</h1>
+
+<div class="view-details-main">
+    <ng-container *ngFor="let masterData of BOQDetailsList.wbs_list">
+        <section type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseExample'+masterData.id"
+            aria-expanded="false" [attr.aria-controls]="'collapseExample'+masterData.id">
+
+            <table class="parrentTable">
+                <tr>
+                    <th>WBS</th>
+                    <th>WBS Head</th>
+                    <th class="uomCol">UOM</th>
+                    <th>Tender Quantity</th>
+                    <th>Budgeted Quantity</th>
+                    <th>Rate</th>
+                    <th>Cost</th>
+                </tr>
+                <tr>
+                    <td>
+                        <select name="" id="" disabled [(ngModel)]="masterData.wbs_parent">
+                            <option value="{{WbsListData.id}}" *ngFor="let WbsListData of WbsList">
+                                {{WbsListData.wbs_name}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="" id="" disabled [(ngModel)]="masterData.wbs">
+                            <ng-container *ngFor="let WbsListData of WbsList">
+                                <ng-container *ngFor="let key_scopes of WbsListData.key_scopes">
+                                    <option value="{{key_scopes.id}}">{{key_scopes.keyscope}}</option>
+                                </ng-container>
+                            </ng-container>
+                        </select>
+                    </td>
+                    <td class="uomCol">
+                        <select name="" id="" disabled [(ngModel)]="masterData.wbs">
+                            <ng-container *ngFor="let WbsListData of WbsList">
+                                <ng-container *ngFor="let key_scopes of WbsListData.key_scopes">
+                                    <option value="{{key_scopes.id}}">{{key_scopes.uom_name}}</option>
+                                </ng-container>
+                            </ng-container>
+                        </select>
+                    </td>
+                    <td>{{masterData.tender_quantity}}</td>
+                    <td>{{masterData.budgeted_quantity}}</td>
+                    <td>{{masterData.rate |currency:"INR":"symbol"}}</td>
+                    <td>{{masterData.cost |currency:"INR":"symbol"}}</td>
+                </tr>
+            </table>
+        </section>
+        <div class="collapse show" [id]="'collapseExample'+masterData.id">
+            <div class="card card-body">
+                <h1>Labour</h1>
+                <table>
+                    <tr>
+                        <th>Labour Type</th>
+                        <th>Budgeted Quantity</th>
+                        <th>Consumed Quantity</th>
+                        <th>Balance Quantity</th>
+                        <th>Rate</th>
+                        <th>Cost</th>
+                    </tr>
+                    <tr *ngFor="let labourData of masterData.WBSLabour">
+                        <td>
+                            <select name="" id="" disabled [(ngModel)]="labourData.labour">
+                                <option value="{{labmasterData.id}}" *ngFor="let labmasterData of labourMasterlist">
+                                    {{labmasterData.cost_type}} |
+                                    {{labmasterData.component}} | {{labmasterData.name}} </option>
+                            </select>
+                        </td>
+                        <td>{{labourData.budgeted_quantity}}</td>
+                        <td>{{labourData.consumed_quantity}}</td>
+                        <td>{{labourData.balance_quantity}}</td>
+                        <td>{{labourData.rate |currency:"INR":"symbol"}}</td>
+                        <td>{{labourData.cost |currency:"INR":"symbol"}}</td>
+                    </tr>
+                    <tr *ngIf="masterData.WBSLabour.length == 0">
+                        <td colspan="6" class="center">No Labour added</td>
+                    </tr>
+                </table>
+
+
+                <h1>Material</h1>
+                <table>
+                    <tr>
+                        <th>Material Group</th>
+                        <th>Budgeted Quantity</th>
+                        <th>Consumed Quantity</th>
+                        <th>Balance Quantity</th>
+                        <th>Rate</th>
+                        <th>Cost</th>
+                    </tr>
+                    <tr *ngFor="let materialData of masterData.WBSMaterial">
+                        <td>
+                            <select name="" id="">
+                                <option value="" disabled>Select Material</option>
+                                <option value="{{MatmasterData.id}}" *ngFor="let MatmasterData of materialMasterlist">
+                                    {{MatmasterData.material_name}} |
+                                    {{MatmasterData.material_type_name}} | {{MatmasterData.material_code}} </option>
+                            </select>
+                        </td>
+                        <td>{{materialData.budgeted_quantity}}</td>
+                        <td>{{materialData.consumed_quantity}}</td>
+                        <td>{{materialData.balance_quantity}}</td>
+                        <td>{{materialData.rate |currency:"INR":"symbol"}}</td>
+                        <td>{{materialData.cost |currency:"INR":"symbol"}}</td>
+                    </tr>
+                    <tr *ngIf="masterData.WBSMaterial.length == 0">
+                        <td colspan="6" class="center">No Material added</td>
+                    </tr>
+                </table>
+
+                <h1>P&E</h1>
+                <table>
+                    <tr>
+                        <th>P&E Type</th>
+                        <th>Budgeted Quantity</th>
+                        <th>Consumed Quantity</th>
+                        <th>Balance Quantity</th>
+                        <th>Rate</th>
+                        <th>Cost</th>
+                    </tr>
+                    <tr *ngFor="let pnEData of masterData.WBSPlantMachinery">
+                        <td>
+                            <select name="" id="" disabled [(ngModel)]="pnEData.plant_machinery">
+                                <option value="{{pnEmasterData.id}}" *ngFor="let pnEmasterData of PnEmasterlist">
+                                    {{pnEmasterData.plant_machinery_data[0].value}} |
+                                    {{pnEmasterData.plant_machinery_data[1].value}} | Monthly Charge -
+                                    {{pnEmasterData.plant_machinery_data[25].value}} </option>
+                            </select>
+                        </td>
+                        <td>{{pnEData.budgeted_quantity}}</td>
+                        <td>{{pnEData.consumed_quantity}}</td>
+                        <td>{{pnEData.balance_quantity}}</td>
+                        <td>{{pnEData.rate |currency:"INR":"symbol"}}</td>
+                        <td>{{pnEData.cost |currency:"INR":"symbol"}}</td>
+                    </tr>
+                    <tr *ngIf="masterData.WBSPlantMachinery.length == 0">
+                        <td colspan="6" class="center">No PnE added</td>
+                    </tr>
+                </table>
+
+
+
+                <h1>IDC</h1>
+                <table>
+                    <tr>
+                        <th>IDC Type</th>
+                        <th>Budgeted Quantity</th>
+                        <th>Consumed Quantity</th>
+                        <th>Balance Quantity</th>
+                        <th>Rate</th>
+                        <th>Cost</th>
+                    </tr>
+                    <tr *ngFor="let pnEData of masterData.WBSIndirectCost">
+                        <td>
+                            <select name="" id="" disabled [(ngModel)]="pnEData.indirect_cost">
+                                <option value="{{idcmasterData.id}}" *ngFor="let idcmasterData of IDCmasterlist">
+                                    {{getCaagory(idcmasterData.indirect_cost_category)}} | {{idcmasterData.name}}
+                                </option>
+                            </select>
+                        </td>
+                        <td>{{pnEData.budgeted_quantity}}</td>
+                        <td>{{pnEData.consumed_quantity}}</td>
+                        <td>{{pnEData.balance_quantity}}</td>
+                        <td>{{pnEData.rate |currency:"INR":"symbol"}}</td>
+                        <td>{{pnEData.cost |currency:"INR":"symbol"}}</td>
+                    </tr>
+                    <tr *ngIf="masterData.WBSIndirectCost.length == 0">
+                        <td colspan="6" class="center">No IDC added</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<h1>
+    Budget Total : {{budgetTotla | currency:"INR":"symbol"}}
+</h1>
+
+
+<app-boq-approver *ngIf="isBoqApproverPresent"></app-boq-approver>

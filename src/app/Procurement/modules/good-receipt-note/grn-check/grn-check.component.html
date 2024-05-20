@@ -1,0 +1,11 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="creatematerial">
+        <h3>Check Procurement GRN</h3>
+
+        <div class="row mt-4">
+            <section class="action-button">
+                <button #submitButton="" type="submit" (click)="changeStatus('checked')" class="approve">CHECK <i class="fa" aria-hidden="true"><img src="assets/icons/white-tick.png" alt=""></i></button>
+            </section>
+        </div>
+    </div>
+</form>

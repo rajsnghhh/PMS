@@ -1,0 +1,210 @@
+<div class="nav-position" *ngIf="router.url == '/pms/dashbord'">
+    Dashboard
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/usermanagement/manageUser'">
+    User Management <span class="active-link"> - Manage User</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/usermanagement/userActivity'">
+    User Management <span class="active-link"> - User Log</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/usermanagement/manageProfile'">
+    User Management <span class="active-link"> - Manage Profile & Permission</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/usermanagement/manageGroup'">
+    User Management <span class="active-link"> - Manage Group</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/notification'">
+    Notifications <span class="active-link"> - Notification List</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/survey'">
+    SITE SURVEY <span class="active-link"></span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/survey/viewsurvey'">
+    VIEW SURVEY <span class="active-link"></span>
+</div>
+<div class="nav-position" *ngIf="this.router.url.indexOf('/pms/planning') > -1">
+    Planning
+</div>
+<div class="nav-position" *ngIf="this.router.url.indexOf('/pms/budget') > -1">
+    Budget
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/profile/view'">
+    Profile <span class="active-link"> - View</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/profile/resetpassword'">
+    Profile <span class="active-link"> - Reset Password</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/tender/add-new'">
+    Tender <span class="active-link"> - Add New Tender</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/tender/activity-tracker'">
+    Tender <span class="active-link"> - Activity Tracker</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/tender/evaluations-summary'">
+    Tender <span class="active-link"> - Tender Evaluations Summary</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/tender/tender-detail'">
+    Tender - <a [routerLink]="['/pms/tender/evaluations-summary']">Tender Evaluations Summary</a><span
+        class="active-link"> - Tender Details</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/tender/tender-jv-detail'">
+    Tender - <a [routerLink]="['/pms/tender/evaluations-summary']">Tender Evaluations Summary</a> <span
+        class="active-link"> - Tender Details</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/tender/employee-master-details'">
+    Settings - <a [routerLink]="['/pms/settings/employee-master']">Employer Master</a> <span class="active-link"> -
+        Employer Master Details</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/tender/tender-jv-master-details'">
+    Tender -<a [routerLink]="['/pms/tender/evaluations-summary']">Tender Evaluations Summary</a> <span
+        class="active-link"> - Tender JV Master Details</span>
+</div>
+
+<div class="nav-position" *ngIf="this.router.url.indexOf('/pms/tender/wbs') > -1">
+    Tender <span class="active-link"> - WBS Management</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/settings/workflow'">
+    Survey<span class="active-link"> - Workflow</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/tender/executive-summary'">
+    Tender List<span class="active-link"> - Executive Summary</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/attendance'">
+    Attendance
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/insurance/insurance'">
+    Insurance
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/plant_machinary'">
+    Plant & Machinery
+</div>
+
+<div class="nav-position" *ngIf="this.router.url.indexOf('/settings/') > -1">
+    <span *ngIf="this.router.url.indexOf('/pms/settings/') > -1">Settings </span>
+    <!-- Settings  -->
+    <span class="active-link" *ngIf="this.router.url.indexOf('/merger-transport-name') > -1"> - Merge Transport Name</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/lock-financial-year') > -1"> - Month Financial Year Lock (Store / Purchase)</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/idc') > -1"> - Indirect Cost Master</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/labour') > -1"> - Labour Master</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/planning-structure') > -1"> - Planning Structure Master</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/delay-reason') > -1"> - Delay Reason Master</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/rate-contract') > -1"> - Rate Contract</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/prcurement-settings/indent') > -1"> - Indent Approval Setting</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/prcurement-settings/wo') > -1"> - WO Approval Setting</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/prcurement-settings/po') > -1"> - PO Approval Setting</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/freight-Contract') > -1"> - Freight Contract</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/closing-stock-trn') > -1"> - Closing Stock TRN. To Next Year</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/approval-doc-type') > -1"> - Approval Doctype</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/add-gst') > -1"><span>- Tax Management</span> - Add GST</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/model') > -1"> - Model</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/tax-management') > -1"> - Tax Management</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/material-group-tree') > -1"> - Material Group Tree</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/material-sub-group') > -1"> - Material Sub Groups</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/depreciation-group') > -1"><span>- Assets </span> - Depreciation Group Master</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/asset-master') > -1"> - Asset Master</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/material-types-store') > -1 || this.router.url.indexOf('/material-types-purchase') > -1"> - Material Groups</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/material-cost-head') > -1"> - Material Cost Head</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/unit-of-measurement-store') > -1 || this.router.url.indexOf('/unit-of-measurement-purchase') > -1"> - Unit of Measurement</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/material-nature-properties') > -1"> - Material Nature Properties</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/standalone-master') > -1"> - Standalone Master</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/jv-priroty-master') > -1"> - JV Priroty Master</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/employee-master') > -1"> - Employer Master</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/vendor-management-purchase') > -1 || this.router.url.indexOf('/vendor-management-store') > -1"> - Vendor Master</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/material-management') > -1"> - Material Master</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/workflow-list') > -1"> - Workflow Rules</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/module-configuration/update') > -1"><span>- Modules </span> - Update Field</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/module-configuration/add') > -1"><span>- Modules </span> - Add Field</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/sms-config') > -1"> - SMS Configuration</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/email-config') > -1"> - Email Configuration</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/module-configuration/edit') > -1"><a [routerLink]="['/pms/settings/module-configuration']">- Modules List </a><span class="active-link"></span> - Module Configuration</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/multi-stage') > -1"> - Multi Stage Setting</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/site-wise') > -1"> - Site Wise Stock Level Setting</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/general-setting') > -1"> - General Setting</span>
+    <span class="active-link" *ngIf="this.router.url=='/pms/settings/module-configuration'"> - Modules List</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/setting-details') > -1"> - Setting Details</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/employmentType') > -1"> - Employment Type</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/role') > -1"> - Role Hierarchy</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/itemwise-vendor-store') > -1 || this.router.url.indexOf('/itemwise-vendor-purchase') > -1"> - Item Wise Vendor List</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/vender-merge') > -1"> - Vender Merge</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/department') > -1"> - Department</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/companyMaster') > -1"> - Company Master</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/location-zone') > -1"> - Zone</span>
+
+</div>
+
+<div class="nav-position" *ngIf="this.router.url.indexOf('/procurement/') > -1">
+    <span *ngIf="this.router.url.indexOf('/pms/store/') > -1">Store </span>
+    <span *ngIf="this.router.url.indexOf('/pms/purchase/') > -1">Purchase </span>
+    <!-- Procurement  -->
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/dashboard') > -1"> - Dashboard</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/material-issue') > -1"> - Material Issue</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/mr') > -1"> - Material Requisition</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/grn') > -1"> - Goods Receipt Note</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/enquiry') > -1"> - Enquiry</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/transport-bill') > -1"> - Transport Bill</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/tax-invoice-challan') > -1"> - Invoice/Challan</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/fabrication-work') > -1"> - Fabrication Work</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/general-administration-expenses') > -1"> - General Administration Expenses</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/debit-note') > -1"> - Debit Note</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/sublet-order') > -1"> - Sublet Order</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/party-bill-receive') > -1"> - Party Bill Receive</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/indent') > -1"> - Indent List</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/indent/request') > -1"> - Indent Request</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/mr/create') > -1"> - Create Material Requisition</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/mr/modify') > -1"> - Update Material Requisition</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/mr/view') > -1"> - View Material Requisition</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/quotation/compare') > -1"> - Compare Quotations</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/purchase/list') > -1"> - Purchase History</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/purchase/add') > -1"> - Purchase Add</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/purchase/cancel-close') > -1"> - GRN Cancel/Close</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/purchase-return/add') > -1"> - Purchase Return Add</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/way-bill') > -1"> - Way Bill</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/way-bill/add') > -1"> -  Add</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/raw-material-sales') > -1"> - Raw Material Sales</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/raw-material-sales/add') > -1"> -  Add</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/raw-material-sales/add/gst') > -1"> -  (GST)</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/mr/print') > -1"> - MR Print Preview</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/grn/print') > -1"> - GRN Print Preview</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/voucher-linking') > -1"> - Voucher Linking </span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/indent/request/print') > -1"> - Indent Print Preview</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/purchase-order/print') > -1"> - Purchase Order Print Preview</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/gate-pass') > -1"> - Gate Pass</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/gate-pass/transportation') > -1"> - Transportation Charge</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/work-indent') > -1"> - Work Indent</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/work-order') > -1"> - Work Order</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/raw-material-sales/create') > -1"> - Raw Material Sale Entry</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/purchase-order') > -1"> - Purchase Order</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('/procurement/purchase-return') > -1"> - Purchase Return</span>
+    <span class="active-link" *ngIf="this.router.url.indexOf('multistage-approval') > -1"> - Multi Stage Approval</span>
+
+</div>
+
+<div class="nav-position" *ngIf="router.url == '/pms/store/item-opening'">
+    Store - <span class="active-link">  Item Opening</span>
+</div>
+
+<div class="nav-position" *ngIf="router.url == '/pms/store/physical-stock'">
+    Store - <span class="active-link"> Physical Stock</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/store/physical-stock-list'">
+    Store - <span class="active-link"> Physical Stock List</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/pms/store/physical-stock-post'">
+    Store - <span class="active-link"> Physical Stock Posting</span>
+</div>
+
+<div class="nav-position" *ngIf="router.url == '/pms/settings/wbs'">
+    WBS <span class="active-link"> - Master</span>
+</div>
+<div class="nav-position" *ngIf="this.router.url.indexOf('/pms/project') > -1">
+    Project
+    <span *ngIf="this.router.url.indexOf('/pms/project/create-project') > -1" class="active-link"> - Create Project</span>
+    <span *ngIf="this.router.url.indexOf('/pms/project/edit-project') > -1" class="active-link"> - Edit Project</span>
+    <span *ngIf="this.router.url.indexOf('/pms/project/jv-incorporation') > -1" class="active-link"> - JV Incorporation</span>
+    <span *ngIf="this.router.url.indexOf('/pms/project/edit-jv-incorporation') > -1" class="active-link"> - Edit JV Incorporation</span>
+    <span *ngIf="this.router.url.indexOf('/pms/project/master/site') > -1" class="active-link"> - Site Masters</span>
+    <span *ngIf="this.router.url.indexOf('/pms/project/master/store') > -1" class="active-link"> - Store Masters</span>
+    <span *ngIf="this.router.url.indexOf('/pms/project/master/users') > -1" class="active-link"> - Users Management</span>
+    <span *ngIf="this.router.url.indexOf('/pms/project/communication') > -1" class="active-link"> - Communication</span>
+
+</div>

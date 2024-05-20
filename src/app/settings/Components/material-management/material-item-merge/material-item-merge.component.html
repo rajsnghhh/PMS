@@ -1,0 +1,57 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Item Merge</h2>
+    </div>
+    <div class="component-body">
+    </div>
+</div>
+
+<form name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && mergeData()" novalidate>
+    <div class="flex-div boxview">
+
+        <div class="mb-3">
+            <select class="form-select" required aria-label="Default select example" name="unitfrom"
+                [(ngModel)]="addUser.unitfrom" (click)="unitSelect()" #unitfrom="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && unitfrom.errors }">
+                <option selected disabled value="">Source/From Item</option>
+                <option value="{{item.id}}" *ngFor="let item of uomListFrom">{{item.material_name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.unitfrom =='' }">Source/From Item<span class="asterisk">*</span>
+                </label>
+            <div *ngIf="f.submitted && unitfrom.errors" class="invalid-feedback">
+                <div *ngIf="unitfrom.errors['required']">Please select From Item</div>
+            </div>
+
+            <div class="mastertext">
+                <input type="checkbox"  name="vatax" [(ngModel)]="addUser.vatax"
+                #vatax="ngModel">
+                <label for="vatax">Delete This Item From Master</label>
+            </div>
+            <div class="mastertext">
+            <div class="text-danger">
+                <p style="margin: 0;">*Click to Merge 2 Items</p>
+                <p style="margin: 0;">*All Entry Transfer 'Source Item' To 'Destination Item'</p>
+            </div></div>
+        </div>
+        <div class="mb-3">
+            <select class="form-select" required aria-label="Default select example" name="unitto"
+                [(ngModel)]="addUser.unitto" (click)="unitSelect()" #unitto="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && unitto.errors }">
+                <option selected disabled value="">Destination/To Item</option>
+                <option value="{{item.id}}" *ngFor="let item of uomList">{{item.material_name}}</option>              
+             </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.unitto =='' }">Destination/To Item<span class="asterisk">*</span>
+                </label>
+            <div *ngIf="f.submitted && unitto.errors" class="invalid-feedback">
+                <div *ngIf="unitto.errors['required']">Please select To Item</div>
+            </div>
+            <div class="mastertext">
+            <div class="text-danger mt-2">
+                <p style="margin: 0;">*Note (1):Data Merge of (All Company/All Site/All Year)</p>
+                <p style="margin: 0;">*Note (2):Once Data Merge then data can't be reversed.</p>
+            </div></div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="float: left; margin-left: 45%;">Merge</button>
+    </div>
+
+</form>

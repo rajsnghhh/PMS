@@ -1,0 +1,212 @@
+.creatematerial {
+    margin: 0px 0px 20px 0px;
+    padding: 23px 15px;
+    background: #f4f4f4;
+    width: 100%;
+    position: relative;
+}
+
+.creatematerial h3 {
+    margin: 0px 0px 12px 0px;
+    padding: 0px 0px;
+    font-size: 15px;
+    color: #666666;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 25px;
+    width: 100%;
+}
+
+.addressform {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 7px;
+    }
+
+.addressform .form-control {
+    display: block;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 7px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+}
+
+.form-control::placeholder {
+    color: #9D9D9D;
+    opacity: 1;
+}
+
+.addressform label {
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 14px;
+    color: #666;
+    font-weight: 400;
+    margin: 0px 0px;
+    vertical-align: middle;
+    text-align: right;
+    min-width: 110px;
+}
+::ng-deep.createtable-section .form-control {
+	display: block;
+	width: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 3px 4px !important;
+	font-size: 11px;
+    border-radius: 0px !important;
+	font-weight: 300;
+	line-height: 15px;
+	color: #b1adad;
+	appearance: none;
+	background-color: var(--bs-body-bg);
+	background-clip: padding-box;
+	border: #b9b8b8 1px solid;
+	border-radius: 0px;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	position: relative;
+	margin-bottom: 9px;
+	appearance: auto;
+}
+::ng-deep.ng-select.ng-select-single .ng-select-container {
+	height: 26px;
+    }
+::ng-deep.ng-select .ng-select-container {
+	color: #333;
+	background-color: #fff;
+	border-radius: 0px;
+	border: 1px solid #ccc;
+	min-height: 26px;
+	align-items: center;
+    }
+::ng-deep.createtable-section table td {
+    font-size: 12px;
+    padding: 8px 10px;
+    font-weight: 100;
+    min-height: auto;
+    vertical-align: middle;
+    font-family: Arial, Helvetica, sans-serif;
+    }
+
+.control-sect {
+    margin: 0px 0px;
+    padding: 0px 0px;
+    width: 100%;
+    position: relative;
+}
+
+.vector-arrow {
+    position: absolute;
+    right: 21px;
+    top: 12px;
+}
+
+.asterisk {
+    color: red;
+}
+
+.form-check-input[type=checkbox] {
+    border-radius: 0.25em;
+    margin-top: 1px;
+}
+.check_box {
+    margin-left: 23%;
+    margin-top: 2%;
+    }
+.addressform .form-check-label {
+	display: inline-block;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	line-height: 14px;
+	color: #666;
+	font-weight: 400;
+	margin: 0px 0px;
+	vertical-align: middle;
+	text-align: right;
+	min-width: auto;
+	display: flex;
+	align-items: center;
+	justify-content: start;
+}
+::ng-deep.createtable-section table th {
+	background-color: #5577ff;
+	color: white;
+	font-size: 14px !important;
+	padding: 10px !important;
+	font-weight: 600 !important;
+	line-height: 15px !important;
+    }
+    ::ng-deep.tablebtn-save {
+        background-image: linear-gradient(to right, #40d4e6, #6675fe);
+        font-weight: initial;
+        padding: 0px 16px !important;
+        border-radius: 4px !important;
+        border: none;
+        color: white;
+        line-height: 30px;
+        font-size: 13px !important;
+        font-weight: 400 !important;
+        display: flex;
+        justify-content: center;
+        justify-content: space-between;
+        gap: 5px;
+        align-items: baseline;
+        width: auto;
+        text-decoration: none;
+    }
+    ::ng-deep.vector-delete {
+        background-image: linear-gradient(to right, #df2929, #ea4646);
+        font-weight: initial;
+        padding: 0px 16px !important;
+        border-radius: 4px !important;
+        border: none;
+        color: white;
+        line-height: 30px;
+        font-size: 13px !important;
+        font-weight: 400 !important;
+        display: flex;
+        justify-content: center;
+        justify-content: space-between;
+        gap: 5px;
+        align-items: baseline;
+        width: auto;
+        text-decoration: none;
+    }
+.tablegroup label {
+    font-size: 12px !important;
+    color: #9D9D9D;
+    font-weight: 300 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    }
+    ::ng-deep.tablegroup .form-control {
+        display: block;
+        width: 100%;
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 3px 4px;
+        font-size: 11px;
+        font-weight: 300;
+        line-height: 1.5;
+        color: #b1adad;
+        appearance: none;
+        background-color: var(--bs-body-bg);
+        background-clip: padding-box;
+        border: #b9b8b8 1px solid;
+        border-radius: 0px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        position: relative;
+        margin-bottom: 9px;
+        appearance: auto;
+    }

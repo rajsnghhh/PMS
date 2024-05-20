@@ -1,0 +1,507 @@
+<form name="form">
+    <div class="creatematerial">
+        <h3>
+            Check Material Requisition</h3>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="addressform">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-12">
+                            <label for="ssil">Project&nbsp;</label>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-12">
+                            <div class="control-sect">
+                                <select class="form-control" [disabled]="disabledEdit" id="sel1" name="project"
+                                    [(ngModel)]="form.project" #project="ngModel">
+                                    <option disabled>Please Select</option>
+                                    <option *ngFor="let projectData of projectList" value="{{projectData.id}}">
+                                        {{projectData.project_data[1].value}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="addressform">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-12">
+                            <label for="ssil">Request&nbsp;No.</label>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-12">
+                            <input type="ssil" class="form-control" [disabled]="disabledEdit" placeholder="SSIL"
+                                id="ssil" disabled name="request_code" [(ngModel)]="form.request_code"
+                                #request_code="ngModel">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="addressform">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-12">
+                            <label for="ssil">Department</label>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-12">
+                            <div class="control-sect">
+                                <select class="form-control" id="sel1" [disabled]="disabledEdit" name="department"
+                                    [(ngModel)]="form.department" #department="ngModel">
+                                    <option>Please Select</option>
+                                    <option *ngFor="let depData of departmentList" value="{{depData.id}}">
+                                        {{depData.department}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="addressform">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-12">
+                            <label for="ssil">Site&nbsp;Location</label>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-12">
+                            <div class="control-sect">
+                                <select class="form-control" id="sel1" [disabled]="disabledEdit" name="site"
+                                    [(ngModel)]="form.site">
+                                    <option>Please Select</option>
+                                    <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                        {{siteData.site_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="addressform">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-12">
+                            <label for="ssil">Store&nbsp;</label>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-12">
+                            <div class="control-sect">
+                                <select class="form-control" id="sel1" [disabled]="disabledEdit" name="store"
+                                    [(ngModel)]="form.store" #store="ngModel">
+                                    <option>Please Select</option>
+                                    <option *ngFor="let storeData of storeList" value="{{storeData.id}}">
+                                        {{storeData.store_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="addressform">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-12"><label for="location">Date</label></div>
+                                <div class="col-lg-10 col-md-10 col-12">
+                                    <input type="Date" class="form-control" [disabled]="disabledEdit" placeholder=""
+                                        name="date" [(ngModel)]="form.date" #date="ngModel">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-12" hidden>
+                        <div class="addressform">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-12"><label for="location">Time</label></div>
+                                <div class="col-lg-10 col-md-10 col-12">
+                                    <input type="time" class="form-control" [disabled]="disabledEdit" placeholder=""
+                                        name="time" [(ngModel)]="form.time" #time="ngModel">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="addressform">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-12"><label for="location">Location&nbsp;For</label></div>
+                        <div class="col-lg-10 col-md-10 col-12">
+                            <input type="location" class="form-control" [disabled]="disabledEdit"
+                                placeholder="Type here for search data" id="location" name="location"
+                                [(ngModel)]="form.location" #location="ngModel">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form name="form" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="createtable-section table-responsive">
+        <table class="text-nowrap">
+            <tr>
+                <th><input type="checkbox" [checked]="selectAll" (change)="selectAllRows(this)"> Sr.&nbsp;No </th>
+                <th>Item Group</th>
+                <th>Item Sub Group</th>
+                <th>Item</th>
+                <th>Item Code</th>
+                <th>Technical Specification(S)</th>
+                <th>Part No.</th>
+                <th style=" min-width: 100px; ">Brand</th>
+                <th>Total Project Quantity</th>
+                <th>Total Received Up To Date</th>
+                <th>STOCK ON SITE</th>
+                <th>Required Qty.</th>
+                <th>Sanctioned Qty.</th>
+                <th>Unit</th>
+                <!-- <th>Weight/Unit</th> -->
+                <th>Requested For</th>
+                <th>Priority</th>
+                <th>Application or work</th>
+                <th>Delivery Schedule</th>
+                <th>Remarks</th>
+                <th style=" min-width: 200px; ">Status</th>
+            </tr>
+
+            <tr class="tablebg" *ngFor="let item of form.requested_items; let i = index">
+                <td>
+                    #{{i+1}}
+                    <br>
+                    <input *ngIf="item.status=='checked'" type="checkbox" [checked]="selectAll" (change)="onCheckboxChange($event, item.id)" name="status_Update" #status_Update="ngModel" [(ngModel)]="form.requested_items[i].status_Update">
+                </td>
+
+                <td style=" min-width: 150px; ">
+                    <div class="tablegroup">
+
+                        <label>Item Group</label>
+
+                        <ng-select [disabled]="disabledEdit" class="" name="requested_material_group{{i+1}}" [(ngModel)]="form.requested_items[i].requested_material_group" 
+                         #requested_material_group="ngModel" (change)="typeChange(form.requested_items[i].requested_material_group,i)">
+                            <ng-option *ngFor="let materialGroup of groupMasterlist" [value]="materialGroup.id">{{materialGroup.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </td>
+                <td style=" min-width: 150px; ">
+                    <div class="tablegroup">
+                        <label>Item Sub Group</label>
+
+                        <ng-select [disabled]="disabledEdit" class="" name="requested_material_sub_group{{i+1}}" [(ngModel)]="form.requested_items[i].requested_material_sub_group" #requested_material_sub_group="ngModel"
+                         (change)="subTypeChange(form.requested_items[i].requested_material_sub_group, i)">
+                            <ng-option *ngFor="let subGroup of form.requested_items[i].MaterilSubGroupList" [value]="subGroup.id">{{subGroup.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </td>
+                <td style=" min-width: 150px; ">
+                    <div class="tablegroup">
+                        <label>Item</label>
+
+                        <ng-select [disabled]="disabledEdit" class="" name="requested_material{{i+1}}" [(ngModel)]="form.requested_items[i].requested_material" required #requested_material="ngModel" (change)="setMaterialMasterData(i)">
+                            <ng-option *ngFor="let masterData of form.requested_items[i].MaterilFilterList" [value]="masterData.id">{{masterData.material_name}}</ng-option>
+                        </ng-select>
+                        
+                    </div>
+                    <div class="tablegroup tablegroup-text">
+                        <h2>
+                            (Bal.&nbsp;Qty.&nbsp;=</h2>
+                        <div class="form-control form-control2" data-bs-toggle="tooltip" data-bs-placement="right"
+                            title="Balance Quantity.">{{form.requested_items[i].currentStock}}</div>
+                        <h2>)</h2>
+                    </div>
+                    <section class="boq-material-details" *ngIf="form.requested_items[i].requested_material">
+                        <img src="assets/icons/details.png" alt="">
+                        <table>
+                            <tr>
+                                <th>BOQ Name</th>
+                                <th>BOQ Item</th>
+                                <th>BOQ Sub Item</th>
+                                <th>Budgeted Quantity</th>
+                            </tr>
+                            <tr *ngFor="let masterialBoQdata of form.requested_items[i].MaterialBOQ">
+                                <td>{{masterialBoQdata.wbs_list__boq__name}}</td>
+                                <td>{{masterialBoQdata.wbs_list__wbs__wbs__wbs_name}}</td>
+                                <td>{{masterialBoQdata.wbs_list__wbs__keyscope}}</td>
+                                <td>{{masterialBoQdata.budgeted_quantity}}</td>
+                            </tr>
+                            <tr *ngIf="form.requested_items[i]?.MaterialBOQ?.length==0">
+                                <td colspan="4" style=" text-align: center; ">
+                                    Item Not found on BOQ. Please add Justification
+                                </td>
+                            </tr>
+                        </table>
+                    </section>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <label>{{form.requested_items[i]?.MaterialmasterData?.material_code}}</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <label>{{form.requested_items[i]?.MaterialmasterData?.material_nature_name}}</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="disabledEdit" class="form-control" id="data" placeholder=""
+                            name="size_part_grade{{i+1}}" [(ngModel)]="form.requested_items[i].size_part_grade"
+                            #size_part_grade="ngModel">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup" *ngIf="!form?.requested_items[i]?.status_Update || selectAll">
+                        <input type="text" [disabled]="disabledEdit" class="form-control" id="data" placeholder=""
+                            name="brand{{i+1}}" [(ngModel)]="form.requested_items[i].brand" #brand="ngModel">
+                    </div>
+                    <section class="approverScope" *ngIf="form?.requested_items[i]?.status_Update || selectAll">
+                        <div class="tablegroup">
+                            <label>Brand</label>
+                            <input type="text" 
+                            class="form-control"
+                            required
+                            [ngClass]="{ 'is-invalid': f.submitted && brand.errors }"
+                            placeholder="Brand"
+                            name="brand{{i+1}}" 
+                            [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="form.requested_items[i].brand" #brand="ngModel">
+                        </div>
+                    </section>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="disabledEdit" class="form-control" id="data" placeholder=""
+                            name="budgeted_qty{{i+1}}" [(ngModel)]="form.requested_items[i].budgeted_qty"
+                            #budgeted_qty="ngModel">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="disabledEdit" class="form-control" id="data" placeholder=""
+                            name="total_received_uptodate{{i+1}}"
+                            [(ngModel)]="form.requested_items[i].total_received_uptodate"
+                            #total_received_uptodate="ngModel">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="disabledEdit" class="form-control" id="data" placeholder=""
+                            name="stock_on_site{{i+1}}" [(ngModel)]="form.requested_items[i].stock_on_site"
+                            #stock_on_site="ngModel">
+                    </div>
+                </td>
+
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="disabledEdit" class="form-control" id="data" placeholder=""
+                            amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                            name="quantity_unit{{i+1}}" [(ngModel)]="form.requested_items[i].quantity_unit" required
+                            #quantity_unit="ngModel">
+                    </div>
+                </td>
+
+                <td>
+                    <div class="tablegroup">
+                        <section class="approverScope" *ngIf="form?.requested_items[i]?.status_Update || selectAll">
+                            <div class="tablegroup">
+                                <label>Sanctioned Quantity</label>
+                                <input  type="text" class="form-control form-control2" name="sanctioned_quantity" placeholder=""
+                                    [(ngModel)]="form.requested_items[i].sanctioned_quantity"
+                                    required
+                                    pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                                    [ngClass]="{ 'is-invalid': f.submitted && sanctioned_quantity.errors }"
+                                    #sanctioned_quantity="ngModel"
+                                    >
+                            </div>
+                        </section>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="tablegroup">
+                        <select disabled *ngIf="form.requested_items[i]?.MaterialmasterData?.unit_of_mesurement"
+                            class="form-control" id="sel1"
+                            [(ngModel)]="form.requested_items[i].MaterialmasterData.unit_of_mesurement"
+                            [ngModelOptions]="{standalone: true}">
+                            <option value="{{uomData.id}}" *ngFor="let uomData of uomList">{{uomData.symbol}}</option>
+                        </select>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="tablegroup">
+                        <span class="text-capitalize">{{form.requested_items[i].requested_for_type}}</span>
+
+                    </div>
+                    <div class="tablegroup">
+                        <input [disabled]="disabledEdit" type="text" class="form-control" id="data" placeholder=""
+                            [(ngModel)]="form.requested_items[i].requested_for" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="tablegroup">
+                        <label>Dep.</label>
+                        <input [disabled]="disabledEdit" type="text" class="form-control" id="data" placeholder=""
+                            [(ngModel)]="form.requested_items[i].department" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="tablegroup">
+                        <label>Charge Type</label>
+                        <input type="text" [disabled]="disabledEdit" class="form-control" id="data" placeholder=""
+                            [(ngModel)]="form.requested_items[i].charge_type" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup" *ngIf="!form?.requested_items[i]?.status_Update || selectAll">
+                        <label>Req. Priority</label>
+                        <select [disabled]="disabledEdit" class="form-control" id="sel1" name="priority{{i+1}}"
+                            [(ngModel)]="form.requested_items[i].priority" required #priority="ngModel">
+                            <option>Select Priority</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <section class="approverScope" *ngIf="form?.requested_items[i]?.status_Update || selectAll">
+                        <label>Req. Priority</label>
+                        <select class="form-control" id="sel1" name="priority{{i+1}}"
+                            [ngClass]="{ 'is-invalid': f.submitted && priority.errors }"
+                            [(ngModel)]="form.requested_items[i].priority" required #priority="ngModel">
+                            <option>Select Priority</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </section>
+                    <div class="tablegroup">
+                        <label>Due Date</label>
+                        <input type="date" class="form-control" placeholder="" name="due_date{{i+1}}"
+                            [(ngModel)]="form.requested_items[i].due_date" required #due_date="ngModel">
+                        <section class="chackbox-container hideOnPrintScreen">
+                            <p *ngIf="form.requested_items[i].is_returnable">Returnable</p>
+                        </section>
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="disabledEdit" class="form-control" id="data" placeholder=""
+                            name="application{{i+1}}" [(ngModel)]="form.requested_items[i].application"
+                            #application="ngModel">
+                    </div>
+                </td>
+                <td>
+                
+                    <div class="tablegroup">
+                        <input type="radio" id="days" [disabled]="disabledEdit" value="days" name="delivery_schedule{{i+1}}" [(ngModel)]="form.requested_items[i].delivery_schedule" #delivery_schedule="ngModel" [ngClass]="{ 'is-invalid': f.submitted && delivery_schedule.errors }" required>
+                        <label for="days">Days</label><br>
+                        <input type="radio" id="date" [disabled]="disabledEdit" value="date" name="delivery_schedule{{i+1}}" [(ngModel)]="form.requested_items[i].delivery_schedule" #delivery_schedule="ngModel" [ngClass]="{ 'is-invalid': f.submitted && delivery_schedule.errors }" required>
+                        <label for="date">Date</label><br>
+                    </div>
+    
+                    <div class="tablegroup"  *ngIf="form.requested_items[i].delivery_schedule == 'days'">
+                        <input type="text" [disabled]="disabledEdit" amountNumber class="form-control" id="data" placeholder=""  name="delivery_schedule_day{{i+1}}" [(ngModel)]="form.requested_items[i].delivery_schedule_day" #delivery_schedule_day="ngModel" [ngClass]="{ 'is-invalid': f.submitted && delivery_schedule_day.errors }" required>
+                    </div> 
+                    <div class="tablegroup"  *ngIf="form.requested_items[i].delivery_schedule == 'date'">
+                        <input type="date" [disabled]="disabledEdit" class="form-control" id="data" placeholder=""  name="delivery_schedule_date{{i+1}}" [(ngModel)]="form.requested_items[i].delivery_schedule_date" #delivery_schedule_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && delivery_schedule_date.errors }" required>
+                    </div> 
+                </td>
+                <td>
+                    <div class="tablegroup" *ngFor="let note of form.requested_items[i].notes; let N_I = index">
+                        <label>{{note.note_title}}</label>
+                        <input [disabled]="disabledEdit" *ngIf="note.note_title == 'Justification'" type="text"
+                            class="form-control form-control2" id="text" placeholder="" name="notes_justify{{i+1}}"
+                            [(ngModel)]="form.requested_items[i].notes[N_I].note_details" required
+                            #notes_justify="ngModel">
+                        <input [disabled]="disabledEdit" *ngIf="note.note_title!= 'Justification'" type="text"
+                            class="form-control form-control2" id="text" placeholder=""
+                            [(ngModel)]="form.requested_items[i].notes[N_I].note_details"
+                            [ngModelOptions]="{standalone: true}">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <label class="text-capitalize" *ngIf="!form?.requested_items[i]?.status_Update || selectAll">{{item?.status}}</label>
+                        <section class="approverScope" *ngIf="form?.requested_items[i]?.status_Update || selectAll">
+                            <div class="tablegroup">
+                                <label>Update Status</label>
+                                <select 
+                                    class="form-control"
+                                    required
+                                    name="status"
+                                    [ngModelOptions]="{standalone: true}"
+                                    #status="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && status.errors }"
+                                    [(ngModel)]="form.requested_items[i].status"
+                                    >
+                                    <option value="" disabled selected>Please select</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="rejected">Rejected</option>
+                                </select>
+                            </div>
+                            <div class="tablegroup">
+                                <label>Approval Remarks</label>
+                    
+                                <input  type="text" class="form-control form-control2" name="sanctioned_remarks" placeholder=""
+                                    [(ngModel)]="form.requested_items[i].sanctioned_remarks"
+                                    required
+                                    [ngClass]="{ 'is-invalid': f.submitted && sanctioned_remarks.errors }"
+                                    #sanctioned_remarks="ngModel">
+                            </div>
+                        </section>
+                    </div>
+                </td>
+            </tr>
+            <tr *ngIf="form.requested_items?.length==0">
+                <td colspan="20" class="text-center">No Item Added Yet</td>
+            </tr>
+        </table>
+    </div>
+    <div class="creatematerial hideOnPrintScreen">
+        <div class="row">
+
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="addressform">
+                    <div class="control-sect">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-12"><label for="request">Request&nbsp;By.</label></div>
+                            <div class="col-lg-9 col-md-9 col-12">
+                                <select class="form-control" [disabled]="disabledEdit" id="sel1" name="requested_by"
+                                    [(ngModel)]="form.requested_by" required #requested_by="ngModel">
+                                    <option>Please Select</option>
+                                    <option *ngFor="let userData of userlist" value="{{userData.id}}">
+                                        {{userData.full_name}}</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="addressform">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-12"><label for="line">Line&nbsp;In&nbsp;bottom</label></div>
+                        <div class="col-lg-9 col-md-9 col-12">
+                            <input [disabled]="disabledEdit" type="line" class="form-control"
+                                placeholder="Please Select" id="line" name="line_in_bottom"
+                                [(ngModel)]="form.line_in_bottom" #line_in_bottom="ngModel">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6 col-md-6 col-12">
+
+                <div class="addressform">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-12"><label for="remarks">Remarks</label></div>
+                        <div class="col-lg-9 col-md-9 col-12"><input [disabled]="disabledEdit" type="remarks"
+                                class="form-control" placeholder="Type here..." id="remarks" name="remarks"
+                                [(ngModel)]="form.remarks" #remarks="ngModel"></div>
+                    </div>
+                </div>
+
+            </div>
+            <button hidden #submitButton="" type="submit">Save</button>
+        </div>
+    </div>
+    <div class="btd-section">
+        <button type="button" (click)="backtolist()" class="btn-cancel">CANCEL</button>
+        <button type="submit" *ngIf="selectedIds.length > 0" class="btn-save" (click)="check()">UPDATE</button>
+    </div>
+</form>

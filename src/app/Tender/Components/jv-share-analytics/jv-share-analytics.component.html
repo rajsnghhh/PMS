@@ -1,0 +1,95 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>JV Share Analytics</h2>
+    </div>
+
+    <div class="mainbody">
+        <div class="tablebody" *ngFor="let val of analyticsData1.jv_share_analytics">
+            <label class="lheader">{{val.party_name}}</label> <br/>
+            <section class="lbody">{{val.percentage_share}}</section>
+        </div>
+    </div>
+    
+    <div class="component-body">
+        <div class="scrollable-table-container table_scroll">
+            <table class="scrollable-table" #customscroll>
+                <tr>
+                    <th class="posion-fixed-left">Eligibility</th>
+                    <th>Required as per tender</th>
+                    <th>Required for Lead Member</th>
+                    <th>Required for Other Member</th>
+                    <th>Available for Lead Member</th>
+                    <th>Available for Other Member</th>
+                    <th>Combined</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td class="posion-fixed-left postionbg">Threshold</td>
+                    <td>{{analyticsData1.threshold}}</td>
+                    <td>{{analyticsData1.required_threshold_lead_member}}</td>
+                    <td>{{analyticsData1.required_threshold_other_member}}</td>
+                    <td>{{analyticsData1.available_threshold_lead_member}}</td>
+                    <td>{{analyticsData1.other_avail_threshold_sum}}</td>
+                    <td>{{analyticsData1.combined_threshold}}</td>
+                    <td>
+                        <img class="statusIcon" *ngIf="analyticsData1.threshold_success" src="assets/usermanagement/tick.png" alt="">
+                        <img class="statusIcon" *ngIf="!analyticsData1.threshold_success" src="assets/usermanagement/not-valid.png" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="posion-fixed-left postionbg">Turnover</td>
+                    <td>{{analyticsData1.turnover}}</td>
+                    <td>{{analyticsData1.required_average_annual_turn_over_lead_member}}</td>
+                    <td>{{analyticsData1.required_average_annual_turn_over_other_member}}</td>
+                    <td>{{analyticsData1.average_annual_turn_over_lead_member}}</td>
+                    <td>{{analyticsData1.other_average_annual_turn_over_sum}}</td>
+                    <td>{{analyticsData1.combined_average_annual_turn_over}}</td>
+                    <td>
+                        <img class="statusIcon" *ngIf="analyticsData1.turnover_success" src="assets/usermanagement/tick.png" alt="">
+                        <img class="statusIcon" *ngIf="!analyticsData1.turnover_success" src="assets/usermanagement/not-valid.png" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="posion-fixed-left postionbg">Net Worth</td>
+                    <td>{{analyticsData1.net_worth}}</td>
+                    <td>{{analyticsData1.required_net_worth_lead_member}}</td>
+                    <td>{{analyticsData1.required_net_worth_other_member}}</td>
+                    <td>{{analyticsData1.net_worth_lead_member}}</td>
+                    <td>{{analyticsData1.other_net_worth_sum}}</td>
+                    <td>{{analyticsData1.combined_net_worth}}</td>
+                    <td>
+                        <img class="statusIcon" *ngIf="analyticsData1.net_worth_success" src="assets/usermanagement/tick.png" alt="">
+                        <img class="statusIcon" *ngIf="!analyticsData1.net_worth_success" src="assets/usermanagement/not-valid.png" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="posion-fixed-left postionbg">Bid Capacity</td>
+                    <td>{{analyticsData1.bid_capacity}}</td>
+                    <td>{{analyticsData1.required_maximum_span_length_of_bridge_avail_lead_member}}</td>
+                    <td>{{analyticsData1.required_maximum_span_length_of_bridge_avail_other_member}}</td>
+                    <td>{{analyticsData1.maximum_span_length_of_bridge_avail_lead_member}}</td>
+                    <td>{{analyticsData1.other_maximum_span_length_of_bridge_avail_sum}}</td>
+                    <td>{{analyticsData1.combined_maximum_span_length_of_bridge_avail}}</td>
+                    <td>
+                        <img class="statusIcon" *ngIf="analyticsData1.bid_capacity_success" src="assets/usermanagement/tick.png" alt="">
+                        <img class="statusIcon" *ngIf="!analyticsData1.bid_capacity_success" src="assets/usermanagement/not-valid.png" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="posion-fixed-left postionbg">Similar Work</td>
+                    <td>{{analyticsData1.similar_work}}</td>
+                    <td>{{analyticsData1.required_value_of_similar_works_lead_member}}</td>
+                    <td>{{analyticsData1.required_value_of_similar_works_other_member}}</td>
+                    <td>{{analyticsData1.value_of_similar_works_lead_member}}</td>
+                    <td>{{analyticsData1.other_value_of_similar_works_sum}}</td>
+                    <td>{{analyticsData1.combined_value_of_similar_works}}</td>
+                    <td>
+                        <img class="statusIcon" *ngIf="analyticsData1.similar_work_success" src="assets/usermanagement/tick.png" alt="">
+                        <img class="statusIcon" *ngIf="!analyticsData1.similar_work_success" src="assets/usermanagement/not-valid.png" alt="">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+</div>

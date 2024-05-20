@@ -1,0 +1,98 @@
+<div class="main-container">
+    <div class="component-header">
+        <!-- <h2>Item Wise Vendor List</h2> -->
+    </div>
+</div>
+
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="flex-div">
+        <div class="mb-3" [ngClass]="{ 'float-now': form.from_name != '' }">
+            <label class="floating-label">From Name<span class="asterisk">*</span></label>
+            <select [ngClass]="{'disable': disableFrom == true }" (change)="onclickFilter()" class="form-control" name="from_name" [(ngModel)]="form.from_name" required  #from_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && from_name.errors }">
+                <option value="" disabled>Select From</option>
+                <option value="po">Purchase Order</option>
+                <option value="mr">Material Requisition</option>
+                <option value="indent">Indent</option>
+                <option value="quotation">Quotation</option>
+                <option value="grn">GRN</option>
+                <option value="work_order">Work Order</option>
+            </select>
+            <div *ngIf="f.submitted && from_name.errors" class="invalid-feedback">
+              <div>This is required</div>
+            </div>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': true }">
+            <label class="floating-label">Select Site<span class="asterisk">*</span></label>
+            <ng-select [items]="siteList" 
+                bindLabel="site_name" 
+                bindValue="id" 
+                [multiple]="true"
+                class="form-control"
+                placeholder = ""
+                [(ngModel)]="form.site_ids"
+                required
+                [ngClass]="{ 'is-invalid': f.submitted && site_ids.errors }"
+                name="site_ids" 
+                #site_ids="ngModel"
+            >
+            </ng-select>
+            <div *ngIf="f.submitted && site_ids.errors" class="invalid-feedback">
+              <div *ngIf="site_ids.errors['required']">Site is required</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="component-body"  *ngIf="form.from_name && form.site_ids ">
+        <div  class="scrollable-table-container" style="padding: 20px;">
+            <button type="button" (click)="addnewstage()">ADD + </button>
+            <table>
+                <tr>
+                    <th>Stage</th>
+                    <th>Department</th>
+                    <th>Employee</th>
+                    <th>Delete</th>
+                </tr>
+                <tr *ngFor="let item of form.stages;let i=index">
+                    <td>Stage {{i+1}}</td>
+                    <td>
+                        <ng-select 
+                            [items]="departmentList" 
+                            bindLabel="department" 
+                            bindValue="id" 
+                            [ngModelOptions]="{standalone: true}"
+                            [multiple]="true"
+                            class="form-control"
+                            placeholder = ""
+                            [(ngModel)]="form.stages[i].department_ids"
+                        >
+                        </ng-select>
+                    </td>
+                    <td>
+                        <ng-select 
+                            [items]="userList" 
+                            bindLabel="full_name" 
+                            bindValue="id" 
+                            [ngModelOptions]="{standalone: true}"
+                            [multiple]="true"
+                            class="form-control"
+                            placeholder = ""
+                            [(ngModel)]="form.stages[i].employee_ids"
+                        >
+                        </ng-select>
+                    </td>
+                    <td>
+                        <img src="assets/icons/delete.png" (click)="deleteItem(i)" alt="">
+                    </td>
+                </tr>
+                <tr class="text-center" *ngIf="form.stages.length==0">
+                    <td colspan="5">No Stage found.</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary save">Save</button>
+      <!-- <button type="submit" class="btn btn-primary" (click)>Close</button> -->
+    </div>
+</form>

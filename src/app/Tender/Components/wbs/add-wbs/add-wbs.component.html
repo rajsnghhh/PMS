@@ -1,0 +1,31 @@
+<form>
+
+    <div class="mb-3" [formGroup]="wbsForm">
+        <div class="fieldValue">
+            <label class="lebelheading">WBS Name</label>
+            <input type="text" name="wbsName" formControlName="wbsName" [ngClass]="displayFieldCss(wbsForm,'wbsName')"
+                [(ngModel)]="wbsName" class="form-control" placeholder="Enter WBS Name">
+        </div>
+        <div class="required" *ngIf="isFieldValid(wbsForm,'wbsName')">
+            <span class="text-danger" *ngIf="wbsForm.get('wbsName')?.errors?.['required']">WBS Name is required</span>
+        </div>
+    </div>
+    <div class="mb-3" [formGroup]="wbsForm">
+        <div class="fieldValue">
+            <label class="lebelheading">WBS Category</label>
+            <select name="wbsCategory" formControlName="wbsCategory" [ngClass]="displayFieldCss(wbsForm,'wbsCategory')" [(ngModel)]="wbsCategory" class="form-control">
+                <option value="">Select Category</option>
+                <option value="general">General</option>
+                <option value="volumetric">Volumetric</option>
+            </select>
+        </div>
+        <div class="required" *ngIf="isFieldValid(wbsForm,'wbsCategory')">
+            <span class="text-danger" *ngIf="wbsForm.get('wbsCategory')?.errors?.['required']">WBS Category  is required</span>
+        </div>
+    </div>
+
+
+
+    <button type="submit" class="btn btn-primary" (click)="addWBS()">ADD</button>
+
+</form>

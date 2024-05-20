@@ -1,0 +1,13 @@
+<div class="createrequisition-section">
+    <section id="printSection">    
+        <app-purchase-top (parrentAction)="appendData($event)" [gstScope]="gstScope" [scope]="scope" [isPurchase_Approver]="isPurchase_Approver" [reload]="reload" [prefieldData]="prefieldData"></app-purchase-top>
+        <app-purchase-table *ngIf="!gstScope" (parrentAction)="appendData($event)" [scope]="scope" [prefieldData]="prefieldData" [reload]="reload" [isPurchase_Approver]="isPurchase_Approver"></app-purchase-table>
+        <app-purchase-gst-table *ngIf="gstScope" (parrentAction)="appendData($event)" [scope]="scope" [prefieldData]="prefieldData" [reload]="reload" [isPurchase_Approver]="isPurchase_Approver"></app-purchase-gst-table>
+        <app-purchase-below-table (parrentAction)="appendData($event)" [scope]="scope" [reload]="reload" [prefieldData]="prefieldData"></app-purchase-below-table>
+    </section>
+    <div class="btd-section">
+        <button type="button" (click)="backtolist()" class="btn-cancel" >CANCEL</button>
+        <button type="submit" *ngIf="scope == 'add'" class="btn-save" (click)="createMR()">SAVE</button>
+        <button type="submit" *ngIf="scope == 'update'" class="btn-save" (click)="updateMR()">UPDATE</button>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+.floating-label {
+    background: white;
+    min-width: 70px;
+    left: 10px !important;
+}
+
+.disable {
+    pointer-events: none;
+    background: #E9E9E9;
+}
+
+.main-container {
+    padding: 10px;
+}
+
+.project-sites {
+    .ind-sight {
+        border: 2px solid #0079fe;
+        margin: 5px;
+        border-radius: 18px;
+        background: #e6f4ff;
+        padding: 15px;
+    }
+    h1 {
+        font-size: 22px;
+        color: #004bba;
+    }
+    h2 {
+        font-size: 18px;
+        color: #0079fe;
+    }
+    h3 {
+        font-size: 18px;
+        color: #0079fe;
+    }
+
+    .store-container {
+        border: 2px solid #96c2f2;
+        border-radius: inherit;
+        padding: 15px;
+    }
+}

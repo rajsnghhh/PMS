@@ -1,0 +1,429 @@
+input {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  border: none;
+}
+
+textarea {
+  //border-radius: 25px;
+  padding: 10px;
+  height: 63px;
+  font-size: 12px;
+  width: 100%;
+}
+
+td,
+th {
+  padding: 0 !important;
+  min-width: 180px;
+}
+
+.main-container {
+  min-width: 99%;
+}
+
+button {
+  background-color: red;
+  border-radius: 5px;
+  border-color: red;
+  color: white;
+  font-weight: 500;
+  font-size: 9px;
+  padding: 0;
+  width: 50px;
+}
+
+.addbtncolor {
+  background-color: #0aad0aed !important;
+  border-color: #14c714 !important;
+  width: 160px;
+  padding: 10px 14px;
+  border-radius: 18px;
+}
+
+.component-header {
+  margin-bottom: -4px !important;
+}
+
+::-webkit-scrollbar {
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #d9d9d9;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #5577ff;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5577ff;
+  border-radius: 10px;
+}
+
+.main-container2 {
+  margin: 0 !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+
+.header {
+  background-color: #F7F7F7;
+  font-weight: 500;
+  height: 45px;
+  padding-top: 9px;
+  padding-left: 24px;
+  font-size: 12px;
+}
+
+.upload {
+  background-color: #F4F4F4;
+  font-weight: 500;
+  height: 80px;
+  margin-top: 30px;
+  margin-left: 37px;
+  border-radius: 8px;
+  margin-right: 37px;
+  padding-left: 24px;
+  font-size: 12px;
+  float: initial;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  border: dotted;
+  border-color: rgb(95, 143, 239);
+}
+
+.upload2 {
+  cursor: pointer;
+}
+
+.format {
+  margin-top: -57px;
+  display: flex;
+  font-size: small;
+  justify-content: center;
+}
+
+.filebutton {
+  border-radius: 5px;
+  color: white;
+  font-weight: 500;
+  font-size: 9px;
+  padding: 0;
+  width: 110px;
+  height: 30px;
+  font-size: 12px;
+}
+
+.addbtncolor2 {
+  background-color: rgba(10, 173, 10, 0.9294117647) !important;
+  border-color: #14c714 !important;
+  margin-left: 10px !important;
+  height: 24px !important;
+  width: 60px;
+  font-size: 12px;
+}
+
+.imgwidth {
+  height: 18px !important;
+}
+
+.textupload {
+  font-weight: 700;
+  padding: 10px 5px;
+}
+
+.allow-file-type {
+  font-size: 10px;
+  margin-left: 10px;
+  color: #0079fe;
+}
+
+.fileUpload {
+  div {
+    position: relative;
+    overflow: hidden;
+    background: #e6e6e6;
+    font-size: 12px;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 25px;
+    border: 1px solid #ced4da;
+    color: black;
+    width: 98%;
+    margin-left: 12px;
+
+    span {
+      img {
+        height: 16px;
+        margin-right: 15px;
+      }
+    }
+  }
+
+  div.selected {
+    background: #18cb31;
+  }
+
+  input {
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+  }
+}
+
+.flex-div {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  label {
+    width: 100%;
+    margin: 0 !important;
+  }
+
+  .mb-3 {
+    width: 100%;
+  }
+}
+
+.mb-3 {
+  margin-bottom: 1.2rem !important;
+
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0px 0px 5px 10px;
+  }
+}
+
+.form-control:focus {
+  border-color: #5577FF;
+}
+
+form {
+  margin: 0px 10px;
+}
+
+
+
+.mb-3 {
+  position: relative;
+}
+
+.ng-submitted {
+  .ng-invalid {
+    border-color: #dc3545;
+  }
+
+  .invalid-feedback {
+    color: #dc3545;
+    opacity: 1 !important;
+    font-size: 10px;
+    background: unset;
+    border: none;
+    padding: 0;
+
+    div {
+      background: unset;
+      border: none;
+      padding: 0;
+      color: #dc3545;
+      font-size: 10px;
+      margin-left: 10px;
+    }
+  }
+
+  .mb-3:has(.ng-invalid) .invalid-feedback {
+    display: block;
+  }
+
+}
+
+.component-body {
+  overflow-x: scroll;
+  padding: 15px 0px 15px 0px;
+  margin-bottom: 25px;
+}
+
+.wbs_button {
+  position: absolute;
+  right: 10px;
+}
+
+.btn-close {
+  height: 20px;
+  width: 20px;
+}
+
+::ng-deep.disable {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.custom-section {
+  display: block;
+  width: 100%;
+  position: relative;
+
+  .container {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 10px;
+    padding-top: 2px;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Hide the browser's default radio button */
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  /* Create a custom radio button */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #e4e4e4;
+    border-radius: 18%;
+  }
+
+  /* On mouse-over, add a grey background color */
+  .container:hover input~.checkmark {
+    background-color: #ccc;
+  }
+
+  /* When the radio button is checked, add a blue background */
+  .container input:checked~.checkmark {
+    background-color: #5577FF;
+  }
+
+  /* Create the indicator (the dot/circle - hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  /* Show the indicator (dot/circle) when checked */
+  .container input:checked~.checkmark:after {
+    display: block;
+  }
+
+  /* Style the indicator (dot/circle) */
+  .container .checkmark:after {
+    top: 3px;
+    font-size: 12px;
+    border-bottom: 1.5px solid white;
+    border-right: 1.5px solid white;
+    left: 7px;
+    height: 10px;
+    width: 6px;
+    color: white;
+    transform: rotate(45deg);
+  }
+
+  label {
+    margin: 0 !important;
+  }
+}
+
+.typesize{
+  font-size: 17px;
+  font-weight: 600;
+}
+
+::ng-deep {
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    display: none;
+    right: -100px;
+    top: 20px;
+    width: 290px;
+    max-height: 94px;
+    overflow-y: scroll;
+    position: absolute;
+    color: rgb(84 83 83);
+    background-color: white;
+    box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.54);
+    z-index: 1;
+    border-radius: 13px;
+    padding: 8px 13px;
+    box-sizing: border-box;
+
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 7px;
+    border-radius: 15px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #e6e6e6;
+    border-radius: 15px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #5577ff;
+    border-radius: 15px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #5577ff;
+    border-radius: 15px;
+  }
+
+  .fstwidth {
+    overflow: visible !important;
+  }
+
+  .dropdown-content::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+    color: white;
+    position: absolute;
+    transform: rotateZ(180deg);
+    top: -2px;
+    zoom: 2;
+    right: 58px;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+}

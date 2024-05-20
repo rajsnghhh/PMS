@@ -1,0 +1,115 @@
+<form>
+
+    <h5 class="heading">Material Group</h5>
+    <!-- <div class="flex-div">
+        <div class="mb-3" [formGroup]="wbsForm" [ngClass]="{ 'float-now': parent != '' }">
+
+            <select style="background-color: #8080802e;" class="form-select parentselect" formControlName="parent" [(ngModel)]="parent"
+            [ngClass]="displayFieldCss(wbsForm,'parent')" aria-label="Default select example">
+                <option value="" selected disabled>Select Primary Group</option>
+                <option *ngFor="let item of companyList" value={{item.id}}>{{item.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': parent =='' }">Select Primary Group</label>
+    
+    
+            <div class="required" *ngIf="isFieldValid(wbsForm,'parent')">
+                <span class="text-danger" *ngIf="wbsForm.get('parent')?.errors?.['required']">Primary Group is required</span>
+              </div>
+        </div>
+    </div> -->
+    <div class="flex-div">
+    <div class="mb-3" [formGroup]="wbsForm" [ngClass]="{ 'float-now': materialtype != '' }">
+        <div class="fieldValue">
+            <input type="text" name="materialtype" formControlName="materialtype"  [ngClass]="displayFieldCss(wbsForm,'materialtype')" [(ngModel)]="materialtype"  class="form-control">
+            <label class="floating-label">Enter Material Group <span class="asterisk">*</span></label>
+        </div>
+        <div class="required" *ngIf="isFieldValid(wbsForm,'materialtype')">
+            <span class="text-danger" *ngIf="wbsForm.get('materialtype')?.errors?.['required']">Material Group is required</span>
+          </div>
+    </div>
+    <div class="mb-3" [formGroup]="wbsForm" [ngClass]="{ 'float-now': materialCode != '' }">
+        <div class="fieldValue">
+            <input type="text" name="materialCode" formControlName="materialCode"  [ngClass]="displayFieldCss(wbsForm,'materialCode')" [(ngModel)]="materialCode"  class="form-control">
+            <label class="floating-label">Enter Material Code <span class="asterisk">*</span></label>
+        </div>
+        <div class="required" *ngIf="isFieldValid(wbsForm,'materialCode')">
+            <span class="text-danger" *ngIf="wbsForm.get('materialCode')?.errors?.['required']">Material Code is required</span>
+          </div>
+    </div>
+    <div class="mb-3" [formGroup]="wbsForm" [ngClass]="{ 'float-now': tolerancelevel != ''}">
+        <div class="fieldValue">
+            <input type="text" name="tolerancelevel" onkeypress='return event.charCode >= 48 && event.charCode <= 57' formControlName="tolerancelevel"  [ngClass]="displayFieldCss(wbsForm,'tolerancelevel')" [(ngModel)]="tolerancelevel"  class="form-control">
+            <label class="floating-label">Enter Tolerance Level <span class="asterisk">*</span></label>
+        </div>
+        <div class="required" *ngIf="isFieldValid(wbsForm,'tolerancelevel')">
+            <span class="text-danger" *ngIf="wbsForm.get('tolerancelevel')?.errors?.['required']">Tolerance Level is required</span>
+          </div>
+    </div>
+
+    <div class="mb-3" [formGroup]="wbsForm" [ngClass]="{ 'float-now': purchaseAccount != '' }">
+
+        <select class="form-select" formControlName="purchaseAccount" [(ngModel)]="purchaseAccount"
+        [ngClass]="displayFieldCss(wbsForm,'purchaseAccount')" aria-label="Default select example">
+            <option value="" selected disabled>Select Purchase A/C</option>
+            <option *ngFor="let account of accountNameList" value={{account.id}}>{{account.name}}</option>
+        </select>
+        <label class="floating-label-select" [ngClass]="{'insideDropdown': purchaseAccount =='' }">Select Purchase A/C</label>
+    </div>
+
+
+    <div class="mb-3" [formGroup]="wbsForm" [ngClass]="{ 'float-now': salesAccount != '' }">
+
+        <select class="form-select" formControlName="salesAccount" [(ngModel)]="salesAccount"
+        [ngClass]="displayFieldCss(wbsForm,'salesAccount')" aria-label="Default select example">
+            <option value="" selected disabled>Select Sales A/C</option>
+            <option *ngFor="let account of accountNameList" value={{account.id}}>{{account.name}}</option>
+        </select>
+        <label class="floating-label-select" [ngClass]="{'insideDropdown': salesAccount =='' }">Select Sales A/C</label>
+    </div>
+
+    <div class="mb-3" [formGroup]="wbsForm" [ngClass]="{ 'float-now': itemtype != '' }">
+
+        <select class="form-select" formControlName="itemtype" [(ngModel)]="itemtype"
+        [ngClass]="displayFieldCss(wbsForm,'itemtype')" aria-label="Default select example">
+            <option value="" selected disabled>Select Item Type</option>
+            <option *ngFor="let item of itemTypelist" value={{item.id}}>{{item.name}}</option>
+        </select>
+        <label class="floating-label-select" [ngClass]="{'insideDropdown': itemtype =='' }">Select Item Type <span class="asterisk">*</span></label>
+
+
+        <div class="required" *ngIf="isFieldValid(wbsForm,'itemtype')">
+            <span class="text-danger" *ngIf="wbsForm.get('itemtype')?.errors?.['required']">Item Type is required</span>
+          </div>
+    </div>
+
+    <div class="mb-3" [formGroup]="wbsForm" [ngClass]="{ 'float-now': gstTax != '' }">
+
+        <select class="form-select" formControlName="gstTax" [(ngModel)]="gstTax"
+        [ngClass]="displayFieldCss(wbsForm,'gstTax')" aria-label="Default select example">
+            <option value="" selected disabled>Select GST Tax</option>
+            <option *ngFor="let item of gstlist" value={{item.id}}>{{item.name}}</option>
+        </select>
+        <label class="floating-label-select" [ngClass]="{'insideDropdown': gstTax =='' }">Select GST Tax</label>
+
+
+        <div class="required" *ngIf="isFieldValid(wbsForm,'gstTax')">
+            <span class="text-danger" *ngIf="wbsForm.get('gstTax')?.errors?.['required']">GST Tax is required</span>
+          </div>
+    </div>
+    <div class="mb-3 mt-2" [formGroup]="wbsForm">
+        <input type="checkbox" id="productiontype" name="productiontype" [(ngModel)]="pruductiontypeCheck" [ngModelOptions]="{standalone: true}">
+        <label for="productiontype">Is Production Type Group</label>
+    </div>
+    <div class="mb-3" *ngIf="pruductiontypeCheck" [formGroup]="wbsForm" [ngClass]="{ 'float-now': productiontypeList != '' }">
+
+        <select class="form-select" formControlName="productiontypeList" [(ngModel)]="productiontypeList"
+        [ngClass]="displayFieldCss(wbsForm,'productiontypeList')" aria-label="Default select example">
+            <option *ngFor="let item of productionTypeValue" value={{item.id}}>{{item.name}}</option>
+        </select>
+        <label class="floating-label-select" [ngClass]="{'insideDropdown': productiontypeList =='' }">Select Production Type</label>
+
+    </div>
+
+</div>
+    <button type="submit" class="btn btn-primary" (click)="editWBS()">UPDATE</button>
+</form>

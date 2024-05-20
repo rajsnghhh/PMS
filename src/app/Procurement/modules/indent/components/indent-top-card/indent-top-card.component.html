@@ -1,0 +1,126 @@
+<div class="createrequisition-section">
+  <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+
+    <div class="creatematerial">
+      <h3>Indent Request</h3>
+
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-12">
+          <div class="addressform" *ngIf="newAddScope">
+            <label for="ssil">Project&nbsp;</label>
+            <select class="form-control" [disabled]="true" id="sel1" name="project" [(ngModel)]="form.project" required
+              #project="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project.errors }"
+              (change)="getProjeDependentSiteData()">
+              <option disabled>Please Select</option>
+              <option *ngFor="let projectData of projectList" value="{{projectData.id}}">
+                {{projectData.project_data[1].value}}</option>
+            </select>
+            <div *ngIf="f.submitted && project.errors" class="invalid-feedback">
+              <div *ngIf="project.errors['required']">This is required !</div>
+            </div>
+
+          </div>
+          <div class="addressform">
+            <label for="ssil">Department</label>
+            <select class="form-control" id="sel1" [disabled]="disabledEdit" name="department"
+              [(ngModel)]="form.department" required #department="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && department.errors }">
+              <option>Please Select</option>
+              <option *ngFor="let depData of departmentList" value="{{depData.id}}">{{depData.department}}</option>
+            </select>
+            <div *ngIf="f.submitted && department.errors" class="invalid-feedback">
+              <div *ngIf="department.errors['required']">This is required !</div>
+            </div>
+          </div>
+          <div class="addressform" *ngIf="this.scope == 'view' || this.scope=='print'">
+            <label for="ssil">Request&nbsp;No.</label>
+            <input type="ssil" class="form-control" [disabled]="disabledEdit" required #request_code="ngModel"
+              placeholder="" id="ssil" name="request_code" [(ngModel)]="form.request_code"
+              [ngClass]="{ 'is-invalid': f.submitted && request_code.errors }">
+            <div *ngIf="f.submitted && request_code.errors" class="invalid-feedback">
+              <div *ngIf="request_code.errors['required']">This is required !</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12" *ngIf="!selectedMRDetails.length">
+          <div class="addressform">
+            <label for="ssil">Manual&nbsp;Slip&nbsp;No.</label>
+            <input type="ssil" class="form-control" [disabled]="disabledEdit" #manual_slip_number="ngModel"
+              placeholder="" id="ssil" name="manual_slip_number" [(ngModel)]="form.manual_slip_number"
+              [ngClass]="{ 'is-invalid': f.submitted && manual_slip_number.errors }">
+            <div *ngIf="f.submitted && manual_slip_number.errors" class="invalid-feedback">
+              <div *ngIf="manual_slip_number.errors['required']">This is required !</div>
+            </div>
+
+
+
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12">
+          <div class="addressform">
+            <label for="date">Date</label>
+            <input type="date" class="form-control" [min]="mindate" max="{{maxDate}}" [disabled]="disabledEdit"
+              placeholder="" id="date" name="date" [(ngModel)]="form.date">
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12">
+          <div class="addressform">
+            <label for="time">Time</label>
+            <input type="time" class="form-control" [disabled]="disabledEdit" placeholder="" id="time" name="time"
+              [(ngModel)]="form.time">
+
+          </div>
+        </div>
+
+        <div class="clearfix w-100"></div>
+
+        <div class="col-lg-6 col-md-6 col-12">
+          <div class="addressform">
+            <label for="text">Indent For</label>
+            <select id="sel1" required class="form-control" #site="ngModel" (change)="siteChange()" name="site"
+              [disabled]="true" [(ngModel)]="form.site" [ngClass]="{ 'is-invalid': f.submitted && site.errors }">
+              <option value="">-- select --</option>
+              <option *ngFor="let siteData of siteList" [ngValue]="siteData.id">{{siteData.site_name}}</option>
+            </select>
+            <div *ngIf="f.submitted && site.errors" class="invalid-feedback">
+              <div *ngIf="site.errors['required']">This is required !</div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- <div class="col-lg-4 col-md-4 col-12">
+          <div class="addressform">
+            <div class="row">
+              <div class="col-lg-2 col-md-2 col-12"><label for="text">Location</label></div>
+              <div class="col-lg-10 col-md-10 col-12">
+                <input type="text" class="form-control" placeholder="" id="text" name="indent_location"
+                  [(ngModel)]="form.indent_location">
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <div class="col-lg-6 col-lg-6 col-12">
+          <div class="addressform">
+            <label for="text">Store</label>
+            <select id="sel1" class="form-control" name="store" (change)="storeChange()" [(ngModel)]="form.store"
+              #store="ngModel" [disabled]="disabledEdit">
+              <option disabled>-- select --</option>
+              <option *ngFor="let storeData of storeList" [ngValue]="storeData.id">{{storeData.store_name}}</option>
+            </select>
+            <div *ngIf="f.submitted && store.errors" class="invalid-feedback">
+              <div *ngIf="store.errors['required']">This is required !</div>
+            </div>
+          </div>
+        </div>
+
+        <button hidden #submitButton="" type="submit">Save</button>
+
+      </div>
+    </div>
+
+  </form>

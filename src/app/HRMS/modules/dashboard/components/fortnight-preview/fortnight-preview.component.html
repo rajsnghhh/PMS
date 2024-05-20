@@ -1,0 +1,41 @@
+<div class="main-container">
+    <ul>
+        <li>
+            <div class="header">
+                <span *ngIf="activeSession.HRMSData.fortnite_type != 'single'">First</span> Fortnight
+                <button class="date">{{activeSession.SprintData.fortnight_start_date}} - {{activeSession.SprintData.fortnight_end_date}}</button>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" [style.width]="firstfortnightData.completion_percentage+'%'" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-tultip">
+                        <span>Completed</span>
+                        <br>
+                        {{firstfortnightData.total_time_completed}}
+                    </div>
+                </div>
+            </div>
+            <div class="header">            
+                <button>Milestone <br><span class="greentext"> {{firstfortnightData.total_time}}</span></button>
+            </div>
+        </li>
+        <li *ngIf="activeSession.HRMSData.fortnite_type != 'single'">
+            <div class="header">
+                Second Fortnight
+                <button class="date">{{activeSession.SprintData.second_fortnight_start}} - {{activeSession.SprintData.second_fortnight_end}}</button>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" [style.width]="firstfortnightData.completion_percentage_second+'%'" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-tultip">
+                        <span>Completed</span>
+                        <br>
+                        {{firstfortnightData.total_time_completed_second}}
+                    </div>
+                </div>
+            </div>
+            <div class="header">
+                
+                <button>Milestone <br><span class="greentext">{{firstfortnightData.total_time_second}}</span></button>
+            </div>
+        </li>
+    </ul>
+</div>

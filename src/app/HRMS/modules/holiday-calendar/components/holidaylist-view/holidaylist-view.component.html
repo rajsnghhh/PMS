@@ -1,0 +1,42 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Holiday List</h2>
+
+        <div class="action-button-container">
+            <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown"
+                aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span><img src="assets/usermanagement/download_csv.png" class="export"><strong>CSV</strong> </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="component-body">
+        <table>
+
+            <tr>
+                <th>S.No</th>
+                <th>Holiday Name</th>
+                <th>Date</th>
+                <th>Is optional?</th>
+                <th>State</th>
+            </tr>
+
+            <tr *ngFor="let item of holidayList; let i = index">
+                <td>{{ (pageSize*(page-1)) + i+1.}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.date | date:'MMM d,y'}}</td>
+                <td>No</td>
+                <td>{{item.state_name}}</td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="5" *ngIf="holidayList.length == 0">No data found.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- <app-table-paginate (emitpage)="getPaginate()"></app-table-paginate> -->

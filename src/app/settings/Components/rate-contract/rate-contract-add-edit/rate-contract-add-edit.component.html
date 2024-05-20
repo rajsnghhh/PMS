@@ -1,0 +1,304 @@
+<form class="allfield" name="addPersonalInformation" #f="ngForm" (ngSubmit)="f.form.valid && personalSubmit()"
+    novalidate>
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Entry date</label>
+            <input type="date" class="form-control" name="entry_date"
+                [ngClass]="{ 'is-invalid': f.submitted && entry_date.errors }"
+                [(ngModel)]="addPersonalInformation.entry_date" required #entry_date="ngModel"
+                placeholder="">
+        </div>
+        <div *ngIf="f.submitted && entry_date.errors" class="invalid-feedback">
+            <div *ngIf="entry_date.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Effective Date</label>
+            <input type="date" class="form-control" name="effect_date"
+                [ngClass]="{ 'is-invalid': f.submitted && effect_date.errors }"
+                [(ngModel)]="addPersonalInformation.effect_date" required #effect_date="ngModel"
+                placeholder="">
+        </div>
+        <div *ngIf="f.submitted && effect_date.errors" class="invalid-feedback">
+            <div *ngIf="effect_date.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Item group</label>
+            <select class="form-select" name="item_group" [ngClass]="{ 'is-invalid': f.submitted && item_group.errors }"
+                (change)="setmaterialItemList()"
+                [(ngModel)]="addPersonalInformation.item_group" required #item_group="ngModel">
+                <option value="">Item group</option>
+                <option value="{{projectSite.id}}" *ngFor="let projectSite of materialTypeList">{{projectSite.name}}</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && item_group.errors" class="invalid-feedback">
+            <div *ngIf="item_group.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Account</label>
+            <select class="form-select" name="Account" [ngClass]="{ 'is-invalid': f.submitted && account.errors }"
+                [(ngModel)]="addPersonalInformation.account" required #account="ngModel">
+                <option value="">Select Account</option>
+                <option value="{{materialGroup.id}}" *ngFor="let materialGroup of accountList">{{materialGroup.name}}</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && account.errors" class="invalid-feedback">
+            <div *ngIf="account.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Site</label>
+            <select class="form-select" name="site" [ngClass]="{ 'is-invalid': f.submitted && site.errors }"
+                [(ngModel)]="addPersonalInformation.site" required #site="ngModel">
+                <option value="">Site</option>
+                <option value="{{projectSite.id}}" *ngFor="let projectSite of siteList">{{projectSite.site_name}}</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && site.errors" class="invalid-feedback">
+            <div *ngIf="site.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Item</label>
+            <select class="form-select" name="item" [ngClass]="{ 'is-invalid': f.submitted && item.errors }"
+                [(ngModel)]="addPersonalInformation.item" required #item="ngModel">
+                <option value="">Item</option>
+                <option value="{{projectSite.id}}" *ngFor="let projectSite of materialItemList">{{projectSite.material_name}}</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && item.errors" class="invalid-feedback">
+            <div *ngIf="item.errors['required']">This is required</div>
+        </div>
+    </div>
+</div>
+
+    <section class="box-section">
+        <div class="row">
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>Company Rate</label>
+                <input type="text" class="form-control" name="company_rate" amountNumber
+                    (change)="calculate()"
+                    [ngClass]="{ 'is-invalid': f.submitted && company_rate.errors }"
+                    [(ngModel)]="addPersonalInformation.company_rate" #company_rate="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>Company Discount</label>
+                <input type="text" class="form-control" name="company_discount" amountNumber
+                    (change)="calculate()"
+                    [ngClass]="{ 'is-invalid': f.submitted && company_discount.errors }"
+                    [(ngModel)]="addPersonalInformation.company_discount" #company_discount="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>Basic rate</label>
+                <input type="text" class="form-control" name="basic_rate" amountNumber
+                    disabled  (change)="calculate()"
+                    [ngClass]="{ 'is-invalid': f.submitted && basic_rate.errors }"
+                    [(ngModel)]="addPersonalInformation.basic_rate" #basic_rate="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>Tax Type</label>
+                <select class="form-select" name="tax_type" [ngClass]="{ 'is-invalid': f.submitted && tax_type.errors }"
+                    [(ngModel)]="addPersonalInformation.tax_type" #tax_type="ngModel">
+                    <option value="">Tax Type</option>
+                    <option value="{{projectSite.id}}" *ngFor="let projectSite of taxHeads">{{projectSite.name}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>Edu Percentage</label>
+                <input type="text" class="form-control" name="edu_percentage" amountNumber
+                    (change)="calculate()" 
+                    [ngClass]="{ 'is-invalid': f.submitted && edu_percentage.errors }"
+                    [(ngModel)]="addPersonalInformation.edu_percentage" #edu_percentage="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+        
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>Edu amount</label>
+                <input type="text" class="form-control" name="edu_amount" amountNumber
+                    disabled  (change)="calculate()"
+                    [ngClass]="{ 'is-invalid': f.submitted && edu_amount.errors }"
+                    [(ngModel)]="addPersonalInformation.edu_amount" #edu_amount="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>Excise Percentage</label>
+                <input type="text"  (change)="calculate()" class="form-control" name="excise_percentage" amountNumber
+                    [ngClass]="{ 'is-invalid': f.submitted && excise_percentage.errors }"
+                    [(ngModel)]="addPersonalInformation.excise_percentage" #excise_percentage="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>Excise amount</label>
+                <input type="text" class="form-control" name="excise_amount" amountNumber
+                    disabled
+                    [ngClass]="{ 'is-invalid': f.submitted && excise_amount.errors }"
+                    [(ngModel)]="addPersonalInformation.excise_amount" #excise_amount="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>SHE Percentage</label>
+                <input type="text" class="form-control" name="she_percentage" amountNumber
+                    (change)="calculate()"
+                    [ngClass]="{ 'is-invalid': f.submitted && she_percentage.errors }"
+                    [(ngModel)]="addPersonalInformation.she_percentage" #she_percentage="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+        
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>SHE amount</label>
+                <input type="text" class="form-control" name="she_amount" amountNumber
+                    disabled
+                    [ngClass]="{ 'is-invalid': f.submitted && she_amount.errors }"
+                    [(ngModel)]="addPersonalInformation.she_amount" #she_amount="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>CST Percentage</label>
+                <input type="text"  (change)="calculate()" class="form-control" name="cst_percentage" amountNumber
+                    [ngClass]="{ 'is-invalid': f.submitted && cst_percentage.errors }"
+                    [(ngModel)]="addPersonalInformation.cst_percentage" #cst_percentage="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>CST amount</label>
+                <input type="text" class="form-control" name="cst_amount" amountNumber
+                    disabled
+                    [ngClass]="{ 'is-invalid': f.submitted && cst_amount.errors }"
+                    [(ngModel)]="addPersonalInformation.cst_amount" #cst_amount="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>VAT Percentage</label>
+                <input type="text" class="form-control" name="vat_percentage" amountNumber
+                    (change)="calculate()"
+                    [ngClass]="{ 'is-invalid': f.submitted && vat_percentage.errors }"
+                    [(ngModel)]="addPersonalInformation.vat_percentage" #vat_percentage="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+        
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>VAT amount</label>
+                <input type="text" class="form-control" name="vat_amount" amountNumber
+                    disabled
+                    [ngClass]="{ 'is-invalid': f.submitted && vat_amount.errors }"
+                    [(ngModel)]="addPersonalInformation.vat_amount" #vat_amount="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>Total Rate</label>
+                <input type="text" class="form-control" name="total_rate" amountNumber
+                    disabled
+                    [ngClass]="{ 'is-invalid': f.submitted && total_rate.errors }"
+                    [(ngModel)]="addPersonalInformation.total_rate" #total_rate="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>CST Percentage</label>
+                <input type="text"  (change)="calculate()" class="form-control" name="discount" amountNumber
+                    [ngClass]="{ 'is-invalid': f.submitted && discount.errors }"
+                    [(ngModel)]="addPersonalInformation.discount" #discount="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>Invoice rate</label>
+                <input type="text" class="form-control" name="invoice_rate" amountNumber
+                    disabled
+                    [ngClass]="{ 'is-invalid': f.submitted && invoice_rate.errors }"
+                    [(ngModel)]="addPersonalInformation.invoice_rate" #invoice_rate="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>Additional discount</label>
+                <input type="text"  (change)="calculate()" class="form-control" name="additional_discount" amountNumber
+                    [ngClass]="{ 'is-invalid': f.submitted && additional_discount.errors }"
+                    [(ngModel)]="addPersonalInformation.additional_discount" #additional_discount="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="fieldValue">
+                <label>Net rate</label>
+                <input type="text" class="form-control" name="net_rate" amountNumber
+                    disabled
+                    [ngClass]="{ 'is-invalid': f.submitted && net_rate.errors }"
+                    [(ngModel)]="addPersonalInformation.net_rate" #net_rate="ngModel"
+                    placeholder="">
+            </div>
+        </div>
+
+
+
+    </div></section>
+
+
+    <div class="btnupdate">
+        <button type="submit" class="btn btn-primary" *ngIf="canvasScope == 'add' ">ADD</button>
+        <button type="submit" class="btn btn-primary" *ngIf="canvasScope == 'update' ">UPDATE</button>
+        <button type="button" class="btn btn-primary non-active-btn" (click)="CloseComponent()">CANCEL</button>
+    </div>
+</form>

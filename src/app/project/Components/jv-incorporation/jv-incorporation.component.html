@@ -1,0 +1,12 @@
+<button type="submit" *ngIf="ActionButtonName == 'Submit'" class="backbutton" (click)="jvIcorpView()">View</button>
+<button type="submit" *ngIf="ActionButtonName == 'Create'" class="backbutton" (click)="jvIcorpEdit()">Edit</button>
+<app-dynamic-forms 
+    (parentCompFun)="genarateTenderData($event)" 
+    [actionName]="ActionButtonName"
+    [formData]="formFieldList" 
+    [prefieldData]="prefieldData" 
+    [btnName]="buttonName" 
+    #dynamicForm
+    [chieldActionRequired]="false"
+    >
+</app-dynamic-forms>

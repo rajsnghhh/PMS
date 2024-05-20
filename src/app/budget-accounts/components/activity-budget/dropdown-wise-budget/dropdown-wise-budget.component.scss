@@ -1,0 +1,195 @@
+.dropdown-item {
+    cursor: pointer;
+}
+ 
+
+.table-container {
+    overflow: scroll;
+    padding: 10px;
+  
+    table {
+      border: 1px solid;
+  
+      th {
+        font-size: 12px;
+        border: 1px solid;
+        min-width: 140px;
+      }
+  
+      td {
+        font-size: 12px;
+        border: 1px solid;
+        padding: 0 !important;
+        border-radius: 0;
+  
+  
+        input,
+        select {
+          width: 100%;
+          border: none;
+          font-size: inherit;
+          border-radius: 0;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  
+  .add-new {
+    border: 1px solid;
+    background: unset;
+    color: blue;
+    position: absolute;
+    right: 12px;
+    top: -44px;
+    font-size: 11px;
+    border-radius: 18px;
+    padding: 1px 20px;
+  }
+  
+  /* width */
+  ::-webkit-scrollbar {
+    width: 7px;
+    border-radius: 15px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #e6e6e6;
+    border-radius: 15px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #5577ff;
+    border-radius: 15px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #5577ff;
+    border-radius: 15px;
+  }
+  
+  .relative-div {
+    position: relative;
+  }
+  
+  .parent-name-cell {
+    background-color: yellow;
+  }
+  
+  .child-name-cell {
+    background-color: lightgray;
+    margin-left: 20px;
+  }
+  
+  .child-name-other-cell {
+    background-color: lightgray;
+  }
+  
+  .sub-child-name-cell {
+    background-color: rgb(239, 72, 72);
+    margin-left: 40px;
+  }
+  
+  .sub-child-name-other-cell {
+    background-color: rgb(239, 72, 72);
+  }
+  
+  .header-row {
+    background-color: #5879ff;
+    color: white;
+  }
+  
+  img {
+    max-height: 20px;
+  }
+  
+  .action-column {
+    width: 10px;
+  }
+  
+  .context-menu {
+    position: fixed;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px 0;
+  }
+  
+  .context-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .context-menu li {
+    padding: 8px 15px;
+    cursor: pointer;
+  }
+  
+  .context-menu li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  span {
+    font-size: 24px;
+    padding: 10px;
+  }
+  
+  .budget_table input {
+    padding: 9px 10px !important;
+    border: 1px solid #ccc !important;
+    margin: 3px !important;
+    width: 94% !important;
+  }
+  
+  .budget_table input[readonly] {
+    background: #f2f2f2;
+  }
+  
+  .budget_table input:focus {
+    box-shadow: 0 0 3px 0 #5577ff !important;
+  }
+  
+  .budget_table th:first-child {
+    min-width: 120px !important;
+  }
+  
+  .budget_table th:nth-child(2) {
+    min-width: 300px !important;
+  }
+  
+  .budget_toggle {
+    position: relative;
+  
+    .toggle_icon {
+      background: #fff;
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      text-align: center;
+      top: 2%;
+      right: 25px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+  
+      p {
+        margin: 0;
+        font-size: 16px;
+      }
+    }
+  }
+  
+  textarea {
+    height: 34px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }

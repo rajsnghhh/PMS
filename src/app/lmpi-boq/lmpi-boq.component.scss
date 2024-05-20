@@ -1,0 +1,102 @@
+.main-container {
+    h3 {
+        background: #5577ff;
+        margin: 10px 0px 5px 0px;
+        font-size: 15px;
+        padding: 10px 5px;
+        color: white;
+    }
+
+    .lmpi-scope {
+        margin-top: 15px;
+
+        .lmpi-header {
+            display: flex;
+
+            section {
+                background: #d5e6ff;
+                border: 5px solid #0168ff;
+                font-size: 12px;
+                padding: 5px 10px;
+                font-weight: 500;
+                cursor: pointer;
+            }
+
+            .active {
+                background: #0168ff;
+                color: white;
+                font-weight: 700;
+            }
+        }
+
+        .lmpi-content {
+            min-height: 200px;
+            border: 5px solid #0168ff;
+            background: #0168ff;
+        }
+    }
+
+    .wbs-scope {
+
+        select,
+        .unit-span {
+            border: 1px solid #cbcbcb;
+            color: #000000;
+            display: block;
+            width: max-content;
+            margin: 5px 5px;
+            border-radius: 25px;
+            font-size: 12px;
+            padding: 10px 20px;
+            font-weight: 200;
+            max-width: 300px;
+        }
+        input {
+            border: none;
+            color: #2240bf;
+        }
+        button {
+            border: 1px solid #0168ff;
+            margin-right: 20px;
+            font-size: 14px;
+            padding: 10px 20px;
+            border-radius: 14px;
+            font-weight: 500;
+            color: #fff;
+            background: #2240bf;
+            margin: 0 5px;
+        }
+        section {
+            display: flex;
+        }
+    }
+}
+
+
+.disable {
+    pointer-events: none;
+    background: #E9E9E9;
+}
+
+label {
+    color: gray;
+    font-size: 12px;
+}
+
+button.disable {
+    display: none;
+}
+.wbs-imput-block {
+    background-color: #f3f3f3;
+    padding: 10px 10px;
+    margin: 0 3px;
+    border-radius: 8px;
+    height: fit-content;
+}
+
+.uom-section {
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    margin-top: 35px !important;
+}

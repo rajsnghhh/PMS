@@ -1,0 +1,380 @@
+<form name="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div class="px-5 pt-5">
+    <div class="d-flex justify-content-center">
+      <div class="col-md-6">
+        <div class="d-flex justify-content-start align-items-center">
+          <label class="col-md-2">
+            Vendor
+            <span
+              class="text-danger"
+              *ngIf="
+                Global.isInputRuleAvailable(formGroup, 'vendor', 'required')
+              "
+              >*</span
+            >
+          </label>
+          <div class="col-md-9">
+            <ng-select
+              [clearable]="false"
+              [readonly]="vendorAndBillSelected"
+              [class.is-invalid]="!Global.isInputValid(formGroup, 'vendor')"
+              placeholder="Select Vendor"
+              formControlName="vendor"
+            >
+              <ng-option *ngFor="let vendor of vendorList" [value]="vendor.id">
+                {{ vendor.vendor_master_data.vendor_name }}
+              </ng-option>
+            </ng-select>
+            <div
+              class="invalid-feedback"
+              *ngIf="!Global.isInputRuleValid(formGroup, 'vendor', 'required')"
+            >
+              <div>This field is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="d-flex justify-content-start align-items-center">
+          <label class="col-md-2">
+            Way Bill No.
+            <span
+              class="text-danger"
+              *ngIf="
+                Global.isInputRuleAvailable(
+                  formGroup,
+                  'way_bill_no',
+                  'required'
+                )
+              "
+              >*</span
+            >
+          </label>
+          <div class="col-md-9">
+            <ng-select
+              [readonly]="vendorAndBillSelected"
+              [clearable]="false"
+              [class.is-invalid]="
+                !Global.isInputValid(formGroup, 'way_bill_no')
+              "
+              placeholder="Select Way Bill"
+              formControlName="way_bill_no"
+            >
+              <ng-option *ngFor="let bill of wayBillList" [value]="bill.id">
+                {{ bill.way_bill_form_no + " | dt." + bill.issued_date }}
+              </ng-option>
+            </ng-select>
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                !Global.isInputRuleValid(formGroup, 'way_bill_no', 'required')
+              "
+            >
+              <div>This field is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="vendorAndBillSelected">
+      <div class="d-flex justify-content-center pt-3">
+        <div class="col-md-6">
+          <div class="d-flex justify-content-start align-items-center">
+            <label class="col-md-2">
+              Issued In
+              <span
+                class="text-danger"
+                *ngIf="
+                  Global.isInputRuleAvailable(
+                    formGroup,
+                    'issued_in',
+                    'required'
+                  )
+                "
+                >*</span
+              >
+            </label>
+            <div class="d-flex flex-column">
+              <div class="d-flex">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="issued_in"
+                    value="grn"
+                    id="grn"
+                  />
+                  <label class="form-check-label" for="grn"> GRN </label>
+                </div>
+                <div class="form-check mx-2">
+                  <input
+                    class="form-check-input"
+                    formControlName="issued_in"
+                    type="radio"
+                    formControlName="issued_in"
+                    value="purchase"
+                    id="purchase"
+                  />
+                  <label class="form-check-label" for="purchase">
+                    Purchase Bill
+                  </label>
+                </div>
+              </div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  !Global.isInputRuleValid(formGroup, 'issued_in', 'required')
+                "
+              >
+                <div>This field is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex justify-content-start align-items-center">
+            <label class="mx-2">
+              V. Date Period
+              <span
+                class="text-danger"
+                *ngIf="
+                  Global.isInputRuleAvailable(
+                    formGroup,
+                    'date__gte',
+                    'required'
+                  ) ||
+                  Global.isInputRuleAvailable(formGroup, 'date__lte', 'required')
+                "
+                >*</span
+              >
+            </label>
+            <div class="col-md-4">
+              <input
+                type="date"
+                formControlName="date__gte"
+                [class.is-invalid]="
+                  !Global.isInputValid(formGroup, 'date__gte')
+                "
+                class="form-control"
+                placeholder=""
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="
+                  !Global.isInputRuleValid(formGroup, 'date__gte', 'required')
+                "
+              >
+                <div>This field is required</div>
+              </div>
+            </div>
+            <span class="mx-2"></span>
+            <div class="col-md-4">
+              <input
+                type="date"
+                formControlName="date__lte"
+                [class.is-invalid]="!Global.isInputValid(formGroup, 'date__lte')"
+                class="form-control"
+                placeholder=""
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="
+                  !Global.isInputRuleValid(formGroup, 'date__lte', 'required')
+                "
+              >
+                <div>This field is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-start">
+        <div class="col-md-6">
+          <div class="d-flex justify-content-start align-items-center">
+            <label class="col-md-2">
+              Pending
+              <span
+                class="text-danger"
+                *ngIf="
+                  Global.isInputRuleAvailable(formGroup, 'pending', 'required')
+                "
+                >*</span
+              >
+            </label>
+            <div class="d-flex flex-column">
+              <div class="d-flex">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="pending"
+                    value="way_bill_form__isnull"
+                    id="way_bill_form__isnull"
+                  />
+                  <label class="form-check-label" for="way_bill_form__isnull">
+                    Not Linked to WAYBIll
+                  </label>
+                </div>
+                <div class="form-check mx-2">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    value="exclude__way_bill_form"
+                    formControlName="pending"
+                    id="exclude__way_bill_form"
+                  />
+                  <label class="form-check-label" for="exclude__way_bill_form">
+                    Linked to other WAYBIll
+                  </label>
+                </div>
+              </div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  !Global.isInputRuleValid(formGroup, 'issued_in', 'required')
+                "
+              >
+                <div>This field is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div *ngIf="!searchedDone" class="d-flex justify-content-center p-3">
+    <button
+      type="button"
+      (click)="onVendorWayBillSelect()"
+      class="btn btn-primary mx-1"
+    >
+      {{ vendorAndBillSelected ? "Search" : "Next Step" }}
+    </button>
+    <button type="button" (click)="backtolist()" class="btn btn-danger mx-1">
+      {{ vendorAndBillSelected ? "Reset" : "Close" }}
+    </button>
+  </div>
+</form>
+<ng-container *ngIf="searchedDone">
+  <div class="px-5 py-2">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Sr. No.</th>
+          <th scope="col">Vouc. Type</th>
+          <th scope="col">Vouc. No.</th>
+          <th scope="col">Vouc. Date</th>
+          <th scope="col">Party Bill No.</th>
+          <th scope="col">Party Bill Date</th>
+          <th scope="col">Items</th>
+          <th scope="col">Bill Amount</th>
+          <th scope="col">Linking</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container class="all_items?.length;else noDataFound">
+          <ng-container *ngFor="let item of all_items; let i = index">
+            <tr [ngClass]="{ selected: selected[i] }">
+              <td scope="row">{{ i + 1 }}</td>
+              <td>{{ formGroup.value.issued_in | uppercase }}</td>
+              <td>{{ item?.grn_no }}</td>
+              <td>{{ item?.date }}</td>
+              <td>{{ item?.party_bill_no }}</td>
+              <td>{{ item?.party_bill_date }}</td>
+              <td>
+                <ng-container *ngIf="item?.grn_items?.length">
+                  <table
+                    class="table table-bordered"
+                    style="margin-bottom: 0; padding-bottom: 0"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Item</th>
+                        <th>Unit</th>
+                        <th>Qty.</th>
+                        <th>Amt.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container *ngFor="let sub_item of item?.grn_items">
+                        <tr>
+                          <td>
+                            {{ sub_item?.material_details[0]?.material_code }}
+                          </td>
+                          <td>
+                            {{
+                              sub_item?.unit_of_mesurement_details[0]?.symbol
+                            }}
+                          </td>
+                          <td>{{ sub_item?.quantity }}</td>
+                          <td>{{ sub_item?.amount | currency : "INR" }}</td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </ng-container>
+                <ng-container *ngIf="item?.items?.length">
+                    <table
+                      class="table table-bordered"
+                      style="margin-bottom: 0; padding-bottom: 0"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Item</th>
+                          <th>Unit</th>
+                          <th>Qty.</th>
+                          <th>Amt.</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let sub_item of item?.items">
+                          <tr>
+                            <td>
+                              {{ sub_item?.material_details[0][0]?.material_code }}
+                            </td>
+                            <td>
+                              {{
+                                sub_item?.material_details[0][0]?.unit_of_mesurement_id
+                              }}
+                            </td>
+                            <td>{{ sub_item?.quantity }}</td>
+                            <td>{{ sub_item?.total_amount | currency : "INR" }}</td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </ng-container>
+              </td>
+              <td>{{ item?.total_amount | currency : "INR" }}</td>
+              <td class="text-center">
+                <input
+                  type="checkbox"
+                  [id]="i"
+                  [name]="item.id"
+                  (change)="getCheckboxValues($event, item.id, i)"
+                />
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+        <ng-template #noDataFound>
+          <tr>
+            <td colspan="9">NO ITEM FOUNDS</td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center pt-3">
+      <button
+        type="button"
+        (click)="saveLinking()"
+        class="btn btn-primary mx-1"
+      >
+        Save Linking
+      </button>
+      <button type="button" (click)="backtolist()" class="btn btn-danger mx-1">
+        Reset
+      </button>
+    </div>
+  </div>
+</ng-container>

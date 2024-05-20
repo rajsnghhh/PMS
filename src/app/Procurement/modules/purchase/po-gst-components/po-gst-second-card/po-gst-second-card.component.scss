@@ -1,0 +1,421 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .tabs {
+    display: flex;
+    background-color: #f2f2f2;
+  }
+  
+  .tab {
+    padding: 15px;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    border: 1px solid #ccc;
+  }
+  
+  .tab:hover {
+    background-color: #ddd;
+  }
+  
+  .tab-content {
+    display: none;
+    padding: 20px;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  /* Default tab open */
+  
+  fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    // padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+  }
+  
+  legend.scheduler-border {
+    border: 1px groove #ddd !important;
+    background-color: gray;
+    width: 200px;
+    color: #ddd;
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    font-family: ui-sans-serif;
+  }
+  
+  .createtable-section {
+    width: 100%;
+    margin: 25px 0px;
+  }
+  
+  .createtable-section table {
+    width: 100%;
+    padding-bottom: 35px;
+  }
+  
+  .createtable-section table td {
+    font-size: 12px;
+    padding: 11px 10px;
+    font-weight: 400;
+    min-height: 42px;
+    vertical-align: top;
+  }
+  
+  .createtable-section table td p {
+    font-size: 14px;
+    color: #666666;
+    font-weight: 400;
+  }
+  
+  .createtable-section table tr:nth-child(2n+1) {
+    background: #f8f8f8;
+  }
+  
+  .createtable-section table th {
+    background-color: #5577ff;
+    color: white;
+    font-size: 14px;
+    padding: 13px;
+    font-weight: 500;
+  }
+  
+  .createtable-section table td,
+  .createtable-section table th {
+    border: 1px solid #D9D9D9;
+  }
+  
+  .tablebtn-save {
+    background-image: linear-gradient(to right, #40d4e6, #6675fe);
+    font-weight: initial;
+    padding: 3px 16px;
+    border-radius: 28px;
+    border: none;
+    color: white;
+    line-height: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: baseline;
+    width: 81px;
+    text-decoration: none;
+  }
+  
+  .tablebtn-save .fa {
+    width: 13px;
+  }
+  
+  .tablebtn-save .fa img {
+    width: 13px;
+  }
+  
+  .tablebtn-save:hover {
+    background-image: linear-gradient(to right, #6675fe, #40d4e6);
+    color: white;
+  }
+  
+  .tablebg {
+    background: #f6f8ff;
+  }
+  
+  .vector-delete {
+    background-image: linear-gradient(to right, #df2929, #ea4646);
+    font-weight: initial;
+    padding: 5px 16px;
+    border-radius: 28px;
+    border: none;
+    color: white;
+    line-height: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: baseline;
+    width: auto;
+    text-decoration: none;
+  }
+  
+  .vector-delete .fa {
+    width: 11px;
+  }
+  
+  .vector-delete .fa img {
+    width: 11px;
+  }
+  
+  .vector-delete:hover {
+    background-image: linear-gradient(to right, #ea4646, #df2929);
+    color: white;
+  }
+  
+  .tab.active {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  /* Style the checkbox */
+  input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #3498db;
+    border-radius: 4px;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+  
+  /* Style the checkbox when checked */
+  input[type="checkbox"]:checked {
+    background-color: #3498db;
+    border-color: #3498db;
+  }
+  
+  /* Style the label */
+  label {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .narrow-column {
+    width: 50px;
+    /* Adjust the width as needed */
+  }
+  
+  
+  /* Tab 4 design for materials */
+  
+  .createtable-section {
+    width: 100%;
+    margin: 25px 0px;
+  }
+  
+  .createtable-section table {
+    width: 100%;
+    padding-bottom: 35px;
+  }
+  
+  .createtable-section table td {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    padding: 10px 10px;
+    font-weight: 300;
+    min-height: auto !important;
+    vertical-align: top;
+  }
+  
+  .createtable-section table td p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #666666;
+    font-weight: 300;
+  }
+  
+  .createtable-section table tr:nth-child(2n+1) {
+    background: #f8f8f8;
+  }
+  
+  .createtable-section table th {
+    background-color: #5577ff;
+    color: white;
+    font-size: 14px;
+    padding: 10px;
+    line-height: 15px;
+    font-weight: 500;
+  }
+  
+  .createtable-section table td,
+  .createtable-section table th {
+    border: 1px solid #D9D9D9;
+  }
+  
+  .tablegroup {
+    margin: 0px 0px;
+    padding: 0px 0px;
+    position: relative;
+  }
+  
+.createtable-section .form-control {
+    display: block;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 3px 4px;
+    font-size: 11px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #b1adad;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: #b9b8b8 1px solid;
+    border-radius: 0px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    margin-bottom: 9px;
+    appearance: auto;
+  }
+  .tablegroup label {
+    font-size: 14px;
+    color: #9D9D9D;
+    font-weight: 400;
+  }
+  
+  .tablegroup .form-control {
+    display: block;
+    width: 100%;
+    padding: 6px 6px;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #b1adad;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: #b9b8b8 1px solid;
+    border-radius: 5px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    margin-bottom: 9px;
+    appearance: auto;
+  }
+  
+  .tablegroup .form-control2 {
+    // background: #EFEFEF;
+    border: #EFEFEF 1px solid;
+  }
+  
+  .tablegroup-text {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    margin-top: 6px;
+  }
+  
+  .tablegroup-text .form-control2 {
+    background: #EFEFEF;
+    padding: 4px 8px;
+    border: #EFEFEF 1px solid;
+  }
+  
+  .tablegroup-text h2 {
+    margin: 0px 0px;
+    padding: 0px 0px;
+    font-size: 15px;
+    color: #666666;
+    font-weight: 500;
+  }
+  
+  .tablebg {
+    background: #f6f8ff;
+  }
+  
+  .tablebtn-save {
+    background-image: linear-gradient(to right, #40d4e6, #6675fe);
+    font-weight: initial;
+    padding: 0px 16px;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    line-height: 30px;
+    font-size: 13px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: baseline;
+    width: auto;
+    text-decoration: none;
+  }
+  
+  .tablebtn-save .fa {
+    width: 13px;
+  }
+  
+  .tablebtn-save .fa img {
+    width: 13px;
+  }
+  
+  .tablebtn-save:hover {
+    background-image: linear-gradient(to right, #6675fe, #40d4e6);
+    color: white;
+  }
+  
+  .vector-delete {
+    background-image: linear-gradient(to right, #df2929, #ea4646);
+    font-weight: initial;
+    padding: 0px 16px;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    line-height: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: baseline;
+    width: auto;
+    text-decoration: none;
+  }
+  
+  .vector-delete .fa {
+    width: 11px;
+  }
+  
+  .vector-delete .fa img {
+    width: 11px;
+  }
+  
+  .vector-delete:hover {
+    background-image: linear-gradient(to right, #ea4646, #df2929);
+    color: white;
+  }
+  
+  .chackbox-container {
+    display: flex;
+    align-items: baseline;
+  
+    p {
+      margin-left: 5px;
+    }
+  }
+  
+  .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+.addressform label{
+	font-size: 13px;
+	color: #333;
+	font-family: Arial, Helvetica, sans-serif;
+  }
+  .addressform .form-control {
+    display: block;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 7px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    appearance: auto;
+  }

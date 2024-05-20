@@ -1,0 +1,16 @@
+<div class="createrequisition-section">
+
+    <app-po-gst-top-card (parrentAction)="appendData($event)" [prefieldData]="prefieldData" [reload]="reload" [scope]="scope" [disableEdit]="disableEdit"></app-po-gst-top-card>
+    <app-po-gst-second-card (parrentAction)="appendData($event)" [prefieldData]="prefieldData" [reload]="reload" [scope]="scope" [disableEdit]="disableEdit"></app-po-gst-second-card>
+    <app-po-gst-table-data (parrentAction)="appendData($event)" [prefieldData]="prefieldData" [reload]="reload" [scope]="scope" [disableEdit]="disableEdit"></app-po-gst-table-data>
+    <app-po-gst-third-card (parrentAction)="appendData($event)" (actionButton)="actionButton($event)" [scope]="scope" [reload]="reload"  [prefieldData]="prefieldData" [disableEdit]="disableEdit"></app-po-gst-third-card>
+    <!-- <app-po-gst-fourth-card (parrentAction)="appendData($event)"></app-po-gst-fourth-card> -->
+
+    <div class="btd-section">
+        <button type="button" (click)="backtolist()" class="btn-cancel">CANCEL</button>
+        <button type="submit" *ngIf="scope == 'create' && !draftScope"  class="btn-save" (click)="createPurchaseOrder()">SAVE</button>
+        <!-- <button type="submit" *ngIf="draftScope && (scope == 'create' || scope == 'update')"  class="btn-save" (click)="createPurchaseOrder()">SAVE as Draft</button> -->
+        <button type="submit" *ngIf="scope == 'update' && !draftScope" class="btn-save" (click)="createPurchaseOrder()">UPDATE</button>
+        
+    </div>
+</div>

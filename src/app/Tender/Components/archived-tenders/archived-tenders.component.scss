@@ -1,0 +1,152 @@
+.scrollable-table {
+  margin-left: 275px !important;
+  width: fit-content !important;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  margin-left: 274px !important;
+  width: calc(100% - 487px) !important;
+}
+
+.posion-fixed-left {
+  position: absolute !important;
+  left: 100px !important;
+  min-height: 37px !important;
+}
+
+.posion-fixed-left-sno {
+  position: absolute !important;
+  left: 10px !important;
+  min-height: 37px !important;
+  min-width: 91px !important;
+}
+
+.posion-fixed-right {
+  min-width: 213px !important;
+  min-height: 37px !important;
+}
+
+.entities {
+  cursor: pointer;
+}
+
+.restore {
+  cursor: pointer;
+}
+
+.close {
+  color: red;
+  font-weight: 500 !important;
+}
+
+.custom-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  img {
+    max-height: 18px;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    padding: 5px;
+  }
+
+  .dropdown-content {
+    display: none;
+    right: -10px;
+    top: 26px;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 0px 11px 0px rgb(0 0 0 / 54%);
+    z-index: 1;
+    border-radius: 13px;
+    padding: 0px 5px;
+  }
+
+  .dropdown-content::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+    color: white;
+    position: absolute;
+    transform: rotateZ(180deg);
+    top: -2px;
+    zoom: 2;
+    right: 7px;
+  }
+
+  .img-container {
+    span {
+      display: inline-flex;
+      min-width: 165px;
+      padding: 3px 10px;
+      cursor: pointer;
+    }
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+}
+
+.export {
+  width: 15%;
+  height: 15%;
+  margin-right: 10px;
+}
+
+.downloadall {
+  padding: 5px 0px 5px 10px !important;
+  cursor: pointer;
+}
+
+td.posion-fixed-left.entities,
+.posion-fixed-left-sno.sln-height {
+  min-height: 41px !important;
+}
+
+// table button design
+.table_scroll {
+  position: relative;
+
+  .tablescroll_btn {
+    display: flex;
+    gap: 15px;
+    position: fixed;
+    right: 5%;
+    justify-content: flex-end;
+    bottom: 4%;
+    width: 50%;
+    z-index: 999;
+    margin-left: auto;
+
+    .btn_action {
+      width: 30px;
+      height: 30px;
+      background: #5577FF;
+      border-radius: 50%;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+  }
+}
+
+.smwidth {
+  min-width: 175px!important;
+}
+td.posion-fixed-right.restore {
+  background: #fff;
+}

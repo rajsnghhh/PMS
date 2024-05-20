@@ -1,0 +1,111 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Indirect Cost List</h2>
+
+        <div class="action-button-container">
+            <!-- <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown" aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>  
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span ><img src="assets/usermanagement/download_csv.png"  class="export" ><strong>CSV</strong> </span>
+                </li>
+            </ul>        -->
+            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight">ADD NEW <img src="assets/header/add.png" alt=""></button>
+        </div>
+    </div>
+
+
+    <div class="component-body">
+        <table>
+            <tr>
+                <th>S.No</th>
+                <th>Category</th>
+                <!-- <th>Name</th>
+                <th>Rate</th>
+                <th>UOM</th> -->
+                <th>Action </th>
+            </tr>
+
+            <tr *ngFor="let idc of setIDCViewList; let i = index" [attr.data-index]="i">
+
+                <td>{{ (pageSize*(page-1)) + i+1.}}</td>
+                <td>{{idc.category_name}}</td>
+                <!-- <td>{{idc.name}}</td>
+                <td>{{idc.rate}}</td>
+                <td>{{idc.uom}}</td> -->
+                <td>
+                    <div class="custom-section">
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                            <div class="dropdown-content">
+                                <div class="img-container">
+                                    <span class="mt-2" data-bs-toggle="offcanvas" (click)="editIDC(idc,'view')"
+                                        data-bs-target="#offcanvasRightLabeladdrole"><img
+                                            src="assets/usermanagement/view.png" alt=""
+                                            aria-controls="offcanvasRight">&nbsp;&nbsp;<label>View</label></span>
+                                    <span class="mt-2" data-bs-toggle="offcanvas" (click)="editIDC(idc,'edit')"
+                                        data-bs-target="#offcanvasRightLabeladdrole"><img
+                                            src="assets/usermanagement/edit.png" alt=""
+                                            aria-controls="offcanvasRight">&nbsp;&nbsp;<label>Edit</label></span>
+                                    <span data-bs-toggle="modal" (click)="deleteAlertIDC(idc)"
+                                        data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png"
+                                            alt="">&nbsp;&nbsp;<label>Delete</label></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            <tr class="text-center">
+                <td colspan="10" *ngIf="setIDCViewList.length == 0">No data found.</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLabeladdrole"
+        aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">{{addUpdateIDC}}</h5>
+            <button #closeButton type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close" (click)="closeModal()"></button>
+        </div>
+        <div class="offcanvas-body planbody" *ngIf="onEditIDCData">
+            <app-add-update-idc [onEditIDCData]="onEditIDCData" [onEditAccess]="onEditAccess" ></app-add-update-idc>
+        </div>
+        <div class="offcanvas-body planbody" *ngIf="!onEditIDCData">
+            <app-add-update-idc></app-add-update-idc>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this IDC ?
+            </div>
+            <div class="modal-footer">
+                <button (click)="deleteIDC()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

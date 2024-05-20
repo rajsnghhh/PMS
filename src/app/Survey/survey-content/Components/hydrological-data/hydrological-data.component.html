@@ -1,0 +1,94 @@
+<div class="survey-content-main">
+    <div class="survey-header">
+        <h1>Hydrological Data</h1>
+        <button (click)="proceedNext()">SKIP NOW</button>
+    </div>
+    <div class="survey-body">
+        <form>
+            <div class="flex-div">
+            <div class="mb-3">
+                <label for="timerange">Rainy Season</label>
+                <div class="custom-select-input">
+                    <input type="date" class="form-control" id="timerange"  placeholder="From">
+                    <input type="date" class="form-control" id="timerange"  placeholder="To">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="distance">Water Depth During Dry Season</label>
+                <div class="custom-select-input">
+                    <select class="form-select" aria-label="Default select">
+                        <option value="Foot" selected>Foot</option>
+                        <option value="M">M</option>
+                    </select>
+                    <input type="text" class="form-control" id="Distance"  placeholder="Add Here">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="distance">Water Depth During Rainy Season</label>
+                <div class="custom-select-input">
+                    <select class="form-select" aria-label="Default select">
+                        <option value="Foot" selected>Foot</option>
+                        <option value="M">M</option>
+                    </select>
+                    <input type="text" class="form-control" id="Distance"  placeholder="Add Here">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="timerange">Water Flow During Dry Season</label>
+                <select class="form-select" aria-label="Default select">
+                    <option selected disabled>None / Low / Medium / High </option>
+                    <option value="1">None</option>
+                    <option value="2">Low</option>
+                    <option value="3">Medium</option>
+                    <option value="3">High</option>
+                </select>
+            </div> 
+            <div class="mb-3">
+                <label for="timerange">Water Flow During Rainy Season</label>
+                <select class="form-select" aria-label="Default select">
+                    <option selected disabled>None / Low / Medium / High </option>
+                    <option value="1">None</option>
+                    <option value="2">Low</option>
+                    <option value="3">Medium</option>
+                    <option value="3">High</option>
+                </select>
+            </div> 
+            <div class="mb-3">
+                <label for="timerange">Water Affected by Tides</label>
+                <select class="form-select" aria-label="Default select">
+                    <option selected disabled>Yes / No </option>
+                    <option value="1">Yes</option>
+                    <option value="2">No</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="distance">Difference in Water Level Due to Tides</label>
+                <div class="custom-select-input">
+                    <select class="form-select" aria-label="Default select">
+                        <option value="KM">KM</option>
+                        <option value="Meter" selected>Meter</option>
+                    </select>
+                    <input type="text" class="form-control" id="Distance"  placeholder="Add Here">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="timerange">Source of Water</label>
+                <select class="form-select" aria-label="Default select">
+                    <option selected disabled>Rain / Dam / River /Sea </option>
+                    <option value="1">Rain</option>
+                    <option value="2">Dam</option>
+                    <option value="3">River</option>
+                    <option value="3">Sea</option>
+                </select>
+            </div> 
+            </div>
+            <div class="mb-3">
+                <label for="Remarks">Name of Dam / River / Sea</label>
+                <textarea class="form-control" id="Remarks" placeholder="Add Name" rows="2"></textarea>
+            </div>
+            
+            <button type="submit" (click)="proceedNext()" class="btn btn-primary">NEXT</button>
+            <button type="button" class="btn btn-primary non-active-btn" (click)="GoBack()">BACK</button>
+        </form>
+    </div>
+</div>

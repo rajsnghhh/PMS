@@ -1,0 +1,158 @@
+<form name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+
+    <div class="flex-div">
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.code  != '' }">
+            <input type="text" required class="form-control" id="add1" name="code " [(ngModel)]="addUser.code "
+                #code ="ngModel" [ngClass]="{ 'is-invalid': f.submitted && code .errors }">
+            <label class="floating-label">Model Code <span class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && code .errors" class="invalid-feedback">
+                <div *ngIf="code .errors['required']">Model Code is required</div>
+            </div>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.name != '' }">
+            <input type="text" class="form-control" required id="add1" name="name" [(ngModel)]="addUser.name"
+                #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.errors }">
+            <label class="floating-label">Model Name <span class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && name.errors" class="invalid-feedback">
+                <div *ngIf="name.errors['required']">Model Name is required</div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="brand_type "
+                [(ngModel)]="addUser.brand_type " #brand_type ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && brand_type .errors }">
+                <option selected disabled value="">Brand Type</option>
+                <option value="for_tyre">for_tyre</option>
+                <option value="for_battery">for_battery</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.brand_type  =='' }">Select
+                Brand type</label>
+            <div *ngIf="f.submitted && brand_type .errors" class="invalid-feedback">
+                <div *ngIf="brand_type .errors['required']">Please select Brand Type</div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <select class="form-select" required aria-label="Default select example" name="brand" [(ngModel)]="addUser.brand"
+                #brand="ngModel" [ngClass]="{ 'is-invalid': f.submitted && brand.errors }">
+                <option selected disabled value="">Select Brand</option>
+                <option *ngFor="let account of brandList" value={{account.id}}>{{account.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.brand =='' }">Select Brand<span class="asterisk">*</span>
+            </label>
+            <div *ngIf="f.submitted && brand.errors" class="invalid-feedback">
+                <div *ngIf="brand.errors['required']">Please select Brand</div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="item_type" [(ngModel)]="addUser.item_type"
+                #item_type="ngModel" [ngClass]="{ 'is-invalid': f.submitted && item_type.errors }">
+                <option selected disabled value="">Select Item Group</option>
+                <option *ngFor="let account of matGroupList" value={{account.id}}>{{account.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.item_type =='' }">Select Item Group
+            </label>
+            <div *ngIf="f.submitted && item_type.errors" class="invalid-feedback">
+                <div *ngIf="item_type.errors['required']">Please select Item Group</div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="item" [(ngModel)]="addUser.item"
+                #item="ngModel" [ngClass]="{ 'is-invalid': f.submitted && item.errors }">
+                <option selected disabled value="">Select Item</option>
+                <option *ngFor="let account of itemList" value={{account.id}}>{{account.material_name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.item =='' }">Select Item
+            </label>
+            <div *ngIf="f.submitted && item.errors" class="invalid-feedback">
+                <div *ngIf="item.errors['required']">Please select Item</div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <select class="form-select" required aria-label="Default select example" name="uom" [(ngModel)]="addUser.uom"
+                #uom="ngModel" [ngClass]="{ 'is-invalid': f.submitted && uom.errors }">
+                <option selected disabled value="">Select Stock Unit </option>
+                <option *ngFor="let account of unitList" value={{account.id}}>{{account.formal_name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.uom =='' }">Select Stock Unit <span class="asterisk">*</span>
+            </label>
+            <div *ngIf="f.submitted && uom.errors" class="invalid-feedback">
+                <div *ngIf="uom.errors['required']">Please select Stock Unit</div>
+            </div>
+        </div>
+        <div class="mb-3">
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.warranty_days != ''}">
+            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                class="form-control"  id="add1" name="warranty_days" [(ngModel)]="addUser.warranty_days" #warranty_days="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && warranty_days.errors }">
+            <label class="floating-label">Warranty Days</label>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.warranty_km  != ''}">
+            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                class="form-control"  id="add1" name="warranty_km " [(ngModel)]="addUser.warranty_km " #warranty_km ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && warranty_km .errors }">
+            <label class="floating-label">Warranty KM.</label>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.load_capacity  != ''}">
+            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                class="form-control"  id="add1" name="load_capacity " [(ngModel)]="addUser.load_capacity " #load_capacity ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && load_capacity .errors }">
+            <label class="floating-label">Load Capacity</label>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.total_run  != ''}">
+            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                class="form-control" required id="add1" name="total_run " [(ngModel)]="addUser.total_run " #total_run ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && total_run .errors }">
+            <label class="floating-label">Total Run</label>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.ply_rating  != ''}">
+            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                class="form-control"  id="add1" name="ply_rating " [(ngModel)]="addUser.ply_rating " #ply_rating ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && ply_rating .errors }">
+            <label class="floating-label">Ply Rating</label>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.casing  != ''}">
+            <input type="text"
+                class="form-control" id="add1" name="casing " [(ngModel)]="addUser.casing " #casing ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && casing .errors }">
+            <label class="floating-label">Casing</label>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.tread  != ''}">
+            <input type="text"
+                class="form-control"  id="add1" name="tread " [(ngModel)]="addUser.tread " #tread ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && tread .errors }">
+            <label class="floating-label">Tread</label>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.tread_dpth  != ''}">
+            <input type="text"
+                class="form-control"  id="add1" name="tread_dpth " [(ngModel)]="addUser.tread_dpth " #tread_dpth ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && tread_dpth .errors }">
+            <label class="floating-label">Tread Depth</label>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.size  != ''}">
+            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                class="form-control" required id="add1" name="size " [(ngModel)]="addUser.size " #size ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && size .errors }">
+            <label class="floating-label">Size</label>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addUser.grip  != ''}">
+            <input type="text"
+                class="form-control" id="add1" name="grip " [(ngModel)]="addUser.grip " #grip ="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && grip .errors }">
+            <label class="floating-label">Grip</label>
+        </div>
+
+    </div>
+
+    
+    <div class="action-button-container">
+       <button type="submit" class="btn btn-primary" *ngIf="scope == 'add'">SAVE</button>
+       <button type="submit" class="btn btn-primary" *ngIf="scope == 'edit'">UPDATE</button>
+       <button type="button" class="btn btn-primary non-active-btn" (click)="resetADD(f)">BACK</button>
+    </div>
+</form>

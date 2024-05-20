@@ -1,0 +1,322 @@
+<form name="addMaterial" #f="ngForm" (ngSubmit)="f.form.valid && addnewMaterial()" novalidate>
+
+    <div class="flex-div">
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addMaterial.materialtype != '' }">
+            <input type="text" class="form-control" id="add1" name="materialtype" [(ngModel)]="addMaterial.materialtype"
+                #materialtype="ngModel" >
+            <label class="floating-label">Enter Material Type </label>
+            <!-- <div *ngIf="f.submitted && materialtype.errors" class="invalid-feedback">
+                <div *ngIf="materialtype.errors['required']">Name is required </div>
+            </div> -->
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addMaterial.name != '' }">
+            <input type="text" class="form-control" id="add1" required name="name" [(ngModel)]="addMaterial.name"
+                #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.errors }">
+            <label class="floating-label">Enter Name <span class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && name.errors" class="invalid-feedback">
+                <div *ngIf="name.errors['required']">Name is required </div>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addMaterial.description != '' }">
+            <input type="text" class="form-control" id="add1" name="description"
+                [(ngModel)]="addMaterial.description" #description="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && description.errors }">
+            <label class="floating-label">Material Description </label>
+            <!-- <div *ngIf="f.submitted && description.errors" class="invalid-feedback">
+                <div *ngIf="description.errors['required']">Material Description is required</div>
+            </div> -->
+        </div>
+
+
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="mtype" [(ngModel)]="addMaterial.mtype"
+                (change)="typeChange(addMaterial.mtype);generateKey('')" #mtype="ngModel" required
+                [ngClass]="{ 'is-invalid': f.submitted && mtype.errors }">
+                <option selected disabled value="">Select Material Group</option>
+                <option *ngFor="let type of materialTypeList" value={{type.id}}>{{type.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.mtype =='' }">Select Material
+                Group <span class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && mtype.errors" class="invalid-feedback">
+                <div *ngIf="mtype.errors['required']">Please Select Material Group</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="msubtype"
+                [(ngModel)]="addMaterial.msubtype" (change)="generateKey('')" #msubtype="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && msubtype.errors }">
+                <option selected disabled value="">Select Material Sub Group</option>
+                <option *ngFor="let subtype of materialSubTypeList" value={{subtype.id}}>{{subtype.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.msubtype =='' }">Select
+                Material Sub Group </label>
+            <!-- <div *ngIf="f.submitted && msubtype.errors" class="invalid-feedback">
+                <div *ngIf="msubtype.errors['required']">Please Select Material Sub Group</div>
+            </div> -->
+        </div>
+
+
+        <div class="mb-3">
+            <!-- <select class="form-select" aria-label="Default select example" name="hsn_code"
+                [(ngModel)]="addMaterial.hsn_code" #hsn_code="ngModel" required
+                [ngClass]="{ 'is-invalid': f.submitted && hsn_code.errors }">
+                <option selected disabled value="">Select HSN</option>
+                <option value="{{hsnData.id}}" *ngFor="let hsnData of HSN_List">{{hsnData.hsn_code}}</option>
+            </select> -->
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.hsncode =='' }">HSN
+                </label>
+
+                <input type="text" class="form-control" name="hsncode" [(ngModel)]="addMaterial.hsncode"
+                #hsncode="ngModel">
+            <!-- <div *ngIf="f.submitted && hsn_code.errors" class="invalid-feedback">
+                <div *ngIf="hsn_code.errors['required']">Please select HSN code</div>
+            </div> -->
+        </div>
+
+        <!-- <div class="mb-3" [ngClass]="{ 'float-now': addMaterial.code != '' }">
+            <input type="text" class="showOnly" disabled name="groupcode" [(ngModel)]="addMaterial.groupcode">
+            <input type="text" class="showOnly" disabled name="subGroupCode" [(ngModel)]="addMaterial.subGroupCode">
+            <input type="text"
+                style=" position: absolute; top: 35px; padding: 0; border: none; background: transparent;display: none; "
+                name="code" [(ngModel)]="addMaterial.code" #code="ngModel">
+
+            <input type="text" numbersOnly class="form-control customCode"
+                (change)="generateKey(addMaterial.materialCode)" name="materialCode"
+                 [(ngModel)]="addMaterial.code">
+            <label class="floating-label customfloat">Material Code </label>
+            <div *ngIf="f.submitted && code.errors" class="invalid-feedback">
+                <div *ngIf="code.errors['required']">Code is required</div>
+            </div>
+        </div> -->
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addMaterial.code != '' }">
+            <input [disabled]="true" type="text" numbersOnly class="form-control customCode"
+                name="materialCode"
+                 [(ngModel)]="addMaterial.code">
+            <label class="floating-label customfloat">Material Code </label>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addMaterial.sapcode != '' }">
+            <input type="text" class="form-control" name="sapcode" [(ngModel)]="addMaterial.sapcode"
+                #sapcode="ngModel" [ngClass]="{ 'is-invalid': f.submitted && sapcode.errors }">
+            <label class="floating-label">Material SAP Code</label>
+            <div *ngIf="f.submitted && sapcode.errors" class="invalid-feedback">
+                <div *ngIf="sapcode.errors['required']">SAP Code is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3 eachfield" *ngIf="this.scope == 'add'">
+            <input type="file" required class="form-control" name="imagefile" [(ngModel)]="addMaterial.imagefile"
+            #imagefile="ngModel" [ngClass]="{ 'is-invalid': f.submitted && imagefile.errors }" accept="image/*" (change)="uploadFile($event)"
+                placeholder="">
+                <div *ngIf="f.submitted && imagefile.errors" class="invalid-feedback">
+                    <div *ngIf="imagefile.errors['required']">File is required</div>
+                </div>    
+        </div>
+        <div class="mb-3 eachfield" *ngIf="this.scope == 'edit'">
+            <input type="file" class="form-control" name="imagefile" [(ngModel)]="addMaterial.imagefile"
+            #imagefile="ngModel" accept="image/*" (change)="uploadFile($event)"
+                placeholder="">   
+            <a *ngIf="addMaterial.imagefile" href="{{environment.API_URL1 + addMaterial.imagefile}}" target="_blank"><img src="assets/icons/eye.png"></a> 
+        </div>
+
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addMaterial.nature != '' }">
+            <input type="text" class="form-control" name="nature" [(ngModel)]="addMaterial.nature"
+                #nature="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nature.errors }">
+            <label class="floating-label">Material Technical Specification(S)</label>
+            <div *ngIf="f.submitted && nature.errors" class="invalid-feedback">
+                <div *ngIf="nature.errors['required']">Please select Material Technical Specification(S)</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="gst_tax"
+                [(ngModel)]="addMaterial.gst_tax" #gst_tax="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && gst_tax.errors }">
+                <option selected disabled value="">Select GST Tax</option>
+                <option value="{{tax.id}}" *ngFor="let tax of taxHeads">{{tax.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.gst_tax =='' }">Select GST
+                Tax </label>
+            <!-- <div *ngIf="f.submitted && gst_tax.errors" class="invalid-feedback">
+                <div *ngIf="gst_tax.errors['required']">Please select GST Tax</div>
+            </div> -->
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addMaterial.part_no != '' }">
+            <input type="text" class="form-control" name="part_no" [(ngModel)]="addMaterial.part_no" #part_no="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && part_no.errors }">
+            <label class="floating-label">Part No </label>
+        </div>
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="costhead"
+                [(ngModel)]="addMaterial.costhead" (change)="costheadChange(addMaterial.costhead)" #costhead="ngModel"
+                 [ngClass]="{ 'is-invalid': f.submitted && costhead.errors }">
+                <option selected disabled value="">Select Material Cost Head</option>
+                <option *ngFor="let typehead of materialCostHeadList" value={{typehead.id}}>{{typehead.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.costhead =='' }">Select
+                Material Cost Head </label>
+            <!-- <div *ngIf="f.submitted && costhead.errors" class="invalid-feedback">
+                <div *ngIf="costhead.errors['required']">Please Select Material Cost Head</div>
+            </div> -->
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="subcosthead"
+                [(ngModel)]="addMaterial.subcosthead" #subcosthead="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && subcosthead.errors }">
+                <option selected disabled value="">Select Material Sub Cost Head</option>
+                <option *ngFor="let subtype of materialSubCostHeadList?.material_sub_cost_head" value={{subtype.id}}>
+                    {{subtype.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.subcosthead =='' }">Select
+                Material Sub Cost Head </label>
+            <!-- <div *ngIf="f.submitted && subcosthead.errors" class="invalid-feedback">
+                <div *ngIf="subcosthead.errors['required']">Please select Material Sub Cost Head</div>
+            </div> -->
+        </div>
+        
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="uom" [(ngModel)]="addMaterial.uom"
+                (change)="uomChange(addMaterial.uom)" #uom="ngModel" required
+                [ngClass]="{ 'is-invalid': f.submitted && uom.errors }">
+                <option selected disabled value="">Select UOM</option>
+                <option *ngFor="let unitmeasure of uomList" value={{unitmeasure.id}}>{{unitmeasure.symbol}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.uom =='' }">Select UOM <span
+                    class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && uom.errors" class="invalid-feedback">
+                <div *ngIf="uom.errors['required']">Please Select UOM</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="seconduom"
+                [(ngModel)]="addMaterial.seconduom" #seconduom="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && seconduom.errors }">
+                <option value="" selected disabled>Select 2nd UOM</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.seconduom =='' }">2nd UOM
+                Required</label>
+            <!-- <div *ngIf="f.submitted && seconduom.errors" class="invalid-feedback">
+                <div *ngIf="seconduom.errors['required']">2nd Unit of Measurement is required</div>
+            </div> -->
+        </div>
+    </div>
+    <!-- <div class="flex-div" *ngIf="addMaterial.seconduom=='Yes'">
+        <div class="mainuomtable">
+            <div class="allfield" *ngFor="let md of KeyScopesData; let i=index">
+                <div class="mb-3" [ngClass]="{ 'float-now': md.primary_rate != '' }">
+                    <div class="fieldValue firstunit prmrate">
+                        <input required type="text" name="primary_rate{{i}}" amountNumber #primary_rate="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && primary_rate.errors }"
+                            [(ngModel)]="KeyScopesData[i].primary_rate" class="form-control">
+                        <label class="floating-label primryfloat">Primary Rate</label>
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <div class="fieldValue firstunit symbl">
+                        <input type="text" disabled [(ngModel)]="prevuomList" [ngModelOptions]="{standalone: true}"
+                            [ngModelOptions]="{standalone: true}" class="form-control">
+                    </div>
+                </div>
+                <span class="oftext"> = </span>
+                <div class="mb-3" [ngClass]="{ 'float-now': md.conversion_rate != '' }">
+                    <div class="fieldValue firstunit conrate">
+                        <input type="text" required name="conversion_rate{{i}}" #conversion_rate="ngModel" amountNumber
+                            [ngClass]="{ 'is-invalid': f.submitted && conversion_rate.errors }"
+                            [(ngModel)]="KeyScopesData[i].conversion_rate" class="form-control">
+                        <label class="floating-label convfloat">Conversion Rate</label>
+                    </div>
+                </div>
+                <div class="mb-3" [ngClass]="{ 'float-now': md.second_uom != '' }">
+                    <div class="fieldValue firstunit scnduom">
+                        <select class="form-select" name="second_uom{{i}}" required #second_uom="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && second_uom.errors }"
+                            [(ngModel)]="KeyScopesData[i].second_uom" aria-label="Default select example">
+                            <option value="" selected disabled>Select 2nd(UOM)</option>
+                            <option *ngFor="let unitmeasure of uomList" value={{unitmeasure.id}}>{{unitmeasure.symbol}}
+                            </option>
+                        </select>
+                        <label class="floating-label scnduomfloat"
+                            [ngClass]="{'insideDropdown': addMaterial.uom =='' }">2nd UOM
+                        </label>
+
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <div class="fieldValue">
+                        <div class="AddBtn" (click)="addKeyScope()" *ngIf="i==0"><img src="assets/icons/add1.png"
+                                alt="">
+                        </div>
+                        <div class="RemoveBtn" (click)="removeKeyScope(i)" *ngIf="i!=0"><img
+                                src="assets/icons/minus.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="flex-div">
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addMaterial.leadtime != '' }">
+            <input type="text" class="form-control" name="leadtime" numbersOnly
+                [(ngModel)]="addMaterial.leadtime" #leadtime="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && leadtime.errors }">
+            <label class="floating-label">Material Material Lead Time (In Days)</label>
+            <div *ngIf="f.submitted && leadtime.errors" class="invalid-feedback">
+                <div *ngIf="leadtime.errors['required']">Material Lead Time is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="valuation"
+                [(ngModel)]="addMaterial.valuation" #valuation="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && valuation.errors }">
+                <option value="" selected disabled>Select Material Valuation</option>
+                <option value="FIFO">FIFO</option>
+                <option value="LIFO">LIFO</option>
+                <option value="Weighted Average Rate">Weighted Average Rate</option>
+                <option value="Average Rate">Average Rate</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.valuation =='' }">Select
+                Material Valuation </label>
+            <!-- <div *ngIf="f.submitted && valuation.errors" class="invalid-feedback">
+                <div *ngIf="valuation.errors['required']">Material Valuation is required</div>
+            </div> -->
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addMaterial.tolerance != '' }">
+            <input type="text" amountNumber class="form-control" name="tolerance"
+                [(ngModel)]="addMaterial.tolerance" #tolerance="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && tolerance.errors }">
+            <label class="floating-label">Material Tolerance in (%) </label>
+            <!-- <div *ngIf="f.submitted && tolerance.errors" class="invalid-feedback">
+                <div *ngIf="tolerance.errors['required']">Tolerance is required</div>
+            </div> -->
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addMaterial.remarks != '' }">
+            <input type="text" class="form-control" id="add1" name="remarks" [(ngModel)]="addMaterial.remarks"
+                #remarks="ngModel">
+            <label class="floating-label">Remarks </label>
+            <!-- <div *ngIf="f.submitted && materialtype.errors" class="invalid-feedback">
+                <div *ngIf="materialtype.errors['required']">Name is required </div>
+            </div> -->
+        </div>
+    </div>
+
+<div class="btd-section">
+    <button type="submit" class="btn btn-primary" *ngIf="scope == 'add'">SAVE</button>
+    <button type="submit" class="btn btn-primary" *ngIf="scope == 'edit'">UPDATE</button>
+    <button type="button" class="btn btn-primary non-active-btn" (click)="resetADD(f)">BACK</button>
+</div>
+</form>

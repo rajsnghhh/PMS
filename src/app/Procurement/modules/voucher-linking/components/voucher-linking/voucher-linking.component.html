@@ -1,0 +1,66 @@
+<div class="cards-list">
+
+    <div class="card" (click)="gotoProjectSite('mr','issue')" *ngIf="moduleScope == 'store'">
+        <div class="card_image">
+            <img src="assets/icons/linking1.png" />
+        </div>
+        <div class="card_title">
+            <p>MR & ISSUE</p>
+        </div>
+    </div>
+
+    <div class="card" (click)="gotoProjectSite('mr','indent')" *ngIf="moduleScope == 'store' || moduleScope == 'purchase'">
+        <div class="card_image">
+            <img src="assets/icons/linking1.png" />
+        </div>
+        <div class="card_title">
+            <p>MR & INDENT</p>
+        </div>
+    </div>
+
+    <div class="card" (click)="gotoProjectSite('indent','grn')"  *ngIf="moduleScope == 'store' || moduleScope == 'purchase'">
+        <div class="card_image">
+            <img src="assets/icons/linking2.png" />
+        </div>
+        <div class="card_title">
+            <p>INDENT & GRN</p>
+        </div>
+    </div>
+
+    <div class="card" (click)="gotoProjectSite('indent','po')"  *ngIf="moduleScope == 'purchase'">
+        <div class="card_image">
+            <img src="assets/icons/linking2.png" />
+        </div>
+        <div class="card_title">
+            <p>INDENT & PO</p>
+        </div>
+    </div>
+
+    <div class="card" (click)="gotoProjectSite('po','grn')"  *ngIf="moduleScope == 'store' || moduleScope == 'purchase'">
+        <div class="card_image">
+            <img src="assets/icons/linking3.png" />
+        </div>
+        <div class="card_title">
+            <p>PO & GRN</p>
+        </div>
+    </div>
+
+    <div class="card" (click)="gotoProjectSite('grn','purchase')"  *ngIf="moduleScope == 'purchase'">
+        <div class="card_image">
+            <img src="assets/icons/linking2.png" />
+        </div>
+        <div class="card_title">
+            <p>GRN & Purchase</p>
+        </div>
+    </div>
+
+    <div class="card" (click)="gotoProjectSite('po','purchase')"  *ngIf="moduleScope == 'purchase'">
+        <div class="card_image">
+            <img src="assets/icons/linking3.png" />
+        </div>
+        <div class="card_title">
+            <p>PO & Purchase</p>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,124 @@
+<form name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+
+    <div class="flex-div">
+        <div class="mb-3 empinfowth">
+            <select class="form-select" aria-label="Default select example" name="parent" [(ngModel)]="addUser.parent"
+                #parent="ngModel" required [ngClass]="{ 'is-invalid': f.submitted && parent.errors }">
+                <option selected disabled value="">Select Material Group</option>
+                <option value="{{materialData.id}}" *ngFor="let materialData of materialList">{{materialData.name}}
+                </option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.parent =='' }">Select Material
+                Group</label>
+            <div *ngIf="f.submitted && parent.errors" class="invalid-feedback">
+                <div *ngIf="parent.errors['required']">Please select material group</div>
+            </div>
+        </div>
+    </div>
+    <div class="flex-div">
+
+
+        <div class="mb-3 empinfowth" [ngClass]="{ 'float-now': addUser.name != '' }">
+            <input type="text" class="form-control" required id="add1" name="name" [(ngModel)]="addUser.name"
+                #name="ngModel" (keyup)="generateKey()" [ngClass]="{ 'is-invalid': f.submitted && name.errors }">
+            <label class="floating-label">Enter Sub Group Name <span class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && name.errors" class="invalid-feedback">
+                <div *ngIf="name.errors['required']">Sub Group Name is required</div>
+            </div>
+        </div>
+        <div class="mb-3 empinfowth" [ngClass]="{ 'float-now': addUser.code != '' }">
+            <input type="text" class="form-control" required [disabled]="scope == 'edit'" id="add1" name="code"
+                [(ngModel)]="addUser.code" #code="ngModel" [ngClass]="{ 'is-invalid': f.submitted && code.errors }">
+            <label class="floating-label">Enter Code <span class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && code.errors" class="invalid-feedback">
+                <div *ngIf="code.errors['required']">Code is required</div>
+            </div>
+        </div>
+
+
+        <div class="mb-3 empinfowth" [ngClass]="{ 'float-now': addUser.tolerance_level != ''}">
+            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control"
+                required id="add1" name="tolerance_level" [(ngModel)]="addUser.tolerance_level"
+                #tolerance_level="ngModel" [ngClass]="{ 'is-invalid': f.submitted && tolerance_level.errors }">
+            <label class="floating-label">Enter Tolerance Level <span class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && tolerance_level.errors" class="invalid-feedback">
+                <div *ngIf="tolerance_level.errors['required']">Tolerance Level is required</div>
+            </div>
+        </div>
+        <div class="mb-3 empinfowth">
+            <select class="form-select" aria-label="Default select example" name="purchase_account "
+                [(ngModel)]="addUser.purchase_account " #purchase_account="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && purchase_account .errors }">
+                <option selected disabled value="">Purchase A/C</option>
+                <option *ngFor="let account of accountNameList" value={{account.id}}>{{account.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.purchase_account  =='' }">Select
+                Purchase A/C</label>
+        </div>
+        <div class="mb-3 empinfowth">
+                <select class="form-select" aria-label="Default select example" name="sales_account "
+                    [(ngModel)]="addUser.sales_account " #sales_account="ngModel"
+                    [ngClass]="{ 'is-invalid': f.submitted && sales_account .errors }">
+                    <option selected disabled value="">Sales A/C</option>
+                    <option *ngFor="let account of accountNameList" value={{account.id}}>{{account.name}}</option>
+                </select>
+                <label class="floating-label-select"
+                    [ngClass]="{'insideDropdown': addUser.sales_account  =='' }">Select
+                    Sales A/C</label>
+        </div>
+
+        <div class="mb-3 empinfowth">
+            <select class="form-select" aria-label="Default select example" name="item_type"
+                [(ngModel)]="addUser.item_type" #item_type="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && item_type.errors }">
+                <option selected disabled value="">Select Item Type</option>
+                <option value="{{item.id}}" *ngFor="let item of itemTypelist">{{item.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.item_type =='' }">Select Item
+                type</label>
+            <div *ngIf="f.submitted && item_type.errors" class="invalid-feedback">
+                <div *ngIf="item_type.errors['required']">Please select Item Type</div>
+            </div>
+        </div>
+
+        <div class="mb-3 empinfowth">
+            <select class="form-select" aria-label="Default select example" name="gst_tax" [(ngModel)]="addUser.gst_tax"
+                #gst_tax="ngModel" [ngClass]="{ 'is-invalid': f.submitted && gst_tax.errors }">
+                <option selected disabled value="">Select GST Tax</option>
+                <option value="{{item.id}}" *ngFor="let item of gstlist">{{item.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.gst_tax =='' }">Select GST
+                Tax</label>
+            <div *ngIf="f.submitted && gst_tax.errors" class="invalid-feedback">
+                <div *ngIf="gst_tax.errors['required']">Please Select GST Tax</div>
+            </div>
+        </div>
+
+        <div class="mb-3 mt-2 empinfowth">
+            <input type="checkbox" id="productiontype" name="productiontype" [(ngModel)]="pruductiontypeCheck"
+                [ngModelOptions]="{standalone: true}">
+            <label for="productiontype">Is Production Type Group</label>
+        </div>
+
+        <div class="mb-3 empinfowth" *ngIf="pruductiontypeCheck">
+            <select class="form-select" aria-label="Default select example" name="production_type"
+                [(ngModel)]="addUser.production_type" #production_type="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && production_type.errors }">
+                <option selected disabled value="">Select Production Type</option>
+                <option value="{{item.id}}" *ngFor="let item of productionTypeValue">{{item.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.production_type =='' }">Select
+                Production Type</label>
+            <div *ngIf="f.submitted && production_type.errors" class="invalid-feedback">
+                <div *ngIf="production_type.errors['required']">Please Select Production Type</div>
+            </div>
+        </div>
+
+    </div>
+
+<div class="action-button-container">
+    <button type="submit" class="btn btn-primary" *ngIf="scope == 'add'">SAVE</button>
+    <button type="submit" class="btn btn-primary" *ngIf="scope == 'edit'">UPDATE</button>
+    <button type="button" class="btn btn-primary non-active-btn" (click)="resetADD(f)">BACK</button>
+</div>
+</form>

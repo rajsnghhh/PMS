@@ -1,0 +1,22 @@
+.flex-div input{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    border-radius: 0px;
+    font-size: 12px;
+    padding: 7px 20px;
+    line-height: 23px;
+    }
+.flex-div select {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    border-radius: 0px;
+    font-size: 12px;
+    padding: 7px 20px;
+    line-height: 23px;
+    }
+.action-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 7px;
+    }

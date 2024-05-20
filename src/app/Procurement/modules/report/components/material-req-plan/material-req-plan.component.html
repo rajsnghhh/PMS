@@ -1,0 +1,61 @@
+<div class="main-container">
+    <div class="component-body">
+        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+            <div class="row middleRow">
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Project&nbsp;</label>
+                        <select class="form-control" [disabled]="true" id="sel1" name="project"
+                            [(ngModel)]="form.project" required #project="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && project.errors }">
+                            <option disabled>Please Select</option>
+                            <option *ngFor="let projectData of projectList" value="{{projectData.id}}">
+                                {{projectData.project_data[1].value}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && project.errors" class="invalid-feedback">
+                            <div *ngIf="project.errors['required']">This is required !</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Material</label>
+                        <ng-select class="form-control" placeholder="Type atleast 3 character to search data"
+                            name="item" [(ngModel)]="itemName">
+                            <ng-option *ngFor="let material of itemList"
+                                [value]="material.id">{{material.material_name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btd-section text-center mt-2 mb-2">
+                <button type="submit" class="btn btn-info">Search</button>
+            </div>
+        </form>
+        <table class="table">
+            <tr>
+                <th>Sl No.</th>
+                <th>Description</th>
+                <th>Unit</th>
+                <th>Total Project Requirement</th>
+                <th>Total Received as on Date</th>
+                <th>Balance</th>
+            </tr>
+            <tr *ngFor="let plan of materialReqPlan;let i=index">
+                <td>{{i+1}}.</td>
+                <td>{{plan.material_name}}</td>
+                <td>{{plan.material_uom_symbol}}</td>
+                <td>{{plan.total_budgeted_quantity}}</td>
+                <td>{{plan.total_grn_received_quantity}}</td>
+                <td>{{plan.total_budgeted_quantity - plan.total_grn_received_quantity}}</td>
+            </tr>
+            <tr class="text-center" *ngIf="materialReqPlan.length==0">
+               <td colspan="6">No Data Found!</td>
+            </tr>
+        </table>
+    </div>
+</div>

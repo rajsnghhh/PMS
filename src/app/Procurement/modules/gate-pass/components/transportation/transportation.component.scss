@@ -1,0 +1,56 @@
+.createrequisition-section {
+	margin: 12px 12px;
+	padding: 0px 0px;
+	width: auto;
+	position: relative;
+   }
+.eye-docicon{
+	width: 13px;
+}
+.main-body-container table th {
+font-size: 14px !important;
+padding: 10px !important;
+font-weight: 600 !important;
+line-height: 15px !important;
+}
+.main-body-container table td {
+font-family: Arial, Helvetica, sans-serif;
+font-weight: 300 !important;
+font-size: 12px !important;
+line-height: 15px !important;
+}
+.btn-success {
+	--bs-btn-color: #fff;
+	--bs-btn-bg: #198754;
+	--bs-btn-border-color: #198754;
+	--bs-btn-hover-color: #fff;
+	--bs-btn-hover-bg: #157347;
+	--bs-btn-hover-border-color: #146c43;
+	--bs-btn-focus-shadow-rgb: 60,153,110;
+	--bs-btn-active-color: #fff;
+	--bs-btn-active-bg: #146c43;
+	--bs-btn-active-border-color: #13653f;
+	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+	--bs-btn-disabled-color: #fff;
+	--bs-btn-disabled-bg: #198754;
+	--bs-btn-disabled-border-color: #198754;
+	border-radius: 4px;
+	font-size: 14px;
+	text-transform: uppercase;
+	padding: 3px 8px;
+}
+.form-control {
+	display: block;
+	width: 100%;
+	padding: 3px 4px;
+	font-size: 11px;
+	font-weight: 300;
+	line-height: 1.5;
+	color: var(--bs-body-color);
+	appearance: none;
+	background-color: var(--bs-body-bg);
+	background-clip: padding-box;
+	border: var(--bs-border-width) solid var(--bs-border-color);
+	border-radius: 0px;
+	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}

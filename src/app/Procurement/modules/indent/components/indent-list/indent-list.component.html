@@ -1,0 +1,123 @@
+<div class="main-container">
+    <div class="component-header">
+        <div class="action-button-container">
+            <button data-bs-toggle="offcanvas" *ngIf="indentCheckboxIds.length>0" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="poByIDs()">Purchase Order<img src="assets/header/add.png"
+            alt=""></button>
+        </div>
+        <div class="action-button-container">
+            <button data-bs-toggle="offcanvas" *ngIf="indentCheckboxIds.length>0" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="pogstByIDs()">Purchase Order(GST)<img src="assets/header/add.png"
+            alt=""></button>
+        </div>
+        <div class="action-button-container">
+            <button data-bs-toggle="offcanvas" *ngIf="indentCheckboxIdsForGrn.length>0" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="createGRN()">GRN<img src="assets/header/add.png"
+            alt=""></button>
+        </div>
+        <div class="action-button-container">
+            <button data-bs-toggle="offcanvas" *ngIf="indentCheckboxIdsForGrn.length>0" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="createGRNgst()">GRN (with GST)<img src="assets/header/add.png"
+            alt=""></button>
+        </div>
+    </div>
+</div>
+<div class="createrequisition-section">
+    <div class="main-body-container table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Sr No</th>
+                    <th scope="col">Indent No. Date forward to Site</th>
+                    <th scope="col">Store Section Indent For Location</th>
+                    <th scope="col">Item Code</th>
+                    <th scope="col">Item Group, <br> Item  <br> Req. For</th>
+                    <th scope="col">Indent Qty.</th>
+                    <th scope="col">Sanction Qty.</th>
+                    <!-- <th scope="col">Received Quotation</th> -->
+                    <th scope="col">PO Qty.</th>
+                    <th scope="col">GRN Qty.</th>
+                    <th *ngIf="!indentListView">Purchase Order</th>
+                    <th *ngIf="!indentListView">GRN</th>
+                    <th>Doc</th>
+                    <th scope="col">Sanction Status</th>
+                    <th *ngIf="indentListView" scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of procurementIndentRequest;index as i">
+                    <td># {{i+1}}</td>
+                    <td>Indent No : <b>{{item.indent_no ?item.indent_no:'-'}}</b><br>
+                        {{item.created_at.substring(0,10).split('-').reverse().join('-')}}</td>
+                    <td>{{item.site_location}}</td>
+                    <td>{{item.item_code}}</td>
+                    <td>
+                        Item Group : {{item.item_group}}
+                        <br>
+                        Item : {{item['item-name']}}
+                        <br>
+                        <br>
+                        Req. For : {{item.requested_for_type}}
+                    </td>
+                    <td>{{item.indent_qty}}</td>
+                    <td>{{item.sanc_qty}}</td>
+                    <!-- <td>{{item?.quot_count}}</td> -->
+                    <td>{{item.po_qty}}</td>
+                    <td>{{item.grn_qty}}</td>
+                    <td *ngIf="!indentListView">
+                        <input type="checkbox" class="form-check-input" value="" (change)="onIndentCheckboxChange($event, item.indent_item_id)" *ngIf="item.sanc_status=='approved' && item.po_qty < item.sanc_qty && item.sanc_qty != 0">
+                        <br/>
+                        {{item.po_request_code}}
+                    </td>
+                    <td *ngIf="!indentListView">
+                        <input type="checkbox" class="form-check-input" value="" (change)="onIndentCheckboxForGrnChange($event, item.indent_item_id)" *ngIf="item.sanc_status=='approved' && item.po_qty < item.sanc_qty && item.sanc_qty != 0">
+                        <br/>
+                        {{item.grn_request_code}}
+                    </td>
+                    <td>
+                        <section *ngIf="item.doc">
+                            <a href="{{docUrl}}{{attachmentdata}}" target="_blank"
+                                *ngFor="let attachmentdata of item.doc"><img src="assets/icons/eye.png" class="eye-docicon" alt=""></a>
+                        </section>
+                    </td>
+                    <td class="text-capitalize"><b>{{item.sanc_status}}</b></td>
+                    <td *ngIf="indentListView">
+                        <div class="table-action">
+                            <img src="assets/icons/dots.png" alt="">
+                            <ul>
+
+                                <li (click)="viewByID(item.indent_id)">View <span><img src="assets/icons/eye.png"
+                                            alt=""></span></li>
+
+                                <li (click)="updateByID(item.indent_id)" *ngIf="item.sanc_status=='pending'">Update
+                                    <span><img src="assets/icons/amend.jpg" alt=""></span>
+                                </li>
+
+                                <li (click)="checkByID(item.indent_id)" 
+                                    *ngIf="item.sanc_status=='pending' && is_Indent_Checker">Check <span><img src="assets/icons/amend.jpg" alt=""></span>
+                                </li>
+
+                                <li (click)="approveRejectByID(item.indent_id)" 
+                                    *ngIf="item.sanc_status=='checked' && is_Indent_Approver">Approve / Reject <span><img src="assets/icons/amend.jpg" alt=""></span>
+                                </li>
+                                
+                                <li (click)="printByID(item.indent_id)">Print Preview
+                                    <span><img src="assets/icons/print.png" alt=""></span>
+                                </li>
+                                
+                                <!-- <li>Delete <span><img src="assets/icons/delete.png" alt=""></span></li> -->
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="!indentListView" class="text-center">
+                    <td colspan="13" *ngIf="procurementIndentRequest.length == 0">No data found.</td>
+                </tr>
+                <tr *ngIf="indentListView" class="text-center">
+                    <td colspan="12" *ngIf="procurementIndentRequest.length == 0">No data found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<app-table-paginate (emitpage)="getPaginate()" *ngIf="procurementIndentRequest.length > 0"></app-table-paginate>

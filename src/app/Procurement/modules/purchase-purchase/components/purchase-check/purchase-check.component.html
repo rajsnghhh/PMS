@@ -1,0 +1,54 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Purchase Check</h2>
+
+        <div class="action-button-container">
+            <button *ngIf="purchaseCheckboxIds.length>0" class="btn btn-primary" (click)="approveSubmit()">Check</button>
+            <button [routerLink]="['/pms/purchase/procurement/purchase']">List</button>
+        </div>
+    </div>
+
+    <div class="component-body">
+        <table>
+            <tr>
+                <th>Sr.No</th>
+                <th>Pur. No.</th>
+                <th>Date</th>
+                <th>GRN No.</th>
+                <th>Vendor</th>
+                <th>Tax Type</th>
+                <th>Tax Amount</th>
+                <th>Excise Amount</th>
+                <th>Bill Amount</th>
+                <th>Status</th>
+            </tr>
+
+                <tr *ngFor="let transport of purchaseListDetails; let j = index">
+                    <td>{{(pageSize*(page-1)) + j+1}}.</td>
+                    <td>{{ transport.request_code }}</td>
+                    <td>{{ transport.date }}</td>
+                    <td> <span *ngIf="transport.grn_details">{{ transport?.grn_details[0].request_code}}</span></td>
+                    <td>{{ transport.vendor_details.vendor_name }}</td>
+                    <td>{{ transport.tax_type }}</td>
+                    <td>{{ transport.total_item_tax_amount  |currency:"INR":"symbol"}}</td>
+                    <td>{{ transport.total_item_excise_tax_amount  |currency:"INR":"symbol"}}</td>
+                    <td>{{ transport.total_item_total_amount  |currency:"INR":"symbol"}}</td>    
+                    <td>
+                        <div class="mb-3">
+                            <input *ngIf="transport.status=='pending'" type="checkbox" class="form-check-input" value="" (change)="onPurchaseCheckboxChange($event, transport.id)">
+                            <br/>
+                            {{ transport.status }}
+                        </div>
+                    </td>
+    
+                </tr>
+
+            <tr class="text-center">
+                <td colspan="10" *ngIf="purchaseListDetails.length == 0">No data found.</td>
+            </tr>
+
+        </table>
+
+    </div>
+</div>
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

@@ -1,0 +1,146 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Item Wise Vendor List</h2>
+    </div>
+</div>
+<form  [formGroup]="ItemWiseVenderForm">
+<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" id="table_blue" class="Table_Border">
+    <tbody>
+        <tr>
+            
+            <td  class="tabletd" align="right">Vendor Name </td>
+            <td  class="tabletd" colspan="2"><input name="account_id" type="text" value="" formControlName="vendor_name" class="form-control"></td>
+
+            <td class="tabletd" align="right">List Type </td>
+            <td class="tabletd" colspan="2">
+                <input name="optfeesstatus" type="radio" [(ngModel)]="radioCheck" [ngModelOptions]="{standalone: true}"  value="INDENT" checked="checked">
+                Vendor Wise Item List &nbsp;
+                <input name="optfeesstatus" type="radio" [(ngModel)]="radioCheck" [ngModelOptions]="{standalone: true}" value="PURCHASE">
+                Item Wise Vendor List &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td class="tabletd" align="right"> Item Group</td>
+            <td class="tabletd">
+                <!-- <select  class="form-control" name="requested_material_group" [(ngModel)]="form.requested_items.requested_material_group" required #requested_material_group="ngModel"  (change)="setMaterialSubGroup()">
+                    <option value="" disabled>Select Material Group</option>
+                    <option value="{{materialGroup}}" *ngFor="let materialGroup of materialGroupList">{{materialGroup}}</option>
+                </select> -->
+                <ng-select  class=""  name="requested_material_group" [(ngModel)]="form.requested_items.requested_material_group" [ngModelOptions]="{standalone: true}" required #requested_material_group="ngModel" (change)="setMaterialSubGroup()">
+                    <ng-option *ngFor="let materialGroup of materialGroupList" [value]="materialGroup">{{materialGroup}}</ng-option>
+                </ng-select>
+            </td>
+            <td class="tabletd" align="right"> Item Sub Group</td>
+            <td class="tabletd" >
+                <!-- <select class="form-control" name="requested_material_sub_group" [(ngModel)]="form.requested_items.requested_material_sub_group" required #requested_material_sub_group="ngModel" (change)="setMaterialList()">
+                    <option value="" disabled>Select Material Sub Group</option>
+                    <option value="{{subGroup}}" *ngFor="let subGroup of form.requested_items.MaterilSubGroupList">{{subGroup}}</option>
+                </select> -->
+                <ng-select  class="" name="requested_material_sub_group" [(ngModel)]="form.requested_items.requested_material_sub_group" [ngModelOptions]="{standalone: true}" required #requested_material_sub_group="ngModel" (change)="setMaterialList()">
+                    <ng-option *ngFor="let subGroup of form.requested_items.MaterilSubGroupList" [value]="subGroup">{{subGroup}}</ng-option>
+                </ng-select>
+            </td>
+            <td class="tabletd" align="right">Item</td>
+            <td class="tabletd">
+                <!-- <select   class="form-control" name="requested_material" [(ngModel)]="form.requested_items.requested_material" required #requested_material="ngModel" (change)="setMaterialMasterData(false)">
+                    <option value="" disabled>Select Material</option>
+                    <option value="{{masterData.id}}" *ngFor="let masterData of form.requested_items.MaterilFilterList">{{masterData.material_name}} </option>
+                </select> -->
+                <ng-select  class="" name="requested_material" [(ngModel)]="form.requested_items.requested_material" [ngModelOptions]="{standalone: true}" required #requested_material="ngModel" (change)="setMaterialMasterData(false)">
+                    <ng-option *ngFor="let masterData of form.requested_items.MaterilFilterList" [value]="masterData.id">{{masterData.material_name}}</ng-option>
+                </ng-select>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td  class="tabletd" align="right">Delivery Days Between </td>
+            <td  class="tabletd">
+                <input name="min_days" formControlName="delivery_days_from" type="number" class="Numeric_Text" value="0" size="8"
+                    maxlength="9"  style="width:100px;">
+                To
+                <input name="max_days" formControlName="delivery_days_to" type="number" class="Numeric_Text" value="0" size="8"
+                    maxlength="9"  style="width:100px;">
+
+            </td>
+
+
+            <td  class="tabletd" align="right">Rate Between </td>
+            <td  class="tabletd" align="left"><input name="min_rate" type="number" formControlName="rate_from" class="Numeric_Text"
+                    value="0" size="8" maxlength="9"
+                    style="width:100px;">
+                To
+                <input name="max_rate" type="number" formControlName="rate_to" class="Numeric_Text" value="0" size="8" maxlength="9"
+                    style="width:100px;">
+            </td>
+        </tr>
+        <tr align="center"> <td class="tabletd" colspan="4">&nbsp;</td></tr>
+        <tr>
+            <td colspan="6" align="center"><div align="center">
+                <button type="button" class="srch" (click)="serachVendor()">Search</button>
+                </div>
+            </td>
+          </tr>
+    </tbody>
+</table>
+</form>
+
+<div class="component-body">
+    <div *ngIf="radioCheck=='INDENT'" class="scrollable-table-container" style="padding: 20px;">
+        <table>
+            <tr>
+                <th>S No.</th>
+                <th>Vendor Name</th>
+                <th>Contact No.</th>
+                <th>Address</th>
+                <th>Item Group Name</th>
+                <th>Item Name</th>
+                <th>Rate</th>
+                <th>Delivery Days</th>
+            </tr>
+            <tr *ngFor="let item of itemWiseVendorList;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{item.vendor_name}}</td>
+                <td>{{item.vendor_contact_no}}</td>
+                <td>{{item.vendor_address}}</td>
+                <td>{{item.item_type}}</td>
+                <td>{{item.item_name}}</td>
+                <td>{{item.rate}}</td>
+                <td>{{item.delivery_days}}</td>
+            </tr>
+            <tr class="text-center" *ngIf="itemWiseVendorList?.length==0">
+                <td colspan="8">No data found.</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div *ngIf="radioCheck=='PURCHASE'" class="scrollable-table-container" style="padding: 20px;">
+        <table>
+            <tr>
+                <th>S No.</th>
+                <th>Item Group Name</th>
+                <th>Item Name</th>
+                <th>Vendor Name</th>
+                <th>Contact No.</th>
+                <th>Address</th>
+                <th>Rate</th>
+                <th>Delivery Days</th>
+            </tr>
+            <tr *ngFor="let item of itemWiseVendorList;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{item.item_type}}</td>
+                <td>{{item.item_name}}</td>
+                <td>{{item.vendor_name}}</td>
+                <td>{{item.vendor_contact_no}}</td>
+                <td>{{item.vendor_address}}</td>
+                <td>{{item.rate}}</td>
+                <td>{{item.delivery_days}}</td>
+            </tr>
+            <tr class="text-center" *ngIf="itemWiseVendorList?.length==0">
+                <td colspan="8">No data found.</td>
+            </tr>
+
+        </table>
+    </div>
+</div>

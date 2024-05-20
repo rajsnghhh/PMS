@@ -1,0 +1,22 @@
+<div class="pagination-section">
+    <div class="paginations perpage">
+        <table>
+            <tr>
+              <td><label>Counts per page</label>
+                <select [(ngModel)]="perPageCount" (change)="changePerPageItem()">
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="100">100</option>
+                </select></td>
+            </tr>
+          </table>
+    <!-- </div>
+    <div class="paginations"> -->
+        <img src="assets/icons/paginate-prev.png" [ngClass]="{'disabled': pages.length == 1 || activePage == 1}" (click)="goPrev()" title="Previous">
+        <ul>
+            <li *ngFor="let page of pages;let i=index" [ngClass]="{'active': page == activePage,'hidepage': page <= activePage-3 || page > activePage+2}" (click)="geotoPage(page)"> {{ page }}</li>
+        </ul>
+        <img src="assets/icons/paginate-next.png" [ngClass]="{'disabled': pages.length == 1 || activePage == pages.length}" (click)="goNext()" title="Next">
+    </div>
+</div>

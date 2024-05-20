@@ -1,0 +1,60 @@
+<form role="form" [formGroup]="editcompanyForm" (ngSubmit)="scrollToFirstInvalidControl()">
+
+    <div class="work-card1">
+      <div class="flex-div">
+    <div class="mb-3" [ngClass]="{ 'float-now': addStructure.structurecode != '' }">
+      <input type="text" class="form-control" id="role" formControlName="structcode" [(ngModel)]="addStructure.structurecode"
+        [ngClass]="displayFieldCss(editcompanyForm,'structcode')">
+        <label class="floating-label">Enter Structure Code <span class="asterisk">*</span></label>
+  
+      <div class="required" *ngIf="isFieldValid(editcompanyForm,'structcode')">
+        <span class="text-danger" *ngIf="editcompanyForm.get('structcode')?.errors?.['required']">Structure Code is required</span>
+      </div>
+    </div>
+
+    <div class="mb-3" [ngClass]="{ 'float-now': addStructure.structurename != '' }">
+        <input type="text" class="form-control" id="role" formControlName="structname" [(ngModel)]="addStructure.structurename"
+          [ngClass]="displayFieldCss(editcompanyForm,'structname')">
+          <label class="floating-label">Enter Structure Name <span class="asterisk">*</span></label>
+    
+        <div class="required" *ngIf="isFieldValid(editcompanyForm,'structname')">
+          <span class="text-danger" *ngIf="editcompanyForm.get('structname')?.errors?.['required']">Structure Name is required</span>
+        </div>
+      </div>
+
+
+      </div>
+
+      <div class="mb-3 fileUpload" *ngIf="addStructure.structureimg==''">
+        <div class="file btn btn-lg btn-primary">
+            <span><img src="assets/icons/upload.png" alt=""></span>
+            Upload Structure
+            <input type="file" name="imagefile" accept="image/*" (change)="uploadFile($event)">
+        </div>
+    </div>
+    <div class="flex-div" *ngIf="addStructure.structureimg!=''">
+        <div class="mb-3">
+            <div class="custom-section">
+                <div class="dropdown">
+                    <img class="Profile_image" src="{{addStructure.structureimg}}" alt="">
+                    <div class="dropdown-content">
+                        <div class="img-container">
+                            <img style="width: 24px; height: 26px;" src="assets/usermanagement/delete.png" alt=""
+                                (click)="imageDelete()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3 fileUpload Filepic">
+            <div class="file btn btn-lg btn-primary">
+                <span><img src="assets/icons/upload.png" alt=""></span>
+                Upload Structure
+                <input type="file" name="imagefile" accept="image/*" (change)="uploadFile($event)">
+            </div>
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary" (click)="addnewCompany()">UPDATE</button>
+    </div>
+  </form>

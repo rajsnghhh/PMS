@@ -1,0 +1,218 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2> Party Bill Accept</h2>
+        <div class="action-button-container">
+            <button hidden [routerLink]="['/pms/store/procurement/party-bill-receive/add']">ADD NEW <img
+                    src="assets/header/add.png" alt=""></button>
+        </div>
+    </div>
+
+    <div class="component-body">
+        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSearch()" novalidate>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Received Date</label><input type="date" name="received_date__gte "
+                            [(ngModel)]="form.received_date__gte " #received_date__gte="ngModel" placeholder=""
+                            id="received_date__gte" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>To</label><input type="date" name="received_date__lte "
+                            [(ngModel)]="form.received_date__lte " #received_date__lte="ngModel" placeholder=""
+                            id="received_date__lte" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Bill Date</label><input type="date" name="bill_date__gte "
+                            [(ngModel)]="form.bill_date__gte " #bill_date__gte="ngModel" placeholder=""
+                            id="bill_date__gte" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>To</label><input type="date" name="bill_date__lte " [(ngModel)]="form.bill_date__lte "
+                            #bill_date__lte="ngModel" placeholder="" id="bill_date__lte" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Party Name</label>
+                        <select id="sel1" class="form-control" ngDefaultControl name="vendor "
+                            [(ngModel)]="form.vendor " #vendor="ngModel">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                                {{vendor.vendor_master_data.vendor_name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Bill No.</label>
+                        <input type="text" name="manual_slip_number" [(ngModel)]="form.manual_slip_number "
+                            #manual_slip_number="ngModel" placeholder="" id="manual_slip_number" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Bill Type</label>
+                        <select id="sel1" class="form-control" ngDefaultControl name="bill_type "
+                            [(ngModel)]="form.bill_type " #bill_type="ngModel">
+                            <option value="">-- select --</option>
+                            <option value="purchase">Purchase</option>
+                            <option value="journal">Journal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Site</label>
+                        <input type="text" class="form-control" [disabled]="true" [value]="localStorageData?.site_data?.site_name">
+                        <!-- <select id="sel1" class="form-control" ngDefaultControl name="site " [(ngModel)]="form.site "
+                            #site="ngModel">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                {{siteData.site_name}}</option>
+                        </select> -->
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="adform" ngDefaultControl name="status " [(ngModel)]="form.status " #status="ngModel">
+                        <label>Status</label>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="pending" name="typeradio" class="form-check-input"
+                                    id="status" name="status">
+                                Pending
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="checked" name="typeradio" class="form-check-input"
+                                    id="status" name="status">
+                                Checked
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="approved" name="typeradio" class="form-check-input"
+                                    id="status" name="status">
+                                Approved
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="rejected" name="typeradio" class="form-check-input"
+                                    id="status" name="status">
+                                Rejected
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="adform" ngDefaultControl name="voucher_status " [(ngModel)]="form.voucher_status "
+                        #voucher_status="ngModel">
+                        <label>Voucher Status</label>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="unpost" name="typeradio" class="form-check-input"
+                                    id="voucher_status" name="voucher_status">
+                                Unpost
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="post" name="typeradio" class="form-check-input"
+                                    id="voucher_status" name="voucher_status">
+                                Post
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="rejected" name="typeradio" class="form-check-input"
+                                    id="voucher_status" name="voucher_status">
+                                Rejected
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="corrected" name="typeradio" class="form-check-input"
+                                    id="voucher_status" name="voucher_status">
+                                Corrected
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btd-section">
+                <button type="submit" class="btn-save">Search</button>
+            </div>
+        </form>
+
+        <table class="table">
+            <tr>
+                <th>Sr No.</th>
+                <th>Rec No.</th>
+                <th>Rec Data</th>
+                <th>Bill No.</th>
+                <th>Bill Date</th>
+                <th>File No.</th>
+                <th>Site Name</th>
+                <th>Bill Type</th>
+                <th>Party Name</th>
+                <th>Nature of Work</th>
+                <th>Forward User</th>
+                <th>Rec. Status</th>
+                <th>Amount</th>
+                <th>Check</th>
+            </tr>
+            <tr *ngFor="let item of partBillList; let i =index">
+                <td>{{i+1}}.</td>
+                <td>{{item.sr_no}}</td>
+                <td>{{item.received_date | date:"dd-MM-yyyy"}}</td>
+                <td>{{item.manual_slip_number}}</td>
+                <td>{{item.bill_date | date:"dd-MM-yyyy"}}</td>
+                <td>{{item.file_no}}</td>
+                <td>{{item.site_details[0]?.site_name}}</td>
+                <td>{{item.bill_type}}</td>
+                <td>{{item.vendor_details.vendor_name}}</td>
+                <td>{{item.nature_of_work}}</td>
+                <td>{{item.forward_to_user_details[0]?.first_name}} {{item.forward_to_user_details[0]?.last_name}}</td>
+                <td>{{item.received_status}}</td>
+                <td>{{item.amount}}</td>
+                <td class="actionbutton">
+                    <input *ngIf="item.status!='approved' && item.status!='rejected'"
+                     type="checkbox" (change)="changeStatus()" name="checkStatus" id="" [(ngModel)]="item.checkStatus"
+                        [ngModelOptions]="{standalone: true}">
+                </td>
+            </tr>
+            <tr *ngIf="partBillList?.length==0">
+                <td class="text-center" colspan="14"> No Data Found!</td>
+            </tr>
+        </table>
+
+        <div class="row" *ngIf="selectedBill.length>0">
+
+            <div class="col-lg-6 col-md-6 col-6" *ngIf="isParty_Bill_Editor">
+                <div class="adform">
+                    <label>Forward to User</label>
+                    <select id="sel1" class="form-control" name="forward_to_user " [(ngModel)]="forward_to_user ">
+                        <option value="">-- select --</option>
+                        <option *ngFor="let request of userList" value="{{request.id}}">
+                            {{request.full_name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-6">
+                <button type="button" *ngIf="isParty_Bill_Editor" class="btn btn-primary menuItem" (click)="forwardTo()">Forward</button>
+                <button type="button" *ngIf="isParty_Bill_Approver" class="btn btn-primary menuItem" (click)="approveBill()">Receive</button>
+                <button type="button" *ngIf="isParty_Bill_Approver" class="btn btn-primary menuItem" (click)="rejectBill()">Rejected</button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,56 @@
+.common-footer {
+    position: fixed;
+    text-align: center;
+    background-color: #d9d9d9;
+    color: black;
+    width: 100%;
+    bottom: 0;
+    padding: 10px;
+    font-size: 12px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+
+    span {
+        color: #162efe;
+        margin-left: 4px;
+        cursor: pointer;
+    }
+}
+
+.product-main-body {
+    position: relative;
+    padding-bottom: 35px;
+}
+
+.hrms-main-body {
+    display: block;
+    height: calc(100vh - 98px);
+    max-height: calc(100vh - 98px);
+    overflow-y: scroll;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 0px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #6676FF;
+    border-radius: 0px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #6676FF;
+    border-radius: 0px;
+}

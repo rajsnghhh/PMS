@@ -1,0 +1,81 @@
+.invalid-feedback {
+    display: block;
+    opacity: 1 !important;
+    position: absolute;
+    font-size: 10px;
+}
+
+.form-control {
+    border-radius: 18px;
+    font-size: 15px;
+}
+
+
+
+
+
+.fieldValue label {
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 14px;
+    color: #666;
+    font-weight: 400;
+    margin: 0px 0px 10px 0px;
+    text-align: left;
+    width: 100%;
+    }
+
+
+
+.fieldValue .form-control{
+    display: block;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 8px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    appearance: auto;
+    margin: 0px 0px 10px 0px;
+    }
+
+
+
+
+
+::ng-deep .fieldValue .ng-select-container {
+    display: block;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    appearance: auto;
+    margin: 0px 0px 10px 0px;
+    }
+
+
+
+::ng-deep .btn-primary { margin-right: 5px;}   
+
+
+
+

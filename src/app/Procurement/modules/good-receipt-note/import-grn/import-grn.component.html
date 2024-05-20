@@ -1,0 +1,478 @@
+<!-- Upload File -->
+<div *ngIf="activefrom == 'importuser'">
+    <div class="header">
+        <label> Import Goods Receipt Note using your own file, or use our <a
+                href="assets/usermanagement/grnimport_format.xls" target="_blank" download>sample file.</a> </label>
+    </div>
+    <div class="upload" (click)="fileImport.click()">
+        <div class="filecard" *ngIf="!excelIcon">
+            <img src="assets/usermanagement/csv.png" alt="">
+        </div>
+        <div class="filecard2" *ngIf="excelIcon">
+            <img src="assets/usermanagement/tick.png" class="uploadsuccess" alt=""> &nbsp; {{filen}}
+        </div>
+        <input style="display: none" #attachments type="file"
+            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            (change)="uploadFile($event)" #fileImport>
+
+    </div>
+    <div class="format">
+        <p>&nbsp; Drop or upload your file here <br> &nbsp;&nbsp;&nbsp;
+            <strong> (.xls formats supported) </strong>
+        </p>
+    </div>
+
+    <button type="submit" class="btn btn-primary addbutton1" (click)="importUser()">UPLOAD</button>
+</div>
+
+
+
+<!-- Map the Uploaded Data -->
+<form role="form" [formGroup]="importForm">
+
+    <div *ngIf="activefrom == 'userlist'" class="table-header">
+        <div class="header">
+            <label> Map columns from your file to the right PMS fileds. </label>
+        </div>
+
+        <div class="table-data">
+            <ul class="list">
+                <li class="heading1">
+                    <div>PMS FIELD</div>
+                    <div></div>
+                    <div>FILE COLUMN</div>
+                    <div>MAPPED</div>
+                </li>
+
+                <li class="filecolumhead">
+                
+                    <span class="filecolum">Site ID <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example" [ngClass]="displayFieldCss(importForm,'site_id')" formControlName="site_id" [(ngModel)]="site_id">
+                            <option value="">Select </option>
+                            <option value="{{import.id}}" *ngFor="let import of siteList">{{import.site_name}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="site_id!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Date <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'date')" formControlName="date" [(ngModel)]="date">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="date!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Manual Slip No <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'manual_slip_no')" formControlName="manual_slip_no"
+                            [(ngModel)]="manual_slip_no">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="manual_slip_no!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt="">
+                    </div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Loaded Via <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'loaded_via')" formControlName="loaded_via"
+                            [(ngModel)]="loaded_via">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="loaded_via!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Job Site <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'job_site')" formControlName="job_site"
+                            [(ngModel)]="job_site">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="job_site!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Party Bill Amount <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'party_bill_amt')" formControlName="party_bill_amt"
+                            [(ngModel)]="party_bill_amt">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="party_bill_amt!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt="">
+                    </div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">E Way Bill No <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'e_way_bill_no')" formControlName="e_way_bill_no"
+                            [(ngModel)]="e_way_bill_no">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="e_way_bill_no!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt="">
+                    </div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Party Bill No <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'party_bill_no')" formControlName="party_bill_no"
+                            [(ngModel)]="party_bill_no">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="party_bill_no!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt="">
+                    </div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Party<span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'vendor')" formControlName="vendor"
+                            [(ngModel)]="vendor">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="vendor!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Challan No <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'challan_no')" formControlName="challan_no"
+                            [(ngModel)]="challan_no">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="challan_no!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Rst No <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'rst_no')" formControlName="rst_no"
+                            [(ngModel)]="rst_no">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="rst_no!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Transport Name <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'transporter')" formControlName="transporter"
+                            [(ngModel)]="transporter">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="transporter!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Lr No <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'lr_no')" formControlName="lr_no" [(ngModel)]="lr_no">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="lr_no!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Lr Date <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'lr_date')" formControlName="lr_date"
+                            [(ngModel)]="lr_date">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="lr_date!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Vehicle Number <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'carrying_vehicle_no')"
+                            formControlName="carrying_vehicle_no" [(ngModel)]="carrying_vehicle_no">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="carrying_vehicle_no!=''"><img src="assets/usermanagement/tick.png" class="maptick"
+                            alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Driver Name <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'driver_name')" formControlName="driver_name"
+                            [(ngModel)]="driver_name">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="driver_name!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Rate<span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'rate')" formControlName="rate" [(ngModel)]="rate">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="rate!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Remarks <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'remarks')" formControlName="remarks"
+                            [(ngModel)]="remarks">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="remarks!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Royalty Book No<span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'royalty_bk')" formControlName="royalty_bk"
+                            [(ngModel)]="royalty_bk">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="royalty_bk!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Royalty Rate<span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'royalty_rate')" formControlName="royalty_rate"
+                            [(ngModel)]="royalty_rate">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="royalty_rate!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+
+
+
+                <li class="filecolumhead">
+                    <span class="filecolum">Item <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'item')" formControlName="item" [(ngModel)]="item">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="item!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Received Quantity <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'received_quantity')"
+                            formControlName="received_quantity" [(ngModel)]="received_quantity">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="received_quantity!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt="">
+                    </div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Received Weight <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'received_weight')" formControlName="received_weight"
+                            [(ngModel)]="received_weight">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="received_weight!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt="">
+                    </div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Istp Royalty No <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'istp_royalty_no')" formControlName="istp_royalty_no"
+                            [(ngModel)]="istp_royalty_no">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="istp_royalty_no!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt="">
+                    </div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Amount <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'amount')" formControlName="amount"
+                            [(ngModel)]="amount">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="amount!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Royalty Date <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'royalty_date')" formControlName="royalty_date"
+                            [(ngModel)]="royalty_date">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="royalty_date!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt="">
+                    </div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Royalty No <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'royalty_no')" formControlName="royalty_no"
+                            [(ngModel)]="royalty_no">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="royalty_no!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Royalty Quantity <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'royalty_quantity')"
+                            formControlName="royalty_quantity" [(ngModel)]="royalty_quantity">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="royalty_quantity!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt="">
+                    </div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Istp Royalty Date <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'istp_date')" formControlName="istp_date"
+                            [(ngModel)]="istp_date">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="istp_date!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Challan Quantity <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'challan_quantity')"
+                            formControlName="challan_quantity" [(ngModel)]="challan_quantity">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="challan_quantity!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt="">
+                    </div>
+                </li>
+                <li class="filecolumhead">
+                    <span class="filecolum">Change Reason <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'change_reason')" formControlName="change_reason"
+                            [(ngModel)]="change_reason">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="change_reason!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt="">
+                    </div>
+                </li>
+
+                <li class="filecolumhead">
+                    <span class="filecolum">Party Bill Date <span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" aria-label="Default select example"
+                            [ngClass]="displayFieldCss(importForm,'party_bill_date')" formControlName="party_bill_date" [(ngModel)]="party_bill_date">
+                            <option value="">Select </option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="party_bill_date!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+            </ul>
+        </div>
+
+        <button type="submit" class="btn btn-primary addbutton" (click)="mapUser()">SAVE</button>
+    </div>
+</form>

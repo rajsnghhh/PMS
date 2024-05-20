@@ -1,0 +1,138 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Vendor Management</h2>
+
+        <div class="action-button-container">
+            <button class="btn btn-secondary" type="button" routerLink="/pms/settings/unassigned-vendor" *ngIf="purchaseUrl">Unassigned Account Vendor</button>
+            <!-- <button class="btn btn-secondary" type="button" routerLink="/pms/settings/itemwise-vendor">Item Wise Vendor</button> -->
+            <button class="btn btn-secondary" type="button" routerLink="/pms/settings/vender-merge">MERGE ACCOUNT</button>
+            <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown"
+                aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span><img src="assets/usermanagement/download_csv.png" class="export"><strong>CSV</strong> </span>
+                </li>
+            </ul>
+            <button data-bs-toggle="offcanvas" data-bs-target="#addVendor" (click)="addnew()" aria-controls="offcanvasRight">ADD NEW <img
+                    src="assets/header/add.png" alt=""></button>
+        </div>
+    </div>
+
+    <div class="component-body">
+        <div class="scrollable-table-container">
+
+            <table class="scrollable-table" *ngIf="vendorList.length > 0">
+
+                <tr>
+                    <th class="posion-fixed-left-sno">S.No</th>
+                    <ng-container *ngFor="let tditem of vendorList[0]?.vendor_master_data; let i = index">
+                        <th
+                            *ngIf="tditem.is_export == true"
+                            [ngClass]="{'posion-fixed-left': i == 0 }">
+                            {{tditem.form_label}}
+                        </th>
+                    </ng-container>
+                    
+                    <th class="posion-fixed-right lstheight table_action">Action</th>
+                    <!-- <th *ngFor="let tditem of vendorList[0]?.vendor_master_data; let i = index"
+                        [ngClass]="{'posion-fixed-left': i == 0 }">
+                        {{tditem.form_label}}</th> -->
+                    <!-- <th class="posion-fixed-right lstheight table_action">Action</th> -->
+                </tr>
+                <tr *ngFor="let item of vendorList; let i = index">
+                    <td class="posion-fixed-left-sno"> <a class="text-info">{{ (pageSize*(page-1)) + i+1.}}</a>
+                    </td>
+                    <ng-container *ngFor="let tditem of vendorList[i]?.vendor_master_data; let j = index">
+                        <td class="fstwidth" 
+                            *ngIf="tditem.is_export == true "
+                            [ngClass]="{'posion-fixed-left entities': j == 0 }">
+                            {{tditem.value?tditem.value:'-'}}
+                        </td>
+                    </ng-container>
+                    <td class="posion-fixed-right vendorbutton">
+                        <div class="custom-section">
+                            <div class="dropdown">
+                                <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                <div class="dropdown-content">
+                                    <div class="img-container">
+                                        <div class="img-container">
+                                            <span data-bs-toggle="offcanvas" (click)="vendorDetails(item,i)"
+                                            data-bs-target="#VendorDetails"><label>
+                                                Vendor Details</label></span>
+                                            <span data-bs-toggle="offcanvas" (click)="addNewGroup(item)" 
+                                                data-bs-target="#editVendor"><label>Edit
+                                                    Vendor</label></span>
+                                            <span data-bs-toggle="offcanvas" (click)="deletePlantValue(item)" data-bs-toggle="modal"
+                                                data-bs-target="#deleteVendor"><label>Delete
+                                                    Vendor</label></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="text-center">
+                    <td colspan="3" *ngIf="vendorList.length == 0">No data found.</td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="addVendor" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Add Vendor</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" (click)="closeAddCanvas()"></button>
+        </div>
+        <div class="offcanvas-body" *ngIf="scope == 'add'">
+            <app-add-vendor (parentFun)="closeAddCanvas()"></app-add-vendor>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="editVendor" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Update Vendor</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" (click)="closeAddCanvas()"></button>
+        </div>
+        <div class="offcanvas-body" *ngIf="editItem && scope == 'edit'">
+            <app-add-vendor (parentFun)="closeAddCanvas()" [editItem]="editItem"></app-add-vendor>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="VendorDetails" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Vendor Details</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" (click)="closeAddCanvas()"></button>
+        </div>
+        <div class="offcanvas-body" *ngIf="scope == 'details'">
+            <app-vendor-details #venderId [viewItem]="viewItem" [reload]="reload"></app-vendor-details>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteVendor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this Vendor ?
+            </div>
+            <div class="modal-footer">
+                <!-- (click)="deleteZoneModel()" -->
+                <button type="button" (click)="deletePlantModel()" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

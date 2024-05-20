@@ -1,0 +1,287 @@
+.fileUpload {
+    div {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        background: #e6e6e6;
+        font-size: 12px;
+        padding: 12px 20px;
+        cursor: pointer;
+        border-radius: 25px;
+        border: 1px solid #ced4da;
+        color: black;
+
+        span {
+            img {
+                height: 16px;
+                margin-right: 15px;
+            }
+        }
+    }
+
+    div.selected {
+        background: #18cb31;
+    }
+
+    input {
+        position: absolute;
+        font-size: 50px;
+        opacity: 0;
+        right: 0;
+        top: 0;
+        cursor: pointer;
+    }
+}
+
+button {
+    background-image: linear-gradient(to right, #40d4e6, #6675fe);
+    font-weight: initial;
+    padding: 0px 16px;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    line-height: 30px;
+    font-size: 13px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: baseline;
+    max-width: 83px;
+    text-decoration: none;
+}
+
+.non-active-btn {
+    background-image: none;
+    background-color: #b8b8b8;
+}
+
+input,
+select,
+textarea {
+    border-radius: 0;
+    font-size: 12px;
+    padding: 10px 20px;
+    // margin-bottom: 20px;
+}
+
+::ng-deep.multi-select-dropdown {
+    .selected-list {
+        .c-btn {
+            border-radius: 0;
+            font-size: 12px;
+            padding: 10px 20px;
+        }
+    }
+
+    .selected-list .c-list .c-token {
+        background-color: #d9d9d9;
+        margin: 4px;
+        border-radius: 5px;
+        padding: 6px 27px 6px 12px;
+
+        .c-label {
+            color: black;
+        }
+    }
+
+    .selected-list .c-list .c-token .c-remove {
+        top: 46%;
+        right: 10px;
+        width: 10px;
+    }
+
+    .c-angle-up {
+        background-image: url("../../assets/icons/select-dropdown-open.png");
+    }
+
+    .c-angle-down {
+        background-image: url("../../assets/icons/select-dropdown-close.png");
+    }
+
+    .c-angle-down,
+    .c-angle-up {
+        background-size: 10px;
+        background-repeat: no-repeat;
+        transform: unset !important;
+        top: 46% !important;
+
+        c-icon {
+            display: none;
+        }
+    }
+
+    .dropdown-list ul {
+        li {
+            border-bottom: 1px solid #ced4da;
+            font-size: 12px;
+            padding: 10px 20px;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .list-area {
+        border: 1px solid #ced4da;
+        box-shadow: none;
+        border-radius: 5px;
+        margin: 0 11px;
+        //border-bottom-left-radius: 5px;
+        //border-bottom-right-radius: 5px;
+    }
+
+    .arrow-up {
+        margin-left: 30px;
+    }
+}
+
+.flex-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .mb-3 {
+        width: 48.5%;
+    }
+}
+
+.mb-3 {
+    margin-bottom: 1.2rem !important;
+
+    label {
+        font-size: 13px;
+        font-weight: 500;
+        margin: 0px 0px 5px 10px;
+    }
+}
+
+select {
+    background-image: url("../../assets/icons/select-dropdown-close.png");
+    background-size: 10px;
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-position-y: center;
+    background-origin: content-box;
+}
+
+select:focus {
+    background-image: url("../../assets/icons/select-dropdown-open.png");
+}
+
+.form-control:focus {
+    border-color: #5577FF;
+}
+
+form {
+    margin-bottom: 80px;
+}
+
+.form-control.is-invalid {
+    position: relative;
+}
+
+
+.mb-3 {
+    position: relative;
+}
+
+.mb-3 .invalid-feedback {
+    opacity: 0;
+    transition: 0.2s ease-in-out;
+}
+
+.floating-label {
+    color: #7a7a7a;
+    position: absolute;
+    pointer-events: none;
+    top: 10px;
+    left: 12px;
+    transition: all 0.2s ease;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+
+    .asterisk {
+        color: red;
+    }
+}
+
+.floating-label-select {
+    color: #424242;
+    position: absolute;
+    pointer-events: none;
+    top: -9px;
+    left: 5px;
+    transition: all 0.2s ease;
+    padding: 0px 5px 0 3px;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    background: white;
+
+    .asterisk {
+        color: red;
+    }
+}
+
+.insideDropdown {
+    top: 10px;
+}
+
+.form-select .asterisk {
+    color: red;
+}
+
+.float-now {
+    .floating-label {
+        top: -9px;
+        bottom: 0px;
+        left: 5px;
+        font-size: 12px !important;
+        color: #424242;
+        background: white;
+        padding: 0px 5px 0 3px;
+        max-height: 12px;
+    }
+}
+
+.mb-3:hover .invalid-feedback {
+    opacity: 1;
+}
+
+.mb-3:has(> input:focus, select:focus) {
+    .invalid-feedback {
+        opacity: 1;
+    }
+}
+
+.mb-3 .required {
+    opacity: 0;
+    transition: 0.2s ease-in-out;
+}
+
+.mb-3:hover .required {
+    opacity: 1;
+}
+
+::ng-deep.multi-select-dropdown.ng-invalid.ng-touched {
+
+    .selected-list .c-btn {
+        border-color: #dc3545;
+    }
+}
+
+.label2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    margin-left: 0px;
+    font-size: 12px !important;
+    color: #424242;
+}
+
+.required {
+    font-size: 12px;
+    top: 33px;
+    margin-left: 12px;
+}

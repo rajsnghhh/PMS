@@ -1,0 +1,403 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>GATE PASS</h2>
+    </div>
+</div>
+
+<div hidden class="accordion" id="accordionExample">
+
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
+                Advanced Search
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse hide" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <form [formGroup]="mrAdvancedSearchForm" (ngSubmit)="onSubmit()">
+
+                    <div class="row">
+
+
+                        <div class="col-lg-6 col-md-6 col-12">
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="addressform">
+                                        <label for="project">Project</label>
+                                        <select id="sel1" class="form-control" formControlName="project"
+                                            (change)="getProjeDependentSiteData()">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let project of projectList" value={{project.id}}>
+                                                {{project.project_data[1].value}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="addressform">
+                                        <label for="date">From&nbsp;Date</label>
+                                        <input type="date" placeholder="Please Select" id="date" class="form-control"
+                                            formControlName="fromDate">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="addressform">
+                                        <label for="date">To</label>
+                                        <input type="date" placeholder="Please Select" id="date" class="form-control"
+                                            formControlName="toDate">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="addressform">
+                                        <label for="date">Store&nbsp;Section</label>
+                                        <select id="sel1" class="form-control" formControlName="storeSection">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let store of projectStoreList" value={{store.id}}>
+                                                {{store.store_name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="addressform">
+                                        <label for="date">Due&nbsp;Date</label>
+                                        <input type="date" placeholder="Please Select" id="date" class="form-control"
+                                            formControlName="dueDateFrom">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="addressform">
+                                        <label for="date">To</label>
+                                        <input type="date" placeholder="Please Select" id="date" class="form-control"
+                                            formControlName="dueDateTo">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="addressform">
+                                        <label for="date">Item Group</label>
+                                        <select id="sel1" class="form-control" formControlName="itemGroup"
+                                            (change)="subTypeChange()">
+                                            <option value="">-- select -- </option>
+                                            <option *ngFor="let type of materialTypeList" value={{type.id}}>
+                                                {{type.name}}</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="addressform">
+                                        <label for="date">Item</label>
+                                        <select id="sel1" class="form-control" formControlName="item">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let masterData of MaterilFilterList" [value]="masterData.id">{{masterData.material_name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="addressform">
+                                        <label for="requested">Requested<br>
+                                            For</label>
+                                        <div class="requested-group" ngDefaultControl >
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" value="all"
+                                                        formControlName="requestedFor"> All
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" value="party"
+                                                        formControlName="requestedFor"> Party
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" value="vehicle"
+                                                        formControlName="requestedFor"> Vehicle
+                                                </label>
+                                            </div>
+                                            <div class="clearfix w-100"></div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" value="other"
+                                                        formControlName="requestedFor"> Other
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" value="employee"
+                                                        formControlName="requestedFor">
+                                                    Employee
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" value="department"
+                                                    formControlName="requestedFor">
+                                                    Department
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="requested-group">
+                                            <select id="sel1" class="form-control">
+                                                <option>All</option>
+                                            </select>
+                                        </div> -->
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="addressform">
+                                        <div class="checkgroup">
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" value=""
+                                                        formControlName="rejectedVouchers"> Rejected Vouchers Not Show
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" value=""
+                                                        formControlName="closeMRNotShow"> Close MR Not Show
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" value=""
+                                                        formControlName="onlyCloseMRNotShow"> Only Close MR Not Show
+                                                </label>
+                                            </div>
+                                            <div class="clearfix w-100"></div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" value=""
+                                                        formControlName="materialIssueAgainstMR"> If material issued against MR then it will not show in report
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-lg-6 col-md-6 col-12">
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="addressform">
+                                        <label for="date">Next Vch. Generated</label>
+                                        <select id="sel1" class="form-control" formControlName="nextVchGenerated">
+                                            <option value="all">All</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="addressform">
+                                        <label for="date">Site From</label>
+                                        <select id="sel1" class="form-control" formControlName="siteFrom"
+                                            (change)="getProjeDependentStoreData()">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let site of projectSiteList" value={{site.id}}>
+                                                {{site.site_name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="addressform">
+                                        <label for="date">Site Forwarded To</label>
+                                        <select id="sel1" class="form-control" formControlName="siteForwardedTo">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let site of projectSiteList" value={{site.id}}>
+                                                {{site.site_name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="addressform">
+                                        <label for="date">Priority</label>
+                                        <select id="sel1" class="form-control" formControlName="priority">
+                                            <option value="">-- Select --</option>
+                                            <option value="low">Low</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="high">High</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="addressform">
+                                        <label for="date">MR&nbsp;No.</label>
+                                        <input type="text" id="sel1" class="form-control" formControlName="MRNo">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="addressform">
+                                        <label for="date">Sanctioned&nbsp;By</label>
+                                        <select id="sel1" class="form-control" formControlName="sanctionedBy">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let request of userList" value="{{request.id}}">
+                                                {{request.full_name}}</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="addressform">
+                                        <label for="date">Sanctioned&nbsp;Status</label>
+                                        <select id="sel1" class="form-control" formControlName="sanctionedStatus">
+                                            <option value="">-- Select --</option>
+                                            <option value="pending">Pending</option>
+                                            <option value="approved">Approved</option>
+                                            <option value="rejected">Rejected</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="addressform">
+                                        <label for="date">Requested&nbsp;By</label>
+                                        <select id="sel1" class="form-control" formControlName="requestedBy">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let request of userList" value="{{request.id}}">
+                                                {{request.full_name}}</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="addressform">
+                                        <label for="date">Location&nbsp;For</label>
+                                        <input type="text" class="form-control" formControlName="locationFor">
+                                        <!-- <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" name="optradio"
+                                                        value="OnlySelf"> Only
+                                                    Self
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" name="optradio"
+                                                        value="IncludedForwarded">
+                                                    Included
+                                                    Forwarded
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" name="optradio"
+                                                        value="OnlyForwarded"> Only
+                                                    Forwarded
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" name="optradio"
+                                                        value="all">&nbsp;All</label>
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="addressform">
+                                        <label for="date">Location&nbsp;For</label>
+                                        <select id="sel1" class="form-control">
+                                            <option>All</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="addressform">
+                                        <label for="date">Entry&nbsp;By</label>
+                                        <select id="sel1" class="form-control" formControlName="entryBy">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let request of userList" value="{{request.id}}">
+                                                {{request.full_name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="addressform">
+                                        <label for="date">Edit&nbsp;By</label>
+                                        <select id="sel1" class="form-control" formControlName="editBy">
+                                            <option value="">-- select --</option>
+                                            <option *ngFor="let request of userList" value="{{request.id}}">
+                                                {{request.full_name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="btd-section">
+                                <!-- <button type="submit" class="btn-cancel">CLOSE</button> -->
+                                <button type="submit" class="btn-save">SEARCH</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

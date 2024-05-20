@@ -1,0 +1,410 @@
+<div class="main-container">
+  <div class="component-header">
+    <h2>Raw Material Sales List</h2>
+
+    <div class="action-button-container">
+      <button (click)="addNew()">
+        ADD NEW <img src="assets/header/add.png" alt="" />
+      </button>
+      <button (click)="addNewGST()">
+        ADD GST <img src="assets/header/add.png" alt="" />
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Advanced Search Section -->
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button
+        class="accordion-button"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapseOne"
+        aria-expanded="true"
+        aria-controls="collapseOne"
+      >
+        Advanced Search
+      </button>
+    </h2>
+    <div
+      id="collapseOne"
+      class="accordion-collapse collapse hide"
+      aria-labelledby="headingOne"
+      data-bs-parent="#accordionExample"
+    >
+      <div class="accordion-body">
+        <form
+          [formGroup]="purchaseOrderAdvancedSearchForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>From Date</label
+                    ><input
+                      type="date"
+                      formControlName="created_at__gt"
+                      placeholder=""
+                      id="date"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>To</label
+                    ><input
+                      type="date"
+                      formControlName="created_at__lt"
+                      placeholder=""
+                      id="date"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>PO Date</label
+                    ><input
+                      type="date"
+                      formControlName="date"
+                      placeholder=""
+                      id="date"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+
+                <!-- <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="adform">
+                                        <label>PO/GRN Status</label>
+                                        <select id="sel1" class="form-control" ngDefaultControl
+                                            formControlName="po_grn_status">
+                                            <option value="">-- select --</option>
+                                            <option value="approved">Approved</option>
+                                            <option value="pending">Pending</option>
+                                            <option value="rejected">Rejected</option>
+                                        </select>
+
+                                    </div>
+                                </div> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>Site Name</label>
+                    <select
+                      id="sel1"
+                      class="form-control"
+                      ngDefaultControl
+                      formControlName="site__site_name__icontains"
+                    >
+                      <option value="">-- select --</option>
+                      <option
+                        *ngFor="let siteData of siteList"
+                        value="{{ siteData.id }}"
+                      >
+                        {{ siteData.site_name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>Delivery Site</label>
+                    <select
+                      id="sel1"
+                      class="form-control"
+                      ngDefaultControl
+                      formControlName="delivery_site"
+                    >
+                      <option value="">-- select --</option>
+                      <option
+                        *ngFor="let siteData of siteList"
+                        value="{{ siteData.id }}"
+                      >
+                        {{ siteData.site_name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>Vendor</label>
+                    <select
+                      id="sel1"
+                      class="form-control"
+                      ngDefaultControl
+                      formControlName="vendor"
+                    >
+                      <option value="">-- select --</option>
+                      <option
+                        *ngFor="let vendor of vendorList"
+                        value="{{ vendor.id }}"
+                      >
+                        {{ vendor.vendor_master_data.vendor_name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>Tax Type</label>
+                    <select
+                      id="sel1"
+                      class="form-control"
+                      ngDefaultControl
+                      formControlName="procurement_po_tax__tax_head"
+                    >
+                      <option value="">-- select --</option>
+                      <option
+                        value="{{ taxHead.id }}"
+                        *ngFor="let taxHead of taxHeads"
+                      >
+                        {{ taxHead.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>Item Group</label>
+                    <select
+                      id="sel1"
+                      class="form-control"
+                      ngDefaultControl
+                      formControlName="procurement_purchase_order_item__item__material_type"
+                      (change)="subTypeChange()"
+                    >
+                      <option value="">-- select --</option>
+                      <option
+                        *ngFor="let type of materialTypeList"
+                        value="{{ type.id }}"
+                      >
+                        {{ type.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>Item</label>
+                    <select
+                      id="sel1"
+                      class="form-control"
+                      formControlName="procurement_purchase_order_item__item"
+                      ngDefaultControl
+                    >
+                      <option value="">-- select --</option>
+                      <option
+                        *ngFor="let masterData of MaterilFilterList"
+                        [value]="masterData.id"
+                      >
+                        {{ masterData.material_name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>PO For</label>
+                    <input
+                      type="text"
+                      formControlName="po_for__icontains"
+                      class="form-control"
+                      placeholder=""
+                    />
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>Sanction By</label>
+                    <select
+                      id="sel1"
+                      class="form-control"
+                      ngDefaultControl
+                      formControlName="updated_by_id"
+                    >
+                      <option value="">-- select --</option>
+                      <option
+                        *ngFor="let user of userList"
+                        value="{{ user.id }}"
+                      >
+                        {{ user.full_name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>Sanction Status</label>
+                    <select
+                      id="sel1"
+                      class="form-control"
+                      ngDefaultControl
+                      formControlName="status"
+                    >
+                      <option value="">-- select --</option>
+                      <option value="approved">Approved</option>
+                      <option value="rejected">Rejected</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>Delivery Location</label>
+                    <input
+                      type="text"
+                      formControlName="procurement_po_delivery_loc__delivery_location"
+                      class="form-control"
+                      placeholder=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>PO No</label>
+                    <input
+                      type="text"
+                      formControlName="po_no"
+                      class="form-control"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>Item Rate Between</label>
+                    <input
+                      type="text"
+                      formControlName="procurement_purchase_order_item__unit_rate__gt"
+                      class="form-control"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>To</label>
+                    <input
+                      type="text"
+                      formControlName="procurement_purchase_order_item__unit_rate__lt"
+                      class="form-control"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>Item Qty Between</label>
+                    <input
+                      type="text"
+                      formControlName="procurement_purchase_order_item__quantity__gt"
+                      class="form-control"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                  <div class="adform">
+                    <label>To</label>
+                    <input
+                      type="text"
+                      formControlName="procurement_purchase_order_item__quantity__lt"
+                      class="form-control"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-12">
+              <div class="btd-section">
+                <!-- <button type="submit" class="btn-cancel">CANCEL</button> -->
+                <button type="submit" class="btn-save">SEARCH</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Advanced Search Section End -->
+
+  <app-raw-material-sale-list
+    [purchaseOrderAdvancedSearchFormValue]="
+      purchaseOrderAdvancedSearchFormValue
+    "
+    (activeScope)="scopeData($event)"
+  ></app-raw-material-sale-list>
+  <!-- <app-purchase-order-check [purchaseOrderAdvancedSearchFormValue]="purchaseOrderAdvancedSearchFormValue"
+        *ngIf="scope=='check'" (activeScope)="scopeData($event)"></app-purchase-order-check>
+    <app-purchase-order-cancel [purchaseOrderAdvancedSearchFormValue]="purchaseOrderAdvancedSearchFormValue"
+        *ngIf="scope=='cancel'" (activeScope)="scopeData($event)"></app-purchase-order-cancel>
+    <app-purchase-order-approve [purchaseOrderAdvancedSearchFormValue]="purchaseOrderAdvancedSearchFormValue"
+        *ngIf="scope=='approve'" (activeScope)="scopeData($event)"></app-purchase-order-approve> -->
+</div>

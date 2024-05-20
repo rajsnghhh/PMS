@@ -1,0 +1,13 @@
+<div class="product-main-body">
+    <app-header *ngIf="readytoLoadHeader" (someEvent)="openNav($event)"></app-header>
+    <app-sidebar #child (sidebarInfo)="sidebarLoaded($event)"></app-sidebar>
+
+    <div id="main" class="main">
+        <app-nav-position></app-nav-position>
+        <router-outlet></router-outlet>
+    </div>
+
+    <div class="common-footer">
+        Powered by <span (click)="openSFT()">Shyam Future Tech Private Limited</span>
+    </div>
+</div>

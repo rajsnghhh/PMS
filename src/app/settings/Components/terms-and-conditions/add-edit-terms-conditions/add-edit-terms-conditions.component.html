@@ -1,0 +1,84 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && addUpdateTerms()" novalidate>
+    <div class="row">
+
+        <div class="mb-3 col-md-6" [ngClass]="{ 'float-now': form.slug != '' }">
+            <select class="form-control" name="slug" [(ngModel)]="form.slug" #slug="ngModel" [ngClass]="{ 'is-invalid': f.submitted && slug.errors }" (change)="getList()" required
+            >
+                <option disabled>-- select --</option>
+                <option  value="po">PO</option>
+                <option  value="wo">WO</option>
+                <option value="quotation">Quotation</option>
+                <option  value="mr">MR</option>
+                <option  value="in">Indent</option>
+            </select>
+            <label class="floating-label-select">For<span class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && slug.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="slug.errors['required']">For is required</div>
+            </div>
+        </div>
+        
+        <div class="mb-3 col-md-6">
+            <input type="number" name="sortingOrder" class="form-control" [(ngModel)]="form.sortingOrder" #sortingOrder="ngModel" [ngClass]="{ 'is-invalid': f.submitted && sortingOrder.errors }" min="0" required
+            >
+
+            <label class="floating-label-select">Sorting order<span class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && sortingOrder.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="sortingOrder.errors['required']">Sorting order is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3 col-md-6">
+            <input type="text" name="title" class="form-control" [(ngModel)]="form.title" #title="ngModel" [ngClass]="{ 'is-invalid': f.submitted && title.errors }" required
+            >
+
+            <label class="floating-label-select">Title<span class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && title.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="title.errors['required']">Title is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3 col-md-6">
+            <input type="text" name="work_category" class="form-control" [(ngModel)]="form.work_category" #work_category="ngModel" [ngClass]="{ 'is-invalid': f.submitted && work_category.errors }" required
+            >
+
+            <label class="floating-label-select">Work Category<span class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && work_category.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="work_category.errors['required']">Work Category is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3 col-md-6">
+            <input type="checkbox" name="is_default" [(ngModel)]="form.is_default" #is_default="ngModel" [ngClass]="{ 'is-invalid': f.submitted && is_default.errors }"
+            > Is default Selected
+
+            <!-- <label class="floating-label-select">Is default Selected</label> -->
+            <!-- <div *ngIf="f.submitted && isDefault.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="isDefault.errors['required']">Is default selected is required</div>
+            </div> -->
+        </div>
+
+        <div class="mb-3 col-md-6">
+            <input type="checkbox" name="is_billing_format" [(ngModel)]="form.is_billing_format" #is_billing_format="ngModel" [ngClass]="{ 'is-invalid': f.submitted && is_billing_format.errors }"
+            > Is Billing Format
+
+            <!-- <label class="floating-label-select">Is default Selected</label> -->
+            <!-- <div *ngIf="f.submitted && isDefault.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="isDefault.errors['required']">Is default selected is required</div>
+            </div> -->
+        </div>
+
+        <div class="mb-3 col-md-12">
+            <textarea type="text" name="description" class="form-control" [(ngModel)]="form.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.errors }" rows="10" cols="30" required 
+            >
+            </textarea>
+
+            <label class="floating-label-select">Terms and Conditions<span class="asterisk">*</span></label>
+            <div *ngIf="f.submitted && description.errors" class="invalid-feedback" style="display: block;">
+                <div *ngIf="description.errors['required']">Terms and conditions is required</div>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit">Save</button>
+</form>
+    

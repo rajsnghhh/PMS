@@ -1,0 +1,110 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Physical Stock</h2>
+        <div class="action-button-container">
+            <button [routerLink]="['/pms/store/physical-stock-list']">Physical Stock List</button>
+            <button hidden *ngIf="isPhysical_Stock_Approver" [routerLink]="['/pms/store/physical-stock-post']">Physical Stock Posting</button>
+        </div>
+    </div>
+    <div class="component-body">
+
+        <form name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && onSearch()" novalicreateDate>
+            <div class="row searchform">
+
+                <div class="col-lg-6 col-md-6 col-12" [ngClass]="{ 'float-now': addUser.createDate  != ''}">
+                    <div class="adform">
+                    <label class="floating-label">Date</label>
+                    <input [min]="mindate" [max]="maxDate" type="date" class="form-control" id="add1" name="createDate " 
+                        [(ngModel)]="addUser.createDate " #createDate="ngModel">
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                    <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.location =='' }">Select Location
+                    </label>
+                    <select class="form-select" disabled aria-label="Default select example" name="location" [(ngModel)]="addUser.location"
+                        #location="ngModel">
+                        <option selected value="">Select Location</option>
+                        <option *ngFor="let account of locationList" value={{account.id}}>{{account.location}} ({{account.site_name}})</option>
+                    </select>
+                   </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                    <label>Select Group </label>
+                    <angular2-multiselect [data]="dropdownMultiselectGroupList" [(ngModel)]="addUser.itemgroup" [ngModelOptions]="{standalone: true}"
+                        [settings]="dropdownMultiselectGroupListSettings" (onSelect)="onMultiSelectAddUser($event)"
+                        (onDeSelect)="OnMultiDeSelectAddUser($event)" (onSelectAll)="onMultiSelectAddUserAll($event)"
+                        (onDeSelectAll)="onMultiDeSelectAddUserAll($event)">
+                    </angular2-multiselect>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                    <label>Select Item</label>
+                    <angular2-multiselect [data]="dropdownMultiselectSiteList" [(ngModel)]="addUser.item" [ngModelOptions]="{standalone: true}"
+                        [settings]="dropdownMultiselectSiteListSettings" (onSelect)="onMultiSelectAddUser2($event)"
+                        (onDeSelect)="OnMultiDeSelectAddUser2($event)" (onSelectAll)="onMultiSelectAddUserAll2($event)"
+                        (onDeSelectAll)="onMultiDeSelectAddUserAll2($event)">
+                    </angular2-multiselect>
+                    </div>
+                </div>
+            </div>
+            <div class="btd-section">
+              <button type="submit" class="btn-save">Search</button>
+            </div>
+        </form>
+
+        <table class="table">
+            <tr class="header-row">
+                <th class="header">Item Group</th>
+            </tr>
+            
+            <tr class="table-row-not-expanded" *ngFor="let covenant of joined; let i = index">
+                <td class="cell" (click)="underTableClick(i)">
+                    <div>{{ covenant.type }}</div>
+
+                    <div *ngIf="covenant.isExpanded" class="expanded-panel" (click)="underTableClick(i)">
+                        <div class="table-container">
+                            <table class="table">
+                                <tr class="header-row">
+                                    <th class="header">Item Name</th>
+                                    <th class="header">Item Code</th>
+                                    <th class="header">Physical Stock Qty</th>
+                                    <th class="header">Actual Stock Qty (As Per ERP)</th>
+                                    <th class="header">Stock Avg. Rate</th>
+                                    <th class="header">Difference Qty</th>
+                                    <th class="header">Avg. Difference Rate</th>
+                                    <th class="header">Avg. Amount</th>
+                                    <th class="header">Remark</th>
+                                    <th class="header">Action</th>
+                                </tr>
+                                <tr class="table-row" *ngFor="let item of covenant.subs; let j = index">
+                                    <td class="cell">{{item.item_details[0][0]?.material_name}}</td>
+                                    <td class="cell">{{item.item_details[0][0]?.material_code}}</td>
+                                    <td class="cell"><input class="innerInput" type="number" (keyup)="physicalStockEntry($event,i, j)" [(ngModel)]= item.phstockqty ></td>
+                                    <td class="cell"><input class="innerInput" disabled type="number" [(ngModel)]= item.quantity></td>
+                                    <td class="cell"><input class="innerInput" disabled type="number" [(ngModel)]= item.cost_per_unit></td>
+                                    <td class="cell"><input class="innerInput" disabled type="number" [(ngModel)]= item.difqty></td>
+                                    <td class="cell"><input class="innerInput" disabled type="number" [(ngModel)]= item.avgdifrate></td>
+                                    <td class="cell"><input class="innerInput" disabled type="number" [(ngModel)]= item.avgamount></td>
+                                    <td class="cell"><input class="innerInput" type="text" [(ngModel)]= item.note></td>
+                                    <td class="cell">
+                                        <button class="addbtn" (click)="saveData(i,j)">Save</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr *ngIf="inventoryList.length==0" class="text-center">
+                No Data Found!
+            </tr>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,127 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Restrict Item Group</h2>
+        <div class="action-button-container">
+
+            <button [routerLink]="['/pms/settings/restrict-group']">ADD NEW <img src="assets/header/add.png"
+                    alt=""></button>
+        </div>
+    </div>
+
+
+    <form name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && onSearch()" novalidate style="margin-bottom: 19px;">
+        <div class="flex-div">
+            <div class="mb-3">
+                <select class="form-select" required aria-label="Default select example" name="pageName"
+                    [(ngModel)]="addUser.pageName" #pageName="ngModel"
+                    [ngClass]="{ 'is-invalid': f.submitted && pageName.errors }">
+                    <option selected disabled value="">Page Name</option>
+                    <option value="mr">mr</option>
+                    <option value="indent">indent</option>
+                    <option value="enquiry">enquiry</option>
+                    <option value="quotation">quotation</option>
+                    <option value="po">po</option>
+                    <option value="grn">grn</option>
+                    <option value="purchase">purchase</option>
+                    <option value="raw_material_sale">raw_material_sale</option>
+                    <option value="min_max_challan">min_max_challan</option>
+                    <option value="purchase_return">purchase_return</option>
+                    <option value="transport_bill">transport_bill</option>
+                    <option value="item_opening">item_opening</option>
+                    <option value="physical_stock">physical_stock</option>
+                    <option value="issue">issue</option>
+                    <option value="material_wastage">material_wastage</option>
+                    <option value="material_issue_return">material_issue_return</option>
+                    <option value="fabrication_work">fabrication_work</option>
+                    <option value="gate_pass">gate_pass</option>
+                    <option value="item_jv">item_jv</option>
+                </select>
+                <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.pageName =='' }">Page Name
+                <span class="asterisk">*</span>
+                </label>
+            </div>
+            <div class="mb-3">
+                <angular2-multiselect [data]="dropdownMultiselectGroupList" [(ngModel)]="addUser.group" name="group"
+                    [settings]="dropdownMultiselectGroupListSettings" (onSelect)="onMultiSelectAddUser($event)"
+                    (onDeSelect)="OnMultiDeSelectAddUser($event)" (onSelectAll)="onMultiSelectAddUserAll($event)"
+                    (onDeSelectAll)="onMultiDeSelectAddUserAll($event)">
+                </angular2-multiselect>
+            </div>
+            <div class="mb-3">
+                <angular2-multiselect [data]="dropdownMultiselectSiteList" [(ngModel)]="addUser.site" name="site"
+                    [settings]="dropdownMultiselectSiteListSettings" (onSelect)="onMultiSelectAddUser2($event)"
+                    (onDeSelect)="OnMultiDeSelectAddUser2($event)" (onSelectAll)="onMultiSelectAddUserAll2($event)"
+                    (onDeSelectAll)="onMultiDeSelectAddUserAll2($event)">
+                </angular2-multiselect>
+            </div>
+
+        </div>
+        <div class="btnupdate">
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </div>
+    </form>
+
+
+    <div class="component-body">
+        <table>
+
+            <tr>
+                <th class="actionbutton">S.No</th>
+                <th style="width: 25%;">Page Name</th>
+                <th>Item Group</th>
+                <th>Site</th>
+                <th class="actionbutton">Action</th>
+            </tr>
+
+            <tr *ngFor="let restrict of restrictDataList;let i=index">
+                <td class="actionbutton">{{i+1}}</td>
+                <td style="width: 25%;">{{restrict.page_name}}</td>
+                <td>
+                    <div *ngFor="let group of restrict?.item_group;">{{group.name}}</div>
+                </td>
+                <td>
+                    <div *ngFor="let site of restrict?.site;">{{site.site_name}}</div>
+                </td>
+                <td class="actionbutton">
+                    <div class="custom-section">
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                            <div class="dropdown-content editwidth">
+                                <div class="img-container">
+                                    <!-- <span class="mt-2"><img src="assets/usermanagement/edit.png" alt="">&nbsp;&nbsp;<label>Edit Restrict Group</label></span> -->
+                                    <span (click)="deleteCompany(restrict.id)" data-bs-toggle="modal"
+                                        data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png"
+                                            alt="">&nbsp;&nbsp;<label>Delete Restrict Group</label></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr *ngIf="restrictDataList?.length==0">
+               <td colspan="5" style="text-align: center;">No Data Found</td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this Restrict Item Group ?
+            </div>
+            <div class="modal-footer">
+                <button (click)="deleteAlertCompany()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>

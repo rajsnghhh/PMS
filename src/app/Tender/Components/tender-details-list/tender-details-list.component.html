@@ -1,0 +1,279 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>{{TenderName.tender_title}}</h2>
+
+        <div class="action-button-container">
+            <button (click)="SearchTender()">Search By<img src="assets/usermanagement/search.png" alt=""></button>
+            <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown"
+                aria-expanded="false">{{TenderFilterName | uppercase}}<img
+                    src="assets/usermanagement/filtr.png"></button>
+            <ul class="dropdown-menu statsfilter" aria-labelledby="dropdownSelectColoum">
+                <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='all' }"
+                    (click)="getAllList()">
+                    <span><strong>All</strong></span>
+                </li>
+                <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='identified' }"
+                    (click)="getIdentifiedList()">
+                    <span><strong>Identified</strong></span>
+                </li>
+                <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='proposed' }"
+                    (click)="getProposedList()">
+                    <span><strong>Proposed</strong></span>
+                </li>
+                <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='recommended' }"
+                    (click)="getRecommendedList()">
+                    <span><strong>Recommended</strong></span>
+                </li>
+                <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='vga_done' }"
+                    (click)="getVGAapprovedList()">
+                    <span><strong>VGA Done</strong></span>
+                </li>
+                <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='vga_rejected' }"
+                    (click)="getVGARejectedList()">
+                    <span><strong>VGA Rejected</strong></span>
+                </li>
+                <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='approved' }"
+                    (click)="getApprovedList()">
+                    <span><strong>Approved</strong></span>
+                </li>
+                <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='rejected' }"
+                    (click)="getRejectedList()">
+                    <span><strong>Rejected</strong></span>
+                </li>
+            </ul>
+
+            <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown"
+                aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span><img src="assets/usermanagement/download_csv.png" class="export"><strong>CSV</strong> </span>
+                </li>
+            </ul>
+            <button hidden data-bs-toggle="offcanvas" data-bs-target="#filterby" aria-controls="offcanvasRight">Filter
+                By</button>
+            <button data-bs-toggle="offcanvas" data-bs-target="#addZone" aria-controls="offcanvasRight"
+                (click)="gotoAddNewTender()">ADD TENDER<img src="assets/header/add.png" alt=""></button>
+            <button data-bs-toggle="offcanvas" *ngIf="TenderPermission == true" data-bs-target="#addZone"
+                aria-controls="offcanvasRight" (click)="goback()">BACK</button>
+        </div>
+    </div>
+    <div class="component-body">
+        <div class="scrollable-table-container table_scroll ">
+            <table class="scrollable-table" *ngIf="TenderList.length > 0" #customscroll>
+
+                <tr class="">
+                    <th class="posion-fixed-left-sno entiti fst_height headheight">S.No</th>
+                    <th class="dynamiclnth" *ngFor="let tditem of TenderList[0].tender_data; let i = index"
+                        [ngClass]="{'posion-fixed-left': i == 0 }">
+                        <p [outerHTML]="tditem.form_label | textMax"></p>
+                    </th>
+                    <th class="posion-fixed-left entiti fst_height headheight">Description</th>
+                    <th class="posion-fixed-right status-th2 fst_height headheight">Tender<br>Age</th>
+                    <th class="posion-fixed-right status-th3 elaspdays">Elapsed<br>Days</th>
+                    <th class="posion-fixed-right status-th">Status</th>
+                    <th class="posion-fixed-right lstheight fst_height headheight">Action</th>
+                </tr>
+                <tr class="mainHeight" *ngFor="let item of TenderList ; let i = index">
+                    <td class="posion-fixed-left-sno">{{ (pageSize*(page-1)) + i+1.}}</td>
+                    <td class="fstwidth fst_height" *ngFor="let tditem of TenderList[i].tender_data; let j = index"
+                        [ngClass]="{'posion-fixed-left entities entitiwidth': j == 0 }">
+                        <p [outerHTML]="tditem.value | textMax"></p>
+                    </td>
+
+                    <td class="posion-fixed-right status-td" [ngClass]="{'identify': item?.tender_status=='Identified',
+                        'approved': item?.tender_status=='Approved',
+                        'sentforapproved': item?.tender_status=='Recommended and Waiting For Approval',
+                        'sentforrecomm': item?.tender_status=='Proposed and Sent For Recommendation',
+                        'recommended': item?.tender_status=='Recommended By Recommender/Tender Head',
+                        'vgadone': item?.tender_status=='VGA Done',
+                        'vgarejected': item?.tender_status=='VGA Rejected',
+                        'rejected': item?.tender_status=='Rejected',
+                        'asignedmemforsurvy': item?.tender_status=='Members Assigned For Survey',
+                        'startandinprogress': item?.tender_status=='Survey Started and In Progress',
+                        'surveycompleted': item?.tender_status=='Survey Completed',
+                        'sendfinalapproval': item?.tender_status=='Send For Final Approval',
+                        'approvorrejected': item?.tender_status=='Approved / Rejected',
+                        'submitted': item?.tender_status=='Submitted',
+                        'selstatuspending': item?.tender_status=='Selection Status Pending',
+                        'selasl1': item?.tender_status=='Selected As L1',
+                        'Agreementsigned': item?.tender_status=='Agreement Signed',
+                        'rcaprovided': item?.tender_status=='RCA Provided',
+                        'agreestatuspending': item?.tender_status=='Agreement Status Pending'
+
+                         }" (click)="statusprogressbar(item.id,i)" data-bs-toggle="modal" data-bs-target="#status">
+                        <p [outerHTML]="item?.tender_status | textMax"></p>
+                    </td>
+
+                    <td class="posion-fixed-right status-td2">
+                        <div class="viewAll">
+                            <span>{{item?.tender_age | slice: 0:7}}</span>
+                            <div class="dropdown">
+                                <span *ngIf="item?.tender_age.length>7">...</span>
+                                <div class="dropdown-content drpdwnwidth" style=" max-height: 110px; overflow-y: scroll; ">
+                                    <div class="img-container">
+                                        <span>{{item?.tender_age}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td class="posion-fixed-right status-td3" [ngClass]="{'elapsed': item?.elapsed_days != '0 Day'}">
+                        <p>{{item?.elapsed_days}}</p></td>
+
+                    <td class="posion-fixed-right surveybutton">
+                        <div class="custom-section">
+                            <div class="dropdown">
+                                <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                <div class="dropdown-content actionheight drpdwnwidth">
+                                    <div class="img-container actionclass">
+                                        <span (click)="getTenderId(item.id,action)" *ngFor="let action of actionList"
+                                            [ngClass]="{ 'hidden': TenderList[i].is_approved == false && (action.text == 'WBS' || action.text == 'Executive Summary'), 'archived': action.text == 'Archived Tender' }">
+                                            <label>
+                                                {{action.text}}
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="text-center">
+                    <td colspan="6" *ngIf="TenderList.length == 0">No data found.</td>
+                </tr>
+
+            </table>
+            <table>
+                <tr class="text-center" *ngIf="TenderList.length == 0">
+                    <td>No data found.</td>
+                </tr>
+            </table>
+            <div class="tablescroll_btn">
+                <div class="btn_action prev_btn" (click)="previous()">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="btn_action next_btn" (click)="next()">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="editZone" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Edit Tender</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- <app-edit-location #editLocation></app-edit-location> -->
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="filterby" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Filter By</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-filer-tender-detail></app-filer-tender-detail>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal Search -->
+    <div class="offcanvas offcanvas-end modal-width" tabindex="-1" id="offcanvasRightsearch" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Search By</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-search-tender (parentFun)="closeSearchCanvas($event)"></app-search-tender>
+        </div>
+    </div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this Tender ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal StatusProgessBar -->
+<div class="modal fade" id="status" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content statuswidth">
+            <div class="modal-header statuswidth2">
+                <h5 class="modal-title" id="">Tender Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="btn-group">
+                    <div class="dropdown-menu statusbox" style="display: block;">
+
+                        <div class="container">
+                            <div class="step completed" *ngFor="let statusitem of popupTenderList;let k=index"
+                                [ngClass]="{'activeClass': statusitem.status_check == true && statusitem.status != 'Rejected'}">
+                                <div class="v-stepper">
+                                    <span class="bolletcolor"
+                                        *ngIf="statusitem.status_check == true && statusitem.status != 'Rejected'">&#9673;</span>
+                                    <span style="color: rgb(181, 181, 181);"
+                                        *ngIf="statusitem.status_check != true && statusitem.status != 'Rejected'">&#9673;</span>
+                                    <span class="text-danger" *ngIf="statusitem.status == 'Rejected'">&#9673;</span>
+                                    <div class="line"
+                                        [ngClass]="{'active': statusitem.status_check == true,'destination':popupTenderList.length-1==k}">
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <span [ngClass]="{'pendingstatus': statusitem.date ==''}">
+                                        {{statusitem.status}}</span>
+                                    <span *ngIf="statusitem.date !=''" style="color: rgb(107, 107, 107);"
+                                        [ngClass]="{'statusdate': statusitem.is_elapsed == true}"> on
+                                        {{statusitem.date | date:"EEEE, d MMMM y"}}</span>
+                                    <p class="targetdate" *ngIf="statusitem.target_date !=''">Target Date:
+                                        {{statusitem.target_date | date : 'dd-MM-yyyy'}} &nbsp;
+                                        <span class="elapsdate" *ngIf="statusitem.elapsed_days != '0 Day'">(Elapsed By:
+                                            {{statusitem.elapsed_days}})</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>
+
+<!-- <div class="modal fade" id="status" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content statuswidth">
+            <div class="modal-header statuswidth2">
+                <h5 class="modal-title" id="">Tender Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <app-status-box></app-status-box>
+        </div>
+    </div>
+</div> -->

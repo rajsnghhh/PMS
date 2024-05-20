@@ -1,0 +1,134 @@
+.addbtn {
+    background-image: linear-gradient(to right, #40d4e6, #6675fe);
+    font-weight: initial;
+    padding: 0px 16px;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    line-height: 27px;
+    font-size: 13px;
+    font-weight: 300;
+    display: flex;
+    align-items: center !important;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: baseline;
+    width: auto;
+    text-decoration: none;
+    }
+
+.deletebtn {
+    background-image: linear-gradient(to right, #df2929, #ea4646);
+    font-weight: initial;
+    padding: 0px 16px;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    line-height: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: baseline;
+    width: auto;
+    text-decoration: none;
+}
+
+.inputCss {
+    width: 100%;
+    font-size: revert-layer;
+	border: 1px solid rgba(128, 128, 128, 0.4588235294);
+    border-radius: 0px;
+    min-height: 26px;
+    padding: 0px 7px;
+    margin: 0px 0px;
+    background: #fff;
+	color: #646262;
+	font-size: 12px;
+   }
+
+select {
+	width: 100%;
+	font-size: revert-layer;
+	border: 1px solid rgba(128, 128, 128, 0.4588235294);
+	border-radius: 0px;
+	min-height: 26px;
+	background: #fff;
+	color: #646262;
+	font-size: 12px;
+    }
+
+::ng-deep .c-btn {
+    min-height: unset !important;
+    font-size: unset !important;
+}
+
+.asterisk {
+    color: red;
+}
+
+.component-body table td {
+    padding: 6px 9px !important;
+    vertical-align: top !important;
+    }
+
+.showOnly {
+    border: 1px solid gray;
+    width: 20px;
+    padding: 0;
+    margin: 0;
+    top: 10px;
+    left: 45px;
+    border-radius: 0;
+    background: transparent;
+    position: absolute;
+}
+
+.customCode {
+    padding-left: 70px;
+}
+
+.invalid-feedback {
+    display: block !important;
+}
+
+.component-body table th {
+	background-color: #5577ff;
+	color: white;
+	font-size: 14px !important;
+	padding: 10px;
+	font-weight: 600 !important;
+	line-height: 15px;
+    }
+.component-body table td {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 300 !important;
+    font-size: 12px !important;
+    line-height: 15px !important;    
+    }
+
+.btd-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top:20px;
+    margin-bottom: 60px;
+    }
+.btn-save {
+    background-image: linear-gradient(to right, #40d4e6, #6675fe);
+    padding: 7px 17px;
+    margin-top: 8px;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    min-width: auto;
+     margin-left: 15px;
+    }

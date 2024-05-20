@@ -1,0 +1,25 @@
+<form role="form" [formGroup]="adddepartmentForm">
+    <div class="mb-3" [ngClass]="{ 'float-now': addDepartment.name != '' }">
+    <!-- <label for="">Zone Name</label> -->
+    <input type="text" class="form-control" id="role"  formControlName="name" [(ngModel)]="addDepartment.name"
+    [ngClass]="displayFieldCss(adddepartmentForm,'name')">
+    <label class="floating-label">Enter Department Name <span class="asterisk">*</span></label>
+    <div class="required" *ngIf="isFieldValid(adddepartmentForm,'name')">
+        <span class="text-danger" *ngIf="adddepartmentForm.get('name')?.errors?.['required']">Department Name is required</span>
+      </div>
+</div>  
+
+<div class="mb-3">
+  <select class="form-select" formControlName="depthead" [(ngModel)]="addDepartment.deptname"
+  [ngClass]="displayFieldCss(adddepartmentForm,'depthead')" aria-label="Default select example">
+      <option value="" selected disabled>Select Department Head <span class="asterisk">*</span></option>
+      <option *ngFor="let dept of departmentlist" value={{dept.id}}>{{dept.full_name}}</option>
+  </select>
+  <label class="floating-label-select" [ngClass]="{'insideDropdown': addDepartment.deptname =='' }">Select Department Head <span class="asterisk">*</span></label>
+  <div class="required" *ngIf="isFieldValid(adddepartmentForm,'depthead')">
+      <span class="text-danger" *ngIf="adddepartmentForm.get('depthead')?.errors?.['required']">Department Head is required</span>
+    </div>
+</div>
+
+<button type="submit" class="btn btn-primary" (click)="addnewDepartment()">ADD</button>
+</form>

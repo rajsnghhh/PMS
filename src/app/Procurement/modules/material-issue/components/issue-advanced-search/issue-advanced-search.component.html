@@ -1,0 +1,271 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Material Issue</h2>
+
+        <div class="action-button-container">
+            <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="adddNew()">NEW ISSUE <img
+                src="assets/header/add.png" alt="">
+            </button>
+            <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="adddNewMulti()">MULTIPLE ISSUE<img
+                src="assets/header/add.png" alt="">
+            </button>
+            <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="importIssue()">IMPORT ISSUE<img
+                src="assets/header/add.png" alt="">
+            </button>
+            <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="bulkTransfer()">Bulk Stock Transfer<img
+                src="assets/usermanagement/arrow.png" alt="">
+            </button>
+            <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="acknowledgement()">Acknowledgement<img
+                src="assets/header/add.png" alt="">
+            </button>
+            <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="acknowledgementApproval()">Acknowledgement Approval<img
+                src="assets/header/add.png" alt="">
+            </button>
+        </div>
+    </div>
+</div>
+<!-- Advanced Search Section -->
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
+                Advanced Search
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse hide" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+
+                <form [formGroup]="issueAdvancedSearchForm" (ngSubmit)="onSubmit()">
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="date">Issue&nbsp;Type</label>
+
+                                <div class="requested-group">
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" value="consumption_issue" name="optradio"
+                                                class="form-check-input" id="issue_type" name="issue_type"
+                                                formControlName="issue_type">
+                                            Consumption/Issue
+                                        </label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" value="transfer" name="optradio"
+                                                class="form-check-input" id="issue_type" name="issue_type"
+                                                formControlName="issue_type">
+                                            Transfer</label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" value="production" name="optradio"
+                                                class="form-check-input" id="issue_type" name="issue_type"
+                                                formControlName="issue_type">
+                                            Production</label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" value="issue_to_party" name="optradio"
+                                                class="form-check-input" id="issue_type" name="issue_type"
+                                                formControlName="issue_type">
+                                                Issue to Party</label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="date">Issue/Transfer&nbsp;From </label>
+
+                                <div class="requested-group">
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" value="party_stock" name="optradio"
+                                                class="form-check-input" id="issue_transfer_from"
+                                                name="issue_transfer_from" formControlName="issue_transfer_from">
+                                            Party Stock
+                                        </label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" value="self_stock" name="optradio"
+                                                class="form-check-input" id="issue_transfer_from"
+                                                name="issue_transfer_from" formControlName="issue_transfer_from">
+                                            Self Stock</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">Issue&nbsp;Location</label>
+                                <input type="text" placeholder="" id="text" class="form-control" id="issue_location"
+                                    name="issue_location" formControlName="issue_location">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">Transporter</label>
+                                <input type="text" placeholder="" id="text" class="form-control" id="transporter"
+                                    name="transporter" formControlName="transporter">
+                            </div>
+                            <span class="other-texr"><a href="#">If Other</a></span>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">Store</label>
+
+                                <select id="sel1" class="form-control" name="store" formControlName="store">
+                                    <option disabled>-- select --</option>
+                                    <option *ngFor="let storeData of storeList" value="{{storeData.id}}">
+                                        {{storeData.store_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">Carrying<br>
+                                    Vehicle&nbsp;No.</label>
+                                <input type="text" placeholder="" id="text" class="form-control"
+                                    id="carrying_vehicle_number" formControlName="carrying_vehicle_number"
+                                    name="carrying_vehicle_number">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="date">Issue&nbsp;Date</label>
+                                <input type="date" placeholder="" id="Date" class="form-control" id="date" name="date"
+                                    formControlName="issue_date">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">Gate&nbsp;Pass&nbsp;No.</label>
+                                <input type="text" placeholder="" id="text" class="form-control" id="gate_pass_number"
+                                    name="gate_pass_number" formControlName="gate_pass_number">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">Manual<br>Slip&nbsp;No.</label>
+                                <input type="text" placeholder="" id="text" class="form-control" id="manual_slip_number"
+                                    name="manual_slip_number" formControlName="manual_slip_number">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">RST&nbsp;No.</label>
+                                <input type="text" placeholder="" id="text" class="form-control" id="rst_number"
+                                    name="rst_number" formControlName="rst_number">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="date">Lr&nbsp;Date</label>
+                                <input type="date" placeholder="" class="form-control" id="lr_date" name="lr_date"
+                                    formControlName="lr_date">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">Lr&nbsp;No.</label>
+                                <input type="text" placeholder="" class="form-control" id="lr_number" name="lr_number"
+                                    formControlName="lr_number">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">Carrying<br>Veh.Driver</label>
+                                <input type="text" placeholder="" id="text" class="form-control" id="carrying_driver"
+                                    name="carrying_driver" formControlName="carrying_driver">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">Loaded&nbsp;Via</label>
+                                <div class="requested-group">
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label"><input type="radio" name="optradio" value="self"
+                                                class="form-check-input" id="loaded_via" name="loaded_via"
+                                                formControlName="loaded_via">
+                                            Self</label>
+                                    </div>
+
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label"><input type="radio" name="optradio"
+                                                value="party" class="form-check-input" id="loaded_via" name="loaded_via"
+                                                formControlName="loaded_via">
+                                            Party</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-12">
+                        <div class="btd-section">
+                            <!-- <button type="submit" class="btn-cancel">CANCEL</button> -->
+                            <button type="submit" class="btn-save">SEARCH</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Advanced Search Section End -->
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightImport" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Import Issue</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" (click)="reloadData()"></button>
+    </div>
+    <div class="offcanvas-body">
+        <app-import-issue></app-import-issue>
+    </div>
+</div>
+
+<app-issue-list [issueAdvancedSearchFormValue]="issueAdvancedSearchFormValue"></app-issue-list>

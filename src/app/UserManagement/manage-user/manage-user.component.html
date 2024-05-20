@@ -1,0 +1,469 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Manage User</h2>
+
+        <div class="manager_allbtn">
+            <button (click)="searchUser()">Search By <img src="assets/usermanagement/search.png" alt=""></button>
+            <button (click)="addUser()" *ngIf="userPermissions.add">ADD USER <img src="assets/header/add.png"
+                    alt=""></button>
+            <button class="btn btn-secondary" *ngIf="userPermissions.export" type="button" id="dropdownSelectColoum"
+                data-bs-toggle="dropdown" aria-expanded="false">EXPORT<img
+                    src="assets/usermanagement/Export.png"></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span><img src="assets/usermanagement/download_csv.png" class="export"><strong>CSV</strong> </span>
+                </li>
+            </ul>
+            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabelimportuser"
+                aria-controls="offcanvasRight">IMPORT<img src="assets/usermanagement/Import.png"> </button>
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownSelectColoum"
+                data-bs-toggle="dropdown" aria-expanded="false">Select Coloum</button>
+            <!-- <button class="btn btn-secondary retrive" (click)="gotoDeletedUserList()" type="button" aria-expanded="false">Retrive User</button> -->
+
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum">
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="empcode"
+                        [checked]="visiblecloume.empcode" (change)="tableColoumChange('empcode')">
+                    <label class="form-check-label" for="empcode">
+                        Employee Code
+                    </label>
+                </li>
+                <li class="form-check">
+                    <input disabled class="form-check-input" type="checkbox" id="Contact"
+                        [checked]="visiblecloume.Contact" (change)="tableColoumChange('Contact')">
+                    <label class="" for="Contact">
+                        Contact
+                    </label>
+                </li>
+                <li class="form-check">
+                    <input disabled class="form-check-input" type="checkbox" value="" id="Company"
+                        [checked]="visiblecloume.Company" (change)="tableColoumChange('Company')">
+                    <label class="form-check-label" for="Company">
+                        Company
+                    </label>
+                </li>
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Role" [checked]="visiblecloume.Role"
+                        (change)="tableColoumChange('Role')">
+                    <label class="form-check-label" for="Role">
+                        Profile
+                    </label>
+                </li>
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Zone" [checked]="visiblecloume.Zone"
+                        (change)="tableColoumChange('Zone')">
+                    <label class="form-check-label" for="Zone">
+                        Zone
+                    </label>
+                </li>
+                <li class="form-check">
+                    <input disabled class="form-check-input" type="checkbox" value="" id="Department"
+                        [checked]="visiblecloume.Department" (change)="tableColoumChange('Department')">
+                    <label class="" for="Department">
+                        Department
+                    </label>
+                </li>
+                <li class="form-check">
+                    <input disabled class="form-check-input" type="checkbox" value="" id="Designation"
+                        [checked]="visiblecloume.Designation" (change)="tableColoumChange('Designation')">
+                    <label class="form-check-label" for="Designation">
+                        Role
+                    </label>
+                </li>
+                <li class="form-check">
+                    <input disabled class="form-check-input" type="checkbox" value="" id="LastLogin"
+                        [checked]="visiblecloume.LastLogin" (change)="tableColoumChange('LastLogin')">
+                    <label class="form-check-label" for="LastLogin">
+                        Last Login
+                    </label>
+                </li>
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="Gender"
+                        [checked]="visiblecloume.Gender" (change)="tableColoumChange('Gender')">
+                    <label class="form-check-label" for="Gender">
+                        Gender
+                    </label>
+                </li>
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="State" [checked]="visiblecloume.State"
+                        (change)="tableColoumChange('State')">
+                    <label class="form-check-label" for="State">
+                        State
+                    </label>
+                </li>
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="City" [checked]="visiblecloume.City"
+                        (change)="tableColoumChange('City')">
+                    <label class="form-check-label" for="City">
+                        City
+                    </label>
+                </li>
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="AadherNo"
+                        [checked]="visiblecloume.AadherNo" (change)="tableColoumChange('AadherNo')">
+                    <label class="form-check-label" for="AadherNo">
+                        Aadhar No
+                    </label>
+                </li>
+
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="PanNo" [checked]="visiblecloume.PanNo"
+                        (change)="tableColoumChange('PanNo')">
+                    <label class="form-check-label" for="PanNo">
+                        PAN No
+                    </label>
+                </li>
+
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="BloodGroup"
+                        [checked]="visiblecloume.BloodGroup" (change)="tableColoumChange('BloodGroup')">
+                    <label class="form-check-label" for="BloodGroup">
+                        Blood Group
+                    </label>
+                </li>
+
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="AddressLine1"
+                        [checked]="visiblecloume.AddressLine1" (change)="tableColoumChange('AddressLine1')">
+                    <label class="form-check-label" for="AddressLine1">
+                        Address Line 1
+                    </label>
+                </li>
+
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="AddressLine2"
+                        [checked]="visiblecloume.AddressLine2" (change)="tableColoumChange('AddressLine2')">
+                    <label class="form-check-label" for="AddressLine2">
+                        Address Line 2
+                    </label>
+                </li>
+
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="ReportingManager"
+                        [checked]="visiblecloume.ReportingManager" (change)="tableColoumChange('ReportingManager')">
+                    <label class="form-check-label" for="ReportingManager">
+                        Reporting Manager
+                    </label>
+                </li>
+
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="DateofBirth"
+                        [checked]="visiblecloume.DateofBirth" (change)="tableColoumChange('DateofBirth')">
+                    <label class="form-check-label" for="DateofBirth">
+                        Date of Birth
+                    </label>
+                </li>
+
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="JoiningDate"
+                        [checked]="visiblecloume.JoiningDate" (change)="tableColoumChange('JoiningDate')">
+                    <label class="form-check-label" for="JoiningDate">
+                        Joining Date
+                    </label>
+                </li>
+
+                <li class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="LastWorkingDate"
+                        [checked]="visiblecloume.LastWorkingDate" (change)="tableColoumChange('LastWorkingDate')">
+                    <label class="form-check-label" for="LastWorkingDate">
+                        Last Working Date
+                    </label>
+                </li>
+                <li class="form-check">
+                    <input disabled class="form-check-input" type="checkbox" value="" id="Status"
+                        [checked]="visiblecloume.Status" (change)="tableColoumChange('Status')">
+                    <label class="form-check-label" for="Status">
+                        Status
+                    </label>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="action-button-container">
+        <button class="table-filter" [ngClass]="{'active': queryParaMap.is_active=='' }" (click)="getAllUserList()">All
+            Users</button>
+        <button class="table-filter" [ngClass]="{'active': queryParaMap.is_active=='true' }"
+            (click)="getactiveUserList()">Active Users({{activeCount}})</button>
+        <button class="table-filter" [ngClass]="{'active': queryParaMap.is_active=='false' }"
+            (click)="getinactiveUserList()">Inactive Users({{inactiveCount}})</button>
+    </div>
+
+
+
+    <div class="component-body">
+        <div class="scrollable-table-container table_scroll">
+            <!-- {{queryParaMap|json}} -->
+            <table class="scrollable-table" #customscroll>
+
+                <tr>
+                    <th class="posion-fixed-left actionwidth">S.No</th>
+                    <!-- <th class="posion-fixed-left">Emp Code </th> -->
+                    <th [ngClass]="{'hidden': !visiblecloume.empcode }">Emp. Code</th>
+                    <th [ngClass]="{'hidden': !visiblecloume.Contact }" class="contact-col">Contact <img
+                            src="assets/usermanagement/short.png" alt="" (click)="changeShort('name')"></th>
+                    <th [ngClass]="{'hidden': !visiblecloume.Company }">Company</th>
+                    <th [ngClass]="{'hidden': !visiblecloume.Role }">Profile</th>
+                    <th [ngClass]="{'hidden': !visiblecloume.Zone }">Zone</th>
+                    <th [ngClass]="{'hidden': !visiblecloume.Department }">Department <img
+                            src="assets/usermanagement/short.png" alt=""
+                            (click)="changeShort('department__department')"></th>
+                    <th [ngClass]="{'hidden': !visiblecloume.Designation }">Role <img
+                            src="assets/usermanagement/short.png" alt=""
+                            (click)="changeShort('designation__designation')"></th>
+                    <th [ngClass]="{'hidden': !visiblecloume.LastLogin }">Last Login</th>
+                    <th [ngClass]="{'hidden': !visiblecloume.Gender }">Gender <img src="assets/usermanagement/short.png"
+                            alt="" (click)="changeShort('gender')"></th>
+                    <th [ngClass]="{'hidden': !visiblecloume.State }">State <img src="assets/usermanagement/short.png"
+                            alt="" (click)="changeShort('state__name')"></th>
+                    <th [ngClass]="{'hidden': !visiblecloume.City }">City <img src="assets/usermanagement/short.png"
+                            alt="" (click)="changeShort('city__name')"></th>
+                    <th [ngClass]="{'hidden': !visiblecloume.AadherNo }">Aadhar No <img
+                            src="assets/usermanagement/short.png" alt="" (click)="changeShort('aadhar_number')"></th>
+                    <th [ngClass]="{'hidden': !visiblecloume.PanNo }">PAN No <img src="assets/usermanagement/short.png"
+                            alt="" (click)="changeShort('pan_number')"></th>
+                    <th [ngClass]="{'hidden': !visiblecloume.BloodGroup }">Blood Group <img
+                            src="assets/usermanagement/short.png" alt="" (click)="changeShort('blood_group')"></th>
+                    <th [ngClass]="{'hidden': !visiblecloume.AddressLine1 }">Address Line 1 <img
+                            src="assets/usermanagement/short.png" alt="" (click)="changeShort('AddressLine1')"></th>
+                    <th [ngClass]="{'hidden': !visiblecloume.AddressLine2 }">Address Line 2 <img
+                            src="assets/usermanagement/short.png" alt="" (click)="changeShort('AddressLine2')"></th>
+                    <th [ngClass]="{'hidden': !visiblecloume.ReportingManager }">Reporting Manager <img
+                            src="assets/usermanagement/short.png" alt="" (click)="changeShort('ReportingManager')"></th>
+                    <th [ngClass]="{'hidden': !visiblecloume.DateofBirth }">Date of Birth <img
+                            src="assets/usermanagement/short.png" alt="" (click)="changeShort('DateofBirth')"></th>
+                    <th [ngClass]="{'hidden': !visiblecloume.JoiningDate }">Joining Date <img
+                            src="assets/usermanagement/short.png" alt="" (click)="changeShort('JoiningDate')"></th>
+                    <th [ngClass]="{'hidden': !visiblecloume.LastWorkingDate }">Last Working Date <img
+                            src="assets/usermanagement/short.png" alt="" (click)="changeShort('LastWorkingDate')"></th>
+                    <th [ngClass]="{'hidden': !visiblecloume.Status }" class="posion-fixed-right second">Status </th>
+                    <th class="posion-fixed-right actionwidth">Action </th>
+                </tr>
+                <tr *ngFor="let user of userList; let i = index" [attr.data-index]="i"
+                    [ngClass]="{'disabled': !user.Status}">
+                    <td class="posion-fixed-left actionwidth">{{ (pageSize*(page-1)) + i+1.}}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.empcode }">{{user.employe_code}}</td>
+                    <!-- <td class="posion-fixed-left">{{user.id}}</td> -->
+                    <td [ngClass]="{'hidden': !visiblecloume.Contact }" class="contact-col">
+                        <div class="contact-card">
+                            <img *ngIf="user.profile_pic_url!=''" class="Profile_image" src="{{user.profile_pic_url}}"
+                                alt="">
+                            <div *ngIf="user.profile_pic_url==''" class="avtar">
+                                <p>{{user?.first_name | titlecase | slice:0:1}}{{user?.last_name | titlecase |
+                                    slice:0:1}}</p>
+                            </div>
+                            <div class="contact-details">
+                                <h1>{{user?.first_name}} {{user?.last_name}}</h1>
+                                <div class="iconcontainer">
+                                    <div class="active-icon" *ngIf="user.phone_no != ''">
+                                        <span><img src="assets/usermanagement/mobile.png" alt=""></span> {{user.phone_no
+                                        | phoneNumber}}
+                                    </div>
+                                    <div class="active-time" *ngIf="user.email != ''">
+                                        <span><img src="assets/login/email-icon.png" alt=""></span> {{user.email}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td [ngClass]="{'hidden': !visiblecloume.Company }">{{user.company_details[0]?.name}}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.Role }">{{user.role_details?.role_name}}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.Zone }">{{user.zone_details?.zone_name}}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.Department }">{{user.department_details[0]?.department}}
+                    </td>
+                    <td [ngClass]="{'hidden': !visiblecloume.Designation }">{{user.designation_details[0]?.designation}}
+                    </td>
+                    <td [ngClass]="{'hidden': !visiblecloume.LastLogin }">
+                        <div class="iconcontainer" *ngIf="user.last_login != null">
+                            <div class="active-icon">
+                                <span><img src="assets/usermanagement/calander.png" alt=""></span> {{user.last_login |
+                                date : "dd-MM-y"}}
+                            </div>
+                            <div class="active-time">
+                                <span><img src="assets/usermanagement/clock.png" alt=""></span> {{user.last_login | date
+                                : 'shortTime'}}
+                            </div>
+                        </div>
+                    </td>
+
+                    <td [ngClass]="{'hidden': !visiblecloume.Gender }">{{user.gender}}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.State }">{{user.state_details?.name}}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.City }">{{user.city_details?.name }}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.AadherNo }">{{user.aadhar_number}}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.PanNo }">{{user.pan_number}}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.BloodGroup }">{{user.blood_group}}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.AddressLine1 }">{{user.address_line_1}}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.AddressLine2 }">{{user.address_line_2}}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.ReportingManager }">
+                        {{user.reporting_manager_details[0]?.first_name}}
+                        {{user.reporting_manager_details[0]?.last_name}}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.DateofBirth }">{{user.date_of_birth}}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.JoiningDate }">{{user.joining_date}}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.LastWorkingDate }">{{user.last_working_date}}</td>
+                    <td [ngClass]="{'hidden': !visiblecloume.Status }" class="posion-fixed-right second">
+                        <div class="actionimage">
+                            <img class="status" src="assets/usermanagement/on-button.png" alt="" *ngIf="user.is_active"
+                                (click)="ChangeStatus(user.id,false)" data-bs-toggle="modal"
+                                data-bs-target="#deactiveRole">
+                            <img class="status" src="assets/usermanagement/off-button.png" alt=""
+                                *ngIf="!user.is_active" (click)="ChangeStatus(user.id,true)" data-bs-toggle="modal"
+                                data-bs-target="#deactiveRole">
+                        </div>
+                    </td>
+                    <td class="posion-fixed-right actionwidth">
+                        <div class="custom-section">
+                            <div class="dropdown">
+                                <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                <div class="dropdown-content">
+                                    <div class="img-container">
+                                        <span *ngIf="userPermissions.edit" (click)="editUser(user.id)"
+                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightEditUser"
+                                            aria-controls="offcanvasRight"><img src="assets/usermanagement/edit.png"
+                                                alt="">&nbsp;&nbsp;<label>Edit User</label></span>
+                                        <span *ngIf="userPermissions.edit"
+                                            (click)="editProfileSetting(user.id, user.role_details.role_id)"
+                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightUserSetting"
+                                            aria-controls="offcanvasRight"><img
+                                                src="assets/usermanagement/profilesetting.png"
+                                                alt="">&nbsp;&nbsp;<label>User Permission</label></span>
+                                        <span *ngIf="user.last_login != null && userPermissions.edit"
+                                            (click)="usersActivity(user.id)"><img
+                                                src="assets/usermanagement/useractivity.png"
+                                                alt="">&nbsp;&nbsp;<label>User Log</label></span>
+                                        <span *ngIf="userPermissions.delete" (click)="deleteUser(user.id)"
+                                            data-bs-toggle="modal" data-bs-target="#deleteUser"><img
+                                                src="assets/usermanagement/delete.png" alt="">&nbsp;&nbsp;<label>Delete
+                                                User</label></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr *ngIf="userList.length == 0" class="text-center">
+                    <td>No data found.</td>
+                </tr>
+            </table>
+            
+            
+            <div class="tablescroll_btn">
+                <div class="btn_action prev_btn" (click)="previous()">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="btn_action next_btn" (click)="next()">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="offcanvas offcanvas-end importbox" tabindex="-1" id="offcanvasRightLabeladduser"
+        aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Add New User</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-add-user (parentFun)="closeUserCanvas()"></app-add-user>
+        </div>
+    </div>
+
+    <!-- Import User Section -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLabelimportuser"
+        aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Import Users</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" (click)="reset()"
+                aria-label="Close"></button>
+        </div>
+        <div>
+            <app-import-user></app-import-user>
+        </div>
+    </div>
+
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightsearch" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Search By</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-search-user (parentFun)="closeSearchCanvas()"></app-search-user>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end importbox" tabindex="-1" id="offcanvasRightEditUser"
+        aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Edit User</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-edit-user #editUserData (parentFun)="closeEditCanvas()"></app-edit-user>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightUserSetting"
+        aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">User Permission</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-user-setting (parentFun)="closeUserSetting()" #userSetting></app-user-setting>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this User ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="userDelete()">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Status Change -->
+<div class="modal fade" id="deactiveRole" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are you sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to change this user status ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="confirmDeactive()">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>
+<button type="button" hidden (click)="openFormModal()" class="btn btn-dark">
+    open Modal
+</button>
+<button type="button" hidden (click)="openCanvas()" class="btn btn-dark">
+    open Canvas
+</button>

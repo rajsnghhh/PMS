@@ -1,0 +1,72 @@
+<form role="form" [formGroup]="adddepartmentForm">
+
+  <div class="mb-3" [ngClass]="{ 'float-now': addDepartment.code != '' }">
+    <input type="text" class="form-control" id="role" formControlName="code" [(ngModel)]="addDepartment.code"
+      [ngClass]="displayFieldCss(adddepartmentForm,'code')">
+    <label class="floating-label">Enter Delay Code <span class="asterisk">*</span></label>
+    <div class="required" *ngIf="isFieldValid(adddepartmentForm,'code')">
+      <span class="text-danger" *ngIf="adddepartmentForm.get('code')?.errors?.['required']">Delay Code is
+        required</span>
+    </div>
+  </div>
+
+  <div class="mb-3" [ngClass]="{ 'float-now': addDepartment.name != '' }">
+    <input type="text" class="form-control" id="role" formControlName="name" [(ngModel)]="addDepartment.name"
+      [ngClass]="displayFieldCss(adddepartmentForm,'name')">
+    <label class="floating-label">Enter Delay Reason <span class="asterisk">*</span></label>
+    <div class="required" *ngIf="isFieldValid(adddepartmentForm,'name')">
+      <span class="text-danger" *ngIf="adddepartmentForm.get('name')?.errors?.['required']">Delay Reason is
+        required</span>
+    </div>
+  </div>
+
+  <div class="flex-div">
+    <div class="mb-3">
+      <select class="form-select" formControlName="risktype" [(ngModel)]="addDepartment.risktype"
+        [ngClass]="displayFieldCss(adddepartmentForm,'risktype')" aria-label="Default select example">
+        <option value="" selected disabled>Select Risk Type <span class="asterisk">*</span></option>
+        <option value="FINANCIAL">FINANCIAL</option>
+        <option value="NORMAL">NORMAL</option>
+      </select>
+      <label class="floating-label-select" [ngClass]="{'insideDropdown': addDepartment.risktype =='' }">Select Risk Type
+        <span class="asterisk">*</span></label>
+      <div class="required" *ngIf="isFieldValid(adddepartmentForm,'risktype')">
+        <span class="text-danger" *ngIf="adddepartmentForm.get('risktype')?.errors?.['required']">Risk Type is
+          required</span>
+      </div>
+    </div>
+
+    <div class="mb-3" [ngClass]="{ 'float-now': addDepartment.colorcode != '' }">
+      <input [(colorPicker)]="color" #fileSelect [style.background]="color" class="form-control" id="role"
+        formControlName="colorcode" [(ngModel)]="addDepartment.colorcode" (colorPickerChange)="colorChange($event)"
+        (change)="nocolor()" [ngClass]="displayFieldCss(adddepartmentForm,'colorcode')"
+        [ngClass]="{'no-color': addDepartment.colorcode == ''}"><img class="colorpic" (click)="fileSelect.click()"
+        src="assets/icons/color-circle.png" alt="">
+      <label class="floating-label" *ngIf="addDepartment.colorcode != ''">Selected Color : <span
+          class="colrcode">{{addDepartment.colorcode}}</span></label>
+      <label class="floating-label" *ngIf="addDepartment.colorcode == ''">Choose Color <span
+          class="asterisk">*</span></label>
+      <div class="required" *ngIf="isFieldValid(adddepartmentForm,'colorcode')">
+        <span class="text-danger" *ngIf="adddepartmentForm.get('colorcode')?.errors?.['required']">Color is
+          required</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h6 class="labeloption">Delay Breakup</h6>
+    <div class="mb-3 option" [ngClass]="{ 'float-now': md.option != '' }" *ngFor="let md of OptionData; let i=index">
+      <input type="text" Name="option" [ngModelOptions]="{standalone: true}" class="form-control option-input"
+        [(ngModel)]="md.option">
+      <label class="floating-label">Option {{i+1}} <span class="asterisk">*</span></label>
+      <div class="AddBtn" (click)="addOption()" *ngIf="i==0"><img src="assets/icons/add1.png" alt="">
+      </div>
+      <div class="RemoveBtn" (click)="removeOption(i)" *ngIf="i!=0"><img src="assets/icons/minus.png" alt=""></div>
+      <div class="required" *ngIf="md.option==''">
+        <span class="text-danger">Option {{i+1}} is required</span>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary" (click)="addnewDelayreason()">ADD</button>
+</form>

@@ -1,0 +1,195 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Lab Report Entry</h2>
+
+        <div class="action-button-container">
+            <!-- <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown" aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>  
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span ><img src="assets/usermanagement/download_csv.png"  class="export" ><strong>CSV</strong> </span>
+                </li>
+            </ul>        -->
+            <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight">ADD NEW <img src="assets/header/add.png" alt=""></button>
+        </div>
+    </div>
+
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    Advanced Search
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+    
+                    <form [formGroup]="labReportEntryAdvancedSearchForm" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-6">
+                                <div class="mb-3 row">
+                                    <div class="col-md-6">
+                                        <div class="addressform">
+                                        <label>From</label>
+                                        <input type="date" name="date__gte" formControlName="date__gte" class="form-control">
+                                    </div></div>
+                                    <div class="col-md-6">
+                                        <div class="addressform">
+                                        <label>To</label>
+                                        <input type="date" name="date__lte" formControlName="date__lte" class="form-control">
+                                    </div></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-6">
+                                <div class="addressform">
+                                <label>Item Group</label>
+                                <select class="form-control" name="item_group__in" formControlName="item_group__in"> 
+                                    <option value="">Select Item Group</option>
+                                    <option value="{{materialGroup.id}}" *ngFor="let materialGroup of materialGroupList">{{materialGroup.name}}</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-6">
+                                <div class="addressform">
+                                <label>Lab No.</label>
+                                <input type="text"  class="form-control" name="request_code__icontains" formControlName="request_code__icontains">
+                            </div></div>
+                            
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="btd-section">
+                                <button type="submit" class="btn-save">SEARCH</button>
+                            </div>
+                        </div>
+    
+                    </form>
+    
+                </div>
+            </div>
+        </div>
+
+    <div class="component-body">
+        <table>
+            <tr>
+                <th>Sr.No</th>
+                <th>Lab No.</th>
+                <th>Date</th>
+                <th>Gate Pass Date & No.</th>
+                <th>Item Group</th>
+                <th>Sample Qty.(Size)</th>
+                <th>Remark</th>
+                <th>Action </th>
+            </tr>
+
+            <ng-container *ngFor="let transport of labreportList; let i = index" >
+                <tr >
+                    <td>{{ (pageSize*(page-1)) + i+1.}}</td>
+                    <td>{{ transport.request_code }}</td>
+                    <td>{{ transport.date }}</td>
+                    <td>{{ transport.gate_pass_details[0][0].date }}; No.: {{ transport.gate_pass_details[0][0].request_code }}</td>
+                    <td>
+                        <span *ngIf="transport.materials_groups_details[0]?.name">
+                            {{ transport.materials_groups_details[0].name}}
+                        </span>
+                        <span *ngIf="!transport.materials_groups_details[0]?.name">
+                            -
+                        </span>
+                    </td>
+                    <td>{{ transport.sample_quantity }}</td>
+                    <td>{{ transport.remark }}</td>
+                    <td>
+                        <div class="custom-section">
+                            <div class="dropdown">
+                                <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                <div class="dropdown-content">
+                                    <div class="img-container">
+                                        
+                                        <span class="mt-2" data-bs-toggle="offcanvas" (click)="editMaterialWastage(transport,'edit')"
+                                            data-bs-target="#offcanvasRightLabeladdrole"><img
+                                                src="assets/usermanagement/edit.png" alt=""
+                                                aria-controls="offcanvasRight">&nbsp;&nbsp;<label>Edit</label></span>
+                                        <span data-bs-toggle="modal" (click)="deleteAlertWastage(transport)"
+                                            data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png"
+                                                alt="">&nbsp;&nbsp;<label>Delete</label></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <ng-container *ngIf="transport.items.length != 0" >
+                    <tr style="background-color: #4f9dff8a;">
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>Sr.No.</td>
+                        <td>Item Name</td>
+                        <td>Remark</td>
+                        <td>Accept Status</td>
+                    </tr>
+                    <tr *ngFor="let report of transport.items; let j = index;">
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>{{i+1}}.{{j+1}}</td>
+                        <td>{{report.materials_details[0].material_name}}</td>
+                        <td>{{report.remark}}</td>
+                        <td>{{(report.accept == true)? "Accepted":"Rejected"}}</td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+
+            <tr class="text-center">
+                <td colspan="15" *ngIf="labreportList.length == 0">No data found.</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLabeladdrole"
+        aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">{{addUpdateMaterialWastage}}</h5>
+            <button #closeButton type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close" (click)="closeModal()"></button>
+        </div>
+        <div class="offcanvas-body planbody" *ngIf="onEditTransportData">
+            <app-add-update-lab-report-entry [prefieldData]="onEditTransportData" [onEditAccess]="onEditAccess" (labReportEntryList)="labReportEntryList()" (closeModal)="closeModal()"></app-add-update-lab-report-entry>
+        </div>
+        <div class="offcanvas-body planbody" *ngIf="!onEditTransportData">
+            <app-add-update-lab-report-entry [onEditAccess]="onEditAccess" (labReportEntryList)="labReportEntryList()" (closeModal)="closeModal()"></app-add-update-lab-report-entry>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this lab report ?
+            </div>
+            <div class="modal-footer">
+                <button (click)="deleteLabReportEntry()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

@@ -1,0 +1,603 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="createtable-section table-responsive">
+        <table class="text-nowrap">
+            <tr>
+                <th>Sr.&nbsp;No</th>
+                <!-- <th *ngIf="scope=='add' || scope=='update'">Search Item</th> -->
+                <th>Item Group <span class="asterisk">*</span></th>
+                <th>Item Sub Group <span class="asterisk">*</span></th>
+                <th>Item <span class="asterisk">*</span></th>
+                <th>Item Code</th>
+                <th>Technical Specification(S)</th>
+                <th style=" min-width: 100px; ">Stock Qty./Unit <span class="asterisk">*</span></th>
+                <th style=" min-width: 100px; ">Weight</th>
+                <th style=" min-width: 100px; ">Unit Rate <span class="asterisk">*</span></th>
+                <th style=" min-width: 100px; ">Item Amount</th>
+                <th>Disc Rate(%) / Amount</th>
+                <th>Taxable Amount</th>
+                <th style=" min-width: 100px; ">GST</th>
+                <th style=" min-width: 100px; ">UTGST Rate / Amount</th>
+                <th style=" min-width: 100px; ">SGST Rate / Amount</th>
+                <th style=" min-width: 100px; ">CGST Rate / Amount</th>
+                <th style=" min-width: 100px; ">IGST Rate / Amount</th>
+                <th style=" min-width: 100px; ">Amount</th>
+                <th>Remarks</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            
+            <tr class="tablebg" *ngFor="let item of form.quotation_items; let i = index">
+                <td>#{{i+1}}</td>
+
+                <td style=" min-width: 150px; ">
+                    <div class="tablegroup">
+                        <label>Item Group</label>
+                        <ng-select [disabled]="true" class="" name="requested_material_group{{i+1}}"
+                            [(ngModel)]="form.quotation_items[i].requested_material_group" required
+                            #requested_material_group="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && requested_material_group.errors }"
+                            (change)="typeChange(form.quotation_items[i].requested_material_group,i)">
+                            <ng-option *ngFor="let materialGroup of masterlist"
+                                [value]="materialGroup.id">{{materialGroup.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </td>
+                <td style=" min-width: 150px; ">
+                    <div class="tablegroup">
+                        <label>Item Sub Group</label>
+                        <ng-select [disabled]="true" class="" name="requested_material_sub_group{{i+1}}"
+                            [(ngModel)]="form.quotation_items[i].requested_material_sub_group" required
+                            #requested_material_sub_group="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && requested_material_sub_group.errors }"
+                            (change)="subTypeChange(form.quotation_items[i].requested_material_sub_group, i)">
+                            <ng-option *ngFor="let subGroup of form.quotation_items[i].MaterilSubGroupList"
+                                [value]="subGroup.id">{{subGroup.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </td>
+                <td style=" min-width: 150px; ">
+                    <div class="tablegroup">
+                        <label>Item</label>
+                        <ng-select [disabled]="true" class="" name="item{{i+1}}"
+                            [(ngModel)]="form.quotation_items[i].requested_material" required
+                            #item="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && item.errors }"
+                            (change)="setMaterialMasterData(i,false)">
+                            <ng-option *ngFor="let masterData of form.quotation_items[i].MaterilFilterList"
+                                [value]="masterData.id">{{masterData.material_name}}</ng-option>
+                            </ng-select>
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <label>{{form.quotation_items[i]?.MaterialmasterData?.material_code}}</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <label>{{form.quotation_items[i]?.MaterialmasterData?.material_nature_name}}</label>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="disabledEdit" class="form-control" placeholder=""
+                            amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                            name="quantity{{i+1}}" [(ngModel)]="form.quotation_items[i].quantity" required
+                            #quantity="ngModel" [ngClass]="{ 'is-invalid': f.submitted && quantity.errors }"
+                            (change)="changeInputValue('')">
+                        <select
+                            class="form-control"
+                            #uom="ngModel"
+                            required
+                            [disabled]="disabledEdit"
+                            [ngClass]="{ 'is-invalid': f.submitted && uom.errors }"
+                            [(ngModel)]="form.quotation_items[i].uom"
+                            [ngModelOptions]="{standalone: true}">
+                            <ng-container *ngFor="let uomData of uomList">
+                                <option value="{{uomData.id}}">{{uomData.symbol}}</option>    
+                            </ng-container>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" (change)="changeInputValue('')" [disabled]="disabledEdit" class="form-control" placeholder=""
+                        amountNumber 
+                        name="weight{{i+1}}" [(ngModel)]="form.quotation_items[i].weight" 
+                        #weight="ngModel" [ngClass]="{ 'is-invalid': f.submitted && weight.errors }" class="form-control" id="data" placeholder="" >
+                    </div>  
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" (change)="changeInputValue('')" [disabled]="disabledEdit" class="form-control" placeholder=""
+                        amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                        name="rate{{i+1}}" [(ngModel)]="form.quotation_items[i].rate" required
+                        #rate="ngModel" [ngClass]="{ 'is-invalid': f.submitted && rate.errors }" class="form-control" id="data" placeholder="" >
+                    </div>  
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="true" class="form-control" placeholder=""
+                        amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                        name="item_amount{{i+1}}" [(ngModel)]="form.quotation_items[i].item_amount" required
+                        #item_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && item_amount.errors }" class="form-control" id="data" placeholder="" >
+                    </div>  
+
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="disabledEdit" class="form-control" placeholder=""
+                        amountNumber (change)="changeInputValue('discountP')" 
+                        pattern="^(?:100(?:\.00?)?|\d?\d(?:\.\d\d?)?)$"
+                        name="disc_percentage{{i+1}}" [(ngModel)]="form.quotation_items[i].disc_percentage" 
+                        #disc_percentage="ngModel" [ngClass]="{ 'is-invalid': f.submitted && disc_percentage.errors }" class="form-control" id="data" placeholder="" >
+                    </div>  
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="disabledEdit" class="form-control" placeholder=""
+                        amountNumber (change)="changeInputValue('discountA')"
+                        name="disc_amount{{i+1}}" [(ngModel)]="form.quotation_items[i].disc_amount"
+                        #disc_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && disc_amount.errors }" class="form-control" id="data" placeholder="" >
+                    </div>  
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="true" class="form-control" placeholder=""
+                        amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                        name="taxable_amount{{i+1}}" [(ngModel)]="form.quotation_items[i].taxable_amount" required
+                        #taxable_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && taxable_amount.errors }" class="form-control" id="data" placeholder="" >
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <select [disabled]="true" class="form-control" id="sel1" name="tax_head{{i+1}}"
+                            [(ngModel)]="form.quotation_items[i].tax_head" #tax_head="ngModel" (change)="taxHeadChange(i,'itemGst')"
+                            [ngClass]="{ 'is-invalid': f.submitted && tax_head.errors }">
+                            <option value="">Select </option>
+                            <option *ngFor="let tax of taxHeads" value="{{tax.id}}">{{tax.name}}</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')"
+                            pattern="^(?:100(?:\.00?)?|\d?\d(?:\.\d\d?)?)$"
+                            name="utgst_percentage{{i+1}}" [(ngModel)]="form.quotation_items[i].utgst_percentage"
+                            #utgst_percentage="ngModel" [ngClass]="{ 'is-invalid': f.submitted && utgst_percentage.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')" 
+                            name="utgst_amount{{i+1}}" [(ngModel)]="form.quotation_items[i].utgst_amount"
+                            #utgst_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && utgst_amount.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')"
+                            pattern="^(?:100(?:\.00?)?|\d?\d(?:\.\d\d?)?)$"
+                            name="sgst_percentage{{i+1}}" [(ngModel)]="form.quotation_items[i].sgst_percentage"
+                            #sgst_percentage="ngModel" [ngClass]="{ 'is-invalid': f.submitted && sgst_percentage.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')" 
+                            name="sgst_amount{{i+1}}" [(ngModel)]="form.quotation_items[i].sgst_amount"
+                            #sgst_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && sgst_amount.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')"
+                            pattern="^(?:100(?:\.00?)?|\d?\d(?:\.\d\d?)?)$"
+                            name="cgst_percentage{{i+1}}" [(ngModel)]="form.quotation_items[i].cgst_percentage"
+                            #cgst_percentage="ngModel" [ngClass]="{ 'is-invalid': f.submitted && cgst_percentage.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')" 
+                            name="cgst_amount{{i+1}}" [(ngModel)]="form.quotation_items[i].cgst_amount"
+                            #cgst_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && cgst_amount.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')"
+                            pattern="^(?:100(?:\.00?)?|\d?\d(?:\.\d\d?)?)$"
+                            name="igst_percentage{{i+1}}" [(ngModel)]="form.quotation_items[i].igst_percentage"
+                            #igst_percentage="ngModel" [ngClass]="{ 'is-invalid': f.submitted && igst_percentage.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')" 
+                            name="igst_amount{{i+1}}" [(ngModel)]="form.quotation_items[i].igst_amount"
+                            #igst_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && igst_amount.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="true" class="form-control" placeholder=""
+                        amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                        name="total_amount{{i+1}}" [(ngModel)]="form.quotation_items[i].total_amount" required
+                        #total_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && total_amount.errors }" class="form-control" id="data" placeholder="" >
+                    </div>
+                </td>
+                
+                <td>
+                    <div class="tablegroup" *ngFor="let note of form.quotation_items[i].notes; let N_I = index">
+                        <label>{{note.note_title}}</label>
+                        <input [disabled]="disabledEdit" *ngIf="note.note_title == 'Justification'" type="text"
+                            class="form-control form-control2" id="text" placeholder="" name="notes_justify{{i+1}}"
+                            [(ngModel)]="form.quotation_items[i].notes[N_I].note_details" required
+                            #notes_justify="ngModel" [ngClass]="{ 'is-invalid': f.submitted && notes_justify.errors }">
+                        <input [disabled]="disabledEdit" *ngIf="note.note_title!= 'Justification'" type="text"
+                            class="form-control form-control2" id="text" placeholder=""
+                            [(ngModel)]="form.quotation_items[i].notes[N_I].note_details"
+                            [ngModelOptions]="{standalone: true}">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <label class="text-capitalize">{{item.status}}</label>
+                    </div>
+                </td>
+                <td class="align-middle">
+                    <a (click)="delete(i)" [ngClass]="{ 'disabled': disabledEdit }" type="submit"
+                        class="vector-delete">DEL <i class="fa" aria-hidden="true"><img
+                                src="assets/img/vector-delete.png" alt=""></i></a>
+                </td>
+            </tr>
+            <tr *ngIf="form.quotation_items.length>0">
+                <td colspan="6">Total</td>
+                <td>
+                    {{this.form?.total_item_item_quantity}}
+                </td>
+                <td>
+                    {{ this.form?.total_item_item_weight}}
+                </td>
+                <td>
+
+                </td>
+                <td>
+                    {{ this.form?.total_item_item_amount |currency:"INR":"symbol"}}
+                </td>
+                <td>
+                    {{ this.form?.total_item_disc_amount |currency:"INR":"symbol"}}
+                </td>
+                <td>
+                    {{this.form?.total_item_taxable_amount |currency:"INR":"symbol"}}
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    {{ this.form?.total_item_utgst_amount |currency:"INR":"symbol"}}
+                </td>
+                <td>
+                    {{ this.form?.total_item_sgst_amount |currency:"INR":"symbol"}}
+                </td>
+                <td>
+                    {{ this.form?.total_item_cgst_amount |currency:"INR":"symbol"}}
+                </td>
+                <td>
+                    {{ this.form?.total_item_igst_amount |currency:"INR":"symbol"}}
+                </td>
+                
+                <td>
+                    {{ this.form?.total_item_total_amount |currency:"INR":"symbol"}}
+                </td>
+                <td colspan="3"></td>
+            </tr>
+            <tr *ngIf="form.quotation_items.length==0">
+                <td colspan="20" class="text-center">No Item Added Yet</td>
+                <td *ngIf="scope=='add'"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="createtable-section table-responsive">
+        <table class="text-nowrap">
+            <tr>
+                <th>Sr.&nbsp;No</th>
+                <th style=" min-width: 200px; ">Expense Type<span class="asterisk">*</span></th>
+                <th style=" min-width: 100px; ">Calculate On Amount <span class="asterisk">*</span></th>
+                <th style=" min-width: 100px; ">Percent <span class="asterisk">*</span></th>
+                <th></th>
+                <th style=" min-width: 100px; ">Gross Amount</th>
+                <th style=" min-width: 100px; ">GST Tax Type<span class="asterisk">*</span></th>
+                <th style=" min-width: 100px; ">UTGST Rate / Amount</th>
+                <th style=" min-width: 100px; ">SGST Rate / Amount</th>
+                <th style=" min-width: 100px; ">CGST Rate / Amount</th>
+                <th style=" min-width: 100px; ">IGST Rate / Amount</th>
+                <th style=" min-width: 100px; ">Amount</th>
+                <th>Action</th>
+            </tr>
+            <tr class="">
+                <td colspan="12"></td>
+                <td class="align-middle">
+                    <a [ngClass]="{ 'disabled': disabledEdit }" (click)="addExpance()" type="submit" class="tablebtn-save"> ADD 
+                        <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png" alt=""></i>
+                    </a>
+                </td>
+            </tr>
+            <tr  *ngFor="let item of form.quotation_expense; let i = index">
+                <td>#{{i+1}}</td>
+                <td >
+                    <div class="tablegroup">
+                        <select [disabled]="disabledEdit" class="form-control" id="sel1" (change)="changeExpanceHead(i)" name="expense_head{{i+1}}"
+                            [(ngModel)]="form.quotation_expense[i].expense_head" #expense_head="ngModel"
+                            required
+                            [ngClass]="{ 'is-invalid': f.submitted && expense_head.errors }">
+                            <option value="">Select </option>
+                            <option *ngFor="let tax of expenseList" value="{{tax.id}}">{{tax.name}}</option>
+                        </select>
+                    </div>
+                    
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="true" class="form-control" placeholder=""
+                        amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                        name="total_item_total_amount{{i+1}}" [(ngModel)]="form.total_item_total_amount" required
+                        #total_item_total_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && total_item_total_amount.errors }" class="form-control" id="data" placeholder="" >
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="disabledEdit" class="form-control" placeholder=""
+                        amountNumber 
+                        (change)="calculateExpances()"
+                        name="expense_percentage{{i+1}}" [(ngModel)]="form.quotation_expense[i].expense_percentage" required
+                        #expense_percentage="ngModel" [ngClass]="{ 'is-invalid': f.submitted && expense_percentage.errors }" class="form-control" id="data" placeholder="" >
+                    </div>
+                </td>
+                <td>
+                    %
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="disabledEdit" class="form-control" placeholder=""
+                        amountNumber (ngModelChange)="set_discount_pecentage_blanck(i)" pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                        name="expense_amount{{i+1}}" [(ngModel)]="form.quotation_expense[i].expense_amount" required
+                        #expense_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && expense_amount.errors }" class="form-control" id="data" placeholder="" >
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <select [disabled]="true" class="form-control" id="sel1" (change)="taxHeadChange(i,'purchaseTH')" name="tax_head{{i+1}}"
+                            [(ngModel)]="form.quotation_expense[i].tax_head" #tax_head="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && tax_head.errors }">
+                            <option value="">Select </option>
+                            <option *ngFor="let tax of taxHeads" value="{{tax.id}}">{{tax.name}}</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')"
+                            pattern="^(?:100(?:\.00?)?|\d?\d(?:\.\d\d?)?)$"
+                            name="p_utgst_percentage{{i+1}}"
+                            [(ngModel)]="form.quotation_expense[i].utgst_percentage"
+                            #p_utgst_percentage="ngModel" [ngClass]="{ 'is-invalid': f.submitted && p_utgst_percentage.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')" 
+                            name="p_utgst_amount{{i+1}}"
+                            [(ngModel)]="form.quotation_expense[i].utgst_amount"
+                            #p_utgst_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && p_utgst_amount.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')"
+                            pattern="^(?:100(?:\.00?)?|\d?\d(?:\.\d\d?)?)$"
+                            name="p_sgst_percentage{{i+1}}"
+                            [(ngModel)]="form.quotation_expense[i].sgst_percentage"
+                            #p_sgst_percentage="ngModel" [ngClass]="{ 'is-invalid': f.submitted && p_sgst_percentage.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')" 
+                            name="p_sgst_amount{{i+1}}"
+                            [(ngModel)]="form.quotation_expense[i].sgst_amount"
+                            #p_sgst_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && p_sgst_amount.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')"
+                            pattern="^(?:100(?:\.00?)?|\d?\d(?:\.\d\d?)?)$"
+                            name="p_cgst_percentage{{i+1}}"
+                            [(ngModel)]="form.quotation_expense[i].cgst_percentage"
+                            #p_cgst_percentage="ngModel" [ngClass]="{ 'is-invalid': f.submitted && p_cgst_percentage.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')" 
+                            name="p_cgst_amount{{i+1}}"
+                            [(ngModel)]="form.quotation_expense[i].cgst_amount"
+                            #p_cgst_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && p_cgst_amount.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')"
+                            pattern="^(?:100(?:\.00?)?|\d?\d(?:\.\d\d?)?)$"
+                            name="p_igst_percentage{{i+1}}" 
+                            [(ngModel)]="form.quotation_expense[i].igst_percentage"
+                            #p_igst_percentage="ngModel" [ngClass]="{ 'is-invalid': f.submitted && p_igst_percentage.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="true" class="form-control" placeholder=""
+                            amountNumber (change)="changeInputValue('')" 
+                            name="p_igst_amount{{i+1}}" 
+                            [(ngModel)]="form.quotation_expense[i].igst_amount"
+                            #p_igst_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && p_igst_amount.errors }" class="form-control" id="data" placeholder="" >
+                        </div>  
+                    </div>
+                </td>
+                
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="true" class="form-control" placeholder=""
+                        amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                        name="total_expense_amount{{i+1}}" [(ngModel)]="form.quotation_expense[i].total_expense_amount" required
+                        #total_expense_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && total_expense_amount.errors }" class="form-control" id="data" placeholder="" >
+                    </div>
+                </td>
+                <td>
+                    <a (click)="deleteExpance(i)" [ngClass]="{ 'disabled': disabledEdit }" type="submit" class="vector-delete">DEL 
+                        <i class="fa" aria-hidden="true">
+                            <img src="assets/img/vector-delete.png" alt="">
+                        </i>
+                    </a>
+                </td>
+            </tr>
+            <tr *ngIf="form.quotation_expense">
+                <td colspan="5">Total</td>
+                <td>
+                    {{ this.form?.total_expense_expense_amount |currency:"INR":"symbol"}}
+                </td>
+                <td>
+
+                </td>
+                <td>
+                    {{ this.form?.total_expense_utgst_amount |currency:"INR":"symbol"}}
+                </td>
+                <td>
+                    {{ this.form?.total_expense_sgst_amount |currency:"INR":"symbol"}}
+                </td>
+                <td>
+                    {{this.form?.total_expense_cgst_amount |currency:"INR":"symbol"}}
+                </td>
+                <td>
+                    {{ this.form?.total_expense_igst_amount |currency:"INR":"symbol"}}
+                </td>
+                <td>
+                    {{ this.form?.total_expense_total_expense_amount |currency:"INR":"symbol"}}
+                </td>
+                <td></td>
+            </tr>
+            <tr *ngIf="form.quotation_expense.length==0">
+                <td colspan="15" class="text-center">No Expance Added Yet</td>
+            </tr>
+        </table>
+    </div>
+    <div class="createtable-section table-responsive">
+        <table class="text-nowrap">
+            <tr *ngFor="let taxRow of quotation_tax; let i = index">
+                <td style=" text-align: right; ">
+                    {{taxRow.calculate_on}}
+                    <div class="addressform" *ngIf="quotation_tax[i].options.length > 0">
+                        <div class="requested-group">
+                            <div class="form-check-inline" *ngFor="let option of quotation_tax[i].options">
+                                <label class="form-check-label">
+                                    <input [disabled]="disabledEdit" name="selectedOption{{i+1}}" [(ngModel)]="quotation_tax[i].choice" type="radio" (change)="changeRadioOptions(i)" class="form-check-input" value="{{option.value}}"
+                                    > {{option.name}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>{{taxRow.name}}</td>
+                <td>
+                    <div class="tablegroup"  *ngIf="quotation_tax[i].inclided_applicable">
+                        <section class="chackbox-container hideOnPrintScreen">
+                            <input [disabled]="disabledEdit" type="checkbox" (change)="calculateTaxes()" name="included{{i+1}}" id=""
+                                [(ngModel)]="quotation_tax[i].included"
+                            >
+                            <p>Incl.</p>
+                        </section>
+                    </div>
+                </td>
+                <td>
+                    <span *ngIf="quotation_tax[i].tax_head_applicable">@</span>
+                </td>
+                <td>
+                    <div class="tablegroup" *ngIf="quotation_tax[i].tax_head_applicable">
+                        <select [disabled]="disabledEdit" class="form-control" id="sel1" (change)="taxHeadChange(i,'')" name="tax_head{{i+1}}"
+                            [(ngModel)]="quotation_tax[i].tax_head" #tax_head="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && tax_head.errors }">
+                            <option value="">Select </option>
+                            <option *ngFor="let tax of taxHeads" value="{{tax.id}}">{{tax.name}}</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup" *ngIf="quotation_tax[i].tax_percentage_applicable">
+                        <input 
+                            type="text" 
+                            [disabled]="disabledEdit" 
+                            class="form-control" 
+                            placeholder=""
+                            amountNumber 
+                            pattern="^(?:100(?:\.00?)?|\d?\d(?:\.\d\d?)?)$"
+                            (change)="calculateTaxes()"
+                            name="tax_percentage{{i+1}}" 
+                            [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="quotation_tax[i].tax_percentage" 
+                            #tax_percentage="ngModel" 
+                            [ngClass]="{ 'is-invalid': f.submitted && tax_percentage.errors }"
+                        >
+                    </div>
+                </td>
+                <td>
+                    <span *ngIf="quotation_tax[i].tax_percentage_applicable">%</span>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input 
+                            type="text" 
+                            [disabled]="disabledEdit" 
+                            class="form-control" 
+                            placeholder=""
+                            amountNumber 
+                            (change)="changeamount(i)"
+                            name="tax_amount{{i+1}}" 
+                            [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="quotation_tax[i].tax_amount" 
+                            #tax_amount="ngModel" 
+                            [ngClass]="{ 'is-invalid': f.submitted && tax_amount.errors }"
+                        >
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Total Bill Value</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    {{ this.form?.afterAll_tax_Amount |currency:"INR":"symbol"}}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <button hidden #submitButton="" type="submit">Save</button>
+</form>

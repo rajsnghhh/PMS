@@ -1,0 +1,7 @@
+.form-select.is-valid:not([multiple]):not([size]),
+.form-select.is-valid:not([multiple])[size="1"],
+.was-validated .form-select:valid:not([multiple]):not([size]),
+.was-validated .form-select:valid:not([multiple])[size="1"] {
+	padding-right: 0;
+	background-size: 10px 8px, calc(.75em + .375rem) calc(.75em + .375rem);
+}

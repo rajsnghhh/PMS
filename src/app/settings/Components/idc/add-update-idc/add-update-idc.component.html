@@ -1,0 +1,130 @@
+<form role="form" [formGroup]="addUpdateIDCForm">
+
+    <div class="flex-div">
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addIDCTemplate.IDCCategory != '' }">
+            <input type="text" class="form-control" formControlName="IDCCategory"
+                [(ngModel)]="addIDCTemplate.IDCCategory" [ngClass]="displayFieldCss(addUpdateIDCForm,'IDCCategory')">
+            <label class="floating-label">Enter IDC Category <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addUpdateIDCForm,'IDCCategory')">
+                <span class="text-danger" *ngIf="addUpdateIDCForm.get('IDCCategory')?.errors?.['required']">IDC
+                    Category is required</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- <fieldset class="scheduler-border"><br>
+
+        <legend class="scheduler-border">&nbsp;IDC Details</legend>
+        <div class="flex-div">
+
+            <div class="mb-3" [ngClass]="{ 'float-now': addIDCTemplate.IDCMasterName != '' }">
+                <input type="text" class="form-control" formControlName="IDCMasterName"
+                    [(ngModel)]="addIDCTemplate.IDCMasterName"
+                    [ngClass]="displayFieldCss(addUpdateIDCForm,'IDCMasterName')">
+                <label class="floating-label">Enter IDC Master Name <span class="asterisk">*</span></label>
+                <div class="required" *ngIf="isFieldValid(addUpdateIDCForm,'IDCMasterName')">
+                    <span class="text-danger" *ngIf="addUpdateIDCForm.get('IDCMasterName')?.errors?.['required']">IDC
+                        Master Name is required</span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <select class="form-select" formControlName="uom" [(ngModel)]="addIDCTemplate.uom"
+                    [ngClass]="displayFieldCss(addUpdateIDCForm,'uom')" aria-label="Default select example">
+                    <option value="" selected disabled>Select UOM <span class="asterisk">*</span></option>
+                    <option *ngFor="let uom of uomList" value={{uom.id}}>{{uom.formal_name}} ({{uom.symbol}})</option>
+                </select>
+                <label class="floating-label-select" [ngClass]="{'insideDropdown': addIDCTemplate.uom =='' }">Select UOM
+                    <span class="asterisk">*</span></label>
+                <div class="required" *ngIf="isFieldValid(addUpdateIDCForm,'uom')">
+                    <span class="text-danger" *ngIf="addUpdateIDCForm.get('uom')?.errors?.['required']">Unit Of
+                        Measurement is
+                        required</span>
+                </div>
+            </div>
+
+            <div class="mb-3" [ngClass]="{ 'float-now': addIDCTemplate.rate != '' }">
+                <input type="text" class="form-control" formControlName="rate" [(ngModel)]="addIDCTemplate.rate"
+                    [ngClass]="displayFieldCss(addUpdateIDCForm,'rate')" (keypress)="onlyInteger($event)">
+                <label class="floating-label">Enter Rate <span class="asterisk">*</span></label>
+                <div class="required" *ngIf="isFieldValid(addUpdateIDCForm,'rate')">
+                    <span class="text-danger" *ngIf="addUpdateIDCForm.get('rate')?.errors?.['required']"> Rate is
+                        required</span>
+                </div>
+            </div>
+
+        </div>
+    </fieldset> -->
+
+
+    <h6 class="labeloption">IDC Details</h6>
+    <div *ngFor="let idc of IDCDetails; let i=index">
+        <div class="AddBtn" (click)="addIDCDetails()" *ngIf="i==0 && this.onEditAccess != 'view'" style="float: right;"><img
+                src="assets/icons/add1.png" alt=""></div>
+        <div class="RemoveBtn" *ngIf="i!=0 && this.onEditAccess != 'view'" style="float: right;" (click)="removeIDCDetails(i)"><img
+                src="assets/icons/minus.png" alt=""></div>
+
+        <fieldset class="scheduler-border"><br>
+
+            <div class="flex-div">
+                <div class="mb-3" [ngClass]="{ 'float-now': idc.name != '' }">
+                    <!--  formControlName="IDCMasterName" [ngClass]="displayFieldCss(addUpdateIDCForm,'IDCMasterName')" -->
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="idc.name">
+                    <label class="floating-label">Enter IDC Master Name {{i+1}} <span class="asterisk">*</span></label>
+                    <!-- <div class="required" *ngIf="isFieldValid(addUpdateIDCForm,'IDCMasterName')">
+                        <span class="text-danger"
+                            *ngIf="addUpdateIDCForm.get('IDCMasterName')?.errors?.['required']">IDC
+                            Master {{i+1}} is required</span>
+                    </div> -->
+                    <div class="required" *ngIf="idc.name==''">
+                        <span class="text-danger">IDC Master {{i+1}} is required</span>
+                    </div>
+                </div>
+
+                <div class="mb-3" [ngClass]="{ 'float-now': idc.uom != '' }">
+                    <!-- formControlName="uom" [ngClass]="displayFieldCss(addUpdateIDCForm,'uom')"  -->
+                    <select class="form-select" [ngModelOptions]="{standalone: true}" [(ngModel)]="idc.uom"
+                        aria-label="Default select example">
+                        <option value="" selected disabled>Select UOM <span class="asterisk">*</span>
+                        </option>
+                        <option *ngFor="let uom of uomList" value={{uom.id}}>{{uom.formal_name}} ({{uom.symbol}})
+                        </option>
+                    </select>
+                    <label class="floating-label-select" [ngClass]="{'insideDropdown': idc.uom =='' }">Select UOM
+                        <span class="asterisk">*</span></label>
+                    <!-- <div class="required" *ngIf="isFieldValid(addUpdateIDCForm,'uom')">
+                        <span class="text-danger" *ngIf="addUpdateIDCForm.get('uom')?.errors?.['required']">Unit Of
+                            Measurement {{i+1}} is
+                            required</span>
+                    </div> -->
+                    <div class="required" *ngIf="idc.uom==''">
+                        <span class="text-danger">Unit Of Measurement {{i+1}} is required</span>
+                    </div>
+                </div>
+
+                <div class="mb-3" [ngClass]="{ 'float-now': idc.rate != '' }">
+                    <!-- formControlName="rate"    [ngClass]="displayFieldCss(addUpdateIDCForm,'rate')" (keypress)="onlyInteger($event)"-->
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="idc.rate">
+                    <label class="floating-label">Enter Rate <span class="asterisk">*</span></label>
+                    <!-- <div class="required" *ngIf="isFieldValid(addUpdateIDCForm,'rate')">
+                        <span class="text-danger" *ngIf="addUpdateIDCForm.get('rate')?.errors?.['required']"> Rate
+                            is
+                            required</span>
+                    </div> -->
+                    <div class="required" *ngIf="idc.rate==''">
+                        <span class="text-danger">Rate {{i+1}} is required</span>
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+
+
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="addUpdateIDCMaster()" *ngIf="this.onEditAccess != 'view'">{{addUpdateButton}}</button>
+</form>

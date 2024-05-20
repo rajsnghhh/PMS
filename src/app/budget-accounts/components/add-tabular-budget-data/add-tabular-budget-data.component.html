@@ -1,0 +1,109 @@
+<div class="row">
+
+    <div class="col-lg-3 col-md-3 col-3" style="margin-left: 10px;">
+        <div class="adform">
+            <label for="project">Project</label>
+            <select id="sel1" class="form-control" [(ngModel)]="projectId"
+                (change)="getChainageDataForCalculations($event)">
+                <option value="" disabled>-- select --</option>
+                <option *ngFor="let project of projectList" value={{project.id}}>
+                    {{project.project_data[1].value}}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-3">
+        <div class="adform">
+            <label for="project">Chainage</label>
+            <select id="sel1" class="form-control" [(ngModel)]="chainageId"
+                (change)="onChangeChainageIntervalText($event)">
+                <option value="" disabled>-- select --</option>
+                <option *ngFor="let interval of calculateChainageIntervals(); index as i" [value]="interval">
+                    {{interval}}
+                </option>
+            </select>
+        </div>
+    </div>
+
+</div>
+
+<!-- <section class="relative-div">
+    <div class="table-container component-body">
+        <button type="button" class="add-new" (click)="AddNewChildRow()" style="margin-right: 95px;">Add
+            Child-ROW</button>
+        <button type="button" class="add-new" (click)="AddNewRow()">Add ROW</button>
+        <table>
+            <tr>
+                <th *ngFor="let header of tableHeaders">{{ header }}</th>
+            </tr>
+
+            <tr *ngFor="let data of item_act_subAct_list; let i = index">
+                <td *ngFor="let prop of tableProps; let j = index">
+                    <ng-container *ngIf="prop !== 'code' && prop !== 'name'; else codeInput">
+                        <input type="text" numbersOnly [(ngModel)]="item_act_subAct_list[i][prop]"
+                            (change)="onCellEdit(data)"
+                            [ngStyle]="addRowClicked ? {'background':'yellow'} :  {'background':'white'} ">
+                    </ng-container>
+                    <ng-template #codeInput>
+                        <input type="text" [(ngModel)]="item_act_subAct_list[i][prop]" (change)="onCellEdit(data)"
+                            [ngStyle]="addRowClicked ? {'background':'yellow'} :  {'background':'white'} ">
+                    </ng-template>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+</section> -->
+<section class="relative-div">
+    <div class="table-container component-body" *ngIf="chainage_text">
+        <!-- <button type="button" class="add-new" (click)="AddNewSubChild()" style="margin-right: 330px;"
+            [disabled]="!addGrandChildRowDataBoolean">Add
+            Sub-child</button> -->
+        <button type="button" class="add-new" (click)="AddNewHeader()" style="margin-right: 220px;">Add Header</button>
+
+        <button type="button" class="add-new" (click)="AddNewChildRow()" style="margin-right: 95px;"
+            [disabled]="addChildRowDataBoolean">Add
+            Child-ROW</button>
+        <button type="button" class="add-new" (click)="AddNewRow()"  [disabled]="addRowDataBoolean">Add ROW</button>
+        <table>
+            <tr>
+                <th *ngFor="let header of tableHeaders">{{ header }}</th>
+            </tr>
+
+            <!-- Single Loop for Both Parent and Child Rows -->
+            <ng-container *ngFor="let data of item_act_subAct_list; let i = index">
+                <tr>
+                    <td *ngFor="let prop of tableProps; let j = index">
+                        <ng-container *ngIf="prop !== 'code' && prop !== 'activity_group'; else codeInput">
+                            <input type="text" numbersOnly [(ngModel)]="data[prop]" (change)="onCellEdit(data, i)"
+                                (click)="addchildRowFromHere(data)" style="cursor: pointer;"
+                                [readonly]="prop === 'variance_per' || (data.is_header && (prop !== 'activity_group' &&  prop !== 'code'))"
+                                [ngClass]="{'parent-name-cell': !data.isChild && prop === 'activity_group', 'child-name-cell': data.isChild && prop === 'activity_group', 'child-name-other-cell':  data.isChild  && (prop === 'code' || prop === 'budgeted_amount' || prop === 'consumption_amount'  || prop === 'variance_per') , 'header-row': data.is_header, 'sub-child-name-cell': data.isGrandChild && prop === 'activity_group',}">
+                        </ng-container>
+                        <ng-template #codeInput>
+                            <input type="text" [(ngModel)]="data[prop]" (change)="onCellEdit(data, i)"
+                                (click)="addchildRowFromHere(data)" style="cursor: pointer;"
+                                [readonly]="prop === 'variance_per' || (data.is_header && (prop !== 'activity_group'&&  prop !== 'code'))"
+                                [ngClass]="{'parent-name-cell': !data.isChild && prop === 'activity_group', 'child-name-cell': data.isChild && prop === 'activity_group', 'child-name-other-cell':data.isChild  && (prop === 'code' || prop === 'budgeted_amount' || prop === 'consumption_amount'  || prop === 'variance_per') , 'header-row': data.is_header, 'sub-child-name-cell': data.isGrandChild && prop === 'activity_group'}">
+                        </ng-template>
+
+                    </td>
+
+                    <td>
+                        <span style="cursor: pointer;" (click)="deleteRowData(data, i)">
+                            <img src="assets/usermanagement/delete.png" alt="">
+                        </span>
+                    </td>
+                </tr>
+            </ng-container>
+
+
+
+        </table>
+
+    </div>
+</section>
+
+<!-- <div (click)="setData()">set data </div> -->

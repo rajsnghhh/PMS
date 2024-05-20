@@ -1,0 +1,42 @@
+<form role="form" [formGroup]="editsmsForm">
+  <div class="mb-3" [ngClass]="{ 'float-now': getsmsname != '' }">
+    <input type="text" class="form-control" id="role" formControlName="smsname" [(ngModel)]="getsmsname"
+      [ngClass]="displayFieldCss(editsmsForm,'smsname')">
+    <label class="floating-label">Enter SMS Name <span class="asterisk">*</span></label>
+    <div class="required" *ngIf="isFieldValid(editsmsForm,'smsname')">
+      <span class="text-danger" *ngIf="editsmsForm.get('smsname')?.errors?.['required']">SMS Name is required</span>
+    </div>
+  </div>
+
+  <div class="form-control custom1">
+    <label class="taglevel">Select Tags : </label> 
+    <ul class="taglistul">
+      <li *ngFor="let tag of tagList" (click)="addToken(tag.name)" class="taglistli">{{tag.name}}</li>
+    </ul>
+  </div>
+  <div class="mb-3" [ngClass]="{ 'float-now': getsmsbody != '' }">
+    <textarea type="text" class="form-control txtbox custom2" id="role" #myTextArea (click)="getCaretPos(myTextArea)" (keyup)="getCaretPos(myTextArea)" formControlName="smsbody" [(ngModel)]="getsmsbody"
+      [ngClass]="displayFieldCss(editsmsForm,'smsbody')" placeholder="Enter SMS Text"> </textarea>
+    <!-- <label class="floating-label">Enter SMS Text <span class="asterisk">*</span></label> -->
+    <div class="required" *ngIf="isFieldValid(editsmsForm,'smsbody')">
+      <span class="text-danger" *ngIf="editsmsForm.get('smsbody')?.errors?.['required']">SMS Text is required</span>
+    </div>
+  </div>
+
+
+  <div class="mb-3">
+    <select class="form-select" formControlName="Templatetype" [(ngModel)]="gettemplatetype"
+      [ngClass]="displayFieldCss(editsmsForm,'Templatetype')" aria-label="Default select example">
+      <option value="" selected disabled>Select Template Type <span class="asterisk">*</span></option>
+      <option *ngFor="let template of templateList" value={{template.id}}>{{template.smtp_type_name}}</option>
+    </select>
+    <label class="floating-label-select" [ngClass]="{'insideDropdown': gettemplatetype =='' }">Select Template Type
+      <span class="asterisk">*</span></label>
+    <div class="required" *ngIf="isFieldValid(editsmsForm,'Templatetype')">
+      <span class="text-danger" *ngIf="editsmsForm.get('Templatetype')?.errors?.['required']">Template Type is
+        required</span>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary" (click)="editSms()">UPDATE</button>
+</form>

@@ -1,0 +1,368 @@
+<form name="form" [formGroup]="formGroup">
+    <div class="createtable-section table-responsive">
+        <table class="text-nowrap">
+            <tr>
+                <th>Sr.&nbsp;No</th>
+                <th>Item Group/ Item Name</th>
+                <th>Size/Part No./ Grade</th>
+                <th>Qty./ Unit</th>
+                <th>Unit Rate</th>
+                <th>Item Amt.</th>
+                <th>Disc.Rate %/ Amt.</th>
+                <ng-container *ngIf="add_type =='gst';else normalTax">
+                    <th>Taxable Amt.</th>
+                    <th>SGST Rate/Amt.</th>
+                    <th>CGST Rate/Amt.</th>
+                    <th>IGST Rate/Amt.</th>
+                </ng-container>
+                <ng-template #normalTax>
+                    <th>Excise Tax%/Amt.</th>
+                    <th>Tax Rate%/Amt.</th>
+                </ng-template>
+
+                <th>Total Amount</th>
+                <th>Action</th>
+            </tr>
+            <ng-container formArrayName="items">
+                <ng-container *ngFor="let item of items.controls; let i = index; let last = last" [formGroupName]="i">
+                    <tr>
+                        <td>{{i+1}}</td>
+                        <td>
+                            <div class="tablegroup">
+                                <div>
+                                    <label>Item Group</label>
+                                    <ng-select [clearable]="false" (change)="typeChange(item.value.item_group,i)"
+                                        formControlName="item_group"
+                                        [class.is-invalid]="items.at(i).get('item_group')?.errors && items.at(i).get('item_group')?.touched">
+                                        <ng-option *ngFor="let group_item of masterItemGroupList"
+                                            [value]="group_item.id">{{group_item.name}}</ng-option>
+                                    </ng-select>
+                                </div>
+                                <div class="py-2">
+                                    <label>Item Sub Group</label>
+                                    <ng-select [clearable]="false" (change)="subTypeChange(item.value.sub_item_group,i)"
+                                        formControlName="sub_item_group"
+                                        [class.is-invalid]="items.at(i).get('sub_item_group')?.errors && items.at(i).get('sub_item_group')?.touched">
+                                        <ng-option *ngFor="let sub_item of masterSubItemList[i]"
+                                            [value]="sub_item.id">{{sub_item.name}}</ng-option>
+                                    </ng-select>
+                                </div>
+                                <div>
+                                    <label>Item</label>
+                                    <ng-select (change)="setMaterialMasterData(i)" formControlName="item"
+                                        [class.is-invalid]="items.at(i).get('item')?.errors && items.at(i).get('item')?.touched">
+                                        <ng-option *ngFor="let main_item of masterItemList[i]"
+                                            [value]="main_item.id">{{main_item.material_name}}</ng-option>
+                                    </ng-select>
+                                </div>
+                                <div *ngIf="items.at(i).get('hsn_code')?.value" class="mt-2">
+                                    <label>HSN CODE</label>
+                                    <input formControlName="hsn_code" readonly
+                                        [class.is-invalid]="items.at(i).get('hsn_code')?.errors && items.at(i).get('hsn_code')?.touched"
+                                        class="form-control" type="text" class="form-control" placeholder="">
+                                </div>
+                                <div *ngIf="items.at(i).get('item')?.value" class="mt-2">
+                                   <div class="d-flex">
+                                    <label>Loc. Bal. Qty.</label>
+                                    <input formControlName="currentStock" readonly
+                                        class="form-control" type="text" class="form-control" placeholder="">
+                                   </div>
+                                </div>
+
+                            </div>
+                        </td>
+                        <td>
+                            <input formControlName="size_part_no_grade"
+                                [class.is-invalid]="items.at(i).get('size_part_no_grade')?.errors && items.at(i).get('size_part_no_grade')?.touched"
+                                class="form-control" type="text" class="form-control" placeholder="">
+                        </td>
+                        <td>
+                            <div class="">
+                                <div>
+                                    <input amountNumber formControlName="quantity"
+                                        [class.is-invalid]="items.at(i).get('quantity')?.errors && items.at(i).get('quantity')?.touched"
+                                        class="form-control" type="text" placeholder=""
+                                        (input)="showMaterialsCalculatedAmt(i)">
+                                </div>
+                                <div class="py-2">
+                                    <ng-select [clearable]="false" formControlName="uom" placeholder="Unit"
+                                        [class.is-invalid]="items.at(i).get('uom')?.errors && items.at(i).get('uom')?.touched">
+                                        <ng-option *ngFor="let unit of uomList"
+                                            [value]="unit.id">{{unit.symbol}}</ng-option>
+                                    </ng-select>
+                                </div>
+                                <div>
+                                    <label>Weight</label>
+                                    <input amountNumber class="form-control" type="text" class="form-control"
+                                        formControlName="weight" placeholder=""
+                                        [class.is-invalid]="items.at(i).get('weight')?.errors && items.at(i).get('weight')?.touched">
+                                </div>
+
+                            </div>
+                        </td>
+                        <td>
+                            <div class="">
+                                <div>
+                                    <input amountNumber type="text" class="form-control" (input)="showMaterialsCalculatedAmt(i)"
+                                        placeholder="" formControlName="rate"
+                                        [class.is-invalid]="items.at(i).get('rate')?.errors && items.at(i).get('rate')?.touched">
+                                </div>
+                                <div>
+                                    <label class="py-2">Tolerance %</label>
+                                    <input amountNumber formControlName="tolerance_percentage"
+                                        [class.is-invalid]="items.at(i).get('tolerance_percentage')?.errors && items.at(i).get('tolerance_percentage')?.touched"
+                                        type="text" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" readonly class="form-control" placeholder=""
+                                formControlName="item_amount"
+                                [class.is-invalid]="items.at(i).get('item_amount')?.errors && items.at(i).get('item_amount')?.touched">
+
+                        </td>
+                        <td>
+                            <div class="">
+                                <div>
+                                    <input amountNumber (input)="showMaterialsCalculatedAmt(i)" class="form-control" type="text"
+                                        class="form-control" placeholder="" formControlName="disc_percentage"
+                                        [class.is-invalid]="items.at(i).get('disc_percentage')?.errors && items.at(i).get('disc_percentage')?.touched">
+                                </div>
+                                <div>
+                                    <label class="py-2">Amount</label>
+                                    <input readonly class="form-control" type="text" placeholder=""
+                                        formControlName="disc_amount"
+                                        [class.is-invalid]="items.at(i).get('disc_amount')?.errors && items.at(i).get('disc_amount')?.touched">
+                                </div>
+                            </div>
+                        </td>
+                        <ng-container *ngIf="add_type =='gst';else normalTax">
+                            <td>
+                                <div class="">
+                                    <div>
+                                        <input readonly class="form-control" type="text"
+                                            formControlName="taxable_amount"
+                                            [class.is-invalid]="items.at(i).get('taxable_amount')?.errors && items.at(i).get('taxable_amount')?.touched">
+                                    </div>
+                                    <label class="py-2">GST %</label>
+                                    <div>
+                                        <ng-select formControlName="tax_head"
+                                            (change)="taxMaterialsAutoFilled($event,i)"
+                                            [class.is-invalid]="items.at(i).get('tax_head')?.errors && items.at(i).get('tax_head')?.touched">
+                                            <ng-option *ngFor="let taxHead of taxHeads"
+                                                [value]="taxHead.id">{{taxHead.name}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="">
+                                    <div>
+                                        <input readonly class="form-control" type="text"
+                                            formControlName="sgst_percentage"
+                                            [class.is-invalid]="items.at(i).get('sgst_percentage')?.errors && items.at(i).get('sgst_percentage')?.touched">
+                                    </div>
+                                    <div class="pt-2">
+                                        <input readonly class="form-control" type="text" formControlName="sgst_amount"
+                                            [class.is-invalid]="items.at(i).get('sgst_amount')?.errors && items.at(i).get('sgst_amount')?.touched">
+                                    </div>
+                                    <div class="py-2">
+                                        <b>UTGST</b>
+                                    </div>
+                                    <div>
+                                        <input readonly class="form-control" type="text"
+                                            formControlName="utgst_percentage"
+                                            [class.is-invalid]="items.at(i).get('utgst_percentage')?.errors && items.at(i).get('utgst_percentage')?.touched">
+                                    </div>
+                                    <div class="pt-2">
+                                        <input readonly class="form-control" type="text" formControlName="utgst_amount"
+                                            [class.is-invalid]="items.at(i).get('utgst_amount')?.errors && items.at(i).get('utgst_amount')?.touched">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="">
+                                    <div>
+                                        <input readonly class="form-control" type="text"
+                                            formControlName="cgst_percentage"
+                                            [class.is-invalid]="items.at(i).get('cgst_percentage')?.errors && items.at(i).get('cgst_percentage')?.touched">
+                                    </div>
+                                    <div class="py-2">
+                                        <input readonly class="form-control" type="text" formControlName="cgst_amount"
+                                            [class.is-invalid]="items.at(i).get('cgst_amount')?.errors && items.at(i).get('cgst_amount')?.touched">
+                                    </div>
+
+
+                                </div>
+                            </td>
+                            <td>
+                                <div class="">
+                                    <div>
+                                        <input readonly class="form-control" type="text"
+                                            formControlName="igst_percentage"
+                                            [class.is-invalid]="items.at(i).get('igst_percentage')?.errors && items.at(i).get('igst_percentage')?.touched">
+                                    </div>
+                                    <div class="pt-2">
+                                        <input readonly class="form-control" type="text" formControlName="igst_amount"
+                                            [class.is-invalid]="items.at(i).get('igst_amount')?.errors && items.at(i).get('igst_amount')?.touched">
+                                    </div>
+                                    <div class="py-2">
+                                        <b>CESS</b>
+                                    </div>
+                                    <div>
+                                        <input readonly class="form-control" type="text"
+                                            formControlName="cess_percentage"
+                                            [class.is-invalid]="items.at(i).get('cess_percentage')?.errors && items.at(i).get('cess_percentage')?.touched">
+                                    </div>
+                                    <div class="pt-2">
+                                        <input readonly class="form-control" type="text" formControlName="cess_amount"
+                                            [class.is-invalid]="items.at(i).get('cess_amount')?.errors && items.at(i).get('cess_amount')?.touched">
+                                    </div>
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-template #normalTax>
+
+                            <td>
+                                <div class="">
+                                    <div>
+                                        <ng-select formControlName="excise_tax_head"
+                                            (change)="taxExciseMaterialsAutoFilled($event,i,'excise')"
+                                            [class.is-invalid]="items.at(i).get('excise_tax_head')?.errors && items.at(i).get('excise_tax_head')?.touched">
+                                            <ng-option *ngFor="let taxHead of exciseTaxDetails"
+                                                [value]="taxHead.id">{{taxHead.name}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                    <div class="py-2">
+                                        <input class="form-control" type="text" formControlName="excise_tax_percentage"
+                                            [class.is-invalid]="items.at(i).get('excise_tax_percentage')?.errors && items.at(i).get('excise_tax_percentage')?.touched">
+                                    </div>
+                                    <div>
+                                        <input class="form-control" type="text" formControlName="excise_tax_amount"
+                                            [class.is-invalid]="items.at(i).get('excise_tax_amount')?.errors && items.at(i).get('excise_tax_amount')?.touched">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="">
+                                    <div>
+                                        <ng-select formControlName="tax_head"
+                                            (change)="taxExciseMaterialsAutoFilled($event,i,'tax')"
+                                            [class.is-invalid]="items.at(i).get('tax_head')?.errors && items.at(i).get('tax_head')?.touched">
+
+                                            <ng-option *ngFor="let taxHead of taxHeads"
+                                                [value]="taxHead.id">{{taxHead.name}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                    <div class="py-2">
+                                        <input class="form-control" type="text" formControlName="tax_percentage"
+                                            [class.is-invalid]="items.at(i).get('tax_percentage')?.errors && items.at(i).get('tax_percentage')?.touched">
+                                    </div>
+                                    <div>
+                                        <input class="form-control" readonly type="text" formControlName="tax_amount"
+                                            [class.is-invalid]="items.at(i).get('tax_amount')?.errors && items.at(i).get('tax_amount')?.touched">
+                                    </div>
+                                </div>
+                            </td>
+                        </ng-template>
+
+                        <td>
+                            <ng-container *ngIf="add_type =='gst';else normalTaxTotal">
+                                <input readonly class="form-control" type="text" formControlName="after_gst_amount"
+                                    [class.is-invalid]="items.at(i).get('after_gst_amount')?.errors && items.at(i).get('after_gst_amount')?.touched">
+                                <a class="mb-2" href="javascript:void(0)" (click)="hideInput[i]=!hideInput[i]">Add Desc.</a>
+                                <ng-container *ngIf="hideInput[i]">
+                                    <textarea class="form-control mb-2" type="text" formControlName="amount_description" placeholder="Description"
+                                    [class.is-invalid]="items.at(i).get('amount_description')?.errors && items.at(i).get('amount_description')?.touched">
+                                    </textarea>
+                                </ng-container>
+                                <ng-container *ngIf="!hideInput[i] && item.value.amount_description">
+                                    <p (click)="hideInput[i]=true">{{item.value.amount_description}}</p>
+                                </ng-container>
+                            </ng-container>
+                            <ng-template #normalTaxTotal>
+                                <input readonly class="form-control" type="text" formControlName="total_amount"
+                                    [class.is-invalid]="items.at(i).get('total_amount')?.errors && items.at(i).get('total_amount')?.touched">
+                            </ng-template>
+
+                        </td>
+                        <td class="align-middle">
+                            <a *ngIf="last" (click)="addItems(i)" type="submit" class="tablebtn-save">
+                                ADD <i class="fa" aria-hidden="true">
+                                    <img src="assets/img/vector-add.png" alt="">
+                                </i>
+                            </a>
+                            <a *ngIf="!last" (click)="deleteItem(i)" type="submit" class="vector-delete">DEL <i
+                                    class="fa" aria-hidden="true"><img src="assets/img/vector-delete.png"
+                                        alt=""></i></a>
+                        </td>
+
+                    </tr>
+                </ng-container>
+            </ng-container>
+            <tr>
+                <td colspan="2">TOTAL</td>
+                <td></td>
+                <td>
+                    <input class="form-control" readonly type="text" [value]="total?.quantity| number : '1.2-2'">
+                </td>
+                <td>
+                    <input class="form-control" readonly type="text" [value]="total?.rate| number : '1.2-2'">
+                </td>
+                <td>
+                    <input class="form-control" readonly type="text" [value]="total?.item_amt| number : '1.2-2'">
+                </td>
+
+                <td>
+                    <input class="form-control" readonly type="text" [value]="total?.discount_amt| number : '1.2-2'">
+                </td>
+
+                <ng-container *ngIf="add_type=='gst'">
+                    <td>
+                        <input class="form-control" readonly type="text" [value]="total?.taxable_amt| number : '1.2-2'">
+                    </td>
+                    <td>
+                        <div class="d-flex flex-column">
+                            <input class="form-control" readonly type="text"
+                                [value]="total?.sgst_amt| number : '1.2-2'">
+                            <input class="form-control mt-2" readonly type="text"
+                                [value]="total?.utgst_amt| number : '1.2-2'">
+                        </div>
+                    </td>
+                    <td>
+                        <input class="form-control" readonly type="text" [value]="total?.cgst_amt| number : '1.2-2'">
+                    </td>
+                    <td>
+                        <div class="d-flex flex-column">
+                            <input class="form-control" readonly type="text"
+                                [value]="total?.igst_amt| number : '1.2-2'">
+                            <input class="form-control mt-2" readonly type="text"
+                                [value]="total?.cess_amt| number : '1.2-2'">
+                        </div>
+                    </td>
+                    <td>
+                        <input class="form-control" readonly type="text" [value]="total?.net_amt| number : '1.2-2'">
+                    </td>
+                </ng-container>
+                <ng-container *ngIf="add_type==null">
+                    <td>
+                        <input class="form-control" readonly type="text"
+                            [value]="total?.excise_tax_amount| number : '1.2-2'">
+                    </td>
+                    <td>
+                        <input class="form-control" readonly type="text" [value]="total?.tax_amount| number : '1.2-2'">
+                    </td>
+                    <td>
+                        <input class="form-control" readonly type="text"
+                            [value]="total?.total_amount| number : '1.2-2'">
+                    </td>
+                </ng-container>
+
+
+                <td></td>
+            </tr>
+            <button hidden #submitButton="" type="submit">Save</button>
+        </table>
+    </div>
+</form>

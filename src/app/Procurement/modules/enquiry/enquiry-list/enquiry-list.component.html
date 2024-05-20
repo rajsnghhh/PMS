@@ -1,0 +1,163 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Enquiry List</h2>
+
+        <div class="action-button-container">
+            <button hidden [routerLink]="['/pms/store/procurement/enquiry/send-enquiry']">Send Enquiry</button>
+
+            <button hidden [routerLink]="['/pms/store/procurement/enquiry/add']">ADD NEW <img
+                    src="assets/header/add.png" alt=""></button>
+
+        </div>
+    </div>
+
+    <div class="component-body">
+
+        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSearch()" novalidate>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>From</label><input type="date" name="updated_at__gte " [(ngModel)]="form.updated_at__gte "
+                            #updated_at__gte="ngModel" placeholder="" id="updated_at__gte" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>To</label><input type="date" name="updated_at__lte " [(ngModel)]="form.updated_at__lte "
+                            #updated_at__lte="ngModel" placeholder="" id="updated_at__lte" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Enquiry No.</label>
+                        <input type="text" name="request_code__icontains " [(ngModel)]="form.request_code__icontains " #request_code__icontains="ngModel"
+                            placeholder="" id="request_code__icontains" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Site</label>
+                        <select id="sel1" class="form-control" [disabled]="true" ngDefaultControl name="indent__site__in " [(ngModel)]="form.indent__site__in "
+                            #indent__site__in="ngModel">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                {{siteData.site_name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Vendor Name</label>
+                        <ng-select class="form-control" [multiple]="true"
+                            name="vendor__in"
+                            [(ngModel)]="form.vendor__in"
+                            #vendor__in="ngModel">
+                            <ng-option *ngFor="let vend of vendorList"
+                                [value]="vend.id">{{vend.vendor_master_data.vendor_name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Item Group</label>
+                        <ng-select class="form-control" [multiple]="true"
+                            name="procurement_rfq_vendors_items__requested_material__material_type__in"
+                            [(ngModel)]="form.procurement_rfq_vendors_items__requested_material__material_type__in"
+                            #procurement_rfq_vendors_items__requested_material__material_type__in="ngModel">
+                            <ng-option *ngFor="let group of materialGroupList"
+                                [value]="group.id">{{group.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Item</label>
+                        <ng-select class="form-control" [multiple]="true"
+                            name="procurement_rfq_vendors_items__requested_material__in"
+                            [(ngModel)]="form.procurement_rfq_vendors_items__requested_material__in"
+                            #procurement_rfq_vendors_items__requested_material__in="ngModel">
+                            <ng-option *ngFor="let masterData of itemList"
+                                [value]="masterData.id">{{masterData.material_name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+               
+            </div>
+
+            <div class="btd-section">
+                <button type="submit" class="btn-save">Search</button>
+            </div>
+        </form>
+        <table class="table text-center">
+            <tr>
+                <th>SrNo.</th>
+                <th>Enquiry NO.</th>
+                <th>Enquiry Date</th>
+                <th>Indent No</th>
+                <th>
+                    Received Quotation
+                </th>
+                <th>Action</th>
+            </tr>
+            <tr *ngFor="let item of enquiryList;let i=index">
+                <td>{{i+1}}.</td>
+                <td>{{item.request_code}}</td>
+                <td>{{item.enquiry_date | date:"dd-MM-yyyy"}}</td>
+                <td>{{item.indent_details[0].request_code}}</td>
+                <td> {{item.quot_count}}</td>
+                <td class="actionbutton">
+                    <div class="custom-section">
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                            <div class="dropdown-content editwidth">
+                                <div class="img-container">
+                                    <span class="mt-2" (click)="editEnquiry(item.id)"><img
+                                            src="assets/usermanagement/edit.png" alt="">&nbsp;&nbsp;<label>Edit Enquiry
+                                        </label>
+                                    </span>
+                                    <span class="mt-2" (click)="ViewquotationByID(item.id)"><img
+                                        src="assets/icons/quotation.png" alt="">&nbsp;&nbsp;
+                                        <label>View Quotation</label>
+                                    </span>
+                                    <!-- <li (click)="ViewquotationByID(item.indent_id)" *ngIf="item.sanc_status=='approved'">View Quotation
+                                    <span><img src="assets/icons/quotation.png" alt=""></span>
+                                    </li> -->
+                                    <span (click)="deleteEnquiry(item.id)" data-bs-toggle="modal"
+                                        data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png"
+                                            alt="">&nbsp;&nbsp;<label>Delete Enquiry</label></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            <tr *ngIf="enquiryList?.length==0">
+                <td class="text-center" colspan="7"> No Data Found!</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this Enquiry ?
+            </div>
+            <div class="modal-footer">
+                <button (click)="deleteAlertCompany()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>

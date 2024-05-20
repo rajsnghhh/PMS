@@ -1,0 +1,9 @@
+<div class="holiday-main">
+    <div class="header">
+        Upcomming Holiday
+        <button [routerLink]="['holiday/holiday_list']">View All</button>
+    </div>
+    <ul>
+        <li *ngFor="let item of upCommingHolidays; let i = index"> <span class="date">{{item.date | date:'d'}} <br> {{item.date | date:'MMM'}}</span>{{item.name}}</li>
+    </ul>
+</div>

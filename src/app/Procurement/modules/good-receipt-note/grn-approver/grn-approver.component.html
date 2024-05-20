@@ -1,0 +1,34 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="creatematerial">
+        <h3>Approve / Reject Procurement GRN</h3>
+
+        <div class="row">
+            <div class="">
+
+                <div class="addressform">
+                    <div class="row">
+                        
+                        <div class="d-flex">
+                            <input type="checkbox" class="form-control checkbox" [disabled]="disabledEdit" placeholder="SSIL"
+                                id="ssil" disabled name="request_number" [(ngModel)]="form.request_number" required
+                                #request_number="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && request_number.errors }">&nbsp;
+                            <label >I have checked and verified.</label>&nbsp;
+                            <label >It will Approve / Reject all the material requested in this GRN request.</label>
+                            <div *ngIf="f.submitted && request_number.errors" class="invalid-feedback">
+                                <div *ngIf="request_number.errors['required']">This is required to proceed!</div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-3 col-md-3 col-12">
+                            <input type="ssil" class="form-control" placeholder="67" id="ssil">
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <section class="action-button">
+                <button #submitButton="" type="submit" (click)="changeStatus('approved')" class="approve">APPROVE <i class="fa" aria-hidden="true"><img src="assets/icons/white-tick.png" alt=""></i></button>
+                <button #submitButton="" type="submit" (click)="changeStatus('rejected')" class="reject">REJECT <i class="fa" aria-hidden="true"><img src="assets/usermanagement/not-valid.png" alt=""></i></button>
+            </section>
+        </div>
+    </div>
+</form>

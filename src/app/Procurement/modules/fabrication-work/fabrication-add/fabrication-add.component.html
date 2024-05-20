@@ -1,0 +1,411 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Add Fabrication</h2>
+    </div>
+    <div class="component-body">
+        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Voucher No.</label>
+                        <input type="text" name="voucher_no " [(ngModel)]="form.voucher_no " #voucher_no="ngModel"
+                            placeholder="" id="voucher_no" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Date</label><input type="date" name="date " [(ngModel)]="form.date " #date="ngModel"
+                            placeholder="" id="date" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Template</label><input type="text" name="select_template "
+                            [(ngModel)]="form.select_template " #select_template="ngModel" placeholder=""
+                            id="select_template" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Batch</label><input type="text" name="batch " [(ngModel)]="form.batch " #batch="ngModel"
+                            placeholder="" id="batch" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Party Bill No.</label>
+                        <input type="text" name="party_bill_no"  id="party_bill_no" [(ngModel)]="form.party_bill_no "
+                            #party_bill_no="ngModel" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Bill Date</label><input type="date" name="bill_date " [(ngModel)]="form.bill_date "
+                            #bill_date="ngModel" placeholder="" id="bill_date" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>No Of Job's</label><input type="number" name="number_of_jobs "
+                            [(ngModel)]="form.number_of_jobs " #number_of_jobs="ngModel" placeholder=""
+                            id="number_of_jobs" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Site<span class="asterisk">*</span></label>
+                        <select id="sel1" disabled class="form-control" required ngDefaultControl name="site "
+                            [(ngModel)]="form.site " #site="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && site.errors }">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                {{siteData.site_name}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && site .errors" class="invalid-feedback">
+                            <div *ngIf="site .errors['required']">Site is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform" ngDefaultControl name="fabrication_by " [(ngModel)]="form.fabrication_by "
+                        #fabrication_by="ngModel">
+                        <label>Fabrication By</label>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="self" name="optradio" class="form-check-input"
+                                    id="fabrication_by" name="fabrication_by">
+                                Self
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="party" name="optradio" class="form-check-input"
+                                    id="fabrication_by" name="fabrication_by">
+                                Party
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform" ngDefaultControl name="fabrication_type " [(ngModel)]="form.fabrication_type "
+                        #fabrication_type="ngModel">
+                        <label>Type</label>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="new" name="typeradio" class="form-check-input"
+                                    id="fabrication_type" name="fabrication_type">
+                                New
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" value="old" name="typeradio" class="form-check-input"
+                                    id="fabrication_type" name="fabrication_type">
+                                Old
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Contractor<span class="asterisk">*</span></label>
+                        <select id="sel1" class="form-control" required ngDefaultControl name="contractor "
+                            [(ngModel)]="form.contractor " #contractor="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && contractor.errors }">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                                {{vendor.vendor_master_data.vendor_name}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && contractor .errors" class="invalid-feedback">
+                            <div *ngIf="contractor .errors['required']">Contractor is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Work Order</label>
+                        <select id="sel1" class="form-control" ngDefaultControl name="work_order "
+                            [(ngModel)]="form.work_order " #work_order="ngModel">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let work of workOrderList" value="{{work.id}}">
+                                {{work.request_code}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="createtable-section">
+                        <div class="tableMenu">Raw Material</div>
+                        <table>
+                            <tr>
+                                <th>Item Name<span class="asterisk">*</span></th>
+                                <th>Qty.<span class="asterisk">*</span></th>
+                                <th>Weight</th>
+                                <th>Action</th>
+                            </tr>
+
+                            <tr class="tablebg" *ngFor="let item of form.raw_materials; let i = index">
+                                <td style="width: 45%;">
+                                    <div class="tablegroup">
+                                        <ng-select class="form-control" name="material{{i+1}}"
+                                            [(ngModel)]="form.raw_materials[i].material" required #material="ngModel"
+                                            [ngClass]="{ 'is-invalid': f.submitted && material.errors }" (change)="changeItem(i)">
+                                            <ng-option *ngFor="let masterData of itemList"
+                                                [value]="masterData.id">{{masterData.material_name}}</ng-option>
+                                        </ng-select>
+                                        <div *ngIf="f.submitted && material.errors" class="invalid-feedback">
+                                            <div *ngIf="material.errors['required']">This is required !</div>
+                                        </div>
+
+                                        <div class="mainSection">
+                                            <div class="subsection">
+                                                L <input type="number" id="l" class="form-control"
+                                                    [(ngModel)]="form.raw_materials[i].l" #l="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && l.errors }" name="l{{i+1}}">
+                                            </div>
+                                            <div class="subsection">
+                                                W <input type="number" id="w" class="form-control"
+                                                    [(ngModel)]="form.raw_materials[i].w" #w="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && w.errors }" name="w{{i+1}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <input type="number" required id="quantity" class="form-control"
+                                            [(ngModel)]="form.raw_materials[i].quantity" #quantity="ngModel"
+                                            [ngClass]="{ 'is-invalid': f.submitted && quantity.errors }"
+                                            name="quantity{{i+1}}">
+                                        <div *ngIf="f.submitted && quantity.errors" class="invalid-feedback">
+                                            <div *ngIf="quantity.errors['required']">This is required !</div>
+                                        </div>
+                                        <select 
+                                            class="form-control"
+                                            [(ngModel)]="form.raw_materials[i].unit_of_mesurement"
+                                            [ngModelOptions]="{standalone: true}"
+                                            ngDefaultControl
+                                            disabled
+                                        >
+                                            <option value="{{uomData.id}}" *ngFor="let uomData of uomList">{{uomData.symbol}}</option>
+                                        </select>
+                                        <div>
+                                            T <input type="number"  id="t" class="form-control"
+                                                [(ngModel)]="form.raw_materials[i].t" #t="ngModel"
+                                                [ngClass]="{ 'is-invalid': f.submitted && t.errors }" name="t{{i+1}}">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <input type="number" id="weight" class="form-control"
+                                            [(ngModel)]="form.raw_materials[i].weight" #weight="ngModel" name="weight{{i+1}}">
+                                        <div>
+                                            D <input type="number" id="d" class="form-control"
+                                                [(ngModel)]="form.raw_materials[i].d" #d="ngModel"
+                                                [ngClass]="{ 'is-invalid': f.submitted && d.errors }" name="d{{i+1}}">
+                                        </div>
+                                        <select 
+                                            class="form-control"
+                                            [(ngModel)]="form.raw_materials[i].weight_uom"
+                                            [ngModelOptions]="{standalone: true}"
+                                            ngDefaultControl
+                                            disabled
+                                        >
+                                            <option value="{{uomData.id}}" *ngFor="let uomData of uomList">{{uomData.symbol}}</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td class="align-middle" style="width: 4%;">
+                                    <a *ngIf="i>0" (click)="deleteRawMaterial(i)" type="submit"
+                                        class="vector-delete">DEL <i class="fa" aria-hidden="true"><img
+                                                src="assets/img/vector-delete.png" alt=""></i></a>
+
+                                    <a *ngIf="i==0" (click)="addRawMaterial()" type="submit" class="tablebtn-save">ADD
+                                        <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png"
+                                                alt=""></i></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="createtable-section">
+                        <div class="tableMenu">Finish Goods</div>
+                        <table>
+                            <tr>
+                                <th>Item Name<span class="asterisk">*</span></th>
+                                <th>Qty.<span class="asterisk">*</span></th>
+                                <th>Weight</th>
+                                <th>Rate</th>
+                                <th>Action</th>
+                            </tr>
+
+                            <tr class="tablebg" *ngFor="let item of form.finish_goods; let i = index">
+                                <td style="width: 35%;">
+                                    <div class="tablegroup">
+                                        <ng-select class="form-control" name="material{{i+1}}"
+                                            [(ngModel)]="form.finish_goods[i].material" required #material="ngModel"
+                                            [ngClass]="{ 'is-invalid': f.submitted && material.errors }" (change)="changeFinishItem(i)">
+                                            <ng-option *ngFor="let masterData of itemList"
+                                                [value]="masterData.id">{{masterData.material_name}}</ng-option>
+                                        </ng-select>
+                                        <div *ngIf="f.submitted && material.errors" class="invalid-feedback">
+                                            <div *ngIf="material.errors['required']">This is required !</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <input type="number" required id="quantity" class="form-control"
+                                            [(ngModel)]="form.finish_goods[i].quantity" #quantity="ngModel"
+                                            [ngClass]="{ 'is-invalid': f.submitted && quantity.errors }"
+                                            name="quantity{{i+1}}">
+                                        <div *ngIf="f.submitted && quantity.errors" class="invalid-feedback">
+                                            <div *ngIf="quantity.errors['required']">This is required !</div>
+                                        </div>
+                                        <select 
+                                            class="form-control"
+                                            [(ngModel)]="form.finish_goods[i].unit_of_mesurement"
+                                            [ngModelOptions]="{standalone: true}"
+                                            ngDefaultControl
+                                            disabled
+                                        >
+                                            <option value="{{uomData.id}}" *ngFor="let uomData of uomList">{{uomData.symbol}}</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <input type="number" id="weight" class="form-control"
+                                            [(ngModel)]="form.finish_goods[i].weight" #weight="ngModel" name="weight{{i+1}}">
+
+                                        <select 
+                                            class="form-control"
+                                            [(ngModel)]="form.finish_goods[i].weight_uom"
+                                            [ngModelOptions]="{standalone: true}"
+                                            ngDefaultControl
+                                            disabled
+                                        >
+                                            <option value="{{uomData.id}}" *ngFor="let uomData of uomList">{{uomData.symbol}}</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <input type="number" id="rate" class="form-control"
+                                            [(ngModel)]="form.finish_goods[i].rate" #rate="ngModel" name="rate{{i+1}}">
+                                    </div>
+                                </td>
+                                <td class="align-middle" style="width: 4%;">
+                                    <a *ngIf="i>0" (click)="deleteFinishGoods(i)" type="submit"
+                                        class="vector-delete">DEL <i class="fa" aria-hidden="true"><img
+                                                src="assets/img/vector-delete.png" alt=""></i></a>
+
+                                    <a *ngIf="i==0" (click)="addFinishGoods()" type="submit" class="tablebtn-save">ADD
+                                        <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png"
+                                                alt=""></i></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="createtable-section">
+                        <div class="tableMenu">labors</div>
+                        <table>
+                            <tr>
+                                <th>labors Category<span class="asterisk">*</span></th>
+                                <th>No of Duty<span class="asterisk">*</span></th>
+                                <th>Rate</th>
+                                <th>Amount</th>
+                                <th>Action</th>
+                            </tr>
+
+                            <tr class="tablebg" *ngFor="let item of form.labors; let i = index">
+                                <td style="width: 30%;">
+                                    <div class="tablegroup">
+
+                                        <select class="form-control" name="category{{i+1}}"
+                                            [(ngModel)]="form.labors[i].category" required #category="ngModel"
+                                            [ngClass]="{ 'is-invalid': f.submitted && category.errors }">
+                                            <option value="" disabled>Please Select</option>
+                                            <option value="{{masterData.id}}"
+                                                *ngFor="let masterData of laborsMasterList">
+                                                {{masterData.name}} </option>
+                                        </select>
+                                        <div *ngIf="f.submitted && category.errors" class="invalid-feedback">
+                                            <div *ngIf="category.errors['required']">This is required !</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <input type="number" id="no_of_duty" required class="form-control"  [ngClass]="{ 'is-invalid': f.submitted && no_of_duty.errors }"
+                                            [(ngModel)]="form.labors[i].no_of_duty" #no_of_duty="ngModel" name="no_of_duty{{i+1}}">
+
+                                            <div *ngIf="f.submitted && no_of_duty.errors" class="invalid-feedback">
+                                                <div *ngIf="no_of_duty.errors['required']">This is required !</div>
+                                            </div>    
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <input type="number" id="rate" class="form-control"
+                                            [(ngModel)]="form.labors[i].rate" #rate="ngModel" name="rate{{i+1}}">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="tablegroup">
+                                        <input type="number" id="amount" class="form-control"
+                                            [(ngModel)]="form.labors[i].amount" #amount="ngModel" name="amount{{i+1}}">
+                                    </div>
+                                </td>
+                                <td class="align-middle" style="width: 4%;">
+                                    <a *ngIf="i>0" (click)="deletelabors(i)" type="submit"
+                                        class="vector-delete">DEL <i class="fa" aria-hidden="true"><img
+                                                src="assets/img/vector-delete.png" alt=""></i></a>
+
+                                    <a *ngIf="i==0" (click)="addlabors()" type="submit" class="tablebtn-save">ADD
+                                        <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png"
+                                                alt=""></i></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-3 col-12">
+                    <div class="adform">
+                        <label>Remark</label>
+                        <textarea type="text" name="remark " [(ngModel)]="form.remark " #remark="ngModel" placeholder=""
+                            id="remark" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Attach File</label>
+                        <input type="file" name="fileData " [(ngModel)]="form.fileData" (change)="uploadFile($event)" #fileData="ngModel"
+                            placeholder="" id="fileData" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-12 col-md-12 col-12">
+                <div class="btd-section">
+                    <button type="submit" class="btn-save">SAVE</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

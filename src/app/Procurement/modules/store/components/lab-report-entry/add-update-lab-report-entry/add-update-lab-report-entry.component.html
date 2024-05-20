@@ -1,0 +1,99 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && addUpdateLabReportEntry()" novalidate>
+    <!-- <div class="mb-3 float-now" >
+        <select class="form-select" name="financialyear" [ngClass]="{ 'is-invalid': f.submitted && financialyear.errors }"
+            [(ngModel)]="form.financialyear" required #financialyear="ngModel">
+            <option value="">Financial Year</option>
+            <option value="{{projectSite.id}}" *ngFor="let projectSite of financialYearData">{{projectSite.description}}</option>
+        </select>
+        <label class="floating-label">Financial Year <span class="asterisk">*</span></label>
+    </div> -->
+    <div class="mb-3 float-now" >
+        <select class="form-select" name="gate_pass_no" [ngClass]="{ 'is-invalid': f.submitted && gate_pass_no.errors }"
+            [(ngModel)]="form.gate_pass_no" #gate_pass_no="ngModel"
+        >
+            <option value="">Select</option>
+            <option value="{{projectSite.id}}" *ngFor="let projectSite of gatePassList">{{projectSite.request_code}}</option>
+        </select>
+        <label class="floating-label">Gate Pass No.</label>
+    </div>
+    <div class="mb-3 float-now" >
+        <input type="text" name="lr_no" class="form-control" [(ngModel)]="form.lr_no" #lr_no="ngModel">
+        <label class="floating-label">Lab Report No.</label>
+    </div>
+    <div class="mb-3 float-now" >
+        <input type="date" name="date" class="form-control" [(ngModel)]="form.date" #date="ngModel">
+        <label class="floating-label">Date</label>
+    </div>
+    <div class="mb-3">
+        <label>Item Group</label>
+        <select class="form-control" name="item_group" required [(ngModel)]="form.item_group" #item_group="ngModel" [ngClass]="{ 'is-invalid': f.submitted && item_group.errors }" (change)="getItems()"> 
+            <option value="">Select Item Group</option>
+            <option value="{{materialGroup.id}}" *ngFor="let materialGroup of materialGroupList">{{materialGroup.name}}</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label>Item</label>
+        <!-- <select class="form-control" name="item" [(ngModel)]="form.item" #item="ngModel" >
+            <option value="">Select Item</option>
+            <option value="{{masterData.id}}" *ngFor="let masterData of MaterilFilterList">{{masterData.material_name}}</option>
+        </select> -->
+        <angular2-multiselect 
+            [data]="MaterilFilterList" 
+            [(ngModel)]="form.item" 
+            [ngModelOptions]="{standalone: true}"
+            [settings]="MaterilFilterListSettings" 
+            (onSelect)="onMultiSelectAddUser($event)"
+            (onDeSelect)="OnMultiDeSelectAddUser($event)" 
+            (onSelectAll)="onMultiSelectAddUserAll($event)"
+            (onDeSelectAll)="onMultiDeSelectAddUserAll($event)">
+        </angular2-multiselect>
+        <!-- {{ form.item|json }} -->
+    </div> 
+    <div class="mb-3" [ngClass]="{ 'float-now': form.sample_quantity != '' }">
+        <input type="number" name="sample_quantity" class="form-control" [(ngModel)]="form.sample_quantity" #sample_quantity="ngModel">
+        <label class="floating-label">Sample Qty./Size</label>
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': form.remark != '' }">
+        <textarea name="remark" class="form-control" [(ngModel)]="form.remark" #remark="ngModel" cols="30" rows="5" class="form-control"></textarea>
+        <label class="floating-label">Remark</label>
+    </div>
+
+    <div class="createtable-section table-responsive">
+        <table class="text-nowrap">
+            <tr>
+                <th colspan="1" style="min-width: 150px;">Sr.No.</th>
+                <th colspan="1" style="min-width: 150px;">Item</th>
+                <th colspan="1" style="min-width: 150px;">Remark</th>
+                <th colspan="1" style="min-width: 150px;">Accept</th>
+            </tr>
+            <tr class="tablebg" *ngFor="let item of form.items; let i = index">
+                <td colspan="1">
+                    {{i+1}}
+                </td>
+                <td colspan="1">
+                    <input type="hidden" name="item{{i+1}}" value="{{item.id}}" class="form-control" [(ngModel)]="form.items[i].item" #item="ngModel" disabled>
+                    <br>
+                    <input type="text" name="itemName{{i+1}}" [(ngModel)]="form.items[i].itemName" value="{{item.itemName}}" class="form-control" disabled>
+                    
+                </td>
+                <td colspan="1">
+                    <textarea name="itemRemark{{i+1}}" class="form-control" [(ngModel)]="form.items[i].remark" #itemRemark="ngModel" cols="30" rows="5" class="form-control"></textarea>
+
+                    <label class="floating-label">Remark</label>
+                </td>
+                <td colspan="1">
+                    <input type="checkbox" name="accept{{i+1}}" [(ngModel)]="form.items[i].accept" #accept="ngModel">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- <div class="mb-3 eachfield">
+        <input type="file" multiple="multiple" (change)="handleUpload($event)" class="custom-file-input" id="customFile">
+    </div> -->
+
+    <div class="pull-right">
+        <button type="submit">Save</button>
+    </div>
+</form>
+    

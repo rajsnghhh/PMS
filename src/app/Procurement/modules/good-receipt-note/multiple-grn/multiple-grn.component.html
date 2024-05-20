@@ -1,0 +1,295 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Multiple Goods Receipt Note</h2>
+    </div>
+    <div class="component-body">
+        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+            <div class="createtable-section">
+
+                <div class="mb-3 col-md-4">
+                    <div class="adform">
+                        <label>Receive Location</label>
+                        <select id="sel1" class="form-control"  required
+                             name="form.site" [ngClass]="{ 'is-invalid': f.submitted && site.errors }"
+                            [(ngModel)]="form.site" #site="ngModel"
+                            >
+                            <option value="">-- select --</option>
+                            <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                {{siteData.site_name}}</option>
+                        </select>
+
+                        <div *ngIf="f.submitted && site.errors" class="invalid-feedback">
+                            <div *ngIf="site.errors['required']">Location is required !</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <table>
+                    <tr>
+                        <th>Sr.&nbsp;No</th>
+                        <th>GRN Date & Time</th>
+                        <th>Challan No. & Qty.</th>
+                        <th>Party Bill No. & Date</th>
+                        <th>Party Bill Amt.</th>
+                        <th>Truck/Vehicle No.</th>
+                        <th style="width:5%">Action</th>
+                    </tr>
+                    <tr class="">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="align-middle"><a (click)="addMoreGRNItems()" type="submit" class="tablebtn-save">ADD
+                                <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png" alt=""></i></a>
+                        </td>
+                    </tr>
+                    <tr class="tablebg" *ngFor="let item of form.grn_items; let i = index">
+                        <td>
+                            <div class="tablegroup">
+                                <label for="grn_no" class="checkbox-label">GRN No.</label>&nbsp;
+                                <input type="input" class="form-control"
+                                    [(ngModel)]="form.grn_items[i].grn_no" #grn_no="ngModel" name="grn_no{{i+1}}"><br>
+
+
+                                <label for="manual_slip_no" class="checkbox-label">Manual Slip No.</label>&nbsp;
+                                <input type="input"  class="form-control"
+                                    [(ngModel)]="form.grn_items[i].manual_slip_no" #manual_slip_no="ngModel" name="manual_slip_no{{i+1}}"><br>
+
+
+                                <div class="tablegroup">
+                                    <label>Vendor</label>
+                                    <select class="form-control" name="vendor{{i+1}}"
+                                        [(ngModel)]="form.grn_items[i].vendor" #vendor="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && vendor.errors }">
+                                        <option value="" disabled>Select Vendor</option>
+                                        <option *ngFor="let vendor of vendorList" [value]="vendor.id">{{vendor.vendor_master_data.vendor_name}}</option>
+                                    </select>
+                                </div>
+
+                                <input type="checkbox" id="cash_payment"
+                                [(ngModel)]="form.grn_items[i].cash_payment" #cash_payment="ngModel" name="cash_payment{{i+1}}">&nbsp;Cash Payment<br>
+
+                                <div class="tablegroup">
+                                    <label>Account</label>
+                                    <select class="form-control" name="cash_payment_account{{i+1}}"
+                                        [(ngModel)]="form.grn_items[i].cash_payment_account" #cash_payment_account="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && cash_payment_account.errors }">
+                                        <option value="" disabled>Select Account</option>
+                                        <option *ngFor="let vendor of accountNameList" [value]="vendor.id">{{vendor.name}}</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablegroup">
+                                <label for="date">Date</label>
+                                <input type="date" placeholder="" class="form-control" id="date" name="date"
+                                    [(ngModel)]="form.grn_items[i].date" required #date="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && date.errors }">
+                                <div *ngIf="f.submitted && date.errors" class="invalid-feedback">
+                                    <div *ngIf="date.errors['required']">This is required !</div>
+                                </div>
+                            </div>
+                            <div class="tablegroup">
+                                <label for="time">Time</label>
+                                <input type="time" placeholder="" class="form-control" id="time" name="time"
+                                    [(ngModel)]="form.grn_items[i].time" required #time="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && time.errors }">
+                                <div *ngIf="f.submitted && time.errors" class="invalid-feedback">
+                                    <div *ngIf="time.errors['required']">This is required !</div>
+                                </div>
+                            </div>
+                            <div class="tablegroup">
+                                <input type="checkbox" id="cash_payment" class="custom-checkbox"
+                                    [(ngModel)]="form.grn_items[i].fill_item_by_party" #fill_item_by_party="ngModel"
+                                    (change)="onCheckfill_item_by_party(i)" name="fill_item_by_party{{i+1}}">&nbsp;
+                                <label for="fill_item_by_party" class="checkbox-label">Fill Item By Party</label><br>
+
+                                <label>Item Group</label>
+                                <select class="form-control" name="requested_material_group{{i+1}}"
+                                    [(ngModel)]="form.grn_items[i].requested_material_group" required
+                                    #requested_material_group="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && requested_material_group.errors }"
+                                    (change)="setMaterialSubGroup(i,form.grn_items[i].requested_material_group)">
+
+                                    <option value="" disabled>Select Material Group</option>
+                                    <option *ngFor="let materialGroup of masterlist" [value]="materialGroup.id">
+                                        {{materialGroup.name}}</option>
+                                </select>
+                                <div *ngIf="f.submitted && requested_material_group.errors" class="invalid-feedback">
+                                    <div *ngIf="requested_material_group.errors['required']">This is required !</div>
+                                </div>
+
+                                <label>Item Sub Group</label>
+                                <select class="form-control" name="requested_material_sub_group{{i+1}}"
+                                    [(ngModel)]="form.grn_items[i].requested_material_sub_group" required
+                                    #requested_material_sub_group="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && requested_material_sub_group.errors }"
+                                    (change)="setMaterialList(i,form.grn_items[i].requested_material_sub_group)">
+
+                                    <option value="" disabled>Select Material Sub Group</option>
+                                    <option *ngFor="let subGroup of form.grn_items[i].MaterilSubGroupList"
+                                        [value]="subGroup.id">{{subGroup.name}}</option>
+                                </select>
+
+                                <div *ngIf="f.submitted && requested_material_sub_group.errors" class="invalid-feedback">
+                                    <div *ngIf="requested_material_sub_group.errors['required']">This is required !</div>
+                                </div>
+
+                                <label>Item</label>
+                                <select class="form-control" name="item{{i+1}}" [(ngModel)]="form.grn_items[i].item"
+                                    required #item="ngModel" [ngClass]="{ 'is-invalid': f.submitted && item.errors }"
+                                    (change)="setMaterialMasterData(i)">
+                                    <option value="" disabled>Select Material</option>
+                                    <option value="{{masterData.id}}"
+                                        *ngFor="let masterData of form.grn_items[i].MaterilFilterList">
+                                        {{masterData.material_name}} </option>
+                                </select>
+                                <div *ngIf="f.submitted && item.errors" class="invalid-feedback">
+                                    <div *ngIf="item.errors['required']">This is required !</div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="tablegroup">
+                                <label for="qty">No.</label>
+                                <input type="number" class="form-control" id="data" placeholder=""
+                                    name="challan_no{{i+1}}" [(ngModel)]="form.grn_items[i].challan_no"
+                                    #challan_no="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && challan_no.errors }">
+                            </div>
+                            <div class="tablegroup">
+                                <label for="qty">Qty.</label>
+                                <input type="number" class="form-control" id="data" placeholder=""
+                                    name="challan_quantity{{i+1}}" [(ngModel)]="form.grn_items[i].challan_quantity"
+                                    #challan_quantity="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && challan_quantity.errors }">
+                            </div>
+                            <div class="tablegroup">
+                                <select class="form-control" name="challanUOM{{i+1}}"
+                                    [(ngModel)]="form.grn_items[i].challanUOM" #challanUOM="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && challanUOM.errors }">
+
+                                    <option value="" disabled>Please Select</option>
+                                    <option *ngFor="let uom of uomList" [value]="uom.id">{{uom.symbol}}</option>
+                                </select>
+                            </div>
+                        </td>
+
+                        <td>
+                            <label for="party_bill_no" class="checkbox-label">Bill No.</label>&nbsp;
+                            <input type="input" id="party_bill_no" class="form-control"
+                                [(ngModel)]="form.grn_items[i].party_bill_no" #party_bill_no="ngModel" name="party_bill_no{{i+1}}">
+
+                                <div class="tablegroup">
+                                    <label for="bill_date">Bill Date</label>
+                                    <input type="date" placeholder="" class="form-control" id="bill_date" name="bill_date{{i+1}}"
+                                        [(ngModel)]="form.grn_items[i].bill_date" required #bill_date="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && bill_date.errors }">
+                                    <div *ngIf="f.submitted && bill_date.errors" class="invalid-feedback">
+                                        <div *ngIf="bill_date.errors['required']">This is required !</div>
+                                    </div>
+                                </div>    
+
+                            <div class="tablegroup">
+                                <label for="qty">Recv.Qty</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="received_quantity{{i+1}}" [(ngModel)]="form.grn_items[i].received_quantity"
+                                    #received_quantity="ngModel" required
+                                    [ngClass]="{ 'is-invalid': f.submitted && received_quantity.errors }"
+                                    (ngModelChange)="calculateShowAmount(i)" amountNumber>
+                                
+                                    <div *ngIf="f.submitted && received_quantity.errors" class="invalid-feedback">
+                                        <div *ngIf="received_quantity.errors['required']">This is required !</div>
+                                    </div>
+                                    
+                            </div>
+                            <div class="tablegroup">
+                                <select class="form-control" name="challanUOM2{{i+1}}"
+                                    [(ngModel)]="form.grn_items[i].challanUOM2" #challanUOM2="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && challanUOM2.errors }">
+
+                                    <option value="" disabled>Please Select</option>
+                                    <option *ngFor="let uom of uomList" [value]="uom.id">{{uom.symbol}}</option>
+                                </select>
+                            </div>
+                            <div class="tablegroup">
+                                <label for="weight">Recv.Weight</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="received_weight{{i+1}}" [(ngModel)]="form.grn_items[i].received_weight"
+                                    #received_weight="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && received_weight.errors }">
+                            </div>
+                            <div class="tablegroup">
+                                <select class="form-control" name="challanUOM3{{i+1}}"
+                                    [(ngModel)]="form.grn_items[i].challanUOM3" #challanUOM3="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && challanUOM3.errors }">
+
+                                    <option value="" disabled>Please Select</option>
+                                    <option *ngFor="let uom of uomList" [value]="uom.id">{{uom.symbol}}</option>
+                                </select>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="tablegroup">
+                                <label>Rate</label>
+                                <input type="text" class="form-control" id="data" placeholder="" name="exchange_rate{{i+1}}"
+                                    [(ngModel)]="form.grn_items[i].exchange_rate" #exchange_rate="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && exchange_rate.errors }">
+                            </div>
+                            <div class="tablegroup">
+                                <label>Amount</label>
+                                <input type="number" class="form-control" id="data" placeholder="" name="amount{{i+1}}"
+                                    [(ngModel)]="form.grn_items[i].amount" #amount="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && amount.errors }" required>
+
+                                    <div *ngIf="f.submitted && amount.errors" class="invalid-feedback">
+                                        <div *ngIf="amount.errors['required']">This is required !</div>
+                                    </div>    
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="tablegroup">
+                                <label>Vehicle No.</label>
+                                <input type="text" class="form-control" id="data" placeholder="" name="carrying_vehicle_no{{i+1}}"
+                                    [(ngModel)]="form.grn_items[i].carrying_vehicle_no">
+                            </div>
+
+                            <div class="tablegroup">
+                                <label>Driver Name</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="driver_name{{i+1}}" [(ngModel)]="form.grn_items[i].driver_name"
+                                    #driver_name="ngModel">
+                            </div>
+                            <div class="tablegroup">
+                                <label>Remark</label>
+                                <textarea class="form-control" id="data" placeholder=""
+                                    name="remark{{i+1}}" [(ngModel)]="form.grn_items[i].remark"
+                                    #remark="ngModel" ></textarea>
+                            </div>
+                        </td>
+
+                        <td class="align-middle">
+                            <a (click)="delete(i)" type="submit" class="vector-delete">DEL <i class="fa"
+                                    aria-hidden="true"><img src="assets/img/vector-delete.png" alt=""></i></a>
+                        </td>
+                    </tr>
+                    <tr *ngIf="form.grn_items.length==0">
+                        <td colspan="9" class="text-center">No Item Added Yet</td>
+                    </tr>
+
+                </table>
+                <div class="btd-section">
+                    <button type="submit" class="btn-save">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

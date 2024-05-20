@@ -1,0 +1,26 @@
+<form role="form" [formGroup]="groupForm">
+    <div class="mb-3" [ngClass]="{ 'float-now': addGrop.group_name != '' }">
+        <input type="text" class="form-control" formControlName="group_name" [(ngModel)]="addGrop.group_name"
+        [ngClass]="displayFieldCss(groupForm,'group_name')" id="role">
+        <label class="floating-label">Group Name <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(groupForm,'group_name')">
+            <span class="text-danger" *ngIf="groupForm.get('group_name')?.errors?.['required']">Group is required</span>
+          </div>
+    </div>
+    <div class="mb-3">
+        <div>
+            <angular2-multiselect formControlName="member"
+            [ngClass]="displayFieldCss(groupForm,'member')"
+            [data]="dropdownMultiselectAddGroupList" [(ngModel)]="selectedMultipleData"
+                [settings]="dropdownMultiSelectAddGroupSettings" (onSelect)="onMultiSelectAddGroup($event)" (onDeSelect)="OnMultiDeSelectAddGroup($event)"
+                (onSelectAll)="onMultiSelectAddGroupAll($event)" (onDeSelectAll)="onMultiDeSelectAddGroupAll($event)">
+            </angular2-multiselect>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': selectedMultipleData =='' }">Select Member <span class="asterisk">*</span></label>
+        </div>
+        <div class="required" *ngIf="isFieldValid(groupForm,'member')">
+            <span class="text-danger" *ngIf="groupForm.get('member')?.errors?.['required']">Member is required</span>
+          </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary" (click)="addGroup()">ADD</button>
+</form>

@@ -1,0 +1,344 @@
+<div class="main-container">
+    <div class="left-section">
+        <ul>
+            <li class="completed" (click)="changeNav('roadWork')" [ngClass]="{'active-nav' : activefrom == 'roadWork'}">ROAD WORK</li>
+            <li (click)="changeNav('conditionOfRoad')" [ngClass]="{'active-nav' : activefrom == 'conditionOfRoad'}">CONDITION OF EXISTING ROAD</li>
+            <li (click)="changeNav('GPS')" [ngClass]="{'active-nav' : activefrom == 'GPS'}">GPS CO-ORDINATES</li>
+        </ul>
+    </div>
+
+    <div class="survey-content-main" *ngIf="activefrom == 'roadWork'">
+        <div class="survey-body">
+            <form>
+                <div class="work-card">
+                    <div class="work-header">
+                        <span>Total Kilometer</span>
+                    </div>
+                    <div class="work-action" *ngIf="collectKM == 0">
+                        <span (click)="collectKMData()"><img src="assets/icons/add.png" alt=""> ADD DETAILS</span>
+                    </div>
+                    <section *ngIf="collectKM == 1">
+                    <div class="mb-3">
+                        <label for="timerange">From Chainage (Km)</label>
+                        <input type="text" class="form-control" id="Distance"  placeholder="Add">
+                    </div>
+                    <div class="mb-3">
+                        <label for="timerange">To Chainage (Km)</label>
+                        <input type="text" class="form-control" id="Distance"  placeholder="Add">
+                    </div>
+                    <div class="mb-3">
+                        <label for="timerange">Length (Km)</label>
+                        <input type="text" class="form-control" id="Distance"  placeholder="Add">
+                    </div>
+                    <button type="submit" class="btn btn-primary" (click)="afterCollectedKMData()">ADD</button>
+                    </section>
+                    <section class="data-table" *ngIf="collectKM == 2">
+                    <div class="table-description">
+                        <span (click)="collectKMData()"><img src="assets/icons/add.png" alt=""> ADD MORE</span>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Sl. No.</th>
+                            <th>From Chainage (Km)</th>
+                            <th>To Chainage (Km)</th>
+                            <th>Length (Km)</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>10</td>
+                            <td>5</td>
+                            <td>13</td>
+                            <td>
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content">
+                                            <div class="img-container">
+                                                <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                                <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>11</td>
+                            <td>9</td>
+                            <td>23</td>
+                            <td>
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content">
+                                            <div class="img-container">
+                                                <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                                <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>12</td>
+                            <td>10</td>
+                            <td>12</td>
+                            <td>
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content">
+                                            <div class="img-container">
+                                                <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                                <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>13</td>
+                            <td>11</td>
+                            <td>10</td>
+                            <td>
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content">
+                                            <div class="img-container">
+                                                <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                                <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="summery">
+                            <td>Total</td>
+                            <td>46</td>
+                            <td>34</td>
+                            <td>88</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    </section>
+                </div>
+                
+                <section *ngIf="collectKM == 0 || collectKM == 2">
+                <div class="mb-3">
+                    <label for="timerange">Type of road to be constructed</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected disabled>Bituminous / Concrete Pavement </option>
+                        <option value="1">Bituminous</option>
+                        <option value="2">Concrete Pavement</option>
+                    </select>
+                </div> 
+                <div class="flex-div">
+                    <div class="mb-3">
+                        <label for="timerange">Width of road</label>
+                        <input type="text" class="form-control" id="Distance"  placeholder="Add">                    </div>
+                    <div class="mb-3">
+                        <label for="timerange">Width of shoulders</label>
+                        <input type="text" class="form-control" id="Distance"  placeholder="Add">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Terrain of road to be made</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected disabled>Flat ground / Low Height / High / Hilly Area </option>
+                        <option value="1">Flat ground</option>
+                        <option value="2">Low Height</option>
+                        <option value="">High</option>
+                        <option value="">Hilly Area</option>
+                    </select>
+                </div> 
+                
+                <div class="mb-3">
+                    <label for="timerange">Material rates sheet enclosed</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected disabled>Yes / No </option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Chainages & distance for set up of hot mix/wet mix plants</label>
+                    <input type="text" class="form-control" id="Distance"  placeholder="Add">
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Chainage & distance of quarry from site and at what location</label>
+                    <input type="text" class="form-control" id="Distance"  placeholder="Add">
+                </div>
+                <button type="submit" class="btn btn-primary">NEXT</button>
+                </section>
+            </form>
+        </div>
+    </div>
+    <div class="survey-content-main" *ngIf="activefrom == 'conditionOfRoad'">
+        <div class="survey-body">
+            <div class="work-card">
+                <div class="work-header">
+                    <span>Total Kilometer</span>
+                </div>
+            </div>
+            <section class="data-table">
+            <div class="table-description">
+                <span><img src="assets/icons/add.png" alt=""> ADD MORE</span>
+            </div>
+            <table>
+                <tr>
+                    <th>Sl. No.</th>
+                    <th>From Chainage (Km)</th>
+                    <th>To Chainage (Km)</th>
+                    <th>Length (Km)</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>10</td>
+                    <td>5</td>
+                    <td>13</td>
+                    <td>
+                        <div class="custom-section">
+                            <div class="dropdown">
+                                <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                <div class="dropdown-content">
+                                    <div class="img-container">
+                                        <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                        <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>11</td>
+                    <td>9</td>
+                    <td>23</td>
+                    <td>
+                        <div class="custom-section">
+                            <div class="dropdown">
+                                <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                <div class="dropdown-content">
+                                    <div class="img-container">
+                                        <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                        <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>12</td>
+                    <td>10</td>
+                    <td>12</td>
+                    <td>
+                        <div class="custom-section">
+                            <div class="dropdown">
+                                <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                <div class="dropdown-content">
+                                    <div class="img-container">
+                                        <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                        <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>13</td>
+                    <td>11</td>
+                    <td>10</td>
+                    <td>
+                        <div class="custom-section">
+                            <div class="dropdown">
+                                <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                <div class="dropdown-content">
+                                    <div class="img-container">
+                                        <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                        <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="summery">
+                    <td>Total</td>
+                    <td>46</td>
+                    <td>34</td>
+                    <td>88</td>
+                    <td></td>
+                </tr>
+            </table>
+            </section>
+            <form>
+                <div class="mb-3">
+                    <label for="timerange">Type of existing road</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option value="Foot" selected disabled>Bituminous / Concrete Pavement</option>
+                        <option value="M">Bituminous</option>
+                        <option value="M">Concrete Pavement</option>
+                    </select>
+                </div>
+                
+                <div class="flex-div">
+                <div class="mb-3">
+                    <label for="distance">Width of existing road</label>
+                    <input type="text" class="form-control" id="timerange"  placeholder="Add">
+                </div>
+                <div class="mb-3">
+                    <label for="distance">Width of existing shoulders</label>
+                    <input type="text" class="form-control" id="timerange"  placeholder="Add">
+                </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">NEXT</button>
+                <button type="button"  class="btn btn-primary non-active-btn">BACK</button>
+            </form>
+        </div>
+    </div>
+    <div class="survey-content-main" *ngIf="activefrom == 'GPS'">
+        <div class="survey-body">
+            <form>
+                
+                <div class="mb-3">
+                    <label for="distance">Start of road</label>
+                    <input type="text" class="form-control" id="phone"  placeholder="Add">
+                </div>
+                <div class="mb-3">
+                    <label for="distance">End of road</label>
+                    <input type="text" class="form-control" id="phone"  placeholder="Add">
+                </div>
+                <div *ngFor="let value of values; let i = index"> 
+                    <div class="mb-3 dynamicinput">
+                        <label for="distance">Chainage</label>
+                        <input type="text" class="form-control" id="phone"  placeholder="Add" [(ngModel)]="value.value" #name="ngModel" name="value{{i}}">
+                        <button (click)="removevalue(i)" *ngIf="i != 0"><img src="assets/icons/minus.png" alt=""></button>
+                        <button (click)="addvalue()" *ngIf="i == 0"><img src="assets/icons/add.png" alt=""></button>
+                    </div>
+                </div>
+                <!-- <h2>Result</h2>
+                <div *ngFor="let value of values;">
+                {{ value.value }}
+                </div> -->
+
+                
+                <button type="submit" class="btn btn-primary">NEXT</button>
+            </form>
+        </div>
+    </div>
+</div>

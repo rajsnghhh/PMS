@@ -1,0 +1,139 @@
+<div class="main-header">
+  <div class="header-icon">
+    <img src="assets/Logo/PMS_LOGO_WHITE.png" class="pmslogo" [routerLink]="['/pms/dashbord']" alt="">
+  </div>
+  <span class="header-banner" style="background-image: url('assets/header/header-banner.png');"></span>
+  <div class="nav-options">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div >
+          <img *ngIf="toggleIcon==false" class="toggle-nav" src="assets/icons/oui_menu-right.png" alt="" (click)="callParent(true)">
+          <img *ngIf="toggleIcon==true" class="toggle-nav" src="assets/icons/oui_menu-left.png" alt="" (click)="callParent(false)">
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="nav-actions">
+    <select class="form-select financialyear" (change)="changeFinacialYearData()" [(ngModel)]="selectedFinancialYear" aria-label="Default select example">
+      <option value="{{fdata.id}}" *ngFor="let fdata of financialYearData">{{fdata.name}}</option>
+    </select>
+    <div class="custom-section">
+      <div class="dropdown">
+        <img class="dropbtn" src="assets/header/menu.png" alt="">
+        <div class="dropdown-content-header">
+          <div class="cards-list">
+            <div class="pmsbox" [routerLink]="['/hrms']">
+              <img class="pmstab" src="assets/header/hrms.png" alt=""><br>
+              <span class="pmstxt">HRMS</span>
+            </div> &nbsp;
+            <div class="pmsbox" (click)="NavigatetoPMS()">
+              <img class="pmstab" src="assets/header/pms.png" alt=""><br>
+              <span class="pmstxt">PMS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="custom-section">
+      <div class="dropdown">
+        <img class="dropbtn" src="assets/header/setting.png" alt="">
+        <div class="dropdown-content-header">
+          <section class="selectproject">
+            <div class="container">
+              <label for="">Project :</label>
+              <select class="form-select selectprojectdrop" (change)="changeProject()" [(ngModel)]="selectedProject" aria-label="Default select example">
+                  <option *ngFor="let project of projectList" value={{project.id}}>
+                      {{project.project_data[1].value}}
+                  </option>
+              </select>
+            </div>
+            <div class="container">
+              <label for="">Site :</label>
+              <select class="form-select selectprojectdrop" (change)="changeSite()" [(ngModel)]="selectedSite" aria-label="Default select example">
+                  <option *ngFor="let siteData of siteList" value={{siteData.id}}>
+                      {{siteData.site_name}}
+                  </option>
+              </select>
+            </div>
+          </section>
+          <div class="list-options">
+            <ng-container *ngFor="let settingsD of settingsData">
+              <div class="list-option"
+                *ngIf="settingsD.settings_details.length > 0 && getMultiLablePermission(generateList(settingsD.settings_details))">
+                <ng-container>
+                  <div class="header"><img *ngIf="settingsD.icon_image != null" src="{{settingsD.icon_image}}"
+                      alt="">{{settingsD.name}}</div>
+                  <ul>
+                    <ng-container *ngFor="let settings of settingsD.settings_details.slice(0, 5)">
+                      <li *ngIf="getPermissionchild('Setting '+settings.name)"
+                        (click)="NavigateToSetting(settings.slug,settings.name)">{{settings.name}}
+                      </li>
+                    </ng-container>
+                  </ul>
+                </ng-container>
+                <div class="border-bottom" *ngIf="settingsD.settings_details.length > 0"></div>
+              </div>
+            </ng-container>
+            <div class="border-bottom"></div>
+            <div></div>
+          </div>
+          <div class="detailsView" (click)="viewAll()">View All</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="custom-section">
+      <div class="dropdown">
+
+        <img class="dropbtn" src="assets/header/BelIcon.png" alt="">
+        <p class="count">{{notificationData?.length>99?'99+':notificationData?.length}}</p>
+
+        <div class="dropdown-content-header">
+          <div class="list-options">
+            <div>
+              <div class="notification-ui_dd-content" *ngFor="let notification of notificationData">
+                <div class="notification-list notification-list--unread">
+                  <div class="notification-list_content">
+                    <div class="notification-list_detail">
+                      <p class="text-muted" style="font-size:small;">{{notification.notification}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="detailsView" (click)="viewAllNotification()">View All</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="custom-section">
+    <div class="dropdown">
+      <div class="nav-profile dropbtn">
+        <img class="profile-icon" *ngIf="userData.cu_profile_img!==''" src="{{userData.cu_profile_img}}" alt="">
+        <div *ngIf="userData.cu_profile_img==''" class="avtar">
+          <p>{{userData.first_name | titlecase | slice:0:1}}{{userData.last_name | titlecase | slice:0:1}}</p>
+        </div>&nbsp;
+        <span class="profile-action">{{userData.first_name + ' ' +userData.last_name | nameMax }}
+          <img src="assets/header/dropDown.png" alt=""></span>
+      </div>
+      <div class="dropdown-content-header">
+        <div class="list-options profile-list">
+          <div class="list-option" style=" width: 100%; ">
+            <div class="header"><img src="assets/icons/bussiness-dress.png" alt="">Profile</div>
+            <ul>
+              <li [routerLink]="['/pms/profile/view']"
+                [ngClass]="{'active-link-header': router.url == '/pms/profile/view' }">View Profile</li>
+              <li [routerLink]="['/pms/profile/resetpassword']"
+                [ngClass]="{'active-link-header': router.url == '/pms/profile/resetpassword' }">Reset Password</li>
+              <li (click)="Logout()">Logout</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="header-space"></div>

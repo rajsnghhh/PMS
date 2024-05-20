@@ -1,0 +1,121 @@
+<div class="main-header">
+  <div class="header-icon">
+    <img src="assets/Logo/Group 609.png" class="pmslogo" [routerLink]="['/hrms']" alt="">
+  </div>
+  <span class="header-banner" style="background-image: url('assets/header/header-banner.png');"></span>
+  <div class="nav-options">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item active" *ngIf="getPermissionchild('Dashboard')">
+            <a class="nav-link" [routerLink]="['/hrms']" [ngClass]="{'active-link-header': router.url == '/hrms' }">
+              Dashboard <span class="sr-only"></span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/hrms/attendance']"
+              [ngClass]="{'active-link-header': router.url == '/hrms/attendance' }"> Attendance <span
+                class="sr-only"></span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/hrms/mediclaim']"
+              [ngClass]="{'active-link-header': router.url == '/hrms/mediclaim' }"> Mediclaim <span
+                class="sr-only"></span></a>
+          </li>
+
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="nav-actions">
+    <div class="custom-section">
+      <div class="dropdown">
+        <img class="dropbtn" src="assets/header/menu.png" alt="">
+        <div class="dropdown-content-header">
+          <div class="cards-list">
+            <div class="pmsbox" [routerLink]="['/hrms']">
+              <img class="pmstab" src="assets/header/hrms.png" alt=""><br>
+              <span class="pmstxt">HRMS</span>
+            </div> &nbsp;
+            <div class="pmsbox" (click)="NavigatetoPMS()">
+              <img class="pmstab" src="assets/header/pms.png" alt=""><br>
+              <span class="pmstxt">PMS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="custom-section">
+      <div class="dropdown">
+        <img class="dropbtn" src="assets/header/setting.png" alt="">
+        <div class="dropdown-content-header">
+          <div class="list-options">
+            <ng-container *ngFor="let settingsD of settingsData">
+              <div class="list-option" *ngIf="settingsD.settings_details.length > 0">
+                <ng-container>
+                  <div class="header"><img *ngIf="settingsD.icon_image != null" src="{{settingsD.icon_image}}"
+                      alt="">{{settingsD.name}}</div>
+                  <ul>
+                    <li *ngFor="let settings of settingsD.settings_details.slice(0, 5)"
+                      (click)="NavigateToSetting(settings.slug,settings.name)">{{settings.name}}</li>
+                  </ul>
+                </ng-container>
+                <div class="border-bottom" *ngIf="settingsD.settings_details.length > 0"></div>
+              </div>
+            </ng-container>
+            <div class="border-bottom"></div>
+            <div></div>
+          </div>
+          <div class="detailsView" (click)="viewAll()">View All</div>
+        </div>
+      </div>
+    </div>
+    <div class="custom-section">
+      <div class="dropdown">
+        <img class="dropbtn" src="assets/header/BelIcon.png" alt="">
+        <p class="count">{{notificationData?.length>99?'99+':notificationData?.length}}</p>
+        <div class="dropdown-content-header">
+          <div class="list-options">
+            <div>
+              <div class="notification-ui_dd-content" *ngFor="let notification of notificationData">
+                <div class="notification-list notification-list--unread">
+                  <div class="notification-list_content">
+                    <div class="notification-list_detail">
+                      <p class="text-muted" style="font-size:small;">{{notification.notification}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="custom-section">
+    <div class="dropdown">
+      <div class="nav-profile dropbtn">
+        <img class="profile-icon" *ngIf="userData.cu_profile_img!==''" src="{{userData.cu_profile_img}}" alt="">
+        <div *ngIf="userData.cu_profile_img==''" class="avtar">
+          <p>{{userData.first_name | titlecase | slice:0:1}}{{userData.last_name | titlecase | slice:0:1}}</p>
+        </div>&nbsp;
+        <span class="profile-action">{{userData.first_name + ' ' +userData.last_name | nameMax }}
+          <img src="assets/header/dropDown.png" alt=""></span>
+      </div>
+      <div class="dropdown-content-header">
+        <div class="list-options profile-list">
+          <div class="list-option" style=" width: 100%; ">
+            <div class="header"><img src="assets/icons/bussiness-dress.png" alt="">Profile</div>
+            <ul>
+              <li [routerLink]="['/hrms/profile/view']"
+                [ngClass]="{'active-link-header': router.url == '/hrms/profile/view' }">View Profile</li>
+              <li [routerLink]="['/hrms/profile/resetpassword']"
+                [ngClass]="{'active-link-header': router.url == '/hrms/profile/resetpassword' }">Reset Password</li>
+              <li (click)="Logout()">Logout</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="header-space"></div>

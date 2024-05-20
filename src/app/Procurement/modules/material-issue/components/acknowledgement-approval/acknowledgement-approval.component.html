@@ -1,0 +1,714 @@
+<div class="component-header">
+    <h2>Ackowledgement <span *ngIf="approvalScreen">Approval</span></h2>
+</div>
+
+<form class="micro-view" [formGroup]="issueAdvancedSearchForm" (ngSubmit)="filterList()">
+
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-6">
+            <div class="addressform">
+                <label for="date">Issue&nbsp;Type</label>
+
+                <div class="requested-group">
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" value="consumption_issue" name="optradio"
+                                class="form-check-input" id="issue_type" name="issue_type"
+                                formControlName="issue_type">
+                            Consumption/Issue
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" value="transfer" name="optradio"
+                                class="form-check-input" id="issue_type" name="issue_type"
+                                formControlName="issue_type">
+                            Transfer</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" value="production" name="optradio"
+                                class="form-check-input" id="issue_type" name="issue_type"
+                                formControlName="issue_type">
+                            Production</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" value="issue_to_party" name="optradio"
+                                class="form-check-input" id="issue_type" name="issue_type"
+                                formControlName="issue_type">
+                                Issue to Party</label>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-lg-6 col-md-6 col-12">
+            <div class="addressform">
+                <label for="date">Issue/Transfer&nbsp;From </label>
+
+                <div class="requested-group">
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" value="party_stock" name="optradio"
+                                class="form-check-input" id="issue_transfer_from"
+                                name="issue_transfer_from" formControlName="issue_transfer_from">
+                            Party Stock
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" value="self_stock" name="optradio"
+                                class="form-check-input" id="issue_transfer_from"
+                                name="issue_transfer_from" formControlName="issue_transfer_from">
+                            Self Stock</label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-lg-6 col-md-6 col-12">
+            <div class="addressform">
+                <label for="text">Issue&nbsp;Location</label>
+                <input type="text" placeholder="" id="text" class="form-control" id="issue_location"
+                    name="issue_location" formControlName="issue_location">
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12">
+            <div class="addressform">
+                <label for="text">Transporter</label>
+                <input type="text" placeholder="" id="text" class="form-control" id="transporter"
+                    name="transporter" formControlName="transporter">
+            </div>
+            <span class="other-texr"><a href="#">If Other</a></span>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12">
+            <div class="addressform">
+                <label for="text">Store</label>
+
+                <select id="sel1" class="form-control" name="store" formControlName="store">
+                    <option disabled>-- select --</option>
+                    <option *ngFor="let storeData of storeList" value="{{storeData.id}}">
+                        {{storeData.store_name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="addressform">
+                <label for="text">Carrying<br>
+                    Vehicle&nbsp;No.</label>
+                <input type="text" placeholder="" id="text" class="form-control"
+                    id="carrying_vehicle_number" formControlName="carrying_vehicle_number"
+                    name="carrying_vehicle_number">
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="addressform">
+                <label for="date">Issue&nbsp;Date</label>
+                <input type="date" placeholder="" id="Date" class="form-control" id="date" name="date"
+                    formControlName="issue_date">
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="addressform">
+                <label for="text">Gate&nbsp;Pass&nbsp;No.</label>
+                <input type="text" placeholder="" id="text" class="form-control" id="gate_pass_number"
+                    name="gate_pass_number" formControlName="gate_pass_number">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="addressform">
+                <label for="text">Manual<br>Slip&nbsp;No.</label>
+                <input type="text" placeholder="" id="text" class="form-control" id="manual_slip_number"
+                    name="manual_slip_number" formControlName="manual_slip_number">
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="addressform">
+                <label for="text">RST&nbsp;No.</label>
+                <input type="text" placeholder="" id="text" class="form-control" id="rst_number"
+                    name="rst_number" formControlName="rst_number">
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="addressform">
+                <label for="date">Lr&nbsp;Date</label>
+                <input type="date" placeholder="" class="form-control" id="lr_date" name="lr_date"
+                    formControlName="lr_date">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="addressform">
+                <label for="text">Lr&nbsp;No.</label>
+                <input type="text" placeholder="" class="form-control" id="lr_number" name="lr_number"
+                    formControlName="lr_number">
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="addressform">
+                <label for="text">Carrying<br>Veh.Driver</label>
+                <input type="text" placeholder="" id="text" class="form-control" id="carrying_driver"
+                    name="carrying_driver" formControlName="carrying_driver">
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="addressform">
+                <label for="text">Loaded&nbsp;Via</label>
+                <div class="requested-group">
+                    <div class="form-check-inline">
+                        <label class="form-check-label"><input type="radio" name="optradio" value="self"
+                                class="form-check-input" id="loaded_via" name="loaded_via"
+                                formControlName="loaded_via">
+                            Self</label>
+                    </div>
+
+                    <div class="form-check-inline">
+                        <label class="form-check-label"><input type="radio" name="optradio"
+                                value="party" class="form-check-input" id="loaded_via" name="loaded_via"
+                                formControlName="loaded_via">
+                            Party</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-12">
+        <div class="btd-section">
+            <!-- <button type="submit" class="btn-cancel">CANCEL</button> -->
+            <button type="submit" class="btn-save">SEARCH</button>
+        </div>
+    </div>
+
+</form>
+
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+<div class="createrequisition-section">
+
+    <div class="main-body-container">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Sr No</th>
+                    <th>
+                        Select <br> to <br> Rec. <br> Update
+                        <br>
+                        <div class="form-check" *ngIf="procurementIssueList.length > 0">
+                            <input class="form-check-input" type="checkbox" 
+                                name="selectAlll"
+                                (change)="toggleeall()"
+                                [(ngModel)]="selectAll" #selectAlll="ngModel">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Select All
+                            </label>
+                        </div>
+                    </th>
+                    <th *ngIf="approvalScreen">
+                        Approve
+                    </th>
+                    <th scope="col">Issue No & Date</th>
+                    <th scope="col">Issue Type</th>
+                    <th>Status</th>
+                    <th scope="col">Issue Location</th>
+                    <th scope="col">Site Location</th>
+                    <th scope="col">Store Location</th>
+                    <th scope="col">Issue Transfer From</th>
+                    <th scope="col">
+                        Rec. Date
+                    </th>
+                    <th scope="col">
+                        Rec. Location Site
+                    </th>
+                    <th>
+                        Purchase
+                        <br>
+                        voucher
+                        <br>
+                        no
+                    </th>
+                    <th scope="col">
+                        Rec. Qty
+                    </th>
+                    <th>
+                        Rec. Unit
+                    </th>
+                    <th>
+                        Rec. No
+                    </th>
+                    <th>Waybill <br> Form <br> No</th>
+                    <th>Royality Received</th>
+                    <th>Royalty no</th>
+                    <th>Royality Qty</th>
+                    <th>Form Chinage <br>/ <br>To Chinage </th>
+                    <th>In Time <br>/ <br> Out Time</th>
+                    <th>Reach Time</th>
+                    <th>Unload Time</th>
+                    <th>Return Time</th>
+                    <th>Voucher type</th>
+                    <th scope="col">Manual Slip No.</th>
+                    <th scope="col">RST No.</th>
+                    <th scope="col">LR No.</th>
+                    <th scope="col">Gate Pass No.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of procurementIssueList;index as i">
+                    <td>{{i+1}}</td>
+                    <td>
+                        <input class="form-check-input" type="checkbox" 
+                            name="selectedUpdate{{i+1}}" id=""
+                            [disabled]="procurementIssueList[i].status != 'pending' || procurementIssueList[i].selectedapproveSelected"
+                            [(ngModel)]="procurementIssueList[i].selectedUpdate" #selectedUpdate="ngModel"
+                        >
+                    </td>
+                    <td *ngIf="approvalScreen">
+                        <input class="form-check-input" type="checkbox" 
+                            name="selectedapproveSelected{{i+1}}" id=""
+                            (change)="approvecheck(i)"
+                            [disabled]="procurementIssueList[i].status != 'pending'"
+                            [(ngModel)]="procurementIssueList[i].selectedapproveSelected" #selectedapproveSelected="ngModel"
+                        >
+                    </td>
+                    <td>Issue No : <b>{{item.issue_request_code?item.issue_request_code:'-'}}</b><br>
+                        {{item.issue_item_created_at.substring(0,10).split('-').reverse().join('-')}}</td>
+                    <td>{{item.issue_type}}</td>
+                    <td>{{item.status}}</td>
+                    <td>{{item.issue_location}}</td>
+                    <td>{{item.issue_site}}</td>
+                    <td>{{item.issue_store}}</td>
+                    <td>{{item.issue_transfer_from}}</td>
+                    <td>
+                        <input type="date" class="form-control" placeholder=""
+                            name="received_date{{i+1}}"
+                            *ngIf="!approvalScreen"
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            [(ngModel)]="procurementIssueList[i].received_date" 
+                            #received_date="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && received_date.errors }"
+                        >
+                        <input type="date" class="form-control" placeholder=""
+                            name="received_date_acknowledge{{i+1}}"
+                            *ngIf="approvalScreen"
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            [(ngModel)]="procurementIssueList[i].received_date_acknowledge" 
+                            #received_date_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && received_date_acknowledge.errors }"
+                        >
+                    </td>
+
+                    <td>
+                        <select class="form-control" 
+                            name="received_site{{i+1}}"
+                            *ngIf="!approvalScreen"
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            [(ngModel)]="procurementIssueList[i].received_site" 
+                            #received_site="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && received_site.errors }"
+                        >
+                            <option value="">-- select --</option>
+                            <option *ngFor="let storeData of siteList" value="{{storeData.id}}">
+                                {{storeData.site_name}}</option>
+                        </select>
+                        <select class="form-control" 
+                            name="received_site_acknowledge{{i+1}}"
+                            *ngIf="approvalScreen"
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            [(ngModel)]="procurementIssueList[i].received_site_acknowledge" 
+                            #received_site_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && received_site_acknowledge.errors }"
+                        >
+                            <option value="">-- select --</option>
+                            <option *ngFor="let storeData of siteList" value="{{storeData.id}}">
+                                {{storeData.site_name}}</option>
+                        </select>
+                    </td>
+
+                    <td style=" min-width: 100px; ">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="!approvalScreen"
+                            name="purchase_voucher_no{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].purchase_voucher_no" 
+                            #purchase_voucher_no="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && purchase_voucher_no.errors }">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="approvalScreen"
+                            name="purchase_voucher_no_acknowledge{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].purchase_voucher_no_acknowledge" 
+                            #purchase_voucher_no_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && purchase_voucher_no_acknowledge.errors }">
+                    </td>
+
+                    <td style=" min-width: 100px; ">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            *ngIf="!approvalScreen"
+                            amountNumber 
+                            pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$" 
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            name="received_quantity{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].received_quantity" 
+                            #received_quantity="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && received_quantity.errors }">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            *ngIf="approvalScreen"
+                            amountNumber 
+                            pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$" 
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            name="received_quantity_acknowledge{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].received_quantity_acknowledge" 
+                            #received_quantity_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && received_quantity_acknowledge.errors }">
+                    </td>
+
+                    <td style=" min-width: 100px; ">
+                        <select class="form-control" 
+                            name="received_unit{{i+1}}"
+                            *ngIf="!approvalScreen"
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            [(ngModel)]="procurementIssueList[i].received_unit" 
+                            #received_unit="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && received_unit.errors }"
+                        >
+                            <option value="">-- select --</option>
+                            <option *ngFor="let storeData of uomList" value="{{storeData.id}}">
+                                {{storeData.symbol}}</option>
+                        </select>
+                        <select class="form-control" 
+                            name="received_unit_acknowledge{{i+1}}"
+                            *ngIf="approvalScreen"
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            [(ngModel)]="procurementIssueList[i].received_unit_acknowledge" 
+                            #received_unit_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && received_unit_acknowledge.errors }"
+                        >
+                            <option value="">-- select --</option>
+                            <option *ngFor="let storeData of uomList" value="{{storeData.id}}">
+                                {{storeData.symbol}}</option>
+                        </select>
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="!approvalScreen"
+                            name="received_no{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].received_no" 
+                            #received_no="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && received_no.errors }">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="approvalScreen"
+                            name="received_no_acknowledge{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].received_no_acknowledge" 
+                            #received_no_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && received_no_acknowledge.errors }">
+                    </td>
+
+                    <td style=" min-width: 100px; ">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="!approvalScreen"
+                            name="waybill_form_no{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].waybill_form_no" 
+                            #waybill_form_no="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && waybill_form_no.errors }">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="approvalScreen"
+                            name="waybill_form_no_acknowledge{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].waybill_form_no_acknowledge" 
+                            #waybill_form_no_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && waybill_form_no_acknowledge.errors }">
+                    </td>
+
+                    <td>
+                        <input class="form-check-input" 
+                            type="checkbox" 
+                            *ngIf="!approvalScreen"
+                            name="is_royalty_received{{i+1}}" id=""
+                            [(ngModel)]="procurementIssueList[i].is_royalty_received" #is_royalty_received="ngModel"
+                        >
+                        <input class="form-check-input" 
+                            type="checkbox" 
+                            *ngIf="approvalScreen"
+                            name="is_royalty_received_acknowledge{{i+1}}" id=""
+                            [(ngModel)]="procurementIssueList[i].is_royalty_received_acknowledge" #is_royalty_received_acknowledge="ngModel"
+                        >
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="!approvalScreen"
+                            name="royalty_no{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].royalty_no" 
+                            #royalty_no="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && royalty_no.errors }">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="approvalScreen"
+                            name="royalty_no_acknowledge{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].royalty_no_acknowledge" 
+                            #royalty_no_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && royalty_no_acknowledge.errors }">
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            *ngIf="!approvalScreen"
+                            amountNumber 
+                            pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$" 
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            name="royalty_quantity{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].royalty_quantity" 
+                            #royalty_quantity="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && royalty_quantity.errors }">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            *ngIf="approvalScreen"
+                            amountNumber 
+                            pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$" 
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            name="royalty_quantity_acknowledge{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].royalty_quantity_acknowledge" 
+                            #royalty_quantity_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && royalty_quantity_acknowledge.errors }">
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            *ngIf="!approvalScreen"
+                            amountNumber 
+                            pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$" 
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            name="chainage_from{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].chainage_from" 
+                            #chainage_from="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && chainage_from.errors }">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            *ngIf="approvalScreen"
+                            amountNumber 
+                            pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$" 
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            name="chainage_from_acknowledge{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].chainage_from_acknowledge" 
+                            #chainage_from_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && chainage_from_acknowledge.errors }">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            *ngIf="!approvalScreen"
+                            amountNumber 
+                            pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$" 
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            name="chainage_to{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].chainage_to" 
+                            #chainage_to="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && chainage_to.errors }">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            *ngIf="approvalScreen"
+                            amountNumber 
+                            pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$" 
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            name="chainage_to_acknowledge{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].chainage_to_acknowledge" 
+                            #chainage_to_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && chainage_to_acknowledge.errors }">
+                    </td>
+
+                    <td style=" min-width: 100px; ">
+                        <input type="time" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="!approvalScreen"
+                            name="in_time{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].in_time" 
+                            #in_time="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && in_time.errors }">
+                        <input type="time" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="approvalScreen"
+                            name="in_time_acknowledge{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].in_time_acknowledge" 
+                            #in_time_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && in_time_acknowledge.errors }">
+                        <input type="time" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="!approvalScreen"
+                            name="out_time{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].out_time" 
+                            #out_time="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && out_time.errors }">
+                        <input type="time" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="approvalScreen"
+                            name="out_time_acknowledge{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].out_time_acknowledge" 
+                            #out_time_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && out_time_acknowledge.errors }">
+                            
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <input type="time" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="!approvalScreen"
+                            name="reach_time{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].reach_time" 
+                            #reach_time="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && reach_time.errors }">
+                        <input type="time" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="approvalScreen"
+                            name="reach_time_acknowledge{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].reach_time_acknowledge" 
+                            #reach_time_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && reach_time_acknowledge.errors }">
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <input type="time" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="!approvalScreen"
+                            name="unload_time{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].unload_time" 
+                            #unload_time="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && unload_time.errors }">
+                        <input type="time" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="approvalScreen"
+                            name="unload_time_acknowledge{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].unload_time_acknowledge" 
+                            #unload_time_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && unload_time_acknowledge.errors }">
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <input type="time" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="!approvalScreen"
+                            name="return_time{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].return_time" 
+                            #return_time="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && return_time.errors }">
+                        <input type="time" 
+                            class="form-control"
+                            placeholder="" 
+                            amountNumber 
+                            *ngIf="approvalScreen"
+                            name="return_time_acknowledge{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].return_time_acknowledge" 
+                            #return_time_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && return_time_acknowledge.errors }">
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            *ngIf="!approvalScreen"
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            name="voucher_type{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].voucher_type" 
+                            #voucher_type="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && voucher_type.errors }">
+                        <input type="text" 
+                            class="form-control"
+                            placeholder="" 
+                            *ngIf="approvalScreen"
+                            [required]="procurementIssueList[i].selectedUpdate"
+                            name="voucher_type_acknowledge{{i+1}}"
+                            [(ngModel)]="procurementIssueList[i].voucher_type_acknowledge" 
+                            #voucher_type_acknowledge="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && voucher_type_acknowledge.errors }">
+                    </td>
+                                        
+                    <td>{{item.manual_slip_number?item.manual_slip_number:'-'}}</td>
+                    <td>{{item.rst_number?item.rst_number:'-'}}</td>
+                    <td>{{item.lr_number?item.lr_number:'-'}}</td>
+                    <td>{{item.gate_pass_number?item.gate_pass_number:'-'}}</td>
+                </tr>
+                <tr class="text-center">
+                    <td colspan="12" *ngIf="procurementIssueList.length == 0 && !approvalScreen">No Data found.</td>
+                    <td colspan="13" *ngIf="procurementIssueList.length == 0 && approvalScreen">No Data found.</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<div class="btd-section">
+    <button type="button" (click)="backtolist()" class="btn-cancel">CANCEL</button>
+    <button type="submit"  class="btn-save" *ngIf="!approvalScreen">UPDATE</button>
+    <button type="submit"  class="btn-save" *ngIf="approvalScreen">UPDATE & APPROVE</button>
+</div>
+</form>
+
+<!-- {{procurementIssueList|json}} -->

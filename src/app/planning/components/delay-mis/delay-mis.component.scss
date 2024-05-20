@@ -1,0 +1,112 @@
+table {
+    border: 1px solid #0000002e;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    table th{
+        white-space: nowrap;
+        padding: 0px 12px;
+        border: 1px solid #fff;
+        background-color: #57f;
+        color:#fff;
+        min-width: 100px;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .table-responsive-custom{
+
+        width:99%;
+        overflow-x: auto;
+        max-height:400px;
+        margin: auto;
+
+    }
+
+    table td {
+    padding:0;
+    border: 1px solid #0000002e;
+    font-size:12px;
+    font-family:'Times New Roman', Times, serif;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+}
+
+.custom-sticy-new{
+    position:sticky;
+    left:0;
+    top:20px;
+    background-color:#fff;
+    
+}
+td{
+    background-color:transparent;
+}
+
+.custom-sticy{
+    position:sticky;
+    left:149px;
+    top:0;
+    background-color:#fff;
+    z-index: 99;
+}
+
+th.custom-sticy-new{
+    position:sticky;
+    left:0;
+    top:0px;
+    background-color:blue;
+    z-index:999;
+    
+}
+
+th.custom-sticy{
+    position:sticky;
+    left:149px;
+    top:0;
+    background-color:blue;
+    z-index:999;
+}
+tr.focus td {
+    background: red;
+}
+input{
+    border: none;
+}
+.inputDisable{
+   pointer-events: none;
+}
+
+// table button design
+.table_scroll {
+    position: relative;
+  
+    .tablescroll_btn {
+      display: flex;
+      gap: 15px;
+      position: fixed;
+      right: 5%;
+      justify-content: flex-end;
+      bottom: 4%;
+      width: 50%;
+      z-index: 999;
+      margin-left: auto;
+  
+      .btn_action {
+        width: 30px;
+        height: 30px;
+        background: #5577FF;
+        border-radius: 50%;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+    }
+  }

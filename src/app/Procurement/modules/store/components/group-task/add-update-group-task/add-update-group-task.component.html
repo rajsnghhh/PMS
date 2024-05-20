@@ -1,0 +1,127 @@
+<form class="allfield" name="addPersonalInformation" #f="ngForm" (ngSubmit)="f.form.valid && personalSubmit()" novalidate>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <!-- [ngClass]="{ 'is-invalid': f.submitted && stock_type.errors }" -->
+            <label>Task Type</label>
+            <!-- <input type="text" name="task_type" [(ngModel)]="addPersonalInformation.task_type" #task_type="ngModel" class="form-control"> -->
+            <select class="form-select" name="task_type"
+                [(ngModel)]="addPersonalInformation.task_type" #task_type="ngModel">
+                <option value="">Select Task Type</option>
+                <option value="tender_group_subgroup">Tender Group/Sub-Group</option>
+                <option value="tender_task">Tender Task</option>
+            </select>
+        </div>
+        <!-- <div *ngIf="f.submitted && task_type.errors" class="invalid-feedback">
+            <div *ngIf="task_type.errors['required']">Stock Type is required</div>
+        </div> -->
+    </div>
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>BOQ No.</label>
+            <input type="text" name="boq_no" [(ngModel)]="addPersonalInformation.boq_no" #boq_no="ngModel" class="form-control">
+        </div>
+    </div>
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Group Subgroup & Tak Name</label>
+            <textarea name="group_subgroup_and_task_name" [(ngModel)]="addPersonalInformation.group_subgroup_and_task_name" #group_subgroup_and_task_name="ngModel" cols="30" rows="3" class="form-control"></textarea>
+        </div>
+    </div>
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Short Name</label>
+            <input type="text" name="short_name" [(ngModel)]="addPersonalInformation.short_name" #short_name="ngModel" class="form-control">
+        </div>
+    </div>
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Primary</label>
+            <select class="form-select" name="primary"
+                [(ngModel)]="addPersonalInformation.primary" #primary="ngModel">
+                <option value="">Select Primary</option>
+                <option *ngFor="let groupTask of groupTaskList" value="{{groupTask.id}}">{{groupTask.short_name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>After This</label>
+            <select class="form-select" name="after_this"
+                [(ngModel)]="addPersonalInformation.after_this" #after_this="ngModel">
+                <option value="">Select</option>
+                <option *ngFor="let groupTask of groupTaskList" value="{{groupTask.id}}">{{groupTask.short_name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Predecessor</label>
+            <select class="form-select" name="predeccessor"
+                [(ngModel)]="addPersonalInformation.predeccessor" #predeccessor="ngModel">
+                <option value="">Select</option>
+                <option *ngFor="let groupTask of groupTaskList" value="{{groupTask.id}}">{{groupTask.short_name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>SOR Master</label>
+            <input type="text" name="sor_master" [(ngModel)]="addPersonalInformation.sor_master" #sor_master="ngModel" class="form-control">
+        </div>
+    </div>
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>SOR Group</label>
+            <input type="text" name="sor_group" [(ngModel)]="addPersonalInformation.sor_group" #sor_group="ngModel" class="form-control">
+        </div>
+    </div>
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            Non-Billabel <input type="checkbox" name="non_billable" [(ngModel)]="addPersonalInformation.non_billable" #non_billable="ngModel">
+        </div>
+    </div>
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            Copy Downline <input type="checkbox" name="copy_downline" [(ngModel)]="addPersonalInformation.copy_downline" #copy_downline="ngModel">
+        </div>
+    </div>
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Weightage</label>
+            <input type="number" name="weightage" [(ngModel)]="addPersonalInformation.weightage" #weightage="ngModel" class="form-control">
+        </div>
+    </div>
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Priority</label>
+            <input type="number" name="priority" [(ngModel)]="addPersonalInformation.priority" #priority="ngModel" class="form-control">
+        </div>
+    </div>
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Buildup Area Qty</label>
+            <input type="number" name="build_up_area_qty" [(ngModel)]="addPersonalInformation.build_up_area_qty" #build_up_area_qty="ngModel" class="form-control">
+        </div>
+    </div>
+    
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Description</label>
+            <textarea type="textarea" cols="30" rows="3" class="form-control" name="description" 
+            [(ngModel)]="addPersonalInformation.description" #description="ngModel">
+            </textarea>
+        </div>
+    </div>
+
+    <div class="mb-3 eachfield">
+        <!-- multiple="multiple" -->
+        <input type="file" multiple="multiple" (change)="handleUpload($event)" class="custom-file-input" id="customFile">
+    </div>
+
+    <div class="btnupdate">
+        <button type="submit" class="update-btn" *ngIf="canvasScope == 'add' ">ADD</button>
+        <button type="submit" class="update-btn" *ngIf="canvasScope == 'update' ">UPDATE</button>
+        <button type="button" class="cancel-btn non-active-btn" (click)="CloseComponent()">CANCEL</button>
+    </div>
+</form>

@@ -1,0 +1,134 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Transport (GRN & Issue) List</h2>
+
+        <div class="action-button-container">
+
+            <button hidden *ngIf="isTransportBill_Approver" [routerLink]="['/pms/store/procurement/transport-bill/approve']">Approve</button>
+
+            <button hidden [routerLink]="['/pms/store/procurement/transport-bill/create']">ADD NEW <img
+                    src="assets/header/add.png" alt=""></button>
+
+        </div>
+    </div>
+    <div class="component-body">
+
+        <form name="form" #f="ngForm" (ngSubmit)="onSubmit()" novalidate>
+            <div class="row">
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>From Date</label>
+                        <input type="date" name="date__gte " [(ngModel)]="form.date__gte " #date__gte="ngModel"
+                            placeholder="" id="date__gte" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>To Date</label>
+                        <input type="date" name="date__lte " [(ngModel)]="form.date__lte " #date__lte="ngModel"
+                            placeholder="" id="date__lte" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Voucher No.</label>
+                        <input type="text" name="invoice_no" [(ngModel)]="form.invoice_no " #invoice_no="ngModel"
+                            placeholder="" id="invoice_no" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Bill No.</label>
+                        <input type="text" name="bill_no" [(ngModel)]="form.bill_no " #bill_no="ngModel" placeholder=""
+                            id="bill_no" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Bill Date</label>
+                        <input type="date" name="bill_date " [(ngModel)]="form.bill_date " #bill_date="ngModel"
+                            placeholder="" id="bill_date" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>HSN/SAC Code</label>
+                        <input type="text" name="hsn_sac_code" [(ngModel)]="form.hsn_sac_code " #hsn_sac_code="ngModel"
+                            placeholder="" id="hsn_sac_code" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Transporter</label>
+                        <mat-select name="transporter" multiple [(ngModel)]="form.transporter " #transporter="ngModel"
+                            placeholder="Select Transporter" class="form-control">
+                            <mat-option *ngFor="let vendorData of vendorList" [value]="vendorData.id">
+                                {{vendorData.vendor_master_data.vendor_name}}
+                            </mat-option>
+                            <mat-option [value]="" *ngIf="vendorList.length==0">
+                                No Records.
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Site Name</label>
+                        <input type="text" class="form-control" [disabled]="true" [value]="localStorageData?.site_data?.site_name">
+                        <!-- <mat-select name="site " [(ngModel)]="form.site " #site="ngModel" placeholder="Select Site"
+                            class="form-control" multiple>
+                            <mat-option *ngFor="let siteData of siteList" [value]="siteData.id">
+                                {{siteData.site_name}}
+                            </mat-option>
+                            <mat-option [value]="" *ngIf="siteList.length==0">
+                                No Records.
+                            </mat-option>
+                        </mat-select> -->
+                    </div>
+                </div>
+            </div>
+            <div class="btd-section">
+                <button type="submit" class="btn-save">Search</button>
+            </div>
+
+        </form>
+
+        <table class="table text-center">
+            <tr>
+                <th>SrNo.</th>
+                <th>Voucher No.</th>
+                <th>Voucher Date</th>
+                <th>Bill No.</th>
+                <th>Bill Date</th>
+                <th>Transporter Name</th>
+                <th>Site</th>
+                <th>Shortage Qty.</th>
+                <th>Excess Qty.</th>
+                <th>Advance Amount</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+            </tr>
+            <tr *ngFor="let invoice of transportBillList;let i=index">
+                <td>{{i+1}}.</td>
+                <td>{{invoice.invoice_no}}</td>
+                <td>{{invoice.date | date:'dd-MM-yyyy'}}</td>
+                <td>{{invoice.bill_no}}</td>
+                <td>{{invoice.bill_date | date:'dd-MM-yyyy'}}</td>
+                <td>{{invoice?.transporter_details?.data?.vendor_name}}</td>
+                <td>
+                    <div *ngFor="let site of invoice.site_details">{{site?.site_name}}</div>
+                </td>
+                <td>{{invoice.total_item_short_age_qty}}</td>
+                <td>{{invoice.total_item_excess_qty}}</td>
+                <td>{{invoice.tax[0]?.advance_amount}}</td>
+                <td>{{invoice.tax[0]?.final_balance | number : '1.2-2'}}</td>
+                <td>{{invoice.status}}</td>
+
+            </tr>
+            <tr class="text-center" *ngIf="transportBillList?.length==0">
+                <td colspan="12">No Data Found!</td>
+            </tr>
+        </table>
+    </div>
+</div>

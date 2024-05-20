@@ -1,0 +1,88 @@
+<form class="allfield" name="addPersonalInformation" #f="ngForm" (ngSubmit)="f.form.valid && personalSubmit()"
+    novalidate>
+
+
+<div class="row">
+
+
+
+    <div class="col-lg-6">
+        <div class="fieldValue">
+            <label>Select User<span class="asterisk">*</span></label>
+            <ng-select 
+                [items]="userList" 
+                bindLabel="full_name" 
+                bindValue="id" 
+                [ngClass]="{ 'is-invalid': f.submitted && user.errors }"
+                [(ngModel)]="addPersonalInformation.user"
+                required
+                name="user" 
+                #user="ngModel"
+            >
+            </ng-select>
+        </div>
+        <div *ngIf="f.submitted && user.errors" class="invalid-feedback">
+            <div>Please select atleast one user to proceed.</div>
+        </div>
+    </div>
+
+    
+    <div class="col-lg-6">
+        <div class="fieldValue">
+            <label>Select Site<span class="asterisk">*</span></label>
+            <ng-select 
+                [items]="siteList" 
+                bindLabel="site_name" 
+                bindValue="id" 
+                [multiple]="true"
+                [ngClass]="{ 'is-invalid': f.submitted && site_ids.errors }"
+                [(ngModel)]="addPersonalInformation.site_ids"
+                required
+                name="site_ids" 
+                #site_ids="ngModel"
+            >
+            </ng-select>
+        </div>
+        <div *ngIf="f.submitted && site_ids.errors" class="invalid-feedback">
+            <div>Please select atleast one site to proceed.</div>
+        </div>
+    </div>
+
+    <div class="field col-lg-6">
+        <div class="fieldValue">
+            <label>Min value</label>
+            <input type="text" class="form-control" name="min_value" numbersOnly
+                [ngClass]="{ 'is-invalid': f.submitted && min_value.errors }"
+                [(ngModel)]="addPersonalInformation.min_value" required #min_value="ngModel"
+                placeholder="">
+        </div>
+        <div *ngIf="f.submitted && min_value.errors" class="invalid-feedback">
+            <div *ngIf="min_value.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="field col-lg-6">
+        <div class="fieldValue">
+            <label>Max value</label>
+            <input type="text" class="form-control" name="max_value" numbersOnly
+                [ngClass]="{ 'is-invalid': f.submitted && max_value.errors }"
+                [(ngModel)]="addPersonalInformation.max_value" required #max_value="ngModel"
+                placeholder="">
+        </div>
+        <div *ngIf="f.submitted && max_value.errors" class="invalid-feedback">
+            <div *ngIf="max_value.errors['required']">This is required</div>
+        </div>
+    </div>
+
+
+    <div class="btnupdate col-lg-12 d-flex">
+        <button type="submit" class="btn btn-primary" *ngIf="canvasScope == 'add' ">ADD</button>
+        <button type="submit" class="btn btn-primary" *ngIf="canvasScope == 'update' ">UPDATE</button>
+        <button type="button" class="btn btn-primary non-active-btn" (click)="CloseComponent()">CANCEL</button>
+    </div>
+
+
+
+
+    </div>
+</form>

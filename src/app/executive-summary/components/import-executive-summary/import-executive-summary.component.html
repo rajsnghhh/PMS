@@ -1,0 +1,114 @@
+<!-- Upload File -->
+<div *ngIf="activefrom == 'importuser'">
+    <div class="header">
+        <label> Import Executive Summary using your own file, or use our <a href="assets/usermanagement/user_import.xlsx"
+                target="_blank" download>sample file.</a> </label>
+    </div>
+    <div class="upload" (click)="fileImport.click()">
+        <div class="filecard" *ngIf="!excelIcon">
+            <img src="assets/usermanagement/csv.png" alt="">
+        </div>
+        <div class="filecard2" *ngIf="excelIcon">
+            <img src="assets/usermanagement/tick.png" class="uploadsuccess" alt=""> &nbsp; {{filen}}
+        </div>
+        <input style="display: none" #attachments type="file"
+            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="uploadFile($event)"
+            #fileImport>
+        
+    </div>
+    <div class="format">
+        <p>&nbsp; Drop or upload your file here <br> &nbsp;&nbsp;&nbsp;
+            <strong> (.xlsx formats supported) </strong>
+        </p>
+    </div>
+    <button type="submit" class="btn btn-primary addbutton1" (click)="importUser()">UPLOAD</button>
+</div>
+
+<!-- Map the Uploaded Data -->
+<form name="itemData" role="form" #f="ngForm" (ngSubmit)="f.form.valid && mapUser()" novalidate>
+
+<div *ngIf="activefrom == 'userlist'" class="table-header">
+    <div class="header">
+        <label> Map columns from your file to the right PMS fileds. </label>
+    </div>
+
+    <div class="table-data">
+        <ul class="list">
+            <li class="heading1">
+                <div>PMS FIELD</div>
+                <div></div>
+                <div>FILE COLUMN</div>
+                <div>MAPPED</div>
+            </li>
+            <li class="filecolumhead">
+                <span class="filecolum">BOQ Code <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" required aria-label="Default select example" name="boqcode" [(ngModel)]="itemData.boqcode"
+                    #boqcode="ngModel" [ngClass]="{ 'is-invalid': f.submitted && boqcode.errors }" >
+                        <option value="">Select BOQ Code</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="itemData.boqcode!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">BOQ No. <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" required aria-label="Default select example" name="boqno" [(ngModel)]="itemData.boqno"
+                    #boqno="ngModel" [ngClass]="{ 'is-invalid': f.submitted && boqno.errors }" >
+                        <option value="">Select BOQ No.</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="itemData.boqno!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">Particulars <span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" required aria-label="Default select example" name="particulars" [(ngModel)]="itemData.particulars"
+                    #particulars="ngModel" [ngClass]="{ 'is-invalid': f.submitted && particulars.errors }" >
+                        <option value="">Select Particulars</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="itemData.particulars!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+
+            <li class="filecolumhead">
+                <span class="filecolum">Unit<span class="asterisk">*</span></span>
+                <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                <span>
+                    <select class="form-select pmsfield" required aria-label="Default select example" name="unit" [(ngModel)]="itemData.unit"
+                    #unit="ngModel" [ngClass]="{ 'is-invalid': f.submitted && unit.errors }" >
+                        <option value="">Select Unit</option>
+                        <option *ngFor="let import of userData">{{import}}</option>
+                    </select>
+                </span>
+                <div *ngIf="itemData.unit!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+            </li>
+            <ng-container *ngFor="let data of keyFeaturesHeader">
+                <li class="filecolumhead" *ngIf="!data.is_hidden">
+                    <span class="filecolum">{{data.form_label}}<span class="asterisk">*</span></span>
+                    <span><img src="assets/usermanagement/arrow.png" class="arrow" alt=""></span>
+                    <span>
+                        <select class="form-select pmsfield" required aria-label="Default select example" name="{{data.form_internal_name}}" [(ngModel)]="data.form_internal_name"
+                        #data.form_internal_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && data.form_internal_name.errors }" >
+                            <option value="">Select {{data.form_label}}</option>
+                            <option *ngFor="let import of userData">{{import}}</option>
+                        </select>
+                    </span>
+                    <div *ngIf="data.form_internal_name!=''"><img src="assets/usermanagement/tick.png" class="maptick" alt=""></div>
+                </li>
+            </ng-container>
+
+        </ul>
+    </div>
+
+    <button type="submit" class="btn btn-primary addbutton">SAVE</button>
+</div>
+</form>

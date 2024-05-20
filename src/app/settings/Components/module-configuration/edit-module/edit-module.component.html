@@ -1,0 +1,231 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>{{menuName | titlecase}} Module Form</h2>
+    </div>
+    <div class="component-body">
+        <div class="colaps-element">
+            <section *ngFor="let from of colapseFromsList; let i = index">
+                <button class="collapsible" [ngClass]="{'active': from.colapseStatus }"
+                    (click)="expandSpecificElement(i,from.formType)">{{from.name}}</button>
+                    <div class="component-header" [ngClass]="{'active1': from.colapseStatus }">
+                    <div class="action-button-container customcss">
+                        <button (click)="addNewGroup(from.formType)" data-bs-toggle="offcanvas"  data-bs-target="#addGroupNav" aria-controls="offcanvasRight">ADD NEW GROUP<img src="assets/header/add.png" alt=""></button>                    
+                    </div>
+                    </div>
+                <div class="content" [ngClass]="{'active-content': from.colapseStatus }">
+                    <div class="component-header" *ngFor="let field of fieldValue">
+                        <h6>{{field.name}} <img data-bs-toggle="offcanvas" (click)="editTheGroup(from.formType,field.id)"  data-bs-target="#updateGroupNav" aria-controls="offcanvasRight"class="editImage pointerEditDelete"
+                            src="assets/usermanagement/edit.png" alt="">&nbsp;<img *ngIf="field.group_category=='general'" data-bs-toggle="modal"
+                            data-bs-target="#deleteGroup" (click)="deleteTheGroup(field.id)" class="editImage pointerEditDelete"
+                            src="assets/usermanagement/delete.png" alt=""></h6>
+                        <div class="action-button-container">
+                            <button (click)="addNewField(from.formType,field.id)">ADD NEW FIELD<img
+                                    src="assets/header/add.png" alt=""></button>
+                        </div>
+                        <div class="top-body-part" style="
+                        background-color: #b6f7ff1c;" dndDropzone dndEffectAllowed="move"
+                            (dndDrop)="onDrop($event, field.form_fields)" class="dndList">
+                            <div class="body-part" dndPlaceholderRef class="dndPlaceholder"></div>
+                            <div class="body-part" *ngFor="let form of field.form_fields" [dndDraggable]="form"
+                                dndEffectAllowed="move" (dndMoved)="onDragged(form, field.form_fields, 'move')"
+                                class="draggable">
+                                <div class="container menuslide" style="background-color: white;">
+                                    <img class="img" src="{{form.form_input_type | FormTypeIMG }}" alt="">
+                                    <div class="labelName">{{form.form_label | nameFullLength}}
+                                        
+                                        <div class="descript" *ngIf="form.form_description">{{form.form_description}}
+                                        </div>
+                                    </div>
+                                    <span class="count" *ngIf="form.choise_counter > 0 && (form.form_input_type == 'dropdown' || form.form_input_type == 'multiselect' || form.form_input_type == 'radio')">
+                                        <img class="editImage" src="assets/icons/radio-list-line.png" alt="">
+                                        {{form.choise_counter}} Choices Added
+                                    </span> 
+                                    <div class="inputCheck">
+                                        <label [ngClass]="{'disabled': form.form_category == 'systemdefine' }"
+                                            (click)="isRequiredCheck(form.id,form.form_group_id,form.is_required,form.is_export,form.is_searchable)"
+                                            data-bs-toggle="modal" data-bs-target="#RequiredCheck">Required
+                                            <input type="checkbox" name="required" [ngModelOptions]="{standalone: true}"
+                                                [(ngModel)]="form.is_required">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label [ngClass]="{'disabled': form.form_category == 'systemdefine' }"
+                                            (click)="isListExportCheck(form.id,form.form_group_id,form.is_required,form.is_export,form.is_searchable)"
+                                            data-bs-toggle="modal" data-bs-target="#ListExportCheck">Show in List/Export
+                                            <input type="checkbox" name="listexport"
+                                                [ngModelOptions]="{standalone: true}" [(ngModel)]="form.is_export">
+                                            <span class="checkmark checkmark2"></span>
+                                        </label>
+
+
+                                        <label [ngClass]="{'disabled': form.form_category == 'systemdefine' }"
+                                            (click)="isSearchCheck(form.id,form.form_group_id,form.is_required,form.is_export,form.is_searchable)"
+                                            data-bs-toggle="modal" data-bs-target="#SearchCheck">Is Searchable
+                                            <input type="checkbox" name="search"
+                                                [ngModelOptions]="{standalone: true}" [(ngModel)]="form.is_searchable">
+                                            <span class="checkmark checkmark2 checkmark3"></span>
+                                        </label>
+
+
+
+                                        <div class="custom-section">
+                                            <div class="dropdown">
+                                                <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                                <div class="dropdown-content">
+                                                    <div class="img-container">
+                                                        <span (click)="editField(form.id,form.form_type)"
+                                                            data-bs-toggle="offcanvas" data-bs-target="#editZone"><img
+                                                                src="assets/usermanagement/edit.png" alt=""
+                                                                aria-controls="offcanvasRight"><label
+                                                                class="hoverlabel">Edit Field</label></span>
+                                                        <span *ngIf="form.form_category != 'systemdefine'"
+                                                            (click)="deleteField(form.id)" data-bs-toggle="modal"
+                                                            data-bs-target="#deleteField"><img
+                                                                src="assets/usermanagement/delete.png" alt=""><label
+                                                                class="hoverlabel">Delete Field</label></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="body-part draggable" *ngIf="field.form_fields.length==0">
+                                <div class="container menuslide dflex" style="background-color: white;">
+                                    <p class="noField">No Field Added</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-header" *ngIf="fieldValue.length==0">
+                        <p class="nodata">No data Found</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteField" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this Form Field ?
+            </div>
+            <div class="modal-footer">
+                <button (click)="deleteFieldForm()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Required Check -->
+<div class="modal fade" id="RequiredCheck" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to Update the Status?
+            </div>
+            <div class="modal-footer">
+                <button (click)="updateRequired()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" (click)="cancelUpdate()"
+                    data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal List Export Check -->
+<div class="modal fade" id="ListExportCheck" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to Update the Status?
+            </div>
+            <div class="modal-footer">
+                <button (click)="updateListExport()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" (click)="cancelUpdate()"
+                    data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="SearchCheck" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to Update the Status?
+            </div>
+            <div class="modal-footer">
+                <button (click)="updateSearch()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" (click)="cancelUpdate()"
+                    data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteGroup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to Delete this Group?
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="deletePerticulerGroup()" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary"
+                    data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="addGroupNav" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Add New Group</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <app-add-group #addGroup></app-add-group>
+    </div>
+</div>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="updateGroupNav" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Edit Group</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <app-update-group #editGroup></app-update-group>
+    </div>
+</div>

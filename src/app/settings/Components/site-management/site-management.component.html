@@ -1,0 +1,109 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Site Management</h2>
+
+        <div class="action-button-container">
+            <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown"
+                aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall"><!--  (click)="downloadPdf()" -->
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall"><!-- (click)="downloadCsv()" -->
+                    <span><img src="assets/usermanagement/download_csv.png" class="export"><strong>CSV</strong> </span>
+                </li>
+            </ul>
+            <button data-bs-toggle="offcanvas" data-bs-target="#addSite" aria-controls="offcanvasRight">ADD NEW <img
+                    src="assets/header/add.png" alt=""></button>
+        </div>
+    </div>
+    <div class="component-body">
+        <div class="scrollable-table-container">
+
+            <table class="scrollable-table" *ngIf="siteList.length > 0">
+
+                <tr>
+                    <th class="posion-fixed-left-sno">S.No</th>
+                    <th *ngFor="let tditem of siteList[0].plant_machinery_data; let i = index"
+                        [ngClass]="{'posion-fixed-left': i == 0 }">
+                        {{tditem.form_label}}</th>
+                    <th class="posion-fixed-right lstheight">Action</th>
+                </tr>
+
+                <tr *ngFor="let item of siteList; let i = index">
+                    <td class="posion-fixed-left-sno"> <a class="text-info">{{ (pageSize*(page-1)) + i+1.}}</a>
+                    </td>
+                    <td class="fstwidth" *ngFor="let tditem of siteList[i].plant_machinery_data; let j = index"
+                        [ngClass]="{'posion-fixed-left entities': j == 0 }">
+                        {{tditem.value?tditem.value:'-'}}</td>
+                    <td class="posion-fixed-right sitebutton">
+                        <div class="custom-section">
+                            <div class="dropdown">
+                                <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                <div class="dropdown-content">
+                                    <div class="img-container">
+                                        <div class="img-container">
+                                            <span data-bs-toggle="offcanvas"
+                                                data-bs-target="#offcanvasRightLabelEditPlant"><label>Edit
+                                                    Site</label></span> <!-- (click)="addNewGroup(item)" -->
+                                            <span data-bs-toggle="offcanvas" data-bs-toggle="modal"
+                                                data-bs-target="#deleteSite"><label>Delete
+                                                    Site</label></span><!-- (click)="deletePlantValue(item)" -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="text-center">
+                    <td colspan="3" *ngIf="siteList.length == 0">No data found.</td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="addSite" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Add Site</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-add-site></app-add-site>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="editSite" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Edit Site</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <!-- <div class="offcanvas-body">
+            <app-edit-location #editLocation></app-edit-location>
+        </div> -->
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteSite" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this Site ?
+            </div>
+            <div class="modal-footer">
+                <!-- (click)="deleteZoneModel()" -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

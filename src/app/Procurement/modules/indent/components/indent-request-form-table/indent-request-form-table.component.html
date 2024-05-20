@@ -1,0 +1,281 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+  <div class="createtable-section table-responsive" *ngIf="selectedMRDetails || prefieldData">
+    <table class="text-nowrap">
+      <tr>
+        <th>Sr.&nbsp;No</th>
+        <th>Item Group</th>
+        <th>Item Sub Group</th>
+        <th>Item</th>
+        <th>Item Code</th>
+        <th>Technical Specification(S)</th>
+        <th>Part No.</th>
+        <th>Brand</th>
+        <th>Total Project Quantity</th>
+        <th>Total Received Up To Date</th>
+        <th>STOCK ON SITE</th>
+        <th>Required Qty</th>
+        <th>Unit</th>
+        <th>Requested For</th>
+        <th>Priority</th>
+        <th>Application or work</th>
+        <th>Delivery Schedule</th>
+        <th>Remarks</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+      <tr class="">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="align-middle"><a (click)="addItem()" type="submit"
+            class="tablebtn-save">ADD <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png"
+                alt=""></i></a></td>
+      </tr>
+      <tr class="tablebg" *ngFor="let item of form.requested_items; let i = index">
+        <td>#{{i+1}}</td>
+
+        <td>
+          <div class="tablegroup">
+            <label>Item Group</label>
+            <select class="form-control" name="requested_material_group{{i+1}}" [disabled]="disabledEdit"
+              [(ngModel)]="form.requested_items[i].requested_material_group" required
+              #requested_material_group="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && requested_material_group.errors }"
+              (change)="setMaterialSubGroup(i,form.requested_items[i].requested_material_group)">
+              <option value="" disabled>Select Material Group</option>
+              <option value="{{materialGroup.id}}" [ngValue]="materialGroup.id" *ngFor="let materialGroup of materialTypeList">{{materialGroup.name}}
+              </option>
+            </select>
+            <!-- <input type="text" class="form-control form-control2" id="data" placeholder="Type here to search data"> -->
+          </div>
+        </td>
+        <td>
+          <div class="tablegroup">
+            <label>Item Sub Group</label>
+            <select class="form-control" name="requested_material_sub_group{{i+1}}" [disabled]="disabledEdit"
+              [(ngModel)]="form.requested_items[i].requested_material_sub_group" required
+              #requested_material_sub_group="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && requested_material_sub_group.errors }"
+              (change)="setMaterialList(i,form.requested_items[i].requested_material_sub_group)">
+              <option value="" disabled>Select Material Sub Group</option>
+              <option value="{{subGroup.id}}" [ngValue]="subGroup.id" *ngFor="let subGroup of form.requested_items[i].MaterilSubGroupList">
+                {{subGroup.name}}</option>
+            </select>
+          </div>
+        </td>
+        <td>
+          <div class="tablegroup">
+            <label>Item</label>
+            <select [disabled]="disabledEdit" class="form-control" name="requested_material{{i+1}}"
+              [(ngModel)]="form.requested_items[i].requested_material" required #requested_material="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && requested_material.errors }"
+              (change)="setMaterialMasterData(i)">
+              <option value="" disabled>Select Material</option>
+              <option value="{{masterData.id}}" *ngFor="let masterData of form.requested_items[i].MaterilFilterList">
+                {{masterData.material_name}} </option>
+            </select>
+          </div>
+          <div class="tablegroup tablegroup-text">
+            <h2 class="bal_txt"> 
+              (Bal.&nbsp;Qty.&nbsp;=</h2>
+            <div class="form-control form-control2 bal_qty" data-bs-toggle="tooltip" data-bs-placement="right"
+              title="Balance Quantity.">{{form.requested_items[i].currentStock}}</div>
+            <h2>)</h2>
+          </div>
+          <section class="boq-material-details" *ngIf="form.requested_items[i].requested_material">
+            <img src="assets/icons/details.png" alt="">
+            <table>
+              <tr>
+                <th>BOQ Name</th>
+                <th>BOQ Item</th>
+                <th>Budgeted Quantity</th>
+              </tr>
+              <tr *ngFor="let masterialBoQdata of form.requested_items[i].MaterialBOQ">
+
+                <td>{{masterialBoQdata.wbs_list__boq__name}}</td>
+                <td>{{masterialBoQdata.wbs_list__wbs}}</td>
+                <td>{{masterialBoQdata.budgeted_quantity}}</td>
+              </tr>
+              <tr *ngIf="form.requested_items[i]?.MaterialBOQ?.length==0">
+                <td colspan="4" style=" text-align: center; ">
+                  Item Not found on BOQ. Please add Justification
+                </td>
+              </tr>
+            </table>
+          </section>
+        </td>
+        <td>
+          <div class="tablegroup">
+              <label>{{form.requested_items[i]?.MaterialmasterData?.material_code}}</label>
+          </div>
+        </td>
+        <td>
+          <div class="tablegroup">
+              <label>{{form.requested_items[i]?.MaterialmasterData?.material_nature_name}}</label>
+          </div>
+        </td>
+        <td>
+          <div class="tablegroup">
+              <input type="text" [disabled]="disabledEdit" class="form-control" id="data" placeholder=""  name="size_part_grade{{i+1}}" [(ngModel)]="form.requested_items[i].size_part_grade" #size_part_grade="ngModel" [ngClass]="{ 'is-invalid': f.submitted && size_part_grade.errors }">
+          </div>     
+        </td>
+        <td>
+          <div class="tablegroup">
+              <input type="text" [disabled]="disabledEdit" class="form-control" id="data" placeholder=""  name="brand{{i+1}}" [(ngModel)]="form.requested_items[i].brand" #brand="ngModel" [ngClass]="{ 'is-invalid': f.submitted && brand.errors }">
+          </div> 
+        </td>
+        <td>
+          <div class="tablegroup">
+              <input type="text"  class="form-control" id="data" placeholder=""  name="budgeted_qty{{i+1}}" [(ngModel)]="form.requested_items[i].budgeted_qty" #budgeted_qty="ngModel" [ngClass]="{ 'is-invalid': f.submitted && budgeted_qty.errors }" disabled>
+          </div> 
+        </td>
+        <td>
+          <div class="tablegroup">
+              <input type="text"  class="form-control" id="data" placeholder=""  name="total_received_uptodate{{i+1}}" [(ngModel)]="form.requested_items[i].total_received_uptodate" #total_received_uptodate="ngModel" [ngClass]="{ 'is-invalid': f.submitted && total_received_uptodate.errors }" disabled>
+          </div> 
+        </td>
+        <td>
+          <div class="tablegroup">
+              <input type="text"  class="form-control" id="data" placeholder=""  name="stock_on_site{{i+1}}" [(ngModel)]="form.requested_items[i].stock_on_site" #stock_on_site="ngModel" [ngClass]="{ 'is-invalid': f.submitted && stock_on_site.errors }" disabled>
+          </div> 
+        </td>
+        <td>
+          <div class="tablegroup">
+            <h5 *ngIf="isIndent_Approver && item.status == 'pending'"> Requested Quantity</h5>
+            <input type="text" class="form-control" id="data" placeholder="" required [disabled]="disabledEdit" amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+              name="quantity{{i+1}}" [(ngModel)]="form.requested_items[i].quantity" #quantity="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && quantity.errors }" (change)="checkFromStock(i)">
+          </div>
+        </td>
+
+        <td>
+          <div class="tablegroup">
+            <select
+              class="form-control"
+              #uom="ngModel"
+              required
+              name="uom{{i+1}}"
+              [disabled]="disabledEdit"
+              [ngClass]="{ 'is-invalid': f.submitted && uom.errors }"
+              [(ngModel)]="form.requested_items[i].uom"
+              >
+              <ng-container *ngFor="let uomData of uomList">
+                  <option value="{{uomData.id}}" *ngIf="form.requested_items[i]?.MaterialmasterData?.uomList?.includes(uomData.id)">{{uomData.symbol}}</option>    
+              </ng-container>
+            </select>
+          </div>
+        </td>
+
+        <td>
+          <div class="tablegroup" >
+            <select class="form-control" [(ngModel)]="form.requested_items[i].requested_for"
+            [ngModelOptions]="{standalone: true}" id="sel1" [disabled]="disabledEdit">
+              <!-- <option value="party">Party</option>
+              <option value="vehicle">Vehicle</option> -->
+              <option value="">Select </option>
+              <option value="civil">Civil</option>
+              <option value="pnm">P & M</option>
+              <option value="other">Other</option>
+              <!-- <option value="employee">Employee</option> -->
+            </select>
+          </div>
+          <div class="tablegroup">
+            <label>Charge Type</label>
+            <input type="text" class="form-control" id="data" placeholder=""
+              [(ngModel)]="form.requested_items[i].charge_type" [ngModelOptions]="{standalone: true}"
+              [disabled]="disabledEdit">
+            <!-- <select class="form-control" id="sel1">
+                <option></option>
+            </select> -->
+          </div>
+        </td>
+        <td>
+          <div class="tablegroup">
+            <label>Req. Priority</label>
+            <select class="form-control" id="sel1" name="priority{{i+1}}" [(ngModel)]="form.requested_items[i].priority"
+              required #priority="ngModel" [ngClass]="{ 'is-invalid': f.submitted && priority.errors }"
+              [disabled]="disabledEdit">
+              <option>Select Priority</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div class="tablegroup">
+            <label>Required Date</label>
+            <input type="date" class="form-control" placeholder="" [disabled]="disabledEdit" name="due_date{{i+1}}"
+              [(ngModel)]="form.requested_items[i].due_date" required #due_date="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && due_date.errors }">
+          </div>
+        </td>
+        <td>
+          <div class="tablegroup">
+              <input type="text" [disabled]="disabledEdit" class="form-control" id="data" placeholder=""  name="application{{i+1}}" [(ngModel)]="form.requested_items[i].application" #application="ngModel" [ngClass]="{ 'is-invalid': f.submitted && application.errors }">
+          </div> 
+        </td>
+        <td>
+          <div class="tablegroup">
+            <input type="radio" id="days" [disabled]="disabledEdit" value="days" name="delivery_schedule{{i+1}}" [(ngModel)]="form.requested_items[i].delivery_schedule" #delivery_schedule="ngModel" [ngClass]="{ 'is-invalid': f.submitted && delivery_schedule.errors }">
+            <label for="days">Days</label><br>
+            <input type="radio" id="date" [disabled]="disabledEdit" value="date" name="delivery_schedule{{i+1}}" [(ngModel)]="form.requested_items[i].delivery_schedule" #delivery_schedule="ngModel" [ngClass]="{ 'is-invalid': f.submitted && delivery_schedule.errors }">
+            <label for="date">Date</label><br>
+        </div>
+
+        <div class="tablegroup"  *ngIf="form.requested_items[i].delivery_schedule == 'days'">
+            <input type="text" [disabled]="disabledEdit" amountNumber class="form-control" id="data" placeholder=""  name="delivery_schedule_day{{i+1}}" [(ngModel)]="form.requested_items[i].delivery_schedule_day" #delivery_schedule_day="ngModel" [ngClass]="{ 'is-invalid': f.submitted && delivery_schedule_day.errors }">
+        </div> 
+        <div class="tablegroup"  *ngIf="form.requested_items[i].delivery_schedule == 'date'">
+            <input type="date" [disabled]="disabledEdit" class="form-control" id="data" placeholder=""  name="delivery_schedule_date{{i+1}}" [(ngModel)]="form.requested_items[i].delivery_schedule_date" #delivery_schedule_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && delivery_schedule_date.errors }">
+        </div> 
+        </td>
+        <td>
+          <div class="tablegroup" *ngFor="let note of form.requested_items[i].notes; let N_I = index">
+            <label>{{note.note_title}}</label>
+            <input *ngIf="note.note_title == 'Justification'" [disabled]="disabledEdit" type="text"
+              class="form-control form-control2" id="text" placeholder="" name="notes_justify{{i+1}}"
+              [(ngModel)]="form.requested_items[i].notes[N_I].note_details" required #notes_justify="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && notes_justify.errors }">
+            <input *ngIf="note.note_title!= 'Justification'" [disabled]="disabledEdit" type="text"
+              class="form-control form-control2" id="text" placeholder=""
+              [(ngModel)]="form.requested_items[i].notes[N_I].note_details" [ngModelOptions]="{standalone: true}">
+          </div>
+        </td>
+        <td>
+          <div class="tablegroup">
+            <label class="text-capitalize">{{item.status}}</label>
+          </div>
+        </td>
+        <td class="align-middle">
+          <a *ngIf="this.scope == 'update' || this.scope == 'add'" (click)="delete(i)" type="submit"
+            class="vector-delete">DEL <i class="fa" aria-hidden="true"><img src="assets/img/vector-delete.png"
+                alt=""></i></a>
+          <a *ngIf="scope == 'view'" type="submit" class="vector-delete">DEL <i class="fa" aria-hidden="true"><img
+                src="assets/img/vector-delete.png" alt=""></i></a><br>
+
+
+        </td>
+
+      </tr>
+      <tr *ngIf="form.requested_items?.length==0">
+        <td colspan="20" class="text-center">No Item Added Yet</td>
+      </tr>
+      <button hidden #submitButton="" type="submit">Save</button>
+    </table>
+  </div>
+</form>

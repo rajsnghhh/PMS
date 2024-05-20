@@ -1,0 +1,17 @@
+<div class="survey-main">
+    <div class="survey-content">
+        <div class="survey-content-main">
+            <div class="survey-body">
+                <div class="form-conatainer">
+                    <app-dynamic-forms 
+                        (parentCompFun)="genaratePlantMechinaryData($event)"
+                        [actionName]="ActionButtonName" [formData]="formFieldList" 
+                        [prefieldData]="prefieldData"
+                        #dynamicForm
+                        [chieldActionRequired]="false"
+                    ></app-dynamic-forms>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

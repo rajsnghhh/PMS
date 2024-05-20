@@ -1,0 +1,71 @@
+<div class="survey-content-main">
+    <div class="survey-header">
+        <h1>Location Details</h1>
+        <button (click)="proceedNext()">SKIP NOW</button>
+    </div>
+    <div class="survey-body">
+        <form>
+            <div class="flex-div">
+            <div class="mb-3">
+                <label for="location">Add City / Town / Area</label>
+                <input type="text" class="form-control" id="location"  placeholder="Add Field">
+            </div>
+            <div class="mb-3">
+                <label for="distance">Distance</label>
+                <div class="custom-select-input">
+                    <select class="form-select" aria-label="Default select">
+                        <option value="KM" selected>KM</option>
+                        <option value="M">M</option>
+                    </select>
+                    <input type="text" class="form-control" id="Distance"  placeholder="Add Field">
+                </div>
+            </div> 
+            <div class="mb-3">
+                <label for="location">District</label>
+                <input type="text" class="form-control" id="district"  placeholder="Add Field">
+            </div> 
+            <div class="mb-3">
+                <label for="distance">Distance</label>
+                <div class="custom-select-input">
+                    <select class="form-select" aria-label="Default select">
+                        <option value="KM" selected>KM</option>
+                        <option value="M">M</option>
+                    </select>
+                    <input type="text" class="form-control" id="Distance"  placeholder="Add Field">
+                </div>
+            </div> 
+            <div class="mb-3">
+                <label for="state">State</label>
+                <input type="text" class="form-control" id="state"  placeholder="Add Field">
+            </div> 
+            <div class="mb-3">
+                <label for="distance">Distance</label>
+                <div class="custom-select-input">
+                    <select class="form-select" aria-label="Default select">
+                        <option value="KM" selected>KM</option>
+                        <option value="M">M</option>
+                    </select>
+                    <input type="text" class="form-control" id="Distance"  placeholder="Add Field">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="railway">Nearest Railway Station</label>
+                <input type="text" class="form-control" id="railway"  placeholder="Add Field">
+            </div> 
+            <div class="mb-3">
+                <label for="distance">Distance</label>
+                <div class="custom-select-input">
+                    <select class="form-select" aria-label="Default select">
+                        <option value="KM" selected>KM</option>
+                        <option value="M">M</option>
+                    </select>
+                    <input type="text" class="form-control" id="Distance"  placeholder="Add Field">
+                </div>
+            </div>
+            </div>
+            
+            <button type="submit" (click)="proceedNext()" class="btn btn-primary">NEXT</button>
+            <button type="button" class="btn btn-primary non-active-btn" (click)="GoBack()">BACK</button>
+        </form>
+    </div>
+</div>

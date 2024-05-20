@@ -1,0 +1,117 @@
+<div class="createrequisition-section">
+
+    <div class="main-body-container">
+        <div class="table-responsive">
+            <table class="table text-nowrap">
+                <thead>
+                    <tr>
+                        <th scope="col">Sr No</th>
+                        <th scope="col">GRN No.</th>
+                        <th scope="col">GRN Date</th>
+                        <th scope="col">Ch. No./ Party Bill No</th>
+                        <th scope="col">Indent No.</th>
+                        <th scope="col">RST No.</th>
+                        <th scope="col">Recd. From</th>
+                        <th scope="col">Account Name</th>
+                        <th scope="col">Transporter Name</th>
+                        <th scope="col">Vehicle No.</th>
+                        <th scope="col">Recieved Qty</th>
+                        <!-- <th scope="col">Weight</th> -->
+                        <th scope="col">Pur. Bill Done Qty</th>
+                        <th scope="col">Challan Qty</th>
+                        <th scope="col">Qty Pending For Pur.</th>
+                        <th scope="col">Amt.</th>
+                        <th scope="col">Received Location</th>
+                        <th>Tax Type</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of grnList;index as i">
+                        <td># {{i+1}}</td>
+                        <td>{{item.request_code}}</td>
+                        <td>{{item.date.substring(0,10).split('-').reverse().join('-')}}</td>
+                        <td>{{item.challan_no}}</td>
+                        <td>{{item.linked_docs?.indent}}</td>
+                        <td>{{item.rst_no}}</td>
+                        <td>{{item.received_from}}</td>
+                        <td>-</td>
+                        <td>{{item.transporter_details?.data?.vendor_name}}</td>
+                        <td>{{item.carrying_vehicle_no}}</td>
+                        <td>{{item.total_received_quantity}}</td>
+                        <!-- <td>{{item.total_weight}}</td> -->
+                        <td>{{item.purchase_bill_done_qty}}</td>
+                        <td>{{item.total_challan_quantity}}</td>
+                        <td>{{item.qty_pending_for_pur}}</td>
+                        <td>{{item.total_amount | currency:"INR":"symbol"}}</td>
+                        <td>{{item.receive_location}}</td>
+                        <td class="text-capitalize">{{item.tax_type}}</td>
+                        <td class="text-capitalize">{{item.status}}</td>
+                        <td>
+                            <div class="table-action">
+                                <img src="assets/icons/dots.png" alt="">
+                                <ul>
+                                    <li (click)="viewByID(item.id)">View
+                                        <span>
+                                            <img class="eye-docicon" src="assets/icons/eye.png" alt="">
+                                        </span>
+                                    </li>
+                                    <li *ngIf="item.status!='approved'" (click)="updateByID(item.id)"> Update
+                                        <span>
+                                            <img src="assets/icons/amend.jpg" alt="">
+                                        </span>
+                                    </li>
+                                    <li *ngIf="item.status=='approved' && item.tax_type == 'vat'&& !grnListView" (click)="purchase(item.id)">Purchase ( Billing ) 
+                                        <span>
+                                            <img class="eye-docicon" src="assets/icons/amend.jpg" alt="">
+                                        </span>
+                                    </li>
+                                    <li *ngIf="item.status=='approved' && item.tax_type == 'gst' && !grnListView" (click)="purchasegst(item.id)">Purchase GST ( Billing ) 
+                                        <span>
+                                            <img class="eye-docicon" src="assets/icons/amend.jpg" alt="">
+                                        </span>
+                                    </li>
+                                    <li *ngIf="item.status=='approved' && item.tax_type == 'vat' && !grnListView" (click)="purchasereturn(item.id)">Purchase Return 
+                                        <span>
+                                            <img class="eye-docicon" src="assets/icons/amend.jpg" alt="">
+                                        </span>
+                                    </li>
+                                    <li *ngIf="item.status=='approved' && item.tax_type == 'gst' && !grnListView" (click)="purchasegstreturn(item.id)">Purchase GST Return
+                                        <span>
+                                            <img class="eye-docicon" src="assets/icons/amend.jpg" alt="">
+                                        </span>
+                                    </li>
+                                    <li (click)="printByID(item.id)">Print Preview
+                                        <span>
+                                            <img src="assets/icons/print.png" alt="">
+                                        </span>
+                                    </li>
+    
+                                    <li (click)="addDebitNoteByID(item.id)"
+                                        *ngIf="(item.total_challan_quantity - item.total_received_quantity)>0">Add Debit Note
+                                        <span>
+                                            <img src="assets/icons/add.png" alt="">
+                                        </span>
+                                    </li>
+    
+                                    <!-- <li (click)="indentByID(item.id)">Indent <span><img src="assets/icons/indent.png"
+                                                alt=""></span></li> -->
+                                    <!-- <li>Delete <span><img src="assets/icons/delete.png" alt=""></span></li> -->
+                                </ul>
+                            </div>
+                        </td>
+    
+                    </tr>
+    
+                    <tr class="text-center">
+                        <td colspan="18" *ngIf="grnList?.length == 0">No data found.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      
+    </div>
+</div>
+
+<app-table-paginate *ngIf="grnList?.length > 0" (emitpage)="getPaginate()"></app-table-paginate>

@@ -1,0 +1,92 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+
+    <div class="createtable-section">
+        <table>
+            <tr class="tablebg2">
+                <td colspan="4">
+                    <h3>Tax Type</h3>
+                </td>
+                <td>
+                    <h3>Tax Percentage</h3>
+                </td>
+                <td>
+                    <h3>SGST</h3>
+                </td>
+                <td>
+                    <h3>CGST</h3>
+                </td>
+                <td>
+                    <h3>IGST</h3>
+                </td>
+            </tr>
+            <tr class="tablebg">
+                <td colspan="4">
+                    <div class="tablegroup">
+                        <label>Tax Head <span>*</span></label>
+                        <select id="sel1" class="form-control" *ngFor="let taxHead of taxHeads"
+                            (change)="setPercentage(taxHead)" [(ngModel)]="form.tax_head" required #tax_head="ngModel"
+                            name="tax_head" [ngClass]="{ 'is-invalid': f.submitted && tax_head.errors }">
+                            <option value="">Select Tax Head</option>
+                            <option value="{{taxHead.id}}">{{taxHead.name}}</option>
+                            <div *ngIf="f.submitted && tax_head.errors" class="invalid-feedback">
+                                <div *ngIf="tax_head.errors['required']">This is required !</div>
+                            </div>
+                        </select>
+
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <div class="col-lg-6">
+                            <label>Tax (%) <span>*</span></label>
+                            <input type="text" class="form-control" id="data" [(ngModel)]="form.tax_percentage" required
+                                #tax_percentage="ngModel" placeholder="0" name="tax_percentage"
+                                [ngClass]="{ 'is-invalid': f.submitted && tax_percentage.errors }">
+                        </div>
+                        <div *ngIf="f.submitted && tax_percentage.errors" class="invalid-feedback">
+                            <div *ngIf="tax_percentage.errors['required']">This is required !</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <!-- <label>Req.&nbsp;Priority</label> -->
+                        <input type="text" disabled class="form-control" id="data" placeholder="0" name="data">
+                    </div>
+
+                    <div class="tablegroup">
+                        <!-- <label>Due&nbsp;Date</label> -->
+                        <input type="text" disabled class="form-control" id="data" placeholder="0" name="data">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <!-- <label>Req.&nbsp;Priority</label> -->
+                        <input type="text" disabled class="form-control" id="data" placeholder="0" name="data">
+                    </div>
+
+                    <div class="tablegroup">
+                        <!-- <label>Due&nbsp;Date</label> -->
+                        <input type="text" disabled class="form-control" id="data" placeholder="0" name="data">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <!-- <label>Req.&nbsp;Priority</label> -->
+                        <input type="text" disabled class="form-control" id="data" placeholder="0" name="data">
+                    </div>
+
+                    <div class="tablegroup">
+                        <!-- <label>Due&nbsp;Date</label> -->
+                        <input type="text" disabled class="form-control" id="data" placeholder="0" name="data">
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <button hidden #submitButton="" type="submit">Save</button>
+
+
+</form>

@@ -1,0 +1,12 @@
+<form role="form" [formGroup]="editemployementForm">
+
+    <div class="mb-3" [ngClass]="{ 'float-now': employementname != '' }">
+        <input type="text" class="form-control" id="role" formControlName="name"
+            [ngClass]="displayFieldCss(editemployementForm,'name')"  [(ngModel)]="employementname">
+            <label class="floating-label">Enter Employement Type <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(editemployementForm,'name')">
+            <span class="text-danger" *ngIf="editemployementForm.get('name')?.errors?.['required']">Employement Type is required</span>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="editemployement()">UPDATE</button>
+</form>

@@ -1,0 +1,97 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-12 mb-3">
+            <div class="adform">
+                <label>For Project</label>
+                <select id="sel1" style="border: none;background: none;-webkit-appearance: none;"  class="form-control" disabled  ngDefaultControl name="project "
+                    [(ngModel)]="form.project " #project="ngModel">
+                    <option value="">-- select --</option>
+                    <option *ngFor="let project of projectList" value={{project.id}}>
+                        {{project.project_data[1].value}}
+                    </option>
+
+                </select>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12">
+            <div class="adform">
+                <label>Communication Type<span class="asterisk">*</span></label>
+                <select id="sel1"  class="form-control" required ngDefaultControl name="communication_type "
+                    [(ngModel)]="form.communication_type " #communication_type="ngModel"
+                    [ngClass]="{ 'is-invalid': f.submitted && communication_type.errors }">
+                    <option value="">-- select --</option>
+                    <option *ngFor="let communication of communicationTypeList" value="{{communication.id}}">
+                        {{communication.name}}</option>
+
+                </select>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12">
+            <div class="adform">
+                <label>Document Name</label>
+                <input type="text" name="name_of_document"  id="name_of_document" [(ngModel)]="form.name_of_document "
+                    #name_of_document="ngModel" class="form-control" placeholder="">
+            </div>
+        </div>
+       
+        <!-- <div class="col-lg-6 col-md-6 col-12">
+            <div class="adform">
+                <label>Name</label>
+                <input type="text" name="name " [(ngModel)]="form.name " #name="ngModel"
+                    placeholder="" id="name" class="form-control">
+            </div>
+        </div> -->
+
+        <div class="col-lg-6 col-md-6 col-12">
+            <div class="adform">
+                <label>Date <span class="asterisk">*</span></label>
+                <input type="date" name="date" required [ngClass]="{ 'is-invalid': f.submitted && date.errors }" [(ngModel)]="form.date " #date="ngModel"
+                    placeholder="" id="date" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12">
+            <div class="adform">
+                <label>From</label><input type="text" name="from_name"
+                    [(ngModel)]="form.from_name " #from_name="ngModel" placeholder=""
+                    id="from_name" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-12">
+            <div class="adform">
+                <label>To</label><input type="text" name="to_name " [(ngModel)]="form.to_name " #to_name="ngModel"
+                    placeholder="" id="to_name" class="form-control">
+            </div>
+        </div>    
+        
+       
+        <div class="col-lg-6 col-md-6 col-12" *ngIf="!form.id">
+            <div class="adform">
+                <label>Attach File<span class="asterisk">*</span></label>
+                <input type="file" required [ngClass]="{ 'is-invalid': f.submitted && fileData.errors }" name="fileData " [(ngModel)]="form.fileData" (change)="uploadFile($event)" #fileData="ngModel"
+                    placeholder="" id="fileData" class="form-control">
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12" *ngIf="form.id">
+            <div class="adform">
+                <label>Attach File</label>
+                <input type="file" name="fileData " [(ngModel)]="form.fileData" (change)="uploadFile($event)" #fileData="ngModel"
+                    placeholder="" id="fileData" class="form-control">
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-lg-12 col-md-12 col-12">
+        <div class="btd-section">
+            <button *ngIf="!form.id" type="submit" class="btn-save">SAVE</button>
+            <button *ngIf="form.id" type="submit" class="btn-save">UPDATE</button>
+
+        </div>
+    </div>
+
+</form>

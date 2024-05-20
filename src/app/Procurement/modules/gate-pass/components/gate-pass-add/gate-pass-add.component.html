@@ -1,0 +1,29 @@
+<div class="createrequisition-section">
+
+    <section id="printSection">
+        <app-gate-pass-add-top-card
+            (parrentAction)="appendData($event)" [scope]="scope" [prefieldData]="prefieldData"
+        >
+        </app-gate-pass-add-top-card>
+        <app-gate-pass-add-table
+            (parrentAction)="appendData($event)" [scope]="scope" [prefieldData]="prefieldData" [isGP_Approver]="isGP_Approver"
+        >
+        </app-gate-pass-add-table>
+        <app-gate-pass-add-bottom
+            (parrentAction)="appendData($event)" [scope]="scope" [prefieldData]="prefieldData"
+        >
+        </app-gate-pass-add-bottom>
+    </section>
+    <!-- <app-send-sms-email-create-mr></app-send-sms-email-create-mr> -->
+    <div class="btd-section" *ngIf="isGP_Approver && prefieldData.status == 'pending' && checkApproverScope()">
+        <button type="button" class="btn-save" (click)="updateStatus('approved')">Approve</button>
+        <button type="button" class="btn-cancel" (click)="updateStatus('rejected')" >Reject</button>
+    </div>
+
+    <div class="btd-section">
+        <button type="button" (click)="backtolist()" class="btn-cancel">CANCEL</button>
+        <button type="submit" *ngIf="scope == 'add'" class="btn-save" (click)="createMR()">SAVE</button>
+        <button type="submit" *ngIf="scope == 'update'" class="btn-save" (click)="updateMR()">UPDATE</button>
+    </div>
+
+</div>

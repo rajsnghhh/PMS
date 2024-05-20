@@ -1,0 +1,70 @@
+h1 {
+    font-size: 18px;
+    padding: 11px 0px 0px 3px;
+    color: #57f;
+    text-transform: capitalize;
+}
+.view-details-main {
+    section {
+        border: 2px solid #001d8f;
+        margin: 15px 0px 0px 0px;
+        z-index: 999;
+    }
+    .card {
+        border-radius: 0;
+        border: 2px solid #001d8f;
+        padding: 3px 10px 25px 10px;
+    }
+    table {
+        width: 100%;
+        th {
+            font-size: 12px;
+            background-color: #57f;
+            color: white;
+            font-weight: 200;
+            padding: 5px;
+            border: 1px solid black;
+        }
+        td {
+            font-size: 10px;
+        }
+        tr,td {
+            border: 1px solid;
+        }
+    }
+    .parrentTable {
+        th {
+            background-color: #001d8f;
+            height: 65px;
+        }
+    }
+    h1 {
+        font-size: 12px;
+        color: #57f;
+        margin-bottom: 0;
+    }
+    .center {
+        text-align: center;
+    }
+}
+.top-space {
+    margin-top: -95px;
+}
+
+.uomCol {
+    max-width: 80px;
+}
+
+select {
+    max-width: 200px;
+    border: none;
+    background: transparent !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+    z-index: -999;
+}
+select::-ms-expand {
+    display: none;
+}

@@ -1,0 +1,274 @@
+<div class="component-body">
+    <div class="colaps-element">
+        <section>
+            <button type="button" class="collapsible2">Employer Master Information</button>
+        </section>
+
+        <div class="maintable">
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">EMPLOYER NAME</label><br>
+                    <section class="lbody">
+                        {{empList.employee_name}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">PAN NUMBER</label><br>
+                    <section class="lbody">
+                        {{empList.pan_no}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">GST NUMBER</label><br>
+                    <section class="lbody">
+                        {{empList.gst_no}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">EMAIL ID</label><br>
+                    <section class="lbody">
+                        {{empList.email_id}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">PHONE NUMBER</label><br>
+                    <section class="lbody">
+                        {{empList.phone_no}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">ADDRESS</label><br>
+                    <section class="lbody">
+                        {{empList.address}}
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="colaps-element">
+        <section>
+            <button type="button" class="collapsible">{{empTenderList.tender_title}}</button>
+        </section>
+        <div class="main-container">
+            <div class="component-header">
+                <h2>{{TenderName.tender_title}}</h2>
+
+                <div class="action-button-container">
+                    <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown"
+                        aria-expanded="false">{{TenderFilterName | uppercase}}<img
+                            src="assets/usermanagement/filtr.png"></button>
+                    <ul class="dropdown-menu statsfilter" aria-labelledby="dropdownSelectColoum">
+                        <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='all' }"
+                            (click)="getAllList()">
+                            <span><strong>All</strong></span>
+                        </li>
+                        <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='identified' }"
+                            (click)="getIdentifiedList()">
+                            <span><strong>Identified</strong></span>
+                        </li>
+                        <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='proposed' }"
+                            (click)="getProposedList()">
+                            <span><strong>Proposed</strong></span>
+                        </li>
+                        <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='recommended' }"
+                            (click)="getRecommendedList()">
+                            <span><strong>Recommended</strong></span>
+                        </li>
+                        <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='vga_done' }"
+                            (click)="getVGAapprovedList()">
+                            <span><strong>VGA Done</strong></span>
+                        </li>
+                        <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='vga_rejected' }"
+                            (click)="getVGARejectedList()">
+                            <span><strong>VGA Rejected</strong></span>
+                        </li>
+                        <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='approved' }"
+                            (click)="getApprovedList()">
+                            <span><strong>Approved</strong></span>
+                        </li>
+                        <li class="table-filter" [ngClass]="{'active': queryParaMap.tender_status=='rejected' }"
+                            (click)="getRejectedList()">
+                            <span><strong>Rejected</strong></span>
+                        </li>
+                    </ul>
+
+                    <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown"
+                        aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                        <li class="downloadall" (click)="downloadPdf()">
+                            <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong>
+                            </span>
+                        </li>
+                        <li class="downloadall" (click)="downloadCsv()">
+                            <span><img src="assets/usermanagement/download_csv.png" class="export"><strong>CSV</strong>
+                            </span>
+                        </li>
+                    </ul>
+                    <button hidden data-bs-toggle="offcanvas" data-bs-target="#filterby"
+                        aria-controls="offcanvasRight">Filter
+                        By</button>
+                    <button data-bs-toggle="offcanvas" data-bs-target="#addZone" aria-controls="offcanvasRight"
+                        (click)="gotoAddNewTender()">ADD TENDER<img src="assets/header/add.png" alt=""></button>
+                    <button data-bs-toggle="offcanvas" data-bs-target="#addZone" aria-controls="offcanvasRight"
+                        (click)="goback()">BACK</button>
+                </div>
+            </div>
+            <div class="component-body emptable">
+                <div class="scrollable-table-container">
+                    <table class="scrollable-table" *ngIf="empTenderList.length > 0">
+
+                        <tr>
+                            <th class="posion-fixed-left-sno entiti">S.No</th>
+                            <th class="dynamiclnth" *ngFor="let tditem of empTenderList[0].tender_data; let i = index"
+                                [ngClass]="{'posion-fixed-left': i == 0 }">
+                                <p [outerHTML]="tditem.form_label | textMax"></p>
+                            </th>
+                            <th class="posion-fixed-left entiti">Description</th>
+                            <th class="posion-fixed-right status-th2">Tender<br>Age</th>
+                            <th class="posion-fixed-right status-th3">Elapsed<br>Days</th>
+                            <th class="posion-fixed-right status-th">Status</th>
+                            <th class="posion-fixed-right lstheight">Action</th>
+                        </tr>
+                        <tr class="mainHeight" *ngFor="let item of empTenderList ; let i = index">
+                            <td class="posion-fixed-left-sno">{{ (pageSize*(page-1)) + i+1.}}</td>
+                            <td class="fstwidth " *ngFor="let tditem of empTenderList[i].tender_data; let j = index"
+                                [ngClass]="{'posion-fixed-left entities entitiwidth': j == 0 }">
+                                <p [outerHTML]="tditem.value | textMax"></p>
+                            </td>
+
+                            <td class="posion-fixed-right status-td" [ngClass]="{'identify': item?.tender_status=='Identified',
+                            'approved': item?.tender_status=='Approved',
+                            'sentforapproved': item?.tender_status=='Recommended and Waiting For Approval',
+                            'sentforrecomm': item?.tender_status=='Proposed and Sent For Recommendation',
+                            'recommended': item?.tender_status=='Recommended By Recommender/Tender Head',
+                            'vgadone': item?.tender_status=='VGA Done',
+                            'vgarejected': item?.tender_status=='VGA Rejected',
+                            'rejected': item?.tender_status=='Rejected',
+                            'asignedmemforsurvy': item?.tender_status=='Members Assigned For Survey',
+                            'startandinprogress': item?.tender_status=='Survey Started and In Progress',
+                            'surveycompleted': item?.tender_status=='Survey Completed',
+                            'sendfinalapproval': item?.tender_status=='Send For Final Approval',
+                            'approvorrejected': item?.tender_status=='Approved / Rejected',
+                            'submitted': item?.tender_status=='Submitted',
+                            'selstatuspending': item?.tender_status=='Selection Status Pending',
+                            'selasl1': item?.tender_status=='Selected As L1',
+                            'Agreementsigned': item?.tender_status=='Agreement Signed',
+                            'rcaprovided': item?.tender_status=='RCA Provided',
+                            'agreestatuspending': item?.tender_status=='Agreement Status Pending'
+                            
+                             }" (click)="statusprogressbar(item.id,i)" data-bs-toggle="modal" data-bs-target="#status">
+                                <p [outerHTML]="item?.tender_status | textMax"></p>
+                            </td>
+
+                            <td class="posion-fixed-right status-td2">
+                                <div class="viewAll">
+                                    <span>{{item?.tender_age | slice: 0:7}}</span>
+                                    <div class="dropdown">
+                                        <span *ngIf="item?.tender_age.length>7">...</span>
+                                        <div class="dropdown-content" style=" max-height: 110px; overflow-y: scroll; ">
+                                            <div class="img-container">
+                                                <span>{{item?.tender_age}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td class="posion-fixed-right status-td3"
+                                [ngClass]="{'elapsed': item?.elapsed_days != '0 Day'}">{{item?.elapsed_days}}</td>
+
+                            <td class="posion-fixed-right surveybutton">
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content actionheight">
+                                            <div class="img-container actionclass">
+                                                <span (click)="getTenderId(item.id,action)"
+                                                    *ngFor="let action of actionList">
+                                                    <label>
+                                                        {{action.text}}
+                                                    </label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr class="text-center" *ngIf="empTenderList.length == 0">
+                            <td>No data found.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Modal StatusProgessBar -->
+            <div class="modal fade" id="status" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content statuswidth">
+                        <div class="modal-header statuswidth2">
+                            <h5 class="modal-title" id="">Tender Status</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="btn-group">
+                                <div class="dropdown-menu statusbox" style="display: block;">
+
+                                    <div class="container">
+                                        <div class="step completed"
+                                            *ngFor="let statusitem of popupTenderList;let k=index"
+                                            [ngClass]="{'activeClass': statusitem.status_check == true && statusitem.status != 'Rejected'}">
+                                            <div class="v-stepper">
+                                                <!-- <div class="circle"></div> -->
+                                                <span class="bolletcolor"
+                                                    *ngIf="statusitem.status_check == true && statusitem.status != 'Rejected'">&#9673;</span>
+                                                <span style="color: rgb(181, 181, 181);"
+                                                    *ngIf="statusitem.status_check != true && statusitem.status != 'Rejected'">&#9673;</span>
+                                                <span class="text-danger"
+                                                    *ngIf="statusitem.status == 'Rejected'">&#9673;</span>
+                                                <div class="line"
+                                                    [ngClass]="{'active': statusitem.status_check == true,'destination':popupTenderList.length-1==k}">
+                                                </div>
+                                            </div>
+                                            <div class="content">
+                                                <span [ngClass]="{'pendingstatus': statusitem.date ==''}">
+                                                    {{statusitem.status}}</span>
+                                                <span *ngIf="statusitem.date !=''" style="color: rgb(107, 107, 107);"
+                                                    [ngClass]="{'statusdate': statusitem.is_elapsed == true}"> on
+                                                    {{statusitem.date | date:"EEEE, d MMMM y"}}</span>
+                                                <p class="targetdate" *ngIf="statusitem.target_date !=''">Target Date:
+                                                    {{statusitem.target_date | date : 'dd-MM-yyyy'}} &nbsp;
+                                                    <span class="elapsdate"
+                                                        *ngIf="statusitem.elapsed_days != '0 Day'">(Elapsed By:
+                                                        {{statusitem.elapsed_days}})</span>
+                                                </p>
+                                                <!-- <p class="elapsdate" *ngIf="statusitem.elapsed_days != '0 Day'">Elapsed By:
+                                                    {{statusitem.elapsed_days}}
+                                                </p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

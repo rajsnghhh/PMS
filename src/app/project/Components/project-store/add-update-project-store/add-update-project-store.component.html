@@ -1,0 +1,83 @@
+<form role="form" [formGroup]="addUpdateProjectStoreForm">
+
+    <div class="flex-div">
+
+        <!-- <div class="mb-3">
+            <select class="form-select" formControlName="project" [(ngModel)]="addProjectStoreTemplate.project"
+                [ngClass]="displayFieldCss(addUpdateProjectStoreForm,'project')" aria-label="Default select example">
+                <option value="" selected disabled>Select Project<span class="asterisk">*</span></option>
+                <option *ngFor="let project of projectList" value={{project.id}}>{{project.project_data[1].value}}
+                </option>
+            </select>
+            <label class="floating-label-select"
+                [ngClass]="{'insideDropdown': addProjectStoreTemplate.project =='' }">Select
+                Project <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addUpdateProjectStoreForm,'project')">
+                <span class="text-danger" *ngIf="addUpdateProjectStoreForm.get('project')?.errors?.['required']">Project
+                    is required</span>
+            </div>
+        </div> -->
+
+        <div class="mb-3">
+            <select class="form-select" formControlName="site" [(ngModel)]="addProjectStoreTemplate.site"
+                [ngClass]="displayFieldCss(addUpdateProjectStoreForm,'site')" aria-label="Default select example">
+                <option value="" selected disabled>Select Site<span class="asterisk">*</span></option>
+                <option *ngFor="let site of projectSiteList" value={{site.id}}>{{site.site_name}}
+                </option>
+            </select>
+            <label class="floating-label-select"
+                [ngClass]="{'insideDropdown': addProjectStoreTemplate.site =='' }">Select
+                Site <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addUpdateProjectStoreForm,'site')">
+                <span class="text-danger" *ngIf="addUpdateProjectStoreForm.get('site')?.errors?.['required']">Site
+                    is required</span>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addProjectStoreTemplate.store_name != '' }">
+            <input type="text" class="form-control" formControlName="store_name"
+                [(ngModel)]="addProjectStoreTemplate.store_name"
+                [ngClass]="displayFieldCss(addUpdateProjectStoreForm,'store_name')">
+            <label class="floating-label">Enter Store Name<span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addUpdateProjectStoreForm,'store_name')">
+                <span class="text-danger"
+                    *ngIf="addUpdateProjectStoreForm.get('store_name')?.errors?.['required']">Store
+                    Name is required</span>
+            </div>
+        </div>
+        
+        <div class="mb-3" [ngClass]="{ 'float-now': addProjectStoreTemplate.users != '' }">
+            <angular2-multiselect 
+                formControlName="users"
+                [data]="dropdownMultiselectAddUserList" 
+                [(ngModel)]="selectedMultipleData"
+                [settings]="dropdownMultiselectAddUserListSettings" 
+                (onSelect)="onMultiSelectAddUser($event)" 
+                (onDeSelect)="OnMultiDeSelectAddUser($event)"
+                (onSelectAll)="onMultiSelectAddUserAll($event)" 
+                (onDeSelectAll)="onMultiDeSelectAddUserAll($event)"
+            >
+            </angular2-multiselect>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': selectedMultipleData =='' }">Select User <span class="asterisk">*</span></label>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addProjectStoreTemplate.racks != '' }">
+            <angular2-multiselect 
+                formControlName="racks"
+                [data]="dropdownMultiselectAddRackList" 
+                [(ngModel)]="selectedMultipleRackData"
+                [settings]="dropdownMultiselectAddRackListSettings" 
+                (onSelect)="onMultiSelectAddRack($event)" 
+                (onDeSelect)="OnMultiDeSelectAddRack($event)"
+                (onSelectAll)="onMultiSelectAddRackAll($event)" 
+                (onDeSelectAll)="onMultiDeSelectAddRackAll($event)"
+            >
+            </angular2-multiselect>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': selectedMultipleRackData =='' }">Select Racks <span class="asterisk">*</span></label>
+        </div>
+
+
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="addUpdateProjectStore()">{{addUpdateButton}}</button>
+</form>

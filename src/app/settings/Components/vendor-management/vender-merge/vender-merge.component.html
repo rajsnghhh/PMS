@@ -1,0 +1,65 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Account Merge</h2>
+    </div>
+    <div class="alert">
+        <form  [formGroup]="venderForm">
+        <table width="70%" border="0" cellpadding="0" cellspacing="0" align="center" class="Table_Border">
+            <thead style="background-color:#80808030;">
+                <tr>
+                    <th colspan="2" class="	tabletd" style="text-align:center;padding: 10px;"><strong>
+
+                            <span style="color: #F00; text-align: left; font-size: 13px; font-weight: 300;font-family: Arial, Helvetica, sans-serif;">Apply Account merge option in all Company and all
+                                Site</span></strong></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background-color: aliceblue;border: 1px solid #8080804d;">
+                    <td width="20%" height="21" align="right" class="tabletd"
+                        style="text-align:right;padding-bottom:18px">Account From <span class="error-valid">*</span>
+                    </td>
+
+                    <td width="60%" class="tabletd" align="left">
+                        <mat-select formControlName="venderFromId" (click)="venderSelect()"
+                        placeholder="Select Vendor" class="form-control">
+                        <input class="form-control w-100" formControlName="filerVendor" (keyup)="venderInputFrom($event)" focused="'true'" type="text"
+                            autocomplete="off" placeholder="Search Vendor">
+                        <mat-divider></mat-divider>
+                        <mat-option *ngFor="let vendor of vendorListFrom" [value]="vendor.id">
+                            {{vendor.vendor_master_data.vendor_name}}
+                        </mat-option>
+                        <mat-option [value]="" *ngIf="vendorListFrom.length==0">
+                            No Records.
+                        </mat-option>
+                    </mat-select>
+                       <span style="color: #F00; text-align: left; font-size: 13px; font-weight: 300;font-family: Arial, Helvetica, sans-serif;">After merge This account will be deleted from all
+                            Company and all Site </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="20%" align="right" class="tabletd" style="text-align:right">Account To <span
+                            class="error-valid">*</span></td>
+
+                    <td width="60%" class="tabletd" align="left">
+                    <mat-select formControlName="venderId" (click)="venderSelect()"
+                        placeholder="Select Vendor" class="form-control">
+                        <input class="form-control w-100" formControlName="filerVendor" (keyup)="venderInput($event)" focused="'true'" type="text"
+                            autocomplete="off" placeholder="Search Vendor">
+                        <mat-divider></mat-divider>
+                        <mat-option *ngFor="let vendor of vendorList" [value]="vendor.id">
+                            {{vendor.vendor_master_data.vendor_name}}
+                        </mat-option>
+                        <mat-option [value]="" *ngIf="vendorList.length==0">
+                            No Records.
+                        </mat-option>
+                    </mat-select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </form>
+        <div align="center" class="btnClass">
+            <button type="button" class="btn-save" (click)="mergeVender()">MERGE</button>
+        </div>
+    </div>
+</div>

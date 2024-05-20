@@ -1,0 +1,127 @@
+<div class="createrequisition-section">
+
+    <div class="main-body-container table-responsive">
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th scope="col">Sr No</th>
+                    <th scope="col">Requested No & Date</th>
+                    <th scope="col">Gate Pass Type</th>
+                    <th scope="col">Gate Pass NO</th>
+                    <th>RST NO</th>
+                    <th>Challan no</th>
+                    <th>Chinage</th>
+                    <th>Type</th>
+                    <th>Transporter</th>
+                    <th>Tare weight</th>
+                    <th>Driver</th>
+                    <th>Vehicle no</th>
+                    <th>Gross weight</th>
+                    <th>Net weight</th>
+                    <th>Doc</th>
+                    <th>Remarks</th>
+                    <th>Status</th>
+
+                    <th>Chinage From <br>(in Meter)</th>
+                    <th>Chinage To <br>(in Meter)</th>
+                    <th>Side</th>
+                    <th>First KM</th>
+                    <th>First Rate</th>
+                    <th>Other KM</th>
+                    <th>Rate Per KM</th>
+                    <th>Amount</th>
+
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of gatePassList;index as i">
+                    <td>{{i+1}}</td>
+                    <td>Req No : <b>{{item.request_code ?item.request_code:'-'}}</b><br>
+                        {{item.date.substring(0,10).split('-').reverse().join('-')}}</td>
+                    <td>{{item.gate_pass_type}}</td>
+                    <td>{{item.gate_pass_no}}</td>
+                    <td>{{item.rst_no}}</td>
+                    <td>{{item.challan_no}}</td>
+                    <td>
+                        Form :{{item.chainage_from}}
+                        <br>
+                        
+                        To : {{item.chainage_to}}
+                        <br>
+                        Diff : {{item.diff}}
+                    </td>
+                    <td>{{item.type}}</td>
+                    <td>{{item.transporter}}</td>
+                    <td>{{item.tare_weight}}</td>
+                    <td>{{item.driver}}</td>
+                    <td>{{item.vehicle_no}}</td>
+                    <td>{{item.gross_weight}}</td>
+                    <td>{{item.net_weight}}</td>
+                    <td>
+                        <section *ngIf="item.attachments">
+                            <a href="{{docUrl}}{{attachmentdata.attachment}}" target="_blank"
+                                *ngFor="let attachmentdata of item.attachments"><img src="assets/icons/eye.png" class="eye-docicon" alt=""></a>
+                        </section>
+                    </td>
+                    <td>{{item.remark}}</td>
+                    <td class="text-capitalize">
+                        <b>{{item.status}}</b>
+                        <br>
+                        <!-- <input type="checkbox" class="form-check-input" value="" (change)="onStatusCheckboxChange($event, item.item_id)" *ngIf="isMR_Approver && item.status=='pending'"> -->
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="disabledEdit" class="form-control"  placeholder="" (change)="claculate(i)" amountNumber  name="chainage_from{{i+1}}" [(ngModel)]="gatePassList[i].chainage_from" #chainage_from="ngModel" >
+                        </div> 
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="disabledEdit" class="form-control"  placeholder="" (change)="claculate(i)" amountNumber  name="chainage_to{{i+1}}" [(ngModel)]="gatePassList[i].chainage_to" #chainage_to="ngModel" >
+                        </div> 
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="disabledEdit" class="form-control"  placeholder=""  name="side{{i+1}}" [(ngModel)]="gatePassList[i].side" #side="ngModel" >
+                        </div> 
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="disabledEdit" class="form-control"  placeholder="" (change)="claculate(i)" amountNumber  name="first_km{{i+1}}" [(ngModel)]="gatePassList[i].first_km" #first_km="ngModel" >
+                        </div> 
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="disabledEdit" class="form-control"  placeholder="" amountNumber  (change)="claculate(i)"  name="first_rate{{i+1}}" [(ngModel)]="gatePassList[i].first_rate" #first_rate="ngModel" >
+                        </div> 
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="disabledEdit" class="form-control"  placeholder="" (change)="claculate(i)" amountNumber  name="other_km{{i+1}}" [(ngModel)]="gatePassList[i].other_km" #other_km="ngModel" >
+                        </div> 
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="disabledEdit" class="form-control"  placeholder="" amountNumber (change)="claculate(i)" name="rate_per_km{{i+1}}" [(ngModel)]="gatePassList[i].rate_per_km" #rate_per_km="ngModel" >
+                        </div> 
+                    </td>
+                    <td style=" min-width: 100px; ">
+                        <div class="tablegroup">
+                            <input type="text" [disabled]="disabledEdit" class="form-control"  placeholder="" amountNumber  name="amount{{i+1}}" [(ngModel)]="gatePassList[i].amount" #amount="ngModel" >
+                        </div> 
+                    </td>
+                    <td>
+                        <button *ngIf="item.status == 'pending'" class="btn btn-success" (click)="update(i)">Save</button>
+                    </td>
+                </tr>
+
+
+                <tr class="text-center">
+                    <td colspan="26" *ngIf="gatePassList.length == 0">No data found.</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>

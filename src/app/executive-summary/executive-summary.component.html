@@ -1,0 +1,303 @@
+<div class="main-container"
+    *ngIf="usingIn.toString() == 'Tender' || (usingIn == 'Planning' && (selectedScope == 'planning_executive_summary' || selectedScope == 'planning_risk_evaluation'))">
+    <div class="component-header" *ngIf="DisableModify != true">
+        <button type="button" class="wbs_button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasAddWBS">WBS</button>
+    </div>
+
+    <!-- <div class="active-wms">
+        <div class="contentainer">
+
+        </div>
+        <div class="action-buttons">
+            <div class="action-button"></div>
+        </div>
+    </div> -->
+
+    <!-- tab section  -->
+    <div class="tendertab">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" #customlist>
+            <li class="nav-item" role="presentation" *ngFor="let item of mainnavPosition; let i = index">
+                <button class="nav-link"
+                    [ngClass]="{ 'active': activeCurrentScope==item.parentScope && activeGroupID == item.id}"
+                    id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab"
+                    aria-controls="pills-home" aria-selected="true" (click)="changeTab(item)">{{item.name}}</button>
+            </li>
+        </ul>
+        <div class="listscroll_btn">
+            <div class="btn_action prev_btn" (click)="previous()">
+                <i class="fa-solid fa-chevron-left"></i>
+            </div>
+            <div class="btn_action next_btn" (click)="next()">
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="activeCurrentScope=='Executive Summary'">
+        <section class="custom-table" *ngFor="let item of WbsList; let i = index">
+            <div class="table-responsive-custom table_scroll" #customscroll *ngIf="activeGroupID==item.id">
+                <div class="component-header">
+                    <h2> {{item.wbs_name}}</h2>
+                    <div class="comphed_right">
+                        <button type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasRightLabelimportexecutivesummary" aria-controls="offcanvasRight"
+                            class="wbs_button" *ngIf="DisableModify != true"
+                            (click)="importData(item.wbs_name)">Import<img
+                                src="assets/usermanagement/Import.png"></button>
+
+                        <button type="button" class="wbs_button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasAddWBSITEMS" (click)="setItemScope(item.id)"
+                            *ngIf="DisableModify != true">ADD +</button>
+                    </div>
+
+                </div>
+                <table #customscroll class="road-work">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" class="custom-sticy">
+                                BOQ Code
+                            </th>
+                            <th rowspan="2">
+                                BOQ No.
+                            </th>
+                            <th rowspan="2">
+                                Particulars
+                            </th>
+
+                            <th rowspan="2">
+                                Unit
+                            </th>
+
+                            <th [attr.colspan]="stripData.length">
+                                Quantity
+                            </th>
+                            <th></th>
+                            <th></th>
+                            <th [attr.colspan]="stripData.length">
+                                Amount
+                            </th>
+                            <th></th>
+                            <th [attr.colspan]="keyFeaturesHeader.length - 3">
+                                LMMO
+                            </th>
+
+                        </tr>
+                        <tr>
+                            <ng-container *ngFor="let val of keyFeaturesHeader">
+                                <ng-container
+                                    *ngIf="val.form_label == 'Total Quantity' || val.form_label == 'Total Amount'">
+                                    <th *ngFor="let stripD of stripData">{{stripD.start}} to {{stripD.end}}</th>
+                                </ng-container>
+                                <th *ngIf="!val.is_hidden">{{val.form_label}}</th>
+                            </ng-container>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <ng-container>
+                            <tr *ngFor="let key of item.children; let j = index"
+                                [ngClass]="{'highlight': focusId == '_'+key.id }">
+
+                                <td class="custom-sticy" colspan="1">
+                                    <input type="text" (change)="updateWBS(key)" [(ngModel)]="key.boq_code">
+                                </td>
+                                <td colspan="1">
+                                    <input type="text" (change)="updateWBS(key)" [(ngModel)]="key.boq_no">
+                                </td>
+                                <td colspan="1" [ngClass]="{'disable': DisableModify == true }"
+                                    (click)="modifyID(key.id,item.id)">
+                                    <section class="indent-container">
+                                        <span class="indenttation" [style.width]="assignSpace(key.childLable)"></span>
+                                        <span class="indenttation"
+                                            [style.width]="assignSpace2(key.childLable)">{{key.wbs_name}}</span>
+                                    </section>
+                                </td>
+                                <td>{{key?.uom_name}}</td>
+
+                                <ng-container *ngFor="let val of keyFeaturesHeader">
+                                    <ng-container
+                                        *ngIf="val.form_label == 'Total Quantity'">
+                                        <td *ngFor="let stripD of stripData">
+                                            <input type="number" [(ngModel)]="bindData['customInput' + stripD.id + key.id + 'Q']"
+                                            (focus)="focusrow('_'+key.id)" (focusout)="focusrow('')"
+                                            (change)="changeQuantityInput($event,key.id,stripD.id)" [disabled]="isDisabled">
+                                        </td>
+                                    </ng-container>
+                                    <ng-container
+                                        *ngIf="val.form_label == 'Total Amount'">
+                                        <td *ngFor="let stripD of stripData">
+                                            <input type="number" [(ngModel)]="bindData['customInput' + stripD.id + key.id + 'A']" [disabled]="true">
+                                        </td>
+                                    </ng-container>
+                                    <td *ngIf="!val.is_hidden">
+                                        <input type="{{val.form_input_type}}"
+                                            [ngClass]="{'disable': DisableModify == true  || val.form_label=='Total Amount'}"
+                                            [(ngModel)]="bindData['customInput' + val.id + key.id]"
+                                            (focus)="focusrow('_'+key.id)" (focusout)="focusrow('')"
+                                            (change)="changeInput($event,item.id,key.id,val.id)">
+                                    </td>
+
+                                </ng-container>
+                            </tr>
+                        </ng-container>
+                        <tr>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <table *ngIf="WbsList.length == 0">
+                    <tr class="text-center">
+                        <td colspan="3">No data found.</td>
+                    </tr>
+                </table>
+
+                <div class="tablescroll_btn">
+                    <div class="btn_action prev_btn" (click)="previousbtn()">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div class="btn_action next_btn" (click)="nextbtn()">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ng-container>
+</div>
+
+<div class="main-container" *ngFor="let table of TableData; let z = index">
+    <ng-container *ngIf="activeCurrentScope == table.name">
+        <section
+            *ngIf="usingIn.toString() == 'Tender' || (usingIn == 'Planning' && selectedScope == 'planning_risk_evaluation' && table.name == 'Risk Details')">
+            <div class="component-header">
+                <h2>{{table.name}}</h2>
+            </div>
+
+            <div class="">
+                <div class="component-body custom-fix-height table_scroll table_sticky " #vendorscroll>
+
+                    <table class="text-center custom-scroll-table compliance-derivitives ">
+                        <thead>
+                            <tr>
+                                <th class="sl-No fixedpart">S.No</th>
+                                <th *ngFor="let val of table.form_fields; let k = index"
+                                    [ngClass]="{'fixedparttwo': k == 0 }">
+                                    {{val.form_label}}
+                                    <span class="allow-file-type" *ngIf="val.form_input_type == 'file'">
+                                        Please upload : {{dynamicFileTypes(val.dropdown_choices)}}
+                                    </span>
+                                </th>
+                                <!-- <th>Action</th> -->
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let item of table.values; let i = index">
+                                <td class="sl-No fixedpart">{{ i+1.}}</td>
+                                <td *ngFor="let val1 of item; let k = index"
+                                    [ngClass]="{'fixedparttwo': k == 0 , 'disable': val1.form_internal_name=='days_left_from_today'}">
+                                    <table>
+                                        <tr [ngClass]="{'highlight': focusId == table.id+'_'+table.validationID[i] }">
+                                            <td style=" position: relative; ">
+                                                <input type={{val1.form_input_type}}
+                                                    maxlength="{{val1.maximum_character}}"
+                                                    *ngIf="val1.form_input_type != 'file' && val1.form_input_type != 'reference'"
+                                                    [ngClass]="{'disable': DisableModify == true }"
+                                                    (focus)="focusrow(table.id+'_'+table.validationID[i])"
+                                                    (focusout)="focusrow('')"
+                                                    [(ngModel)]="bindTableData['customInput'+'_'+table.id+'_'+val1.id+'_'+table.validationID[i]]"
+                                                    (change)="changeInputData($event,val1.id,table.id,z,table.validationID[i],table.name)">
+                                                <span style=" position: absolute;z-index: 9; "
+                                                    *ngIf="bindTableData['customInput'+'_'+table.id+'_'+val1.id+'_'+table.validationID[i]] && val1.form_input_type == 'file'">{{filterFileNameOnly(bindTableData['customInput'+'_'+table.id+'_'+val1.id+'_'+table.validationID[i]])}}
+                                                    <img (click)="previewDoc(bindTableData['customInput'+'_'+table.id+'_'+val1.id+'_'+table.validationID[i]])"
+                                                        class="prefiew-icon" src="assets/icons/eye.png" alt=""></span>
+                                                <span style=" position: absolute; "
+                                                    *ngIf="bindTableData['customInput'+'_'+table.id+'_'+val1.id+'_'+table.validationID[i]]?.name && val1.form_input_type == 'file'">{{filterFileNameOnly(bindTableData['customInput'+'_'+table.id+'_'+val1.id+'_'+table.validationID[i]].name)}}
+                                                    <img class="prefiew-icon" src="assets/icons/eye.png" alt=""></span>
+                                                <span style=" position: absolute; "
+                                                    *ngIf="!bindTableData['customInput'+'_'+table.id+'_'+val1.id+'_'+table.validationID[i]] && val1.form_input_type == 'file'">Upload
+                                                    File</span>
+                                                <input type={{val1.form_input_type}}
+                                                    style="opacity: 0;width: 100%;height: 100%;cursor: pointer;"
+                                                    *ngIf="val1.form_input_type == 'file'"
+                                                    [ngClass]="{'disable': DisableModify == true }"
+                                                    [(ngModel)]="bindTableData['customInput'+'_'+table.id+'_'+val1.id+'_'+table.validationID[i]]"
+                                                    (change)="changeFileData($event,val1.id,table.id,z,table.validationID[i],table.name,dynamicFileTypes(val1.dropdown_choices))">
+
+                                                <select *ngIf="val1.form_input_type == 'reference'"
+                                                    [ngClass]="{'disable': DisableModify == true }"
+                                                    [(ngModel)]="bindTableData['customInput'+'_'+table.id+'_'+val1.id+'_'+table.validationID[i]]"
+                                                    (change)="changeInputData($event,val1.id,table.id,z,table.validationID[i],table.name)">
+                                                    <option disabled selected value="">Select Risk Details </option>
+                                                    <option *ngFor="let risk of val1.dependent_dropdown_choices"
+                                                        value={{risk.id}}>{{risk.name}}</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tr *ngIf="table.values.length == 0" class="text-center">
+                            <td colspan="13">No data found.</td>
+                        </tr>
+                    </table>
+
+
+                    <button class="addbtncolor" (click)="addRow(z,table.form_fields)" *ngIf="DisableModify != true">Add
+                        Row</button>
+
+                    <div class="tablescroll_btn">
+                        <div class="btn_action prev_btn" (click)="venpreviousbtn()">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </div>
+                        <div class="btn_action next_btn" (click)="vennextbtn()">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+    </ng-container>
+</div>
+
+
+<div class="offcanvas offcanvas-end importbox" style="min-width: 90%;" tabindex="-1" id="offcanvasAddWBS"
+    aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">WBS</h5>
+        <button type="button" (click)="ReloadExecutiveSummary()" class="btn-close text-reset"
+            data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <app-wbs [TenderNumber]="TenderNumber"></app-wbs>
+    </div>
+</div>
+
+
+<div class="offcanvas offcanvas-end importbox" style="min-width: 50%;" tabindex="-1" id="offcanvasAddWBSITEMS"
+    aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">{{wbsScope}}</h5>
+        <button type="button" (click)="ReloadExecutiveSummary()" class="btn-close text-reset"
+            data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <app-wbs-items *ngIf="wbsScope != ''" [selectedParentID]="activeGroupID" [selectedList]="selectedList"
+            (parentFun)="closeAddCanvas()" [selectedID]="selectedID" [wbsScope]="wbsScope" [TenderNumber]="TenderNumber"
+            [selectedWBSITEM]="selectedWBSITEM"></app-wbs-items>
+    </div>
+</div>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLabelimportexecutivesummary"
+    aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Import {{menuName}}</h5>
+        <button type="button" (click)="ReloadExecutiveSummary()" class="btn-close text-reset"
+            data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div>
+        <app-import-executive-summary></app-import-executive-summary>
+    </div>
+</div>

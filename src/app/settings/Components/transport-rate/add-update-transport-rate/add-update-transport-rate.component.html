@@ -1,0 +1,103 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && addUpdateTransportRate()" novalidate>
+    
+    <div class="mb-3" [ngClass]="{ 'float-now': form.sub_contractor != '' }">
+        <select id="sel2" class="form-control" name="sub_contractor" [(ngModel)]="form.sub_contractor" required #sub_contractor="ngModel" [ngClass]="{ 'is-invalid': f.submitted && sub_contractor.errors }"
+        >
+            <option disabled>-- select --</option>
+            <option *ngFor="let sub_contractor of sub_contractorList" value="{{sub_contractor.id}}">
+                {{sub_contractor.vendor_master_data.vendor_name}}</option>
+        </select>
+        <label class="floating-label-select">Choose Vendor<span class="asterisk">*</span></label>
+        <div *ngIf="f.submitted && sub_contractor.errors" class="invalid-feedback" style="display: block;">
+            <div *ngIf="sub_contractor.errors['required']">Sub Contractor is required</div>
+        </div>
+    </div>
+
+    <div class="createtable-section table-responsive">
+        <table class="text-nowrap">
+            <tr>
+                <th colspan="1"  style="min-width: 150px;">Item</th>
+                <th colspan="1">Unit</th>
+                <th colspan="2">Fixed Rate Upto X KM</th>
+                <th colspan="2">Rate per X KM</th>
+                <th>Action</th>
+            </tr>
+            <tr class="">
+                <td colspan="1"></td>
+                <td colspan="1"></td>
+                <td colspan="2"></td>
+                <td colspan="2"></td>
+                <td class="align-middle">
+                    <a  (click)="addItem()" class="tablebtn-save">ADD <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png" alt=""></i></a>
+                </td>
+            </tr>
+            <tr class="tablebg" *ngFor="let item of form.requested_items; let i = index">
+                <td colspan="1">
+                    <div class="mb-3" >
+                        <!-- setMaterialSubGroup(i) -->
+                        <ng-select  class=""  name="requested_material_group{{i+1}}" [(ngModel)]="form.requested_items[i].requested_material_group" [ngModelOptions]="{standalone: true}"  #requested_material_group="ngModel" (change)="groupTypeChange(form.requested_items[i].requested_material_group, i)">
+                            <ng-option *ngFor="let materialGroup of masterlist" [value]="materialGroup.id">{{materialGroup.name}}</ng-option>
+                        </ng-select>
+                        <label class="floating-label-select">Item Group
+                            <!-- <span class="asterisk">*</span> -->
+                        </label>
+                    </div>
+                    <div class="mb-3" [ngClass]="{ 'float-now': form.requested_items[i].requested_material_sub_group != '' }">
+                        <!-- (change)="setMaterialList(i)" -->
+                        
+                        <ng-select  class="" name="requested_material_sub_group{{i+1}}" [(ngModel)]="form.requested_items[i].requested_material_sub_group" [ngModelOptions]="{standalone: true}" #requested_material_sub_group="ngModel" (change)="subTypeChange(form.requested_items[i].requested_material_sub_group, i)">
+                            <ng-option *ngFor="let subGroup of form.requested_items[i].MaterilSubGroupList" [value]="subGroup.id">{{subGroup.name}}</ng-option>
+                        </ng-select>
+
+                        <label class="floating-label-select">Item Sub Group
+                            <!-- <span class="asterisk">*</span> -->
+                        </label>
+                    </div>
+                    <div class="mb-3" [ngClass]="{ 'float-now': form.requested_items[i].requested_material != '' }">
+                        <!-- (change)="setMaterialMasterData(i, false)" -->
+                        <ng-select  class="" name="requested_material{{i+1}}" [(ngModel)]="form.requested_items[i].requested_material" [ngModelOptions]="{standalone: true}" required #requested_material="ngModel" >
+                            <ng-option *ngFor="let masterData of form.requested_items[i].MaterilFilterList" [value]="masterData.id">{{masterData.material_name}}</ng-option>
+                        </ng-select>
+
+                        <label class="floating-label-select">Item
+                            <!-- <span class="asterisk">*</span> -->
+                        </label>
+                    </div>
+                </td>
+                <td colspan="1">
+                    <div class="mb-3" [ngClass]="{ 'float-now': form.requested_items[i].unit != '' }">
+                        <select class="" name="unit{{i+1}}" [(ngModel)]="form.requested_items[i].unit" #unit="ngModel">
+
+                            <option *ngFor="let unit of uomList; let i = index" value="{{unit.id}}">{{unit.symbol}}</option>
+                        </select>
+                        <label class="floating-label-select">Unit
+                            <!-- <span class="asterisk">*</span> -->
+                        </label>
+                    </div>
+                </td>
+                <td colspan="2">
+                    <input type="number" name="fixed_rate{{i+1}}" [(ngModel)]="form.requested_items[i].fixed_rate" #fixed_rate="ngModel"> Rs. <br>
+                    Upto <br>
+                    <input type="number" name="fixed_rate_km{{i+1}}" [(ngModel)]="form.requested_items[i].fixed_rate_km" #fixed_rate_km="ngModel"> Km.
+                </td>
+                <td colspan="2">
+                    <input type="number" name="rate_per{{i+1}}" [(ngModel)]="form.requested_items[i].rate_per" #rate_per="ngModel"> Rs. <br>
+                    @Per <br>
+                    <input type="number" name="rate_km{{i+1}}" [(ngModel)]="form.requested_items[i].rate_km" #rate_km="ngModel"> Km.
+                </td>
+                <td class="align-middle">
+                    <a (click)="delete(i)" type="submit" class="vector-delete">DEL <i class="fa" aria-hidden="true"><img src="assets/img/vector-delete.png" alt=""></i></a>
+                    
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="5">
+                    <button type="submit">Save</button>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+</form>
+    

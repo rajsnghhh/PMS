@@ -1,0 +1,187 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Item Stock JV List</h2>
+
+        <div class="action-button-container">
+            <!-- <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown" aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>  
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span ><img src="assets/usermanagement/download_csv.png"  class="export" ><strong>CSV</strong> </span>
+                </li>
+            </ul>        -->
+            <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight">ADD NEW <img src="assets/header/add.png" alt=""></button>
+        </div>
+    </div>
+
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    Advanced Search
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+    
+                    <form [formGroup]="itemStockAdvancedSearchForm" (ngSubmit)="onSubmit()">
+                        <div class="row">
+
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="addressform">
+                                        <label>From</label>
+                                        <input type="date" name="date__gte" formControlName="date__gte" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="addressform">
+                                        <label>To</label>
+                                        <input type="date" name="date__lte" formControlName="date__lte" class="form-control">
+                                    </div>
+                                    </div>
+                       
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="addressform">
+                                    <label>JV No.</label>
+                                    <input type="text" name="jv_no__icontains" formControlName="jv_no__icontains" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="btd-section">
+                                <button type="submit" class="btn-save">SEARCH</button>
+                            </div>
+                        </div>
+    
+                    </form>
+    
+                </div>
+            </div>
+        </div>
+
+        <div class="component-header">
+            <div class="action-button-container" *ngIf="scope == 'list'">
+                <button *ngIf="isItemStockJV_approver" (click)="scopeChange('approve')">Approve</button>
+            </div>
+            <div class="action-button-container" *ngIf="(scope == 'approve')">
+                <button *ngIf="isItemStockJV_approver" (click)="scopeChange2('list')">List</button>
+            </div>
+            <div class="action-button-container"  style="margin-right: 87px;"  *ngIf="(scope == 'approve') && (itemStockJVCheckboxIds.length > 0)">
+                <button class="btn btn-primary" (click)="checkSubmit()">Save</button>
+            </div>
+        </div>
+
+    <div class="component-body">
+        <table>
+            <tr>
+                <th>Sr.No aa</th>
+                <th>JV No.</th>
+                <th>Issue Items</th>
+                <th>Receive Items</th>
+                <th>JV Date</th>
+                <th>Remark</th>
+                <th>Status</th>
+                <th>Action </th>
+            </tr>
+
+            <tr *ngFor="let transport of itemStockJvList; let i = index" [attr.data-index]="i">
+
+                <td>{{ (pageSize*(page-1)) + i+1.}}</td>
+                <td>{{ transport.jv_no }}</td>
+
+                <td >
+                    <span *ngFor="let item of transport.issue_items; let j = index">
+                        {{ j+1 }}. {{ item.item_details[0][0].material_name }} - ({{ item.quantity }} {{ item.uom_details[0].symbol }}),<br>
+                    </span>
+                </td>
+                <td >
+                    <span *ngFor="let item of transport.receive_items; let k = index">
+                        {{ k+1 }}. {{ item.item_details[0][0].material_name }} - ({{ item.quantity }} {{ item.uom_details[0].symbol }}),<br>
+                    </span>
+                </td>
+
+                <td>{{ transport.date }}</td>
+                <td>{{ transport.remark }}</td>
+                <td>
+                    {{ transport.status }}
+                    <input type="checkbox" *ngIf="scope == 'approve'" class="form-check-input" value="" (change)="onItemStockJVCheckboxChange($event, transport.id)">
+                </td>
+                <td>
+                    <div class="custom-section">
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                            <div class="dropdown-content">
+                                <div class="img-container">
+                                    <!-- <span class="mt-2" data-bs-toggle="offcanvas" (click)="editRack(rack,'view')"
+                                        data-bs-target="#offcanvasRightLabeladdrole"><img
+                                            src="assets/usermanagement/view.png" alt=""
+                                            aria-controls="offcanvasRight">&nbsp;&nbsp;<label>View</label></span> -->
+                                    <span class="mt-2" data-bs-toggle="offcanvas" (click)="editMaterialWastage(transport,'edit')"
+                                        data-bs-target="#offcanvasRightLabeladdrole"><img
+                                            src="assets/usermanagement/edit.png" alt=""
+                                            aria-controls="offcanvasRight">&nbsp;&nbsp;<label>Edit</label></span>
+                                    <span data-bs-toggle="modal" (click)="deleteAlertWastage(transport)"
+                                        data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png"
+                                            alt="">&nbsp;&nbsp;<label>Delete</label></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            <tr class="text-center">
+                <td colspan="10" *ngIf="itemStockJvList.length == 0">No data found.</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLabeladdrole"
+        aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">{{addUpdateMaterialWastage}}</h5>
+            <button #closeButton type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close" (click)="closeModal()"></button>
+        </div>
+        <div class="offcanvas-body planbody" *ngIf="onEditTransportData">
+            <app-add-update-item-stock-jv [prefieldData]="onEditTransportData" [onEditAccess]="onEditAccess" (getItemStockJvList)="getItemStockJvList()" (closeModal)="closeModal()"></app-add-update-item-stock-jv>
+        </div>
+        <div class="offcanvas-body planbody" *ngIf="!onEditTransportData">
+            <app-add-update-item-stock-jv [onEditAccess]="onEditAccess" (getItemStockJvList)="getItemStockJvList()" (closeModal)="closeModal()"></app-add-update-item-stock-jv>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this item stock JV ?
+            </div>
+            <div class="modal-footer">
+                <button (click)="deleteItemStockJv()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

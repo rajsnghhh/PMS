@@ -1,0 +1,224 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="createtable-section table-responsive">
+        <table class="text-nowrap">
+            <tr>
+                <th>Sr.&nbsp;No</th>
+                <th>Item Group/ Item Name <span class="asterisk" style="color: #f86c6b;">*</span>
+                </th>
+                <th>Size/Part No./ Grade</th>
+                <th>Qty./ Unit <span class="asterisk" style="color: #f86c6b;">*</span>
+                </th>
+                <th>Unit Rate</th>
+                <th>Item Amt</th>
+                <th>Disc.Rate %/ Amount</th>
+                <th>Amount</th>
+                <th>Action</th>
+            </tr>
+            <tr class="">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="align-middle">
+                    <a (click)="addMorePOItems()" type="submit" class="tablebtn-save">ADD <i class="fa"
+                            aria-hidden="true">
+                            <img src="assets/img/vector-add.png" alt="">
+                        </i>
+                    </a>
+                </td>
+            </tr>
+            <tr class="tablebg" *ngFor="let item of form.items; let i = index">
+                <td>#{{i+1}}</td>
+                <td>
+                    <div class="tablegroup">
+                        <label>Item Group <span class="asterisk" style="color: #f86c6b;">*</span>
+                        </label>
+                        <!-- (change)="typeChange(form.items[i].requested_material_group,i)" -->
+                        <select class="form-control" name="requested_material_group{{i+1}}"
+                            [(ngModel)]="form.items[i].requested_material_group" required
+                            #requested_material_group="ngModel" [disabled]="disableEdit"
+                            [ngClass]="{ 'is-invalid': f.submitted && requested_material_group.errors }"
+                            (change)="usertypeChange(form.items[i].requested_material_group,i)">
+                            <option value="" disabled>Select Group</option>
+                            <option *ngFor="let materialGroup of masterlist" [value]="materialGroup.id">
+                                {{materialGroup.name}}
+                            </option>
+                        </select>
+                        <label>Item Sub Group <span class="asterisk" style="color: #f86c6b;">*</span>
+                        </label>
+                        <select class="form-control" name="requested_material_sub_group{{i+1}}"
+                            [(ngModel)]="form.items[i].requested_material_sub_group" required
+                            #requested_material_sub_group="ngModel" [disabled]="disableEdit"
+                            [ngClass]="{ 'is-invalid': f.submitted && requested_material_sub_group.errors }"
+                            (change)="usersubTypeChange(form.items[i].requested_material_sub_group, i)">
+                            <option value="" disabled>Select Sub Group</option>
+                            <option *ngFor="let subGroup of form.items[i].MaterilSubGroupList" [value]="subGroup.id">
+                                {{subGroup.name}}
+                            </option>
+                        </select>
+                        <label>Item <span class="asterisk" style="color: #f86c6b;">*</span>
+                        </label>
+                        <select class="form-control" name="item{{i+1}}" [(ngModel)]="form.items[i].item" required
+                            #selectItem="ngModel" [disabled]="disableEdit"
+                            [ngClass]="{ 'is-invalid': f.submitted && selectItem.errors }"
+                            (change)="setMaterialMasterData(i,false,form.items[i].item)">
+                            <option value="" disabled>Select Material</option>
+                            <option *ngFor="let masterData of form.items[i].MaterilFilterList" [value]="masterData.id">
+                                {{masterData.material_name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="tablegroup tablegroup-text">
+                        <h2> (Bal.&nbsp;Qty.&nbsp;=</h2>
+                        <div class="form-control form-control2" data-bs-toggle="tooltip" data-bs-placement="right"
+                            title="Balance Quantity.">{{form.items[i].currentStock}}</div>
+                        <h2>)</h2>
+                    </div>
+                    <section class="boq-material-details" *ngIf="form.items[i].item">
+                        <img src="assets/icons/details.png" alt="">
+                        <table>
+                            <tr>
+                                <th>BOQ Name</th>
+                                <th>BOQ Item</th>
+                                <th>Budgeted Quantity</th>
+                            </tr>
+                            <tr *ngFor="let masterialBoQdata of form.items[i].MaterialBOQ">
+                                <td>{{masterialBoQdata.wbs_list__boq__name}}</td>
+                                <td>{{masterialBoQdata.wbs_list__wbs}}</td>
+                                <td>{{masterialBoQdata.budgeted_quantity}}</td>
+                            </tr>
+                            <tr *ngIf="form.items[i]?.MaterialBOQ?.length==0">
+                                <td colspan="4" style=" text-align: center; "> Item Not found on BOQ. Please add
+                                    Justification </td>
+                            </tr>
+                        </table>
+                    </section>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" class="form-control" id="data" placeholder=""
+                            name="size_part_no_grade{{i+1}}" [(ngModel)]="form.items[i].size_part_no_grade"
+                            #size_part_no_grade="ngModel">
+                        <label>HSN CODE:</label>
+                        <input type="text" class="form-control" name="hsn_code{{ i + 1 }}" [disabled]="disableEdit"
+                            [(ngModel)]="form.items[i].hsn_code" #hsn_code="ngModel" />
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" class="form-control" id="data" placeholder="" name="quantity{{i+1}}"
+                            amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                            [(ngModel)]="form.items[i].quantity" [disabled]="disableEdit" required #quantity="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && quantity.errors }"
+                            (ngModelChange)="showMaterialsCalculatedAmt(i)">
+                        <select class="form-control" id="sel1" [(ngModel)]="form.items[i].uom"
+                            [ngModelOptions]="{standalone: true}" #uom="ngModel" [disabled]="disableEdit"
+                            [ngClass]="{ 'is-invalid': f.submitted && uom.errors }">
+                            <option value="{{uomData.id}}" *ngFor="let uomData of form.items[i].uomlistData">
+                                {{uomData.symbol}}</option>
+                        </select>
+                    </div>
+                    <label>Weight</label>
+                    <div class="tablegroup">
+                        <input type="text" class="form-control" id="data" placeholder="" amountNumber
+                            [(ngModel)]="form.items[i].weight" [disabled]="disableEdit" #weight="ngModel"
+                            name="weight{{i+1}}">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input amountNumber type="text" class="form-control" id="data" placeholder="" name="rate{{i+1}}"
+                            [(ngModel)]="form.items[i].rate" [disabled]="disableEdit" required #rate="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && rate.errors }"
+                            (ngModelChange)="showMaterialsCalculatedAmt(i)">
+                    </div>
+                    <label>Tolerance %</label>
+                    <div class="tablegroup">
+                        <input amountNumber type="text" class="form-control" id="data" placeholder=""
+                            [(ngModel)]="form.items[i].tolerance_percentage" [disabled]="disableEdit"
+                            #tolerance_percentage="ngModel" name="tolerance_percentage{{i+1}}">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" class="form-control" id="data" placeholder=""
+                            [(ngModel)]="form.items[i].item_amount" [disabled]="disableEdit" #item_amount="ngModel"
+                            name="item_amount{{i+1}}" readonly (ngModelChange)="showMaterialsCalculatedAmt(i)">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input amountNumber type="text" class="form-control" id="data" placeholder=""
+                            [(ngModel)]="form.items[i].disc_percentage" [disabled]="disableEdit"
+                            #disc_percentage="ngModel" name="disc_percentage{{i+1}}"
+                            (ngModelChange)="showMaterialsCalculatedAmt(i)">
+                    </div>
+                    <label>Amount</label>
+                    <div class="tablegroup">
+                        <input amountNumber type="text" class="form-control" id="data" placeholder=""
+                            [(ngModel)]="form.items[i].disc_amount" [disabled]="disableEdit"
+                            #disc_amount="ngModel" name="disc_amount{{i+1}}"
+                            (ngModelChange)="set_discount_pecentage_blanck(i)">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" class="form-control" id="data" placeholder=""
+                            [(ngModel)]="form.items[i].total_amount" [disabled]="disableEdit" #total_amount="ngModel"
+                            name="total_amount{{i+1}}" readonly (ngModelChange)="showMaterialsCalculatedAmt(i)">
+                    </div>
+                </td>
+                <td class="align-middle">
+                    <a (click)="delete(i)" type="submit" class="vector-delete">DEL <i class="fa" aria-hidden="true">
+                            <img src="assets/img/vector-delete.png" alt="">
+                        </i>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Total</td>
+                <td></td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" class="form-control" id="data" placeholder="total_qty" name="total_qty"
+                            readonly [(ngModel)]="total_qty">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" class="form-control" id="data" placeholder="total_unit_rate"
+                            name="total_unit_rate" readonly [(ngModel)]="total_unit_rate">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" class="form-control" id="data" placeholder="total_item_amt"
+                            name="total_item_amt" readonly [(ngModel)]="total_item_amt">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" class="form-control" id="data" placeholder="total_discount_amt"
+                            name="total_discount_amt" readonly [(ngModel)]="total_discount_amt">
+                    </div>
+                </td>
+                <td>
+                    <div class="tablegroup">
+                        <input type="text" class="form-control" id="data" placeholder="total_net_amt"
+                            name="total_net_amt" readonly [(ngModel)]="total_net_amt">
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr *ngIf="form.items.length==0">
+                <td colspan="13" class="text-center">No Item Added Yet</td>
+            </tr>
+            <button hidden #submitButton="" type="submit">Save</button>
+        </table>
+    </div>
+</form>

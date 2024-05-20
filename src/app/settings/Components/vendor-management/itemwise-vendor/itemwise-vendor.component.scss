@@ -1,0 +1,148 @@
+.tabletd, .Table_Td, .Table_Td_alter {
+    color: #000;
+    font-weight: normal;
+    padding-left: 4px;
+    padding-right: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    vertical-align: middle;
+}
+.content {
+    min-height: 250px;
+    padding: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: #FFF;
+    font-size: 11px !important;
+    font-family: Verdana, Arial, Helvetica, sans-serif !important;
+}
+.form-control:not(select) {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+
+
+
+.tabletd {
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 14px;
+    color: #666;
+    font-weight: 400;
+    margin: 0px 0px 16px 0px;
+    vertical-align: middle;
+    text-align: right;
+    min-width: 155px;
+}
+
+
+
+
+.form-control
+
+{ display: block;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 7px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    appearance: auto;}
+
+
+
+
+    ::ng-deep .ng-select .ng-select-container { display: block;
+        width: 100%;
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 7px 8px;
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.5;
+        color: #9D9D9D;
+        appearance: none;
+        background-color: var(--bs-body-bg);
+        background-clip: padding-box;
+        border: var(--bs-border-width) solid var(--bs-border-color);
+        border-radius: 0px !important;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        position: relative;
+        appearance: auto;}
+
+
+
+.Numeric_Text.ng-untouched.ng-pristine.ng-valid { width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 7px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px !important;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    appearance: auto; }
+
+.component-body table td {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 300 !important;
+    font-size: 12px !important;
+    line-height: 15px !important;
+    }
+.component-body table th {
+    background-color: #5577ff;
+    color: white;
+    font-size: 14px;
+    padding: 10px;
+    font-weight: 500;
+    line-height: 15px;
+    }
+
+
+
+
+.srch {
+        background-image: linear-gradient(to right, #40d4e6, #6675fe);
+        font-weight: initial;
+        padding: 7px 26px;
+        border-radius: 5px;
+        border: none;
+        color: white;
+        font-size: 13px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: baseline;
+        margin-left: 10px;
+        min-width: 150px;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+

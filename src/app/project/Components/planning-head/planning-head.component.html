@@ -1,0 +1,18 @@
+<form role="form" [formGroup]="planningForm">
+
+    <div class="mb-3">
+        <select class="form-select" formControlName="user" [(ngModel)]="planningData.planningHead"
+        [ngClass]="displayFieldCss(planningForm,'user')" aria-label="Default select example">
+            <option value="" selected disabled>Select Planning Head <span class="asterisk">*</span></option>
+            <option *ngFor="let particularuser of userlist" value={{particularuser.id}}>{{particularuser.full_name}}</option>
+        </select>
+        <label class="floating-label-select" [ngClass]="{'insideDropdown': planningData.planningHead =='' }">Select Planning Head <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(planningForm,'user')">
+            <span class="text-danger" *ngIf="planningForm.get('user')?.errors?.['required']">Planning Head is required</span>
+          </div>
+    </div>
+
+    <button *ngIf="!projectId?.is_planning_head_selected" type="submit" class="btn btn-primary" (click)="addPlanning()">ADD</button>
+    <button *ngIf="projectId?.is_planning_head_selected" type="submit" class="btn btn-primary" (click)="addPlanning()">UPDATE</button>
+
+</form>

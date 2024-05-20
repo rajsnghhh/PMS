@@ -1,0 +1,122 @@
+.allfield {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0px 0px -30px 0px;
+  
+    .field {
+      display: flex;
+      width: 40%;
+      margin-right: 1.33%;
+  
+      .fieldValue {
+        width: 100%;
+  
+        label {
+          color: grey;
+          margin-left: 8px;
+          font-size: 12px;
+        }
+      }
+    }
+    .fieldbtn{
+      display: flex;
+      width: 15%;
+      margin-right: 1.33%;
+    }
+  }
+  
+  .RemoveBtn {
+    width: 5%;
+  
+    img {
+      height: 38px;
+      width: 38px;
+      margin-left: 100px;
+      margin-top: 0px;
+      cursor: pointer;
+    }
+  }
+  
+  .AddBtn {
+    width: 5%;
+  
+    img {
+      height: 38px;
+      width: 38px;
+      margin-left: 100px;
+      margin-top: 0px;
+      cursor: pointer;
+    }
+  }
+  
+  .heading {
+    color: grey;
+    display: flex;
+    width: 100%;
+    font-size: 14px;
+  }
+  
+  .lebelheading {
+    color: grey;
+    font-size: 12px !important;
+    margin: unset !important;
+  }
+  .required{
+    font-size: 11px;
+    top: 105px;
+    margin-left: 21px;
+  }
+
+  .fieldValue input {
+    border-radius: 0px !important;
+    font-size: 12px !important;
+    padding: 7px 20px !important;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+  }
+
+
+
+  .component-body {
+    font-size: 12px !important;
+    padding: 5px 10px;
+    font-weight: 300;
+    min-height: 32px !important;
+}
+
+
+.heading {
+	color: grey;
+	display: flex;
+	width: 100%;
+	font-size: 13px;
+	margin-top: 18px;
+	font-weight: 400;
+}
+
+
+
+.fieldValue .AddBtn {
+	height: 20px !important;
+  width: 20px !important;
+  margin-left: 99px !important;
+  margin-top: -86px !important;
+  cursor: pointer;
+}
+
+
+.fieldValue .RemoveBtn {
+	height: 20px !important;
+  width: 20px !important;
+  margin-left: 99px !important;
+  margin-top: -86px !important;
+  cursor: pointer;
+}
+
+
+.allfield .mb-5 {
+	margin-bottom: 22px;
+}

@@ -1,0 +1,403 @@
+.mb-3 {
+    label {
+        font-size: 12px !important;
+        width: 100%;
+    }
+
+    select {
+        width: 100%;
+        background-image: unset
+    }
+
+    select:focus {
+        outline: none;
+    }
+}
+
+.survey-body {
+    .asterisk {
+        margin-top: -2px;
+        color: red;
+        font-size: 12px;
+    }
+
+    form {
+        padding: 0 10px;
+    }
+
+    .survey-header {
+        border-bottom: 1px solid #d9d9d9;
+        // display: flex;
+        position: relative;
+        padding: 10px 15px;
+
+        h1,
+        h2 {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            color: #666666;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 1.8;
+            color: #5577ff;
+        }
+
+        h1 {
+            font-size: 16px;
+            color: #0d6efd;
+            font-weight: 500;
+        }
+        h3{
+            color: #5577ff;
+            font-size: 15px;
+            padding: 5px 0 5px 25px;
+        }
+    }
+}
+
+.survey-body .survy_border.survey-header{
+    border-bottom: 0;
+}
+.invalid {
+    color: #dc3545;
+    font-size: 10px;
+}
+
+.ng-submitted {
+    .ng-invalid {
+        border-color: #dc3545;
+    }
+
+    .invalid-feedback {
+        color: #dc3545;
+        opacity: 1 !important;
+        font-size: 10px;
+        background: unset;
+        border: none;
+        padding: 0;
+
+        div {
+            background: unset;
+            border: none;
+            padding: 0;
+            color: #dc3545;
+            font-size: 10px;
+            margin-left: 10px;
+        }
+    }
+
+    .mb-3:has(.ng-invalid) .invalid-feedback {
+        display: block;
+    }
+
+}
+
+::ng-deep {
+    .selected-list .c-btn {
+        border-radius: 18px;
+    }
+
+    .ng-invalid .selected-list .c-btn {
+        border-color: #dc3545;
+    }
+
+    .selected-list .c-list .c-token {
+        border-radius: 18px !important;
+        padding: 8px 30px 8px 10px !important;
+    }
+}
+
+.member-input {
+    width: 100% !important;
+}
+
+.member-selection {
+
+    .level-dropdown,
+    label {
+        width: 30%;
+        color: #666666;
+    }
+
+    .level-dropdown {
+        padding: 0 15px;
+    }
+
+    .user-lable {
+        display: flex;
+        margin-bottom: 5px;
+        background: #dcdcdc40;
+        padding: 10px 0px;
+        border-radius: 18px;
+        position: relative;
+
+        .container {
+            width: 20%;
+        }
+
+        select {
+            width: 20%;
+        }
+    }
+
+    /* The container */
+    .container {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        cursor: pointer;
+        font-size: 22px;
+        padding-top: 4px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    /* Hide the browser's default checkbox */
+    .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+    /* Create a custom checkbox */
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        border-radius: 15px;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .container:hover input~.checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the checkbox is checked, add a blue background */
+    .container input:checked~.checkmark {
+        background-color: #2196F3;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the checkmark when checked */
+    .container input:checked~.checkmark:after {
+        display: block;
+    }
+
+    /* Style the checkmark/indicator */
+    .container .checkmark:after {
+        left: 9px;
+        top: 6px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+.custom-section {
+    display: block;
+    width: 70%;
+    position: relative;
+
+    .container {
+        display: block;
+        position: relative;
+        padding-left: 25px;
+        margin: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        font-size: 10px;
+        padding-top: 2px;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    /* Hide the browser's default radio button */
+    .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    /* Create a custom radio button */
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        background-color: #e4e4e4;
+        border-radius: 18%;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .container:hover input~.checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the radio button is checked, add a blue background */
+    .container input:checked~.checkmark {
+        background-color: #5577FF;
+    }
+
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the indicator (dot/circle) when checked */
+    .container input:checked~.checkmark:after {
+        display: block;
+    }
+
+    /* Style the indicator (dot/circle) */
+    .container .checkmark:after {
+        top: 3px;
+        font-size: 12px;
+        border-bottom: 1.5px solid white;
+        border-right: 1.5px solid white;
+        left: 7px;
+        height: 10px;
+        width: 6px;
+        color: white;
+        transform: rotate(45deg);
+    }
+
+    label {
+        margin: 0 !important;
+    }
+}
+
+.reject-button {
+    background: red;
+}
+
+.approvar-form {
+    margin-top: -90px;
+
+    .mb-3 {
+        width: 100% !important;
+    }
+
+    textarea {
+        width: 100%;
+    }
+}
+
+.appraval-status {
+    width: 60%;
+    font-size: 12px;
+    color: #9c9c00;
+    font-weight: 800;
+    padding: 4px 0px 0px 20px;
+}
+
+.approvar-remarks {
+    font-size: 10px;
+    color: blue;
+    font-weight: 400;
+    display: block;
+}
+
+::ng-deep.survey-content {
+    min-height: unset !important;
+}
+
+.invalid-feedback {
+    opacity: 1 !important;
+    display: block !important;
+}
+
+select:disabled {
+    border: none;
+    background: transparent;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+.resend {
+    background: red;
+}
+
+.card {
+    margin: 200px;
+    margin: 40px 18px;
+
+    h1 {
+        color: #673ab7;
+        font-weight: 400;
+        font-size: 20px;
+        margin: 6px;
+    }
+}
+
+table {
+    th {
+        color: #0d6efd;
+        font-size: 14px;
+    }
+
+    th,
+    td {
+        min-width: 100px;
+        border: 1px solid;
+        padding: 8px;
+    }
+
+    td {
+        color: #2196F3;
+        font-size: 12px;
+    }
+}
+
+.survey-body form {
+    margin-bottom: 0;
+}
+
+.custom-card {
+    margin: 10px;
+}
+
+button {
+    max-width: unset !important;
+}
+
+.flex-div.approverbox {
+    align-items: center;
+
+    .approver_box.mb-3 {
+        width: 80%;
+    }
+}
+
+.btn_wrap {
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    margin-top: -4%;
+    width: 30%;
+    float: right;
+}

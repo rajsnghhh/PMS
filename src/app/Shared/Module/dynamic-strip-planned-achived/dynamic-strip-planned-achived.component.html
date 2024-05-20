@@ -1,0 +1,393 @@
+<section class="filter-options">
+    <div class="input-block">
+        <label>View Side</label>
+        <select name="" [(ngModel)]="selectedStripSide" (change)="getStripDetaails()">
+            <option value="LHS">LHS</option>
+            <option value="RHS">RHS</option>
+            <option value="BHS">BHS</option>
+        </select>
+    </div>
+    <div class="input-block">
+        <label>Min Block Unit on Graph</label>
+        <select name="" [(ngModel)]="graphUnitScope" (change)="stripConfig()">
+            <!-- <option value="1" hidden>1 M</option> -->
+            <option value="5">5 M</option>
+            <option value="10">10 M</option>
+            <option value="20">20 M</option>
+            <option value="50">50 M</option>
+            <option value="100">100 M</option>
+        </select>
+    </div>
+    <div class="input-block">
+        <label>Chainage Breakup Mark</label>
+        <select name="" [(ngModel)]="breakchainMark" (change)="changeinBreakChainge()">
+            <!-- <option *ngIf="10 >=(graphUnitScope*2)" value="10">10 M</option> -->
+            <option *ngIf="50 >=(graphUnitScope*2)" value="50">50 M</option>
+            <option *ngIf="100 >=(graphUnitScope*2)" value="100">100 M</option>
+            <option *ngIf="200 >=(graphUnitScope*2)" value="200">200 M</option>
+            <option *ngIf="400 >=(graphUnitScope*2)" value="400">400 M</option>
+            <option *ngIf="500 >=(graphUnitScope*2)" value="500">500 M</option>
+            <option *ngIf="1000 >=(graphUnitScope*2)" value="1000">1 KM</option>
+            <option *ngIf="1500 >=(graphUnitScope*2)" value="1500">1.5 KM</option>
+            <option *ngIf="2000 >=(graphUnitScope*2)" value="2000">2 KM</option>
+            <option *ngIf="3000 >=(graphUnitScope*2)" value="3000">3 KM</option>
+            <option *ngIf="5000 >=(graphUnitScope*2)" value="5000">5 KM</option>
+        </select>
+    </div>
+    <button class="importstrip imptbtn" data-bs-toggle="offcanvas" *ngIf="activeTab != 'view'"
+        data-bs-target="#offcanvasRightLabelimportstrip" aria-controls="offcanvasRight">Import</button>
+
+    <button class="modifystrip moditbtn" data-bs-toggle="offcanvas" *ngIf="activeTab != 'view'"
+        data-bs-target="#offcanvasRightLabelmodifystrip" aria-controls="offcanvasRight">Modify Strip</button>
+</section>
+<section class="custom-strip-main-container">
+    <section class="table-sec">
+        <div class="container-fluid p-0">
+            <div class="table-box">
+                <div class="table-left">
+                    <div class="table-head">
+                        <h6 class="transform-rotate">{{selectedStripSide}}</h6>
+                    </div>
+                    <div class="tablel-body">
+
+
+                        <ng-container *ngFor="let indStrip of StripDetails">
+                            <div class="single-leftb">
+                                <p><b>{{indStrip.wbs_name}}</b></p>
+                            </div>
+                            <ng-container *ngFor="let delay_breakup of indStrip.children">
+                                <div class="single-leftb subpart">
+                                    <p><span><img src="assets/icons/settings.png" alt="" (click)="updateConfig(delay_breakup)"></span> {{delay_breakup.wbs_name}}</p>
+                                </div>
+                            </ng-container>
+
+                        </ng-container>
+
+                        <ng-container>
+                            <div class="single-leftb">
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="table-right">
+                    <ng-container>
+                        <div class="tabler-body"></div>
+                    </ng-container>
+                    <app-custom-canvas 
+                        *ngIf="appendCanvasComponent"
+                        [canvasWidth]="canvasWidth"
+                        [canvasHeight]="canvasHeight"
+                        [UnitBlockSizeInPX]="UnitBlockSizeInPX"
+                        [breakchainMark]="breakchainMark"
+                        [graphUnitScope]="graphUnitScope"
+                        [unitArray]="unitArray"
+                        [StripDetails]="StripDetails"
+                        (parrentAction)="checkAction($event)"
+                    >
+                    </app-custom-canvas>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+<div class="offcanvas offcanvas-end importbox" tabindex="-1" id="offcanvasRightLabelAction"
+    aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel"> <span  class="text-capitalize">{{actionData?.action}} </span></h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+            <div class="flex-div">
+                <div class="plansection">
+                    
+                    <div class="mb-3"  *ngIf="actionData?.action == 'update'">
+                        <label>Select Issue</label>
+                        <select class="form-control" name="selectedIssue"
+                            (change)="updateSelectedIssue()"
+                            [(ngModel)]="strtipModifyform.selectedIssue" required #selectedIssue="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && selectedIssue.errors }">
+                            <option value="">Select Issue</option>
+                            <option value="{{stripData.id}}" *ngFor="let stripData of stripList">{{stripData.affected_start_meter}} - {{stripData.affected_end_meter}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && selectedIssue.errors" class="invalid-feedback">
+                            <div *ngIf="selectedIssue.errors['required']">This is required</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Select BOQ Item</label>
+                        <select class="form-control" name="boqItem"
+                            [(ngModel)]="strtipModifyform.boqItem" required #boqItem="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && boqItem.errors }">
+                            <option value="">Select Issue</option>
+                            <option value="{{boqData.short_name}}" *ngFor="let boqData of BOQ_LIST">{{boqData.wbs}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && boqItem.errors" class="invalid-feedback">
+                            <div *ngIf="boqItem.errors['required']">This is required</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Start of affected area in M</label>
+                        <input type="text" intNumber class="form-control" name="affected_start_meter"
+                            [(ngModel)]="strtipModifyform.affected_start_meter" required #affected_start_meter="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && affected_start_meter.errors }" />
+                        <div *ngIf="f.submitted && affected_start_meter.errors" class="invalid-feedback">
+                            <div *ngIf="affected_start_meter.errors['required']">This is required</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>End of affected area in M</label>
+                        <input type="text" intNumber class="form-control" name="affected_end_meter"
+                            [(ngModel)]="strtipModifyform.affected_end_meter" required #affected_end_meter="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && affected_end_meter.errors }" />
+                        <div *ngIf="f.submitted && affected_end_meter.errors" class="invalid-feedback">
+                            <div *ngIf="affected_end_meter.errors['required']">This is required</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="mb-3">
+                        <label>Expected end Date</label>
+                        <input type="date" class="form-control" name="date_planned"
+                            [(ngModel)]="strtipModifyform.date_planned" #date_planned="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && date_planned.errors }" />
+                        <div *ngIf="f.submitted && date_planned.errors" class="invalid-feedback">
+                            <div *ngIf="date_planned.errors['required']">This is required</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 w-100">
+                        <label>Remarks</label>
+                        <textarea class="form-control" name="criteria_planned"
+                            [(ngModel)]="strtipModifyform.criteria_planned" #criteria_planned="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && criteria_planned.errors }" cols="30"
+                            rows="4"></textarea>
+                        <div *ngIf="f.submitted && criteria_planned.errors" class="invalid-feedback">
+                            <div *ngIf="criteria_planned.errors['required']">This is required</div>
+                        </div>
+                    </div>
+
+                    <label class="headingportion">Plan</label>
+                    <div class="uploadsection">
+                        <label>Upload Doccuments</label>
+    
+                        <button type="button" class="uploadbtn" (click)="fileInput2.click()">Select File</button>
+    
+                        <input style="display: none" type="file" name="fileInput2" (change)="handleUpload($event,'plan')" #fileInput2
+                            multiple="true" />
+                    </div>
+                    <section class="uploaded-container">
+                        <div class="uploadedfile" *ngFor="let selected of listOfFiles_plan; let index = index">
+                            <h6 *ngIf="!selected.id">{{ selected }}</h6>
+                            <img *ngIf="!selected.id" (click)="removeSelectedFile(index,'plan')" src="assets/icons/close-red.png" alt="">
+                            <a *ngIf="selected.id" href="{{envvironment.API_URL}}media/{{selected.attachment}}" target="_blank"><img src="assets/icons/doc.png" alt=""></a>
+                        </div>
+                    </section>
+                   
+                    <div class="form-group">
+                        <button  type="submit" class="btn btn-primary text-capitalize">{{actionData?.action}} Plan</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form name="form" #f="ngForm" *ngIf="actionData?.action == 'update' && strtipModifyform.selectedIssue" (ngSubmit)="f.form.valid && achivementSubmit()" novalidate>
+            <div class="flex-div">
+                <div class="achievesection" style=" width: 100%; ">
+                    <label class="headingportion">Achieved</label>
+                    <table class="table">
+                        <tr>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th>Date</th>
+                            <th>Remarks</th>
+                            <th>Attachments</th>
+                        </tr>
+                        <tr *ngFor="let resolveddata of resolvedStrip">
+                            <td>{{resolveddata.resolved_start_meter}}</td>
+                            <td>{{resolveddata.resolved_end_meter}}</td>
+                            <td>{{resolveddata.date_resolved | date:'dd-MM-yyyy'}}</td>
+                            <td>{{resolveddata.resolve_notes}}</td>
+                            <td>
+                                <div class="uploadedfile" *ngFor="let selected of getresolvedFiles(resolveddata.id)">
+                                    <a href="{{envvironment.API_URL}}media/{{selected.attachment}}" target="_blank"><img src="assets/icons/doc.png" alt=""></a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" class="text-center" *ngIf="resolvedStrip.length == 0">No Data Found</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="achievesection">
+                    <div class="mb-3">
+                        <label>Start of resolved area in M</label>
+                        <input type="number" intNumber min="{{strtipModifyform.affected_start_meter}}"
+                            max="{{strtipModifyform.affected_end_meter}}" required class="form-control"
+                            name="resolved_start_meter" [(ngModel)]="strtipModifyform.resolved_start_meter" required
+                            #resolved_start_meter="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && resolved_start_meter.errors }" />
+                        <div *ngIf="f.submitted && resolved_start_meter.errors" class="invalid-feedback">
+                            <div *ngIf="resolved_start_meter.errors['required']">This is required</div>
+                            <div *ngIf="resolved_start_meter.errors['min'] || resolved_start_meter.errors['max']">Please
+                                enter velue between {{strtipModifyform.affected_start_meter}} -
+                                {{strtipModifyform.affected_end_meter}}</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>End of resolved area in M</label>
+                        <input type="number" intNumber min="{{strtipModifyform.affected_start_meter}}"
+                            max="{{strtipModifyform.affected_end_meter}}" required class="form-control"
+                            name="resolved_end_meter" [(ngModel)]="strtipModifyform.resolved_end_meter" required
+                            #resolved_end_meter="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && resolved_end_meter.errors }" />
+                        <div *ngIf="f.submitted && resolved_end_meter.errors" class="invalid-feedback">
+                            <div *ngIf="resolved_end_meter.errors['required']">This is required</div>
+                            <div *ngIf="resolved_end_meter.errors['min'] || resolved_end_meter.errors['max']">Please
+                                enter velue between {{strtipModifyform.affected_start_meter}} -
+                                {{strtipModifyform.affected_end_meter}}</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>Resolved Date</label>
+                        <input type="date" class="form-control" required name="date_resolved"
+                            [(ngModel)]="strtipModifyform.date_resolved" #date_resolved="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && date_resolved.errors }" />
+                        <div *ngIf="f.submitted && date_resolved.errors" class="invalid-feedback">
+                            <div *ngIf="date_resolved.errors['required']">This is required</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 w-100">
+                        <label>Resolve Notes</label>
+                        <textarea class="form-control" required name="resolve_notes"
+                            [(ngModel)]="strtipModifyform.resolve_notes" #resolve_notes="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && resolve_notes.errors }" cols="30"
+                            rows="4"></textarea>
+                        <div *ngIf="f.submitted && resolve_notes.errors" class="invalid-feedback">
+                            <div *ngIf="resolve_notes.errors['required']">This is required</div>
+                        </div>
+                    </div>
+                    <label class="headingportion">Add Achieved</label>
+                    <div class="uploadsection">
+                        <label>Upload Doccuments</label>
+                        <button type="button" class="uploadbtn" (click)="fileInput1.click()">Select File</button>
+                        <input style="display: none" type="file" name="fileInput1" (change)="handleUpload($event,'achive')" #fileInput1
+                            multiple="true" />
+                    </div>
+                    <section class="uploaded-container">
+                        <div class="uploadedfile" *ngFor="let selected of listOfFiles_achive; let index = index">
+                            <h6>{{ selected }}</h6>
+                            <img (click)="removeSelectedFile(index,'achive')" src="assets/icons/close-red.png" alt="">
+                        </div>    
+                    </section>
+                    
+    
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Add Achieved</button>
+                </div>
+
+                </div>
+                
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Import Strip Section -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLabelimportstrip"
+    aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Import Strip</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div>
+        <!-- Upload File -->
+        <div>
+            <div class="header">
+                <label> Import Strip Data using your own file, or use our <a
+                        href="assets/usermanagement/strip_import.xlsx" target="_blank" download>sample file.</a>
+                </label>
+            </div>
+            <div class="upload" (click)="fileImport.click()">
+                <div class="filecard" *ngIf="!excelIcon">
+                    <img src="assets/usermanagement/csv.png" alt="">
+                </div>
+                <div class="filecard2" *ngIf="excelIcon">
+                    <img src="assets/usermanagement/tick.png" class="uploadsuccess" alt=""> &nbsp; {{filen}}
+                </div>
+                <input style="display: none" #attachments type="file" (change)="uploadFile($event)"
+                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" #fileImport>
+
+            </div>
+            <div class="format">
+                <p>&nbsp; Drop or upload your file here <br> &nbsp;&nbsp;&nbsp;
+                    <strong> (.xlsx formats supported) </strong>
+                </p>
+            </div>
+
+            <button type="submit" class="btn btn-primary addbutton1" (click)="importUser()">UPLOAD</button>
+        </div>
+    </div>
+</div>
+<!-- </section> -->
+
+<!-- Import Strip Section -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLabelmodifystrip"
+    aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Modify Strip</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="yscroll">
+        <app-modify-strip></app-modify-strip>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" id="offcanvasRightLabelConfig"
+    aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Update Config</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="yscroll spaceforForm">
+        <form class="allfield" name="configData" #configForm="ngForm" (ngSubmit)="configForm.form.valid && configSubmit()"
+                novalidate>
+
+                <div class="mb-3 field">
+                    <div class="fieldValue">
+                        <label>Type</label>
+                        <select class="form-select" name="risk_type" [ngClass]="{ 'is-invalid': configForm.submitted && risk_type.errors }"
+                            [(ngModel)]="configData.risk_type" required #risk_type="ngModel">
+                            <option value="">Select Risk Type</option>
+                            <option value="NORMAL" >NORMAL</option>
+                            <option value="FINANCIAL" >FINANCIAL</option>
+                        </select>
+                    </div>
+                    <div *ngIf="configForm.submitted && risk_type.errors" class="invalid-feedback">
+                        <div *ngIf="risk_type.errors['required']">This is required</div>
+                    </div>
+                </div>
+
+                <div class="mb-3 field">
+                    <div class="fieldValue">
+                        <label>Color</label>
+                        <input class="form-select" name="color_code" required [ngClass]="{ 'is-invalid': configForm.submitted && configData.color_code == '' }"  [(colorPicker)]="configData.color_code" [style.background]="configData.color_code"/>
+                    </div>
+                    <div *ngIf="configForm.submitted && configData.color_code == ''" class="invalid-feedback">
+                        <div>This is required</div>
+                    </div>
+                </div>                
+
+                <div class="btnupdate btnsec">
+                    <button type="submit" class="btn btn-primary">UPDATE</button>
+                    <button type="button" class="btn btn-primary non-active-btn" (click)="CloseComponent()">CANCEL</button>
+                </div>
+            </form>
+    </div>
+</div>
+<!-- </section> -->
+
+<!-- <button (click)="clearCanvas()">Clear</button> -->

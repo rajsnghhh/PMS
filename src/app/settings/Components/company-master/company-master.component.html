@@ -1,0 +1,144 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Company List</h2>
+
+        <div class="action-button-container">  
+            <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown" aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>  
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span ><img src="assets/usermanagement/download_csv.png"  class="export" ><strong>CSV</strong> </span>
+                </li>
+            </ul>       
+            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole" aria-controls="offcanvasRight">ADD NEW <img src="assets/header/add.png" alt=""></button>
+        </div>
+    </div>
+    <div class="component-body">
+                <div class="scrollable-table-container">
+        <table class="company-list">
+            <thead>
+            <tr>
+                <th class="entiti">S.No</th>
+                <th class="entiti">Company Name</th>
+                <th class="headwidth address-field-col">Party Address</th>
+                <th class="headwidth">PAN No.</th>
+                <th class="headwidth">GST No.</th>
+                <th class="headwidth">Email Id</th>
+                <th class="headwidth">Phone No.</th>
+                <th class="headwidth">Available <br> Threshold <br> (in Crs.)</th>
+                <th class="headwidth">Value of <br> Similar Works <br> (in Crs.)</th>
+                <th class="headwidth">Maximum Span <br> Length of Bridge <br> Available (in Mtr)</th>
+                <th class="headwidth">Average Annual <br> Turn Over (in Crs.) <br> (last 5 years)</th>
+                <th class="headwidth">Net Worth <br> (in Crs.)</th>
+                <th class="headwidth  entiti">Action </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            
+            <tr *ngFor="let company of companyList; let i = index"> 
+                <td class="">{{ (pageSize*(page-1)) + i+1.}}</td>
+                <td class="tdwidth address-field-col">
+                    {{company.name}}
+                </td>
+                <td class="tdwidth party-address addwidth">
+                    {{company.party_address}}
+                </td>
+                <td class="tdwidth">
+                    {{company.pan_no}}
+                </td>
+                <td class="tdwidth">
+                    {{company.gst_no}}
+                </td>
+                <td class="tdwidth">
+                    {{company.email_id}}
+                </td>
+                <td class="tdwidth">
+                    {{company.phone_no}}
+                </td>
+                <td class="tdwidth">
+                    {{company.available_threshold}}
+                </td>
+                <td class="tdwidth">
+                    {{company.value_of_similar_works}}
+                </td>
+                <td class="tdwidth">
+                    {{company.maximum_span_length_of_bridge_avail}}
+                </td>
+                <td class="tdwidth">
+                    {{company.average_annual_turn_over}}
+                </td>
+                <td class="tdwidth">
+                    {{company.net_worth}}
+                </td>
+                <td class="tdwidth  surveybutton">
+                    <div class="custom-section">
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                            <div class="dropdown-content drpdwnwidth">
+                                <div class="img-container">
+                                    <span class="mt-2" (click)="editcompanyid(company.id)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightEditRole"><img src="assets/usermanagement/edit.png" alt=""  aria-controls="offcanvasRight">&nbsp;&nbsp;<label>Edit Company</label></span>
+                                    <span (click)="deleteCompany(company.id)" data-bs-toggle="modal" data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png" alt=""  >&nbsp;&nbsp;<label>Delete Company</label></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            
+            </tr>
+            </tbody>
+            <tr class="text-center">
+                <td colspan="10" *ngIf="companyList.length == 0">No data found.</td>
+            </tr>
+            
+        </table>
+                </div>
+    
+    </div>
+<!-- <app-table-paginate></app-table-paginate> -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLabeladdrole" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Add Company</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-add-company></app-add-company>
+        </div>
+    </div>
+</div>
+
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightEditRole" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Edit Company</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <app-edit-company #editCompany></app-edit-company>
+    </div>
+</div>
+
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="">Are You Sure ?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Do you want to delete this Company ?
+        </div>
+        <div class="modal-footer">
+            <button (click)="deleteAlertCompany()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>
+

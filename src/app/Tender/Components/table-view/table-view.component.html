@@ -1,0 +1,50 @@
+<div class="component-body" >
+    <div class="colaps-element">
+        <section *ngFor="let from of formData; let i = index">
+            <section *ngIf="ifShow(from.name)">
+                <button type="button" class="collapsible" [ngClass]="{'active': from.colapseStatus }"
+                    (click)="expandSpecificElement(i)">{{from.name}}</button>
+                <div class="content" [ngClass]="{'active-content': from.colapseStatus }" *ngFor="let dataTouple of from.Datatouples">
+                    <div class="component-header">
+                        <div class="maintable">
+                            <div class="tablebody" *ngFor="let controls of from.form_fields" [ngClass]="{'hidden': !controls.hidden_param }">
+                                <div *ngIf="controls.hidden_param">
+                                    
+                                    <label class="lheader">{{controls.form_label}}</label>
+                                    <br>
+                                    <section class="lbody"> 
+                                        <span class="prefix" *ngIf="controls.form_input_type=='phone'">+{{controls.country[0]?.phone_code}}</span> 
+                                        <input type="text" [ngClass]="{'phonenumber': controls.form_input_type=='phone' }" *ngIf="!inputList.includes(controls.form_input_type)" [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]">
+                                        <span *ngIf="controls.form_input_type =='boolean'" >{{tenderdata[controls.form_internal_name + '' + dataTouple]}} <section class="bboleanNA" *ngIf="!tenderdata[controls.form_internal_name + '' + dataTouple]">NA</section></span>
+                                        <span *ngIf="controls.form_input_type =='date'" >{{tenderdata[controls.form_internal_name + '' + dataTouple] | date :  "d MMM, y"}}</span>
+                                        <select name="" id="" *ngIf="controls.form_input_type =='dropdown'"  [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]">
+                                            <option value="{{dropdown_choice.id}}"
+                                            *ngFor="let dropdown_choice of controls.dropdown_choices">
+                                            {{dropdown_choice.itemName}}</option>
+                                        </select>
+                                        <select name="" id="" *ngIf="controls.form_input_type =='reference'"  [(ngModel)]="tenderdata[controls.form_internal_name + '' + dataTouple]">
+                                            <option value="{{dropdown_choice.option_id}}"
+                                            *ngFor="let dropdown_choice of controls.dependent_dropdown_choices">
+                                            {{dropdown_choice.itemName}}</option>
+                                        </select>
+                                        <span *ngIf="controls.form_input_type =='multiselect'">
+                                            <div *ngIf="tenderdata[controls.form_internal_name + '' + dataTouple]">{{showNamebyID(controls,tenderdata[controls.form_internal_name + '' + dataTouple])}}</div>
+                                        </span>
+                                        <span *ngIf="controls.form_input_type =='dependant-multiselect'">
+                                            <div *ngIf="tenderdata[controls.form_internal_name + '' + dataTouple]">
+                                                {{showNamebyID1(controls,tenderdata[controls.form_internal_name + '' + dataTouple])}}
+                                            </div>
+                                        </span>
+                                        <span *ngIf="controls.form_input_type =='file' && tenderdata[controls.form_internal_name + '' + dataTouple]">
+                                            <img class="view-file" src="assets/icons/eye.png" (click)="viewDoc(tenderdata[controls.form_internal_name + '' + dataTouple])" alt="">
+                                        </span>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </div>
+</div>

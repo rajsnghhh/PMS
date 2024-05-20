@@ -1,0 +1,365 @@
+<form class="dynamic-form" id="PMS_DYNAMIC" name="tenderdata" #f="ngForm" (ngSubmit)="checkIFValid() && submitData()" novalidate>
+    <div class="survey-header suver-action-header tender_editbtn">
+        <button type="button" *ngIf="openTab=='view' && tableViewEnable && !hideswitchScope.includes(activeFromName)" class="header-action" (click)="viewTableData('edit')">Tender Edit</button>
+        <button type="button" *ngIf="openTab=='edit' && tableViewEnable && !hideswitchScope.includes(activeFromName)" class="header-action" (click)="viewTableData('view')">Tender Details</button>
+        <button type="button" class="header-action-1" (click)="multipleEntryTable()" *ngIf="!multipleEntry && showMultiPlebutton">Multiple Entry</button>
+        <button type="button" class="header-action-1" (click)="multipleEntryTable()" *ngIf="multipleEntry && showMultiPlebutton">Singleg Entry</button>
+    </div>
+
+    <app-table-view *ngIf="openTab=='view'" [formData]="formData" [viewData]="tableViewData" [prefieldData]="prefieldData"></app-table-view>
+
+    <div *ngIf="openTab=='edit'">
+        <ng-container *ngFor="let formField of formData ; let i = index">
+            <div class="survey-header" *ngIf="(editMode || (!editMode && !formField.show_on_edit )) && formField.is_hidden ==false">
+                <h1>{{formField.name}}</h1>
+                <button type="button" class="header-action" (click)="proceedNext()" *ngIf="formField.is_skipable">SKIP NOW</button>
+            </div>
+            <app-tabular-entry *ngIf="multipleEntry && !formField.show_on_edit" [excelData]="tenderExcelData"
+                [formData]="formData"></app-tabular-entry>
+            <section [ngClass]="{'tabular-group': formField.value_type == 'TABULAR' }" *ngIf="!multipleEntry && (editMode || (!editMode && !formField.show_on_edit )) && formField.is_hidden ==false">
+                <div class="flex-div adform" [ngClass]="{'is_multiple': formField.is_multiple }"
+                    *ngFor="let dataTouple of formField.Datatouples">
+                    <div class="Add-new" *ngIf="dataTouple != 1">
+                        <button type="button" (click)="removeRow(i,dataTouple)"
+                            class="btn btn-primary main-submit">Remove</button>
+                    </div>
+                    <div class="mb-3" *ngFor="let controls of formField.form_fields"
+                        [ngClass]="{'full-width': ['textarea','file'].includes(controls.form_input_type),'fileUpload': ['file'].includes(controls.form_input_type),'tagMargin': !controls.hidden_param}">
+                        <section *ngIf="controls.hidden_param">
+                            <section [ngSwitch]="controls.form_input_type">
+                                <section *ngSwitchCase="'text'" [ngClass]="{'hiddenField': controls.is_hidden }">
+                                    <label>{{controls.form_label}}<span class="asterisk"
+                                            *ngIf="controls.is_required == true">*</span> </label>
+                                    <input type="text" disabled="{{formField.disableValue || controls.is_disabled}}" class="form-control"
+                                        [required]="controls.is_required == true ? true : false"
+                                        #[controls.form_internal_name]="ngModel"
+                                        maxlength="{{controls.maximum_character}}"
+                                        name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                        [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]">
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+                                </section>
+                                <section *ngSwitchCase="'date'" [ngClass]="{'hiddenField': controls.is_hidden }">
+                                    <label>{{controls.form_label}} <span class="asterisk"
+                                            *ngIf="controls.is_required == true">*</span></label>
+                                    <input type="date" disabled="{{formField.disableValue || controls.is_disabled}}" class="form-control"
+                                        [required]="controls.is_required == true ? true : false"
+                                        #[controls.form_internal_name]="ngModel"
+                                        name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                        [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]">
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+                                </section>
+                                <section *ngSwitchCase="'dropdown'" [ngClass]="{'hiddenField': controls.is_hidden }">
+                                    <label>{{controls.form_label}} <span class="asterisk"
+                                            *ngIf="controls.is_required == true">*</span></label>
+                                    <select class="form-control" disabled="{{formField.disableValue || controls.is_disabled}}"
+                                        aria-label="Default select example"
+                                        [required]="controls.is_required == true ? true : false"
+                                        (change)="applyContition(controls.conditinal_on,$event,controls.api_url,controls.id,controls.dependent_dropdown_choices[0]?.query_name,controls)"
+                                        #[controls.form_internal_name]="ngModel"
+                                        name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                        [ngModelOptions]="{standalone: true}"
+                                        [attr.ctrl_name]="controls.form_internal_name +formField.id +'_' + dataTouple"
+                                        [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]">
+                                        <option selected disabled value="">Select {{controls.form_label}}</option>
+                                        <option value="{{dropdown_choice.id}}"
+                                            *ngFor="let dropdown_choice of controls.dropdown_choices"
+                                            [disabled]="checkSelctableCondition(dropdown_choice.id,formField.is_multiple,formField.Datatouples,controls.form_internal_name +formField.id,formField.value_type)">
+                                            {{dropdown_choice.itemName}}</option>
+                                        <option *ngIf="controls.is_other" value="add-new">Add Other</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+                                </section>
+                                <section *ngSwitchCase="'textarea'" class="full-width" [ngClass]="{'hiddenField': controls.is_hidden }">
+                                    <label>{{controls.form_label}} <span class="asterisk"
+                                            *ngIf="controls.is_required == true">*</span></label>
+                                    <textarea disabled="{{formField.disableValue || controls.is_disabled}}" class="form-control" rows="2"
+                                        [required]="controls.is_required == true ? true : false"
+                                        #[controls.form_internal_name]="ngModel"
+                                        maxlength="{{controls.maximum_character}}"
+                                        name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                        [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]"></textarea>
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+                                </section>
+                                <section *ngSwitchCase="'checkbox'" class="custom-check" [ngClass]="{'hiddenField': controls.is_hidden }">
+                                    <label>{{controls.form_label}} <span class="asterisk"
+                                            *ngIf="controls.is_required == true">*</span></label>
+                                    <label class="container">Add
+                                        <input type="checkbox" disabled="{{formField.disableValue || controls.is_disabled}}" name="add"
+                                            [required]="controls.is_required == true ? true : false"
+                                            #[controls.form_internal_name]="ngModel"
+                                            name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                            [ngModelOptions]="{standalone: true}"
+                                            [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+                                </section>
+    
+                                <section *ngSwitchCase="'radio'" class="custom-check" [ngClass]="{'hiddenField': controls.is_hidden }">
+                                    <label>{{controls.form_label}} <span class="asterisk"
+                                            *ngIf="controls.is_required == true">*</span></label>
+                                    <label #dropdown class="container"
+                                        *ngFor="let dropdown_choice of controls.dropdown_choices; let i = index">
+                                        <label>{{dropdown_choice.option}}</label>
+                                        <input type="radio" disabled="{{formField.disableValue || controls.is_disabled}}" name="custominput"
+                                            id="season{{i}}" [required]="controls.is_required == true ? true : false"
+                                            #[controls.form_internal_name]="ngModel" [value]="dropdown_choice.id"
+                                            name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                            [ngModelOptions]="{standalone: true}"
+                                            [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+                                </section>
+    
+                                <section *ngSwitchCase="'number'" [ngClass]="{'hiddenField': controls.is_hidden }">
+                                    <label>{{controls.form_label}} <span class="asterisk"
+                                            *ngIf="controls.is_required == true">*</span></label>
+                                    <input type="text" disabled="{{formField.disableValue || controls.is_disabled}}" amountNumber class="form-control"
+                                        (input)="customFormula(controls.all_formulas,formField.id,dataTouple)"
+                                        (change)="applyContition(controls.conditinal_on,$event,controls.api_url,controls.id,controls.dependent_dropdown_choices[0]?.query_name,controls)"
+                                        [required]="controls.is_required == true ? true : false"
+                                        #[controls.form_internal_name]="ngModel"
+                                        name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                        [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]">
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+                                </section>
+
+                                <section *ngSwitchCase="'phone'" [ngClass]="{'hiddenField': controls.is_hidden }">
+                                    <label>{{controls.form_label}} <span class="asterisk"
+                                            *ngIf="controls.is_required == true">*</span></label>
+                                    <span class="prefix">+{{controls.country[0]?.phone_code}}</span>
+                                    <input type="text" maxlength="10" [ngClass]="{'phonenumber': controls.form_input_type=='phone' }" numbersOnly disabled="{{formField.disableValue || controls.is_disabled}}" amountNumber class="form-control"
+                                        (input)="customFormula(controls.all_formulas,formField.id,dataTouple)"
+                                        (change)="applyContition(controls.conditinal_on,$event,controls.api_url,controls.id,controls.dependent_dropdown_choices[0]?.query_name,controls)"
+                                        [required]="controls.is_required == true ? true : false"
+                                        #[controls.form_internal_name]="ngModel"
+                                        name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                        [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]">
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+                                </section>
+    
+                                <section *ngSwitchCase="'file'" [ngClass]="{'hiddenField': controls.is_hidden }">
+                                    <label>{{controls.form_label}} <span class="asterisk"
+                                            *ngIf="controls.is_required == true">*</span></label>
+                                    <span class="allow-file-type">Please upload :
+                                        {{dynamicFileTypes(controls.dropdown_choices)}}</span>
+                                    <div class="file btn btn-lg btn-primary upload_btn"
+                                        [ngClass]="{'selected': tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple] }">
+                                        <span><img src="assets/icons/upload.png" alt=""></span>
+                                        <span *ngIf="!tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]">Choose
+                                            file</span>
+                                        <span *ngIf="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]">{{filterFileNameOnly(tenderdata[controls.form_internal_name + formField.id +'_' + dataTouple])}}</span>
+                                        <span *ngIf="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]?.name">{{filterFileNameOnly(tenderdata[controls.form_internal_name + formField.id +'_' + dataTouple].name)}}</span>
+                                        <!-- <span *ngIf="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]">Selected File Name</span> -->
+                                        <input type="file"  disabled="{{formField.disableValue || controls.is_disabled}}" name="file"
+                                            accept="{{dynamicFileTypes(controls.dropdown_choices)}}"
+                                            [attr.ctrl_name]="controls.form_internal_name +formField.id +'_' + dataTouple"
+                                            (change)="uploadFile($event,dynamicFileTypes(controls.dropdown_choices),controls.form_internal_name,formField.id,dataTouple)"
+                                            [required]="fileRequiredValidation(tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple],controls.is_required)"
+                                            #[controls.form_internal_name]="ngModel"
+                                            name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                            [ngModelOptions]="{standalone: true}"
+                                            [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]">
+                                    </div>
+                                    <span *ngIf="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]" (click)="previewDoc(tenderdata[controls.form_internal_name + formField.id +'_' + dataTouple],controls.form_internal_name,formField.id,dataTouple)"><img class="prefiew-icon" src="assets/icons/eye.png" alt=""></span>
+                                    <span *ngIf="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]" (click)="removeDoc(controls.form_internal_name + formField.id +'_' + dataTouple)"><img class="prefiew-icon" src="assets/icons/delete.png" alt=""></span>
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+                                </section>
+    
+                                <section *ngSwitchCase="'boolean'" class="custom-check booleanInput" [ngClass]="{'hiddenField': controls.is_hidden }">
+                                    <label class="container">
+                                        <h1 class="cmnt_txt">{{controls.form_label}} <span class="asterisk"
+                                                *ngIf="controls.is_required == true">*</span></h1>
+                                        <h2>{{controls.form_description}} </h2>
+                                        <input type="checkbox" disabled="{{formField.disableValue || controls.is_disabled}}"
+                                            [required]="controls.is_required == true ? true : false"
+                                            #[controls.form_internal_name]="ngModel"
+                                            name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                            [ngModelOptions]="{standalone: true}"
+                                            [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]"
+                                            [checked]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]=='true'">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+                                </section>
+    
+                                <section *ngSwitchCase="'multiselect'" [ngClass]="{'hiddenField': controls.is_hidden }">
+                                    <label>{{controls.form_label}} <span class="asterisk"
+                                            *ngIf="controls.is_required == true">*</span></label>
+                                    <angular2-multiselect disabled="{{formField.disableValue || controls.is_disabled}}"
+                                        [data]="controls.dropdown_choices" [settings]="MultidropdownSettings"
+                                        [required]="controls.is_required == true ? true : false"
+                                        #[controls.form_internal_name]="ngModel"
+                                        name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                        [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]"></angular2-multiselect>
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+                                </section>
+
+                                <section *ngSwitchCase="'dependant-multiselect'" [ngClass]="{'hiddenField': controls.is_hidden }">
+                                    <label>{{controls.form_label}} <span class="asterisk"
+                                            *ngIf="controls.is_required == true">*</span></label>
+                                    <angular2-multiselect disabled="{{formField.disableValue || controls.is_disabled}}"
+                                        [data]="controls.dependent_dropdown_choices" [settings]="MultidropdownSettings"
+                                        [required]="controls.is_required == true ? true : false"
+                                        #[controls.form_internal_name]="ngModel"
+                                        (ngModelChange)="applyContition(controls.conditinal_on,$event,controls.api_url,controls.id,controls.dependent_dropdown_choices[0]?.query_name,controls)"
+                                        name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                        [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]"></angular2-multiselect>
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+                                </section>
+    
+                                <section *ngSwitchCase="'dependency'" [ngClass]="{'hiddenField': controls.is_hidden }">
+                                    <label>{{controls.form_label}} <span class="asterisk"
+                                            *ngIf="controls.is_required == true">*</span></label>
+                                    <select class="form-control" disabled="{{formField.disableValue || controls.is_disabled}}"
+                                        aria-label="Default select example"
+                                        [required]="controls.is_required == true ? true : false"
+                                        #[controls.form_internal_name]="ngModel"
+                                        (change)="applyContition(controls.conditinal_on,$event,controls.api_url,controls.id,controls.dependent_dropdown_choices[0]?.query_name,controls)"
+                                        name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                        [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]">
+                                        <option selected disabled>Select {{controls.form_label}}</option>
+                                        <option value="{{dropdown_choice.id}}"
+                                            *ngFor="let dropdown_choice of controls.dropdown_choices">
+                                            {{dropdown_choice.itemName}}</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+                                </section>
+    
+                                <section *ngSwitchCase="'formulla'" [ngClass]="{'hiddenField': controls.is_hidden }">
+                                    <label>{{controls.form_label}} <span class="asterisk"
+                                            *ngIf="controls.is_required == true">*</span></label>
+                                    <input type="text" class="form-control"
+                                        [required]="controls.is_required == true ? true : false"
+                                        (input)="customFormula(controls.all_formulas,formField.id,dataTouple)"
+                                        #[controls.form_internal_name]="ngModel"
+                                        [ngModelOptions]="{standalone: true}"
+                                        name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                        [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]">
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+    
+                                </section>
+    
+                                <section *ngSwitchCase="'reference'" [ngClass]="{'hiddenField': controls.is_hidden }">
+                                    <section *ngIf="controls.condition_input_type == 'dropdown'">
+                                    <label>{{controls.form_label}} <span class="asterisk"
+                                            *ngIf="controls.is_required == true">*</span></label>
+                                    <select class="form-control" disabled="{{formField.disableValue || controls.is_disabled}}"
+                                        aria-label="Default select example"
+                                        [required]="controls.is_required == true ? true : false"
+                                        (change)="applyContition(controls.conditinal_on,$event,controls.api_url,controls.id,controls.dependent_dropdown_choices[0]?.query_name,controls)"
+                                        #[controls.form_internal_name]="ngModel"
+                                        name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                        [ngModelOptions]="{standalone: true}"
+                                        [attr.ctrl_name]="controls.form_internal_name +formField.id +'_' + dataTouple"
+                                        [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]">
+                                        <option selected disabled value="">Select {{controls.form_label}}</option>
+                                        <option value="{{dropdown_choice.option_id}}"
+                                            *ngFor="let dropdown_choice of controls.dependent_dropdown_choices"
+                                            [disabled]="checkSelctableCondition(dropdown_choice.id,formField.is_multiple,formField.Datatouples,controls.form_internal_name +formField.id,formField.value_type)">
+                                            {{dropdown_choice.itemName}}</option>
+                                        <option *ngIf="controls.is_other" value="add-new">Add Other</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+                                    </section>
+                                    <section *ngIf="controls.condition_input_type == 'dependant-multiselect'">
+                                    <label>{{controls.form_label}} <span class="asterisk"
+                                            *ngIf="controls.is_required == true">*</span></label>
+                                    <angular2-multiselect disabled="{{formField.disableValue || controls.is_disabled}}"
+                                        [data]="controls.dependent_dropdown_choices" [settings]="MultidropdownSettings"
+                                        [required]="controls.is_required == true ? true : false"
+                                        #[controls.form_internal_name]="ngModel"
+                                        name="{{controls.form_internal_name +formField.id +'_' + dataTouple}}"
+                                        [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="tenderdata[controls.form_internal_name +formField.id +'_' + dataTouple]"></angular2-multiselect>
+                                    <div class="invalid-feedback">
+                                        <div>{{controls.form_label}} is required</div>
+                                    </div>
+                                    </section>
+                                </section>
+    
+    
+                                <section *ngSwitchDefault>Typo Error <span>{{controls.form_input_type}}</span>
+                                </section>
+                            </section>
+                        </section>
+                    </div>
+                </div>
+            </section>
+            <section class="jv-data-table" *ngIf="formField.name == 'Tender Type' && ShowJVDATA">
+                <table>
+                    <tr>
+                        <th *ngFor="let JV_MASTER_form of JV_MASTER_FROM.form_fields ; let i = index">{{JV_MASTER_form.form_label}}</th>
+                    </tr>
+                    <tr *ngFor="let JVDATA of JVDATALIST ; let j = index">
+                        <td *ngFor="let JV_MASTER_form of JV_MASTER_FROM.form_fields ; let i = index">
+                            <input type="checkbox" *ngIf="JV_MASTER_form.form_input_type == 'boolean'" [disabled]="!jvDisableScope.includes(JV_MASTER_form.form_internal_name)" [ngModelOptions]="{standalone: true}" [(ngModel)]="tenderdata[JV_MASTER_form.form_internal_name +JV_MASTER_form.form_group +'_' + increment(j)]">
+                            <span class="tableprefix" *ngIf="JV_MASTER_form.form_input_type == 'phone'">+{{JV_MASTER_form.country[0]?.phone_code}}</span>
+                            <input type="text" [ngClass]="{'tablephonenumber': JV_MASTER_form.form_input_type=='phone' }" *ngIf="JV_MASTER_form.form_input_type != 'boolean'" [disabled]="!jvDisableScope.includes(JV_MASTER_form.form_internal_name) || (JV_MASTER_form.form_internal_name == 'jv_share__details' && JVDATALIST.length == 1)"  [ngModelOptions]="{standalone: true}" [(ngModel)]="tenderdata[JV_MASTER_form.form_internal_name +JV_MASTER_form.form_group +'_' + increment(j)]" (change)="JVChange(increment(j),JV_MASTER_form)">
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            <div class="Add-new" *ngIf="formField.is_multiple && !multipleEntry && (editMode || (!editMode && !formField.show_on_edit )) && formField.is_hidden == false">
+                <button type="button" [disabled]="formField.disableValue" (click)="AddNewRow(i)" class="btn btn-primary main-submit">
+                    ADD NEW
+                </button>
+            </div>
+        </ng-container>
+    </div>
+    <div class="mb-3">
+    <section class="custom-section" *ngIf="openTab=='edit' && needacceptTnC">
+        <label class="container">{{needacceptTnCText}}
+            <input type="checkbox" required #acceptTnc="ngModel" name="acceptTnC" [ngModelOptions]="{standalone: true}" [(ngModel)]="acceptTnC">
+            <span class="checkmark"></span>
+        </label>
+        <div *ngIf="f.submitted && acceptTnc.errors" class="invalid-feedback">
+            <div *ngIf="acceptTnc.errors['required']">Please check to proceed</div>
+        </div>
+    </section>
+    </div>
+    <div class="action-buttoncontainer" *ngIf="!multipleEntry" >
+        <app-tenderactions (parentFun)="parentFun($event)" (validCheckforSurvey)="validCheckforSurvey()" [tenderAction]="tenderAction" [prefieldData]="prefieldData" *ngIf="chieldActionRequired && tenderAction && openTab=='edit'" (parentCompFun)="funcParent()" (submitAndContinue)="submitAndContinue()" (rejectTender)="rejectTender()" (updateTender)="updateTender()"></app-tenderactions>
+        <button  #submitButton="" [disabled]="btndisable"  type="submit" *ngIf="actionName && openTab=='edit'" class="btn btn-primary main-submit">{{actionName}}</button>
+    </div>
+</form>
+
+<!-- {{tenderdata|json}} -->

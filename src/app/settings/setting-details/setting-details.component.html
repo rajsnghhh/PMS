@@ -1,0 +1,16 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Setting List</h2>
+    </div>
+
+    <div class="component-body" *ngFor="let settingsD of settingsData">
+        <ng-container *ngIf="settingsD.settings_details.length > 0 && getMultiLablePermission(generateList(settingsD.settings_details))">
+                <label class="headinglabel">{{settingsD.name}} </label>
+                <ng-container *ngFor="let settings of settingsD.settings_details">
+                        <div *ngIf="getPermissionchild('Setting '+settings.name)" class="content" (click)="NavigateToSetting(settings.slug,settings.name)">
+                                <img src="{{environment.API_URL}}media/{{settings.icon_image}}" alt="">{{settings.name}}
+                        </div>
+                </ng-container>
+        </ng-container>
+    </div>
+</div>

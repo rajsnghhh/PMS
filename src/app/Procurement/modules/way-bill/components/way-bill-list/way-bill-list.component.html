@@ -1,0 +1,80 @@
+<div class="createrequisition-section">
+  <div class="main-body-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">Sr. No.</th>
+          <th scope="col">Way Bill No.</th>
+          <th scope="col">Entry in State</th>
+          <th scope="col">Vendor</th>
+          <th scope="col">Issued Date</th>
+          <th scope="col">Used Details</th>
+          <th scope="col" class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of purchaseOrderList; index as i">
+          <td class="text-center">{{ i + 1 }}</td>
+          <td>{{ item?.way_bill_form_no }}</td>
+          <td>{{ item?.entry_in_state_details[0]?.name }}</td>
+          <td>{{ item?.vendor_details?.vendor_name }}</td>
+          <td>{{ item?.issued_date }}</td>
+          <td>
+            {{ item?.used_details }}
+            <!-- <ng-container *ngIf="item?.purchase_details?.length">
+              <table
+                class="table table-bordered"
+                style="margin-bottom: 0; padding-bottom: 0"
+              >
+                <thead>
+                  <tr>
+                    <th>Pur. No.</th>
+                    <th>Pur. Date.</th>
+                    <th>Bill No.</th>
+                    <th>Bill Date</th>
+                    <th>Item</th>
+                    <th>Unit</th>
+                    <th>Qty.</th>
+                    <th>Bill Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let sub_item of item?.purchase_details">
+                    <tr>
+                      <td>
+                        {{ sub_item?.party_bill_no }}
+                      </td>
+                      <td>
+                        {{ sub_item?.party_bill_date }}
+                      </td>
+                      <td>
+                        {{ sub_item?.date }}
+                      </td>
+                      <td>{{ sub_item?.quantity }}</td>
+                      <td>{{ sub_item?.total_amount | currency : "INR" }}</td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </ng-container> -->
+          </td>
+
+          <td>
+            <div class="table-action">
+              <img src="assets/icons/dots.png" alt="" />
+              <ul>
+                <li (click)="editWayBill(item.id)">Edit</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+
+        <tr class="text-center">
+          <td colspan="13" *ngIf="purchaseOrderList?.length == 0">
+            No data found.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

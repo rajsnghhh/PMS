@@ -1,0 +1,183 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Project Details</h2>
+
+        <div class="action-button-container">
+            <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown"
+                aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span><img src="assets/usermanagement/download_csv.png" class="export"><strong>CSV</strong> </span>
+                </li> 
+            </ul>
+            <button data-bs-toggle="offcanvas" data-bs-target="#addZone" aria-controls="offcanvasRight"
+                onclick="history.back()">BACK</button>
+        </div>
+    </div>
+    <div class="component-body">
+        <div class="scrollable-table-container table_scroll">
+            <table class="scrollable-table" #customscroll *ngIf="ProjectList.length > 0">
+
+                <tr>
+                    <th class="posion-fixed-left-sno entiti table_pro">S.No</th>
+                    <th>Tender ID</th>
+                    <th class="dynamiclnth" *ngFor="let tditem of ProjectList[0].project_data; let i = index"
+                        [ngClass]="{'posion-fixed-left': i == 0 }">
+                        <p [outerHTML]="tditem.form_label | textMax"></p>
+                    </th>
+                    <th class="posion-fixed-right lstheight table_pro">Action</th>
+                </tr>
+                <tr class="mainHeight" *ngFor="let item of ProjectList ; let i = index">
+                    <td class="posion-fixed-left-sno">{{ (pageSize*(page-1)) + i+1.}}</td>
+                    <td (click)="gotoEnderDetails(item.tender)" class="clickable">{{item.corresponding_tender_id}}</td>
+                    <td class="fstwidth" *ngFor="let tditem of ProjectList[i].project_data; let j = index"
+                        [ngClass]="{'posion-fixed-left entities entitiwidth': j == 0 }">
+                        <p [outerHTML]="tditem.value | textMax"></p>
+                    </td>
+                    <td class="posion-fixed-right surveybutton">
+                        <div class="custom-section">
+                            <div class="dropdown">
+                                <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                <div class="dropdown-content actionheight">
+                                    <div class="img-container actionclass">
+                                        <span (click)="getTenderId(item,'Edit')">
+                                            <label>
+                                                Edit
+                                            </label>
+                                        </span>
+                                        <span *ngIf="item.is_executive_commitee_member && item.is_project_head_selected"
+                                            (click)="getTenderId(item,'Select Project Head')">
+                                            <label>
+                                                Edit Project Head
+                                            </label>
+                                        </span>
+                                        <span
+                                            *ngIf="item.is_executive_commitee_member && !item.is_project_head_selected"
+                                            (click)="getTenderId(item,'Select Project Head')">
+                                            <label>
+                                                Select Project Head
+                                            </label>
+                                        </span>
+                                        <span
+                                            *ngIf="item.is_executive_commitee_member && item.is_planning_head_selected"
+                                            (click)="getTenderId(item,'Select Planning Head')">
+                                            <label>
+                                                Edit Planning Head
+                                            </label>
+                                        </span>
+                                        <span
+                                            *ngIf="item.is_executive_commitee_member && !item.is_planning_head_selected"
+                                            (click)="getTenderId(item,'Select Planning Head')">
+                                            <label>
+                                                Select Planning Head
+                                            </label>
+                                        </span>
+                                        <span (click)="getTenderId(item,'JVIncorp')">
+                                            <label>
+                                                JV Incorporation
+                                            </label>
+                                        </span>
+                                        <span *ngIf="item.is_planning_active" (click)="getTenderId(item,'Planning')">
+                                            <label>
+                                                Planning
+                                            </label>
+                                        </span>
+                                        <!-- <span *ngIf="item.is_planning_active" (click)="getTenderId(item,'Budget')">
+                                            <label>
+                                                Budget
+                                            </label>
+                                        </span> -->
+                                        <span *ngIf="item.is_planning_active" (click)="getTenderId(item,'Masters')">
+                                            <label>
+                                                Masters
+                                            </label>
+                                        </span>
+                                        <span  (click)="goToCommunication(item.id)">
+                                            <label>
+                                                Communication
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="text-center">
+                    <td colspan="6" *ngIf="ProjectList.length == 0">No data found.</td>
+                </tr>
+
+            </table>
+            <table>
+                <tr class="text-center" *ngIf="ProjectList.length == 0">
+                    <td>No data found.</td>
+                </tr>
+            </table>
+            
+              <div class="tablescroll_btn">
+                <div class="btn_action prev_btn" (click)="previous()">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="btn_action next_btn" (click)="next()">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="editZone" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Edit Tender</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- <app-edit-location #editLocation></app-edit-location> -->
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this Project ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightUserSetting" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Select Project Head</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <app-project-head (parentFun)="closeUserSetting()" [projectId]="projectId"></app-project-head>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="planningCanvas" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Select Planning Head</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <app-planning-head (parentFun)="closePlanning()" [projectId]="projectId"></app-planning-head>
+    </div>
+</div>
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

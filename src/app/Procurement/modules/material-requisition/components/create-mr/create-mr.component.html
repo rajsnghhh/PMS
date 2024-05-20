@@ -1,0 +1,16 @@
+<div class="createrequisition-section">
+
+
+<section id="printSection">    
+    <app-mr-top-card (parrentAction)="appendData($event)" [scope]="scope" [isMR_Approver]="isMR_Approver" [prefieldData]="prefieldData"></app-mr-top-card>
+    <app-create-mr-table (parrentAction)="appendData($event)" [scope]="scope" [prefieldData]="prefieldData" [isMR_Approver]="isMR_Approver"></app-create-mr-table>
+    <app-form-below-create-mr-table (parrentAction)="appendData($event)" [scope]="scope" [prefieldData]="prefieldData"></app-form-below-create-mr-table>
+</section>
+<!-- <app-send-sms-email-create-mr></app-send-sms-email-create-mr> -->
+<div class="btd-section">
+    <button type="button" (click)="backtolist()" class="btn-cancel" >CANCEL</button>
+    <button type="submit" *ngIf="scope == 'add'" class="btn-save" (click)="createMR()">SAVE</button>
+    <button type="submit" *ngIf="scope == 'update'" class="btn-save" (click)="updateMR()">UPDATE</button>
+</div>
+
+</div>

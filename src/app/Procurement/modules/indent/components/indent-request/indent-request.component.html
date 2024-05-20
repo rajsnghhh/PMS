@@ -1,0 +1,49 @@
+<div class="createrequisition-section">
+  <button 
+    class="print-button"
+    useExistingCss:boolean="true"
+    *ngIf="scope == 'print'"
+    printSectionId="printSection" 
+    ngxPrint>
+    <img src="assets/icons/print.png" alt="">
+  </button> 
+  <!-- <link rel='stylesheet' href="/assets/scss/print-ui.css" *ngIf="scope == 'print'"/> -->
+  <section id="printSection">
+    <div class="companyDetails" *ngIf="scope == 'print'">
+      <div class="companyCard">
+          <h1>{{localStorageData?.company_details[0]?.name}}</h1>
+          <h1>{{projectData[0]?.value}} – {{projectData[1]?.value}} - {{projectData[2]?.value}} </h1>
+          <h1>{{localStorageData?.company_details[0]?.name}}</h1>
+      </div>
+  </div>
+  <div class="print-heade" *ngIf="scope == 'print'">
+      <h1>Indent Detail</h1>
+  </div>
+    <app-indent-top-card (parrentAction)="appendData($event)" [selectedMRDetails]="selectedMRDetails" [scope]="scope"
+    [prefieldData]="prefieldData" [isIndent_Approver]="isIndent_Approver"></app-indent-top-card>
+
+  <app-indent-request-form-table (parrentAction)="appendData($event)" [selectedMRDetails]="selectedMRDetails"
+    *ngIf="selectedMRDetails || prefieldData" [scope]="scope" [prefieldData]="prefieldData"
+    [isIndent_Approver]="isIndent_Approver"></app-indent-request-form-table>
+
+  <app-indent-request-form-data (parrentAction)="appendData($event)" [selectedMRDetails]="selectedMRDetails" [scope]="scope"
+    [prefieldData]="prefieldData"></app-indent-request-form-data>
+    <!-- <app-indent-approver *ngIf="isIndent_Approver && scope == 'update' && prefieldData?.status == 'pending'"
+    [prefieldData]="prefieldData"></app-indent-approver> -->
+
+  <app-send-sms-email-indent *ngIf="prefieldData?.status == 'approved'"
+    [prefieldData]="prefieldData"></app-send-sms-email-indent>
+  <div class="segnature-section" *ngIf="scope == 'print'">
+      <div class="signatiure">Prepared By:</div>
+      <div class="signatiure">Sanction By :</div>
+      <div class="signatiure">Authorized Signatory :</div>
+  </div>
+  </section>
+
+
+  <div class="btd-section">
+    <button type="button" (click)="backtolistIndent()" class="btn-cancel">CANCEL</button>
+    <button type="submit" *ngIf="scope == 'add' || scope == 'create'" class="btn-save" (click)="createIndent()">SAVE</button>
+    <button type="submit" *ngIf="scope == 'update'" class="btn-save" (click)="updateIndent()">UPDATE</button>
+  </div>
+</div>

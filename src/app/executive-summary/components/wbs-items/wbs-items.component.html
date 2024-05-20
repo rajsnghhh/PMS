@@ -1,0 +1,53 @@
+<form name="itemData" #f="ngForm" (ngSubmit)="f.form.valid && addItem()" novalidate>
+    <div class="flex-div">
+      <div class="mb-3" *ngIf="disableParrent">
+        <select class="form-select" aria-label="Default select example" name="parentTemp" [(ngModel)]="itemData.parentTemp"
+            #parentTemp="ngModel" [ngClass]="{ 'is-invalid': f.submitted && parentTemp.errors }">
+            <option selected value="">Select Parent</option>
+            <option *ngFor="let listdata of wbsParrentList" [disabled]="listdata.id == selectedforedit" value={{listdata.id}}>{{listdata.wbs_name}}</option>
+        </select>
+        <label class="floating-label-select" [ngClass]="{'insideDropdown': itemData.parentTemp =='' }">Select Parent</label>
+      </div>
+      <div class="mb-3" [ngClass]="{ 'float-now': itemData.content != '' }">
+        <input type="text" class="form-control" required id="add1" name="content"
+            [(ngModel)]="itemData.content" #content="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && content.errors }">
+        <label class="floating-label">Enter Item <span class="asterisk">*</span></label>
+        <div *ngIf="f.submitted && content.errors" class="invalid-feedback">
+            <div *ngIf="content.errors['required']">Item required</div>
+        </div>
+      </div>
+      <div class="mb-3" [ngClass]="{ 'float-now': itemData.code != '' }">
+        <input type="text" class="form-control" name="code"
+            [(ngModel)]="itemData.code" #code="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && code.errors }">
+        <label class="floating-label">Enter code </label>
+        <div *ngIf="f.submitted && code.errors" class="invalid-feedback">
+            <div *ngIf="code.errors['required']">Code required</div>
+        </div>
+      </div>
+      <div class="mb-3">
+          <select class="form-select" aria-label="Default select example" name="uom" [(ngModel)]="itemData.uom"
+              #uom="ngModel" [ngClass]="{ 'is-invalid': f.submitted && uom.errors }">
+              <option selected disabled value="">Select UOM</option>
+              <option *ngFor="let unitmeasure of uomList" value={{unitmeasure.id}}>{{unitmeasure.symbol}}</option>
+          </select>
+          <label class="floating-label-select" [ngClass]="{'insideDropdown': itemData.uom =='' }">Select UOM</label>
+          <div *ngIf="f.submitted && uom.errors" class="invalid-feedback">
+              <div *ngIf="uom.errors['required']">Please Select UOM</div>
+          </div>
+      </div>
+      <div class="mb-3" [ngClass]="{ 'float-now': itemData.by_order != ''|| itemData.by_order == 0 }">
+        <input type="number" class="form-control" required id="add1" name="by_order"
+            [(ngModel)]="itemData.by_order" #by_order="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && by_order.errors }">
+        <label class="floating-label">Enter Order index <span class="asterisk">*</span></label>
+        <div *ngIf="f.submitted && by_order.errors" class="invalid-feedback">
+            <div *ngIf="by_order.errors['required']">Item required</div>
+        </div>
+      </div>
+        
+    </div>
+    <button type="button"  *ngIf="wbsScope == 'Edit'" class="btn btn-danger delete" (click)="deleteItem()">Delete</button>
+    <button type="submit" class="btn btn-primary">{{wbsScope}} Item</button>
+</form>

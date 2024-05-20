@@ -1,0 +1,269 @@
+
+<form name="addrole" #f="ngForm" (ngSubmit)="f.form.valid && onroleSubmit()" novalidate *ngIf="!setPermissions">
+    <div class="mb-3" [ngClass]="{ 'float-now': addrole.role_name!= '' }">
+        <input type="text" class="form-control" name="role_name"
+         [(ngModel)]="addrole.role_name" required #role_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && role_name.errors }" />
+        <label class="floating-label">Enter Profile Name <span class="asterisk">*</span></label>
+        <div *ngIf="f.submitted && role_name.errors" class="invalid-feedback">
+        <div *ngIf="role_name.errors['required']">Profile name is required</div>
+        </div>
+    </div>
+
+    <div class="mb-3" [ngClass]="{ 'float-now': addrole.description!= '' }">
+        <input type="text" class="form-control" name="role_name"
+         [(ngModel)]="addrole.description" #description="ngModel" />
+        <label class="floating-label">Enter Description</label>
+    </div>
+   
+    
+    <button type="submit" class="btn btn-primary">ADD</button>
+    <button type="button" class="btn btn-primary non-active-btn" (click)="resetADD(f)">BACK</button>
+</form>
+
+<form name="permissionData" #f="ngForm" (ngSubmit)="onPermissionSubmit()" novalidate *ngIf="setPermissions">
+    <div class="permissions-section">
+        <div class="mb-3">
+            <label for="">Profile Name</label>
+            <input type="text" class="form-control" disabled name="role_name" [(ngModel)]="addrole.role_name">
+        </div>
+        <div class="treeview-permissions">
+            <button class="btn btn-primary permission-main-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTabAdm" aria-expanded="true" aria-controls="collapseTabAdm">
+                ACTION ROLE
+            </button>
+            <div class="collapse show" id="collapseTabAdm">
+                <div class="card card-body">
+                    <ul class="tree">
+                        <li *ngFor="let menu of ModulePermissionMenuLIST; let i = index" [attr.data-index]="i" class="main-menu-bottom-space">
+                        <div class="details" [attr.open]="menu.level_permission ? 'open' : null">
+                            <summary (click)="toggleMenuList(i)">{{ menu.name }}</summary>
+                        </div>
+                        </li>
+                    </ul>
+                </div>
+            </div> 
+        </div> 
+        <div class="treeview-permissions">
+            <button class="btn btn-primary permission-main-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTabmodule" aria-expanded="true" aria-controls="collapseTabmodule">
+                MODULE LEVEL PERMISSION
+            </button>
+            <div class="collapse show" id="collapseTabmodule">
+                <div class="card card-body">
+                    <ul class="tree"> 
+                        <li *ngFor="let menu of permissionData[0].menu_list; let i = index" [attr.data-index]="i" class="main-menu-bottom-space">
+                        <div class="details" [attr.open]="menu.level_permission ? 'open' : null">
+                            <summary (click)="toggleMainMenu(i)">{{ menu.menu_name }}</summary>
+                            <ul class="lastNodeHed" *ngIf="menu.sub_menu_list?.length == 0">
+                                <li class="space-line"></li>
+                                <li class="childNode nobefore" [ngClass]="{'hidden' : menu.menu_name == 'Dashboard'}">  
+                                    <label class="container">Add
+                                        <input type="checkbox" name="add" (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].menu_list[i].add">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li class="childNode nobefore">  
+                                    <label class="container">View
+                                        <input type="checkbox" name="view"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].menu_list[i].view">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li class="childNode nobefore" [ngClass]="{'hidden' : menu.menu_name == 'Dashboard'}">
+                                    <label class="container">Edit
+                                        <input type="checkbox" name="edit"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].menu_list[i].edit">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li class="childNode nobefore" [ngClass]="{'hidden' : menu.menu_name == 'Dashboard'}">
+                                    <label class="container">Export
+                                        <input type="checkbox" name="export"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].menu_list[i].export">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li class="lastNode" [ngClass]="{'hidden' : menu.menu_name == 'Dashboard'}">
+                                    <label class="container">Delete
+                                        <input type="checkbox" name="delete"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].menu_list[i].delete">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                            </ul>
+                            <ul>
+                            <li class="submenu" *ngFor="let submenu of menu.sub_menu_list; let j = index" [attr.data-index]="j">
+                                <div class="details subdetails" [attr.open]="submenu.level_permission ? 'open' : null">
+                                <summary (click)="togglechildMainMenu(i,j)">{{ submenu.menu_name }}</summary>
+                                <ul class="lastNodeHed" *ngIf="permissionData[0].menu_list[i].sub_menu_list[j].level_permission ; else elsechildmoduleBlock">
+                                    <li class="space-line"></li>
+                                    <li class="childNode nobefore">  
+                                        <label class="container">Add
+                                            <input type="checkbox" name="add"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].menu_list[i].sub_menu_list[j].add">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </li>
+                                    <li class="childNode nobefore">  
+                                        <label class="container">View
+                                            <input type="checkbox" name="view"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].menu_list[i].sub_menu_list[j].view">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </li>
+                                    <li class="childNode nobefore">
+                                        <label class="container">Edit
+                                            <input type="checkbox" name="edit"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].menu_list[i].sub_menu_list[j].edit">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </li>
+                                    <li class="childNode nobefore">
+                                        <label class="container">Export
+                                            <input type="checkbox" name="export"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].menu_list[i].sub_menu_list[j].export">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </li>
+                                    <li class="lastNode">
+                                        <label class="container">Delete
+                                            <input type="checkbox" name="delete"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].menu_list[i].sub_menu_list[j].delete">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </li>
+                                </ul>
+                                <ng-template #elsechildmoduleBlock>
+                                    <ul class="lastNodeHed">
+                                        <li class="space-line"></li>
+                                        <li class="childNode nobefore">  
+                                            <label class="container">Add
+                                                <input type="checkbox" name="add"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].menu_list[i].sub_menu_list[j].add">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </li>
+
+                                       
+                                        <li class="childNode nobefore">  
+                                            <label class="container">View
+                                                <input type="checkbox" name="view"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].menu_list[i].sub_menu_list[j].view">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </li>
+                                        <li class="childNode nobefore">
+                                            <label class="container">Edit
+                                                <input type="checkbox" name="edit"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].menu_list[i].sub_menu_list[j].edit">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </li>
+                                        <li class="childNode nobefore">
+                                            <label class="container">Export
+                                                <input type="checkbox" name="export"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].menu_list[i].sub_menu_list[j].export">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </li>
+                                        <li class="lastNode">
+                                            <label class="container">Delete
+                                                <input type="checkbox" name="delete"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].menu_list[i].sub_menu_list[j].delete">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </ng-template>
+                                </div>
+                            </li>
+                            </ul>
+                        </div>
+                        </li>
+                    </ul>
+                </div>
+            </div> 
+        </div>
+
+        <div class="treeview-permissions">
+            <button class="btn btn-primary permission-main-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTabGeneral" aria-expanded="true" aria-controls="collapseTabGeneral">
+                GENERAL SETTING
+            </button>
+            <div class="collapse show" id="collapseTabGeneral">
+                <div class="card card-body">
+                    <ul class="tree">
+                        <li *ngFor="let settingmenu of generalsettingsMenuList; let i = index" [attr.data-index]="i" class="main-menu-bottom-space">
+                        <div class="details" [attr.open]="permissionData[0].setting_list[i].level_permission ? 'open' : null">
+                            <summary (click)="settingsMenu(i)">{{ settingmenu.name }}</summary>
+                            <ul class="lastNodeHed">
+                                <li class="space-line"></li>
+                                <li class="childNode nobefore">  
+                                    <label class="container">Add
+                                        <input type="checkbox" name="add"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].setting_list[i].add">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li class="childNode nobefore">  
+                                    <label class="container">View
+                                        <input type="checkbox" name="view"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].setting_list[i].view">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li class="childNode nobefore">
+                                    <label class="container">Edit
+                                        <input type="checkbox" name="edit"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].setting_list[i].edit">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li class="childNode nobefore">
+                                    <label class="container">Export
+                                        <input type="checkbox" name="export"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].setting_list[i].export">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li class="lastNode">
+                                    <label class="container">Delete
+                                        <input type="checkbox" name="delete"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].setting_list[i].delete">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        </li>
+                    </ul>
+                </div>
+            </div> 
+        </div>
+
+        <div class="treeview-permissions">
+            <button class="btn btn-primary permission-main-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTabAdm" aria-expanded="true" aria-controls="collapseTabAdm">
+                ADMINISTRATIVE PERMISSION
+            </button>
+            <div class="collapse show" id="collapseTabAdm">
+                <div class="card card-body">
+                    <ul class="tree">
+                        <li *ngFor="let menu of administrativeMenuList; let i = index" [attr.data-index]="i" class="main-menu-bottom-space">
+                        <div class="details" [attr.open]="permissionData[0].administrative_list[i].level_permission ? 'open' : null">
+                            <summary (click)="admintoggleMainMenu(i)">{{ menu.name }}</summary>
+                            <ul class="lastNodeHed">
+                                <li class="space-line"></li>
+                                <li class="childNode nobefore">  
+                                    <label class="container">Import 
+                                        <input type="checkbox" name="import"  (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].administrative_list[i].import">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li class="childNode nobefore">
+                                    <label class="container">Export
+                                        <input type="checkbox" name="export" (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].administrative_list[i].export">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li class="childNode nobefore">
+                                    <label class="container">Approve
+                                        <input type="checkbox" name="approval" (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].administrative_list[i].approval">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li class="lastNode">
+                                    <label class="container">Submit For Approve
+                                        <input type="checkbox" name="approval_submit" (ngModelChange)="valuechange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionData[0].administrative_list[i].approval_submit">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        </li>
+                    </ul>
+                </div>
+            </div> 
+        </div>
+
+    </div>
+    <button type="submit" class="btn btn-primary">SAVE</button>
+    <button type="button" class="btn btn-primary non-active-btn" (click)="resetADD(f)">BACK</button>
+</form>

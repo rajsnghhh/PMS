@@ -1,0 +1,101 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="row">
+            <div class="container mt-3">
+                <div class="card">
+                    <div class="card-header">Last Week Notifications</div><br>
+                    <div id="ulunread">
+                        <div class="card-body unread" *ngFor="let last of lastWeekNotify">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <img src="assets/header/orange_bell.png" alt="">
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="row active-link">{{last.created_at.substring(11,16)}} |
+                                        {{last.created_at.substring(0,
+                                        10).split("-").reverse().join("-")}}</div>
+                                    <div class="row inactive-link" style="max-width:270px;
+                                    word-wrap:break-word;">{{last.notification}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><br>
+
+        <!-- <div class="row">
+            <div class="container mt-3">
+                <div class="card">
+                    <div class="card-header">Last Week Notifications</div>
+                    <div id="ulread">
+                        <div class="card-body read">
+                            <div class="row">
+                                <img src="assets/header/blue_white_bell.png" alt="">
+                                <div class="col-md">
+                                    <div class="row active-link">14:22 | 30-1-2023</div>
+                                    <div class="row inactive-link">Lorem ipsum is simply dummy text of the...</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body read">
+                            <div class="row">
+                                <img src="assets/header/blue_white_bell.png" alt="">
+                                <div class="col-md">
+                                    <div class="row active-link">14:22 | 30-1-2023</div>
+                                    <div class="row inactive-link">Lorem ipsum is simply dummy text of the...</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body read">
+                            <div class="row">
+                                <img src="assets/header/blue_white_bell.png" alt="">
+                                <div class="col-md">
+                                    <div class="row active-link">14:22 | 30-1-2023</div>
+                                    <div class="row inactive-link">Lorem ipsum is simply dummy text of the...</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body read">
+                            <div class="row">
+                                <img src="assets/header/blue_white_bell.png" alt="">
+                                <div class="col-md">
+                                    <div class="row active-link">14:22 | 30-1-2023</div>
+                                    <div class="row inactive-link">Lorem ipsum is simply dummy text of the...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+    <div class="col-md-8">
+        <div class="container mt-3">
+
+            <div class="card">
+                <div class="card-header">All Notifications</div><br>
+
+                <div id="ulall">
+                    <div class="row" style="width: 98%;" *ngFor="let notification of notificationData"><img
+                            class="imgAll" src="assets/header/blue_grey_bell.png" alt="">
+                        <div class="col-md-6 card-body all" style="height: auto;">
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="row active-link">{{notification.created_at.substring(11,16)}} |
+                                        {{notification.created_at.substring(0,
+                                        10).split("-").reverse().join("-")}}<img src="assets/header/bookmark.png" alt=""
+                                            id="bookmark"></div>
+                                    <div class="row inactive-link" style="max-width:620px;
+                                    word-wrap:break-word;">{{notification.notification}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,50 @@
+<form role="form" [formGroup]="filterForm">
+    <div class="mb-3" [ngClass]="{ 'float-now': floatTender.Status != '' }">
+        <input type="text" class="form-control" formControlName="status" [(ngModel)]="floatTender.Status"
+            [ngClass]="displayFieldCss(filterForm,'status')" id="role">
+        <label class="floating-label">Status <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(filterForm,'status')">
+            <span class="text-danger" *ngIf="filterForm.get('status')?.errors?.['required']">status is required</span>
+        </div>
+    </div>
+
+    <div class="flex-div">
+        <div class="mb-3" [ngClass]="{ 'float-now': floatTender.Sdate != '' }">
+            <label>Date Range <span class="asterisk text-danger">*</span></label>
+            <div class="custom-select-input">
+                <input type="date" class="form-control" formControlName="startdate" [(ngModel)]="floatTender.Sdate"
+                    [ngClass]="displayFieldCss(filterForm,'startdate')" id="role">
+                <input type="date" class="form-control" formControlName="enddate" [(ngModel)]="floatTender.Edate"
+                    [ngClass]="displayFieldCss(filterForm,'enddate')" id="role"><br>
+            </div>
+            <div class="required" *ngIf="isFieldValid(filterForm,'startdate') || isFieldValid(filterForm,'enddate')">
+                <span class="text-danger"
+                    *ngIf="filterForm.get('startdate')?.errors?.['required'] || filterForm.get('enddate')?.errors?.['required']">Date
+                    Range is required</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3" [ngClass]="{ 'float-now': floatTender.Eligibility!= '' }">
+        <input type="text" class="form-control" formControlName="eligibility" [(ngModel)]="floatTender.Eligibility"
+            [ngClass]="displayFieldCss(filterForm,'eligibility')" id="role">
+        <label class="floating-label">Eligibility <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(filterForm,'eligibility')">
+            <span class="text-danger" *ngIf="filterForm.get('eligibility')?.errors?.['required']">Eligibility is
+                required</span>
+        </div>
+    </div>
+
+    <div class="mb-3" [ngClass]="{ 'float-now': floatTender.Biddertype != '' }">
+        <input type="text" class="form-control" formControlName="biddertype" [(ngModel)]="floatTender.Biddertype"
+            [ngClass]="displayFieldCss(filterForm,'biddertype')" id="role">
+        <label class="floating-label">Bidder Type <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(filterForm,'biddertype')">
+            <span class="text-danger" *ngIf="filterForm.get('biddertype')?.errors?.['required']">Bidder Type is
+                required</span>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="tenderFilter()">FILTER</button>
+    <button type="button" class="btn btn-primary non-active-btn">BACK</button>
+</form>

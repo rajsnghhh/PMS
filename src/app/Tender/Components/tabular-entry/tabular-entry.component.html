@@ -1,0 +1,62 @@
+<!-- <div class="table-container component-body">
+    <table *ngIf="excelData">
+        <tr>
+            <th *ngFor="let inputdata of excelData.results[0].tender_data">{{inputdata.form_label}}</th>
+        </tr>
+        <tr *ngFor="let rowDATA of excelData.results">
+            <td *ngFor="let inputdata of rowDATA.tender_data"><input type="text" value="{{inputdata.value}}"></td>
+        </tr>
+    </table>
+
+    <button type="button">Add NEW</button>
+</div> -->
+<section class="relative-div">
+    <div class="table-container component-body" *ngIf="appentTable">
+        <button type="button" class="add-new" (click)="AddNew()">Add NEW</button>
+        <table *ngIf="excelData && formData">
+            <tr>
+                <th *ngFor="let inputdata of formData[0].form_fields">{{inputdata.form_label}}</th>
+            </tr>
+            <tr *ngFor="let rowDATA of excelData.results">
+                <td *ngFor="let inputdata of formData[0].form_fields">
+                    <section [ngSwitch]="inputdata.form_input_type">
+                        <section *ngSwitchCase="'text'">
+                            <input type="text" (change)="ChangeValue($event,rowDATA.id,inputdata.id)" name="{{'data_'+rowDATA.id+'_'+inputdata.form_internal_name}}" [(ngModel)]="bindData['data_'+rowDATA.id+'_'+inputdata.form_internal_name]">
+                        </section>
+                        <section *ngSwitchCase="'date'">
+                            <input type="date" (change)="ChangeValue($event,rowDATA.id,inputdata.id)" name="{{'data_'+rowDATA.id+'_'+inputdata.form_internal_name}}" [(ngModel)]="bindData['data_'+rowDATA.id+'_'+inputdata.form_internal_name]">
+                        </section>
+                        <section *ngSwitchCase="'dropdown'">
+                            <select id="" (change)="ChangeValue($event,rowDATA.id,inputdata.id)" name="{{'data_'+rowDATA.id+'_'+inputdata.form_internal_name}}" [(ngModel)]="bindData['data_'+rowDATA.id+'_'+inputdata.form_internal_name]">
+                                <option selected value="" Disabled>Please Select</option>
+                                <option value="{{dropdown_choice.id}}"
+                                    *ngFor="let dropdown_choice of inputdata.dropdown_choices">
+                                    {{dropdown_choice.itemName}}</option>
+                            </select>
+                        </section>
+                        <section *ngSwitchCase="'reference'">
+                            <select id="" (change)="ChangeValue($event,rowDATA.id,inputdata.id)" name="{{'data_'+rowDATA.id+'_'+inputdata.form_internal_name}}" [(ngModel)]="bindData['data_'+rowDATA.id+'_'+inputdata.form_internal_name]">
+                                <option selected value="" Disabled>Please Select</option>
+                                <option value="{{dropdown_choice.option_id}}"
+                                    *ngFor="let dropdown_choice of inputdata.dependent_dropdown_choices">
+                                    {{dropdown_choice.itemName}}</option>
+                            </select>
+                        </section>
+                        <section *ngSwitchCase="'boolean'">
+                            <select (change)="ChangeValue($event,rowDATA.id,inputdata.id)" id="" name="{{'data_'+rowDATA.id+'_'+inputdata.form_internal_name}}" [(ngModel)]="bindData['data_'+rowDATA.id+'_'+inputdata.form_internal_name]">
+                                <option selected value="" Disabled>Please Select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </section>
+                        <section *ngSwitchDefault>
+                            <input type="text" (change)="ChangeValue($event,rowDATA.id,inputdata.id)" name="{{'data_'+rowDATA.id+'_'+inputdata.form_internal_name}}" [(ngModel)]="bindData['data_'+rowDATA.id+'_'+inputdata.form_internal_name]">
+                        </section>
+                    </section>
+                    
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
+

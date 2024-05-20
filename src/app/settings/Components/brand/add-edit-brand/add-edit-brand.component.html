@@ -1,0 +1,170 @@
+<form name="addUpdateBrandForm" #f="ngForm" (ngSubmit)="f.form.valid && addUpdateBrand()" novalidate>
+
+    <div class="flex-div row">
+        <div class="col-md-6">
+            <div class="mb-3 float-now" >
+                <section class="treeSection form-control">
+                    <!-- <div class="parentDiv">
+                        <ul class="parent"
+                            *ngFor="let itemGroup of itemGroupList; let i = index"
+                        >
+                            <li>
+                                <input type="checkbox" name="material_type{{itemGroup.id}}" #material_type="ngModel" [(ngModel)]="addBrandTemplate.material_type[i]">
+                                
+                                {{itemGroup.name}}
+                                
+                                <ul 
+                                    *ngFor="let subMaterial of itemSubGroupList; let j = index"
+                                >
+                                    <li
+                                        *ngIf="(itemGroup.id == subMaterial.parent)"
+                                    >
+                                        <input type="checkbox" name="material_type{{subMaterial.id}}" #material_type="ngModel" [(ngModel)]="addBrandTemplate.material_type[j]">
+                                        
+                                        {{subMaterial.name}}
+                                        
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                        </ul>
+                    </div> -->
+
+                    <div class="parentDiv">
+                        <!-- <ul class="parent"
+                            *ngFor="let parent of itemGroupList; let i = index"
+                        >
+                            <li >
+                                <div *ngIf="parent.parent == null">
+
+                                    <input type="checkbox" name="material_type{{parent.id}}" #material_type="ngModel" [(ngModel)]="addBrandTemplate.material_type[i]"
+                                        value="{{parent.id}}" >
+                                    
+                                    {{parent.name}}
+                                </div>
+                                
+                                <ul 
+                                    *ngFor="let child of materialTypeList; let j = index"
+                                >
+                                    <li
+                                        *ngIf="(parent.id == child.parent)"
+                                    >
+                                        <input type="checkbox" name="material_type{{child.id}}" #material_type="ngModel" [(ngModel)]="addBrandTemplate.material_type[j]" value="{{parent.id}}">
+                                        
+                                        {{child.name}}
+                                        
+                                        <ul 
+                                            *ngFor="let child2 of materialTypeList; let k = index"
+                                        >
+                                            <li
+                                                *ngIf="(child.id == child2.parent)"
+                                            >
+                                                <input type="checkbox" name="material_type{{child2.id}}" #material_type="ngModel" [(ngModel)]="addBrandTemplate.material_type[k]" value="{{child2.id}}">
+                                                
+                                                {{child2.name}}
+                                                
+                                                <ul 
+                                                    *ngFor="let child3 of materialTypeList; let l = index"
+                                                >
+                                                    <li
+                                                        *ngIf="(child2.id == child3.parent)"
+                                                    >
+                                                        <input type="checkbox" name="material_type{{child3.id}}" #material_type="ngModel" [(ngModel)]="addBrandTemplate.material_type[l]" value="{{child3.id}}">
+                                                        
+                                                        {{child3.name}}
+                                                        
+                                                        <ul 
+                                                            *ngFor="let child4 of materialTypeList; let m = index"
+                                                        >
+                                                            <li
+                                                                *ngIf="(child3.id == child4.parent)"
+                                                            >
+                                                                <input type="checkbox" name="material_type{{child4.id}}" #material_type="ngModel" [(ngModel)]="addBrandTemplate.material_type[m]" value="{{child4.id}}">
+                                                                
+                                                                {{child4.name}}
+                                                                
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                        </ul> -->
+
+                        <ul class="parent">
+                            <ng-container
+                                *ngTemplateOutlet="recursiveListTmpl; context:{ list: list }"
+                            ></ng-container>
+                        </ul>
+                        
+                        <ng-template #recursiveListTmpl let-list="list">
+                            <li *ngFor="let item of list">
+                                <input type="checkbox" name="material_type{{item.id}}" [(ngModel)]="selectedItem['dropDown'+item.id]" [ngModelOptions]="{standalone: true}"> {{ item.name }}
+
+                                <ul *ngIf="item.children.length > 0">
+                                    <ng-container
+                                        *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.children }"
+                                    ></ng-container>
+                                </ul>
+                            </li>
+                        </ng-template>
+                    </div>
+                </section>
+                <!-- {{selectedItem|json}} -->
+                <label class="floating-label">Choose Item
+                    <!-- <span class="asterisk">*</span> -->
+                </label>
+                <!-- <div class="required" *ngIf="isFieldValid(addUpdateBrandForm,'RackName')">
+                    <span class="text-danger" *ngIf="addUpdateBrandForm.get('RackName')?.errors?.['required']">Rack Name is required</span>
+                </div> -->
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="mb-3 rightCol" [ngClass]="{ 'float-now': addBrandTemplate.brandCode != '' }">
+                <input type="text" class="form-control" name="brandCode" [(ngModel)]="addBrandTemplate.brandCode" #brandCode="ngModel" required >
+                <label class="floating-label">Enter Brand Code<span class="asterisk">*</span></label>
+                <!-- <div class="required" *ngIf="isFieldValid(addUpdateBrandForm,'brandCode')">
+                    <span class="text-danger" *ngIf="addUpdateBrandForm.get('brandCode')?.errors?.['required']">Brand Code is required</span>
+                </div> -->
+                <div *ngIf="f.submitted && brandCode.errors" class="invalid-feedback">
+                    <div *ngIf="brandCode.errors['required']">Brand Code is required</div>
+                </div>
+            </div>
+            
+            <div class="mb-3 float-now rightCol" >
+                <select class="form-control" name="type" #type="ngModel" [(ngModel)]="addBrandTemplate.type" required >
+                    <option value="" disabled>-- Select --</option>
+                    <option value="for_battery">For Battery</option>
+                    <option value="for_tyre">For Tyre</option>
+                </select>
+                <label class="floating-label">Choose Brand Type<span class="asterisk">*</span></label>
+                <!-- <div class="required" *ngIf="isFieldValid(addUpdateBrandForm,'type')">
+                    <span class="text-danger" *ngIf="addUpdateBrandForm.get('type')?.errors?.['required']">Brand Code is required</span>
+                </div> -->
+                <div *ngIf="f.submitted && type.errors" class="invalid-feedback">
+                    <div *ngIf="type.errors['required']">Brand type is required</div>
+                </div>
+            </div>
+            
+            <div class="mb-3 rightCol" [ngClass]="{ 'float-now': addBrandTemplate.brandManufacturerName != '' }">
+                <input type="text" class="form-control" name="brandManufacturerName" #brandManufacturerName="ngModel" [(ngModel)]="addBrandTemplate.brandManufacturerName" required>
+                <label class="floating-label">Enter Brand (Manufacturer) Name<span class="asterisk">*</span></label>
+                <!-- <div class="required" *ngIf="isFieldValid(addUpdateBrandForm,'brandManufacturerName')">
+                    <span class="text-danger" *ngIf="addUpdateBrandForm.get('brandManufacturerName')?.errors?.['required']">Brand Code is required</span>
+                </div> -->
+                <div *ngIf="f.submitted && brandManufacturerName.errors" class="invalid-feedback">
+                    <div *ngIf="brandManufacturerName.errors['required']">Brand Name is required</div>
+                </div>
+            </div>
+        </div>
+
+    </div> 
+    
+
+    <button type="submit" class="btn btn-primary" *ngIf="this.onEditAccess != 'view'">{{addUpdateButton}}</button>
+</form>

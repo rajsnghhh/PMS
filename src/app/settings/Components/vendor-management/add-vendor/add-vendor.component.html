@@ -1,0 +1,19 @@
+<div class="survey-main">
+    <div class="survey-content">
+        <div class="survey-content-main">
+            <div class="survey-body">
+                <div class="form-conatainer">
+                    <app-dynamic-forms 
+                        (parentCompFun)="genarateMaterialData($event)"
+                        [actionName]="ActionButtonName" 
+                        [formData]="formFieldList" 
+                        [prefieldData]="prefieldData"
+                        [chieldActionRequired]="false"
+                        [activeFromName]="'vendor-management'"
+                    >
+                    </app-dynamic-forms>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

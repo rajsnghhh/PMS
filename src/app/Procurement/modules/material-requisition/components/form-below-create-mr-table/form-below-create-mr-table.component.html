@@ -1,0 +1,56 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+
+    <div class="creatematerial hideOnPrintScreen">
+        <div class="row">
+
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="addressform">
+
+                    <label for="request">Request&nbsp;By.</label>
+                    <select class="form-control" [disabled]="disabledEdit" id="sel1" name="requested_by"
+                        [(ngModel)]="form.requested_by" required #requested_by="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && requested_by.errors }">
+                        <option>Please Select</option>
+                        <option *ngFor="let userData of userlist" value="{{userData.id}}">{{userData.full_name}}
+                        </option>
+                    </select>
+                    <div *ngIf="f.submitted && requested_by.errors" class="invalid-feedback">
+                        <div *ngIf="requested_by.errors['required']">This is required !</div>
+                    </div>
+                </div>
+
+
+                <div class="addressform">
+                    <label for="line">Line&nbsp;In&nbsp;bottom</label>
+                    <input [disabled]="disabledEdit" type="line" class="form-control" placeholder="Please Enter"
+                        id="line" name="line_in_bottom" [(ngModel)]="form.line_in_bottom" #line_in_bottom="ngModel">
+                </div>
+
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="addressform">
+                    <label for="request">Attach&nbsp;a&nbsp;File</label>
+                    <div class="custom-file">
+                        <input [disabled]="disabledEdit" type="file" multiple="multiple" (change)="handleUpload($event)"
+                            class="custom-file-input" id="customFile"
+                            [ngClass]="{ 'is-invalid': f.submitted && (scope == 'add' && form.attachments.length == 0)||(scope == 'update' && prefieldData.attachments.length == 0) }">
+                    </div>
+                    <section *ngIf="prefieldData.attachments">
+                        <a href="{{docUrl}}{{attachmentdata.attachment}}" target="_blank"
+                            *ngFor="let attachmentdata of prefieldData.attachments"><img src="assets/icons/eye.png"
+                                alt=""></a>
+                    </section>
+                </div>
+
+                <div class="addressform">
+                    <label for="remarks">Remarks</label>
+                    <input [disabled]="disabledEdit" type="remarks" class="form-control" placeholder="Type here..."
+                        id="remarks" name="remarks" [(ngModel)]="form.remarks" #remarks="ngModel">
+                </div>
+
+            </div>
+            <button hidden #submitButton="" type="submit">Save</button>
+        </div>
+    </div>
+</form>

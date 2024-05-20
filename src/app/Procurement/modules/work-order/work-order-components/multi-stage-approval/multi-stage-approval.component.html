@@ -1,0 +1,92 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Work Order</h2>
+
+        <div class="action-button-container">
+           
+        </div>
+    </div>
+</div>
+
+<div class="createrequisition-section" style=" margin: 0 10px; ">
+    <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && updateStage()" novalidate>
+    <div class="main-body-container">
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th scope="col">Sr No</th>
+                    <th scope="col">WO No. Date forward to Site</th>
+                    <th scope="col">Jurisdiction</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Location</th>
+                    <th scope="col" style=" min-width: 380px; ">Stage Details</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let rowitem of procurementIndentRequest;index as i">
+                        <tr>
+                            <td >{{i+1}}</td>
+                            <td >
+                                WO No : <b>{{rowitem.request_code ?rowitem.request_code:'-'}}</b>
+                                <br>
+                                {{rowitem.created_at.substring(0,10).split('-').reverse().join('-')}}
+                                <br> Site : {{rowitem?.site_details[0]?.site_name}}
+                            </td>
+                            <td>{{rowitem.jurisdiction}}</td>
+                            <td>
+                                {{rowitem.type}}
+                                
+                            </td>
+                            <td>
+                                {{rowitem.location}}
+                            </td>
+                            <td>
+                                <ul class="stage-table">
+                                    <li>
+                                        <div class="stage-name">Stage Name</div>
+                                        <div class="stage-name">Approver</div>
+                                        <div class="stage-name">Status</div>
+                                        <div class="stage-name">Remarks</div>
+                                    </li>
+                                    <li *ngFor="let stageData of rowitem.multi_stage_details">
+                                        <div class="stage-name">Sage {{stageData.procurement_multi_stage_setting_stages__stage}}</div>
+                                        <div class="stage-name">{{getUserName(stageData?.procurement_multi_stage_setting_stages__employee)}}</div>
+                                        <div class="stage-name text-capitalize">{{getStatus(stageData.procurement_multi_stage_setting_stages__stage,rowitem.stages)}}</div>
+                                        <div class="stage-name">{{getRemarks(stageData.procurement_multi_stage_setting_stages__stage,rowitem.stages)}}</div>
+                                    </li>
+                                    <li>
+                                        <span *ngIf="rowitem.multi_stage_details.length == 0">No Stage Found</span>
+                                    </li>
+                                </ul>
+                                
+                            </td>
+                            <td>
+                                <section *ngIf="checkIFstageUpdateAccess(rowitem.current_stage,rowitem.multi_stage_details)">
+                                    <input type="checkbox"  (change)="onCheckboxChange($event, rowitem.id)" name="stage_updated{{i}}" [(ngModel)]="rowitem.stage_updated"> Update Stage {{rowitem.current_stage +1}}
+                                    <select class="form-control" [(ngModel)]="rowitem.stage_status" name="stage_status{{i}}" [required]="rowitem.stage_updated" #stage_status="ngModel" [ngClass]="{ 'is-invalid': f.submitted && stage_status.errors }">
+                                        <option disabled value="">Please Select</option>
+                                        <option value="approved">Approve</option>
+                                        <option value="rejected">Reject</option>
+                                   </select>  
+                                   <textarea id="" placeholder="Remarks" cols="30" rows="5" [(ngModel)]="rowitem.stage_remarks" name="stage_remarks{{i}}" #stage_remarks="ngModel" ></textarea>
+                                </section>
+                             
+                            </td>
+                        </tr>
+
+                </ng-container>
+
+                <tr class="text-center">
+                    <td colspan="13" *ngIf="procurementIndentRequest.length == 0">No data found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="btd-section">
+        <button type="button" (click)="backtolist()" class="btn-cancel" >CANCEL</button>
+        <button type="submit" *ngIf="checkedIds.length > 0" class="btn-save">UPDATE</button>
+    </div>
+    </form>
+</div>

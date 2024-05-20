@@ -1,0 +1,106 @@
+.table-container {
+  overflow: scroll;
+  padding: 10px;
+
+  table {
+    border: 1px solid;
+
+    th {
+      font-size: 12px;
+      border: 1px solid;
+      min-width: 140px;
+    }
+
+    td {
+      font-size: 12px;
+      border: 1px solid;
+      padding: 0 !important;
+      border-radius: 0;
+
+      input,
+      select {
+        width: 100%;
+        border: none;
+        font-size: inherit;
+        border-radius: 0;
+      }
+    }
+  }
+}
+
+.add-new {
+  border: 1px solid;
+  background: unset;
+  color: blue;
+  position: absolute;
+  right: 12px;
+  top: -44px;
+  font-size: 11px;
+  border-radius: 18px;
+  padding: 1px 20px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+  border-radius: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #e6e6e6;
+  border-radius: 15px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #5577ff;
+  border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #5577ff;
+  border-radius: 15px;
+}
+
+.relative-div {
+  position: relative;
+}
+ 
+.parent-name-cell {
+  // background-color: green; 
+}
+.child-name-cell {
+  background-color: lightgray; 
+  margin-left: 20px; 
+}
+
+.child-name-other-cell {
+  background-color: lightgray; 
+}  
+
+.sub-child-name-cell {
+  background-color: rgb(239, 72, 72); 
+  margin-left: 40px; 
+}
+
+.sub-child-name-other-cell {
+  background-color: rgb(239, 72, 72);
+}  
+
+// .component-body[_ngcontent-gdb-c13]   table[_ngcontent-gdb-c13] {
+//   width: 100%;
+//   padding-bottom: 35px;
+//   border: none;
+//   background: #5577ff;
+// }
+
+.header-row {
+  background-color: #5879ff;
+  color: white;
+}
+
+img {
+  max-height: 20px;
+}

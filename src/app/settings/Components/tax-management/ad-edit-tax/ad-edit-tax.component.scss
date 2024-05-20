@@ -1,0 +1,15 @@
+.btd-section{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 23px;
+    gap: 7px;
+    }
+
+.flex-div input, select {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 300 !important;
+        border-radius: 0px !important;
+        font-size: 12px;
+        padding: 10px 20px !important;
+    }

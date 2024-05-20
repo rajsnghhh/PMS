@@ -1,0 +1,108 @@
+.mainform {
+    display: flex;
+    width: 99%;
+    margin: auto;
+
+    .flex-div {
+        width: 49% !important;
+        margin: 5px;
+
+        .mb-3 {
+            width: 100% !important;
+        }
+
+        .TotalContent {
+            width: 100% !important;
+            display: flex;
+            flex-wrap: wrap;
+
+            .eachcontent {
+                width: 50% !important;
+            }
+        }
+    }
+}
+
+
+
+/* DivTable.com */
+.divTable {
+    display: table;
+    width: 95%;
+    margin: auto;
+    background-color: #f8f9fa;
+    padding: 15px;
+}
+
+.divTableRow {
+    display: table-row;
+    width: 100%;
+}
+
+.divTableHeading {
+    background-color: #EEE;
+    display: table-header-group;
+}
+
+.divTableCell,
+.divTableHead {
+    display: table-cell;
+    padding: 3px 10px;
+}
+
+.divTableHeading {
+    background-color: #EEE;
+    display: table-header-group;
+    font-weight: bold;
+}
+
+.divTableFoot {
+    background-color: #EEE;
+    display: table-footer-group;
+    font-weight: bold;
+}
+
+.divTableBody {
+    display: table-row-group;
+}
+
+.addressform {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 7px;
+
+    label {
+        display: inline-block;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 13px !important;
+        line-height: 14px;
+        color: #666;
+        font-weight: 400;
+        margin: 0px 0px;
+        vertical-align: middle;
+        text-align: right;
+        min-width: 110px;
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 7px 8px;
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.5;
+        color: #9D9D9D;
+        appearance: none;
+        background-color: var(--bs-body-bg);
+        background-clip: padding-box;
+        border: var(--bs-border-width) solid var(--bs-border-color);
+        border-radius: 0px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        position: relative;
+    }
+}
+

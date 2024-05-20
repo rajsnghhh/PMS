@@ -1,0 +1,525 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="createrequisition-section">
+        <div class="creatematerial">
+            <h3><span *ngIf="scope == 'add'">Create </span> <span *ngIf="scope == 'update'">Update </span> <span
+                    *ngIf="scope == 'view'">View </span>Goods Receipt Note</h3>
+
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-12">
+
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">Project</label>
+                                <select id="sel1" class="form-control" name="project" [disabled]="disabledEdit"
+                                    [(ngModel)]="form.project" required #project="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && project.errors }"
+                                    (change)="getProjeDependentSiteData()">
+                                    <option disabled>-- select --</option>
+                                    <option *ngFor="let project of projectList" value="{{project.id}}">
+                                        {{project.project_data[1]?.value}}</option>
+                                </select>
+
+                                <!-- (change)="getProjeDependentSiteData()" -->
+
+                                <div *ngIf="f.submitted && project.errors" class="invalid-feedback">
+                                    <div *ngIf="project.errors['required']">This is required !</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">Site</label>
+                                <select id="sel1" [disabled]="disabledEdit" class="form-control" name="site"
+                                    [(ngModel)]="form.site" #site="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && site.errors }"
+                                    (change)="sendProjectSiteId()">
+                                    <option disabled>-- select --</option>
+                                    <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                        {{siteData.site_name}}</option>
+                                </select>
+                                <div *ngIf="f.submitted && site.errors" class="invalid-feedback">
+                                    <div *ngIf="site.errors['required']">This is required !</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="addressform">
+                                <label for="text">Store</label>
+                                <select id="sel1" [disabled]="disabledEdit" class="form-control" name="store"
+                                    [(ngModel)]="form.store" #store="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && store.errors }">
+                                    <option disabled>-- select --</option>
+                                    <option *ngFor="let storeData of storeList" value="{{storeData.id}}">
+                                        {{storeData.store_name}}</option>
+                                </select>
+                                <div *ngIf="f.submitted && store.errors" class="invalid-feedback">
+                                    <div *ngIf="store.errors['required']">This is required !</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">GRN&nbsp;No.</label>
+                        <input type="text" placeholder="" [disabled]="disabledEdit" id="text" class="form-control" [(ngModel)]="form.request_code"
+                            #request_code="ngModel" name="request_code" readonly>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="date">GRN&nbsp;Date</label>
+                        <input type="date" placeholder="" [disabled]="disabledEdit" class="form-control" id="date" name="date"
+                            [(ngModel)]="form.date" required #date="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && date.errors }">
+                        <div *ngIf="f.submitted && date.errors" class="invalid-feedback">
+                            <div *ngIf="date.errors['required']">This is required !</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Manual&nbsp;Slip&nbsp;No.</label>
+                        <input type="text" placeholder="" id="text" class="form-control" [disabled]="disabledEdit" name="manual_slip_no"
+                            [(ngModel)]="form.manual_slip_no" #manual_slip_no="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && manual_slip_no.errors }">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="date">Unload&nbsp;Date</label>
+                        <input type="date" placeholder="" [disabled]="disabledEdit" class="form-control" id="unload_date" name="unload_date"
+                            [(ngModel)]="form.unload_date" [ngModelOptions]="{standalone: true}" #unload_date="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && unload_date.errors }">
+                        <div *ngIf="f.submitted && unload_date.errors" class="invalid-feedback">
+                            <div *ngIf="unload_date.errors['required']">This is required !</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Unload&nbsp;Time</label>
+                        <input type="time" placeholder="" [disabled]="disabledEdit" id="text" class="form-control" [(ngModel)]="form.unload_time"
+                            #unload_time="ngModel" [ngClass]="{ 'is-invalid': f.submitted && unload_time.errors }"
+                            name="unload_time">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="date">Received From </label>
+
+                        <div class="requested-group">
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" [disabled]="disabledEdit" value="supplier_transfer" name="optradio"
+                                        class="form-check-input" id="received_from" name="received_from"
+                                        [(ngModel)]="form.received_from" #received_from="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && received_from.errors }">
+                                    Supplier/ Transfer
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" [disabled]="disabledEdit" value="customer" name="optradio" class="form-check-input"
+                                        id="received_from" name="received_from" [(ngModel)]="form.received_from"
+                                        [ngModelOptions]="{standalone: true}" #received_from="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && received_from.errors }">
+                                    Customer</label>
+                            </div>
+                            <div *ngIf="f.submitted && received_from.errors" class="invalid-feedback">
+                                <div *ngIf="received_from.errors['required']">This is required !</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="date">Loaded Via</label>
+
+                        <div class="requested-group">
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" [disabled]="disabledEdit" value="self" name="optradio" class="form-check-input"
+                                        id="loaded_via" name="loaded_via" [(ngModel)]="form.loaded_via"
+                                        [ngModelOptions]="{standalone: true}" #loaded_via="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && loaded_via.errors }">
+                                    Self
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" [disabled]="disabledEdit" value="party" name="optradio" class="form-check-input"
+                                        id="loaded_via" name="loaded_via" [(ngModel)]="form.loaded_via"
+                                        [ngModelOptions]="{standalone: true}" #loaded_via="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && loaded_via.errors }">
+                                    Party</label>
+                            </div>
+                            <div *ngIf="f.submitted && loaded_via.errors" class="invalid-feedback">
+                                <div *ngIf="loaded_via.errors['required']">This is required !</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Vendor/ Customer</label>
+                        <select id="sel1" [disabled]="disabledEdit" (change)="changeCustomer(form.vendor)"  class="form-control" name="vendor"
+                            [(ngModel)]="form.vendor" #vendor="ngModel" [ngModelOptions]="{standalone: true}">
+                            <option disabled>-- select --</option>
+                            <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                                {{vendor.vendor_master_data.vendor_name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Job/ Site</label>
+                        <select id="sel1" [disabled]="disabledEdit" class="form-control" name="job_site"
+                            [(ngModel)]="form.job_site" #job_site="ngModel" [ngModelOptions]="{standalone: true}">
+                            <option disabled>-- select --</option>
+                            <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                {{siteData.site_name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Party&nbsp;Bill Amt.</label>
+                        <input type="text" placeholder="" id="text" name="party_bill_amt" (change)="amountBillValidation()" class="form-control"
+                            required [disabled]="disabledEdit"
+                            amountNumber
+                            [(ngModel)]="form.party_bill_amt" #party_bill_amt="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && party_bill_amt.errors }">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Party&nbsp;Bill No.</label>
+                        <input type="text"  [disabled]="disabledEdit" placeholder="" id="text" name="party_bill_no" class="form-control"
+                            [(ngModel)]="form.party_bill_no" #party_bill_no="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && party_bill_no.errors }">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="date">Bill&nbsp;Date</label>
+                        <input type="date" [disabled]="disabledEdit" placeholder="" class="form-control" id="bill_date" name="bill_date"
+                            [(ngModel)]="form.bill_date" [ngModelOptions]="{standalone: true}" #bill_date="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && bill_date.errors }">
+                        <div *ngIf="f.submitted && bill_date.errors" class="invalid-feedback">
+                            <div *ngIf="bill_date.errors['required']">This is required !</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <div class="checkbox-container">
+                            <input type="checkbox" [disabled]="disabledEdit" id="cash_payment" class="custom-checkbox"
+                                [(ngModel)]="form.cash_payment" #cash_payment="ngModel" name="cash_payment">
+                            <label for="cash_payment" class="checkbox-label">Cash Payment</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Lab&nbsp;Report No.</label>
+                        <input type="text" [disabled]="disabledEdit" placeholder="" id="text" name="lab_report_no" class="form-control"
+                            [(ngModel)]="form.lab_report_no" #lab_report_no="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && lab_report_no.errors }">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">E-Way&nbsp;Bill No.</label>
+                        <input type="text" [disabled]="disabledEdit" placeholder="" id="text" name="e_way_bill_no" class="form-control"
+                            [(ngModel)]="form.e_way_bill_no" #e_way_bill_no="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && e_way_bill_no.errors }">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Challan No.</label>
+                        <input type="text" [disabled]="disabledEdit" placeholder="" id="text" name="challan_no" class="form-control"
+                            [(ngModel)]="form.challan_no" #challan_no="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && challan_no.errors }">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="date">Challan&nbsp;Date</label>
+                        <input type="date" [disabled]="disabledEdit" placeholder="" class="form-control" id="challan_date" name="challan_date"
+                            [(ngModel)]="form.challan_date" #challan_date="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && challan_date.errors }">
+                        <div *ngIf="f.submitted && challan_date.errors" class="invalid-feedback">
+                            <div *ngIf="challan_date.errors['required']">This is required !</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Gate&nbsp;Pass No.</label>
+                        <input type="text" [disabled]="disabledEdit" placeholder="" id="text" name="gate_pass_no" class="form-control"
+                            [(ngModel)]="form.gate_pass_no" #gate_pass_no="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && gate_pass_no.errors }">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">RST&nbsp;No.</label>
+                        <input type="text" [disabled]="disabledEdit" placeholder="" id="text" name="rst_no" class="form-control"
+                            [(ngModel)]="form.rst_no" #rst_no="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && rst_no.errors }">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Transporter</label>
+                        <select id="sel1" name="transporter" [disabled]="disabledEdit" class="form-control" [(ngModel)]="form.transporter"
+                            #transporter="ngModel" [ngClass]="{ 'is-invalid': f.submitted && transporter.errors }">
+                            <option disabled>-- select --</option>
+                            <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                                {{vendor.vendor_master_data.vendor_name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Other</label>
+                        <input type="text" placeholder="" [disabled]="disabledEdit" id="text" name="other" class="form-control"
+                            [(ngModel)]="form.other" #other="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && other.errors }">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">LR&nbsp;No.</label>
+                        <input type="text" placeholder="" [disabled]="disabledEdit" id="text" class="form-control" [(ngModel)]="form.lr_no"
+                            #lr_no="ngModel" name="lr_no" [ngClass]="{ 'is-invalid': f.submitted && lr_no.errors }">
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="date">LR&nbsp;Date</label>
+                        <input type="date" placeholder="" [disabled]="disabledEdit" class="form-control" id="date" name="date"
+                            [(ngModel)]="form.lr_date" [ngModelOptions]="{standalone: true}" #lr_date="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && lr_date.errors }">
+                        <div *ngIf="f.submitted && lr_date.errors" class="invalid-feedback">
+                            <div *ngIf="lr_date.errors['required']">This is required !</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Carrying&nbsp;Vehicle&nbsp;No.</label>
+                        <input type="text" placeholder="" [disabled]="disabledEdit" id="text" class="form-control"
+                            [(ngModel)]="form.carrying_vehicle_no" #carrying_vehicle_no="ngModel"
+                            name="carrying_vehicle_no"
+                            [ngClass]="{ 'is-invalid': f.submitted && carrying_vehicle_no.errors }">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Reading</label>
+                        <input type="text" placeholder="" [disabled]="disabledEdit" id="text" class="form-control" [(ngModel)]="form.reading"
+                            #reading="ngModel" name="reading"
+                            [ngClass]="{ 'is-invalid': f.submitted && reading.errors }">
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="date">Driver&nbsp;Name</label>
+                        <input type="text" placeholder="" [disabled]="disabledEdit" class="form-control" id="driver_name" name="driver_name"
+                            [(ngModel)]="form.driver_name" name="driver_name" #driver_name="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && driver_name.errors }">
+                        <div *ngIf="f.submitted && driver_name.errors" class="invalid-feedback">
+                            <div *ngIf="driver_name.errors['required']">This is required !</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Receive&nbsp;Location</label>
+                        <input type="text" placeholder="" [disabled]="disabledEdit" id="text" class="form-control"
+                            [(ngModel)]="form.receive_location" #receive_location="ngModel" name="receive_location"
+                            [ngClass]="{ 'is-invalid': f.submitted && receive_location.errors }">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Received By</label>
+                        <select id="sel1" [disabled]="disabledEdit" class="form-control" name="received_by"
+                            [(ngModel)]="form.received_by" #received_by="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && received_by.errors }">
+                            <option disabled>-- select --</option>
+                            <option *ngFor="let user of userList" value="{{user.id}}">
+                                {{user.full_name}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && received_by.errors" class="invalid-feedback">
+                            <div *ngIf="received_by.errors['required']">This is required !</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="date">Arrival&nbsp;Date</label>
+                        <input type="date" placeholder="" class="form-control" id="arrival_date" name="arrival_date"
+                            [(ngModel)]="form.arrival_date" [disabled]="disabledEdit" [ngModelOptions]="{standalone: true}"
+                            #arrival_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && arrival_date.errors }">
+                        <div *ngIf="f.submitted && arrival_date.errors" class="invalid-feedback">
+                            <div *ngIf="arrival_date.errors['required']">This is required !</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="time">Arrival&nbsp;Time</label>
+                        <input type="time" placeholder="" [disabled]="disabledEdit" id="arrival_time" class="form-control"
+                            [(ngModel)]="form.arrival_time" #arrival_time="ngModel" name="arrival_time"
+                            [ngClass]="{ 'is-invalid': f.submitted && arrival_time.errors }">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Vendor&nbsp;Currency</label>
+                        <select id="sel1" [disabled]="disabledEdit" class="form-control" name="vendor_currency"
+                            [(ngModel)]="form.vendor_currency" #vendor_currency="ngModel"
+                            [ngModelOptions]="{standalone: true}">
+                            <option disabled>-- select --</option>
+                            <option *ngFor="let curr of vendorCurrencyList" value="{{curr.id}}">{{curr.symbol}}
+                                - {{curr.name}} ({{curr.slug}}) </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Exchange&nbsp;Rate</label>
+                        <input type="text" [disabled]="disabledEdit" placeholder="" id="text" class="form-control" name="exchange_rate"
+                            [(ngModel)]="form.exchange_rate" #exchange_rate="ngModel"
+                            required
+                            amountNumber
+                            [ngClass]="{ 'is-invalid': f.submitted && exchange_rate.errors }">INR
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Remarks</label>
+                        <input type="text" placeholder="" [disabled]="disabledEdit" id="text" class="form-control" name="remarks"
+                            [(ngModel)]="form.remarks" #remarks="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && remarks.errors }">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="addressform">
+                        <label for="text">Line In&nbsp;Bottom</label>
+                        <input type="text" placeholder="" [disabled]="disabledEdit" id="text" class="form-control" name="line_in_bottom"
+                            [(ngModel)]="form.line_in_bottom" #line_in_bottom="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && line_in_bottom.errors }">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-6">
+                    <div class="addressform">
+                        <label for="text">Attach&nbsp;a&nbsp;File</label>
+                        <div class="custom-file">
+                            <input type="file" [disabled]="disabledEdit" multiple="multiple" (change)="handleUpload($event)"
+                                class="custom-file-input" id="customFile">
+                        </div>
+                        <!-- <section *ngIf="prefieldData.attachment">
+                          <a href="{{docUrl}}{{attachmentdata.attachment}}" target="_blank"
+                            *ngFor="let attachmentdata of prefieldData.attachment"><img src="assets/icons/eye.png" alt=""></a>
+                        </section> -->
+                    </div>
+                </div>
+            </div>
+
+<div class="btd-section">
+    <button hidden #submitButton="" class="btn-save" type="submit">Save</button>
+</div>
+            
+
+        </div>
+    </div>
+</form>

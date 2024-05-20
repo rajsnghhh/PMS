@@ -1,0 +1,87 @@
+<form>
+
+    <h5 class="heading">UNIT OF MEASUREMENT</h5>
+    <div class="flex-div">
+    <div class="mb-3" [formGroup]="wbsForm" [ngClass]="{ 'float-now': symbol != '' }">
+        <div class="fieldValue addressform">
+            <input type="text" name="symbol" formControlName="symbol"  [ngClass]="displayFieldCss(wbsForm,'symbol')" [(ngModel)]="symbol"  class="form-control">
+            <label class="floating-label">Enter Symbol <span class="asterisk">*</span></label>
+        </div>
+        <div class="required" *ngIf="isFieldValid(wbsForm,'symbol')">
+            <span class="text-danger" *ngIf="wbsForm.get('symbol')?.errors?.['required']">Symbol is required</span>
+        </div>
+    </div>
+    <div class="mb-3" [formGroup]="wbsForm" [ngClass]="{ 'float-now': formalName != '' }">
+        <div class="fieldValue addressform">
+            <input type="text" name="formalName" formControlName="formalName"  [ngClass]="displayFieldCss(wbsForm,'formalName')" [(ngModel)]="formalName"  class="form-control">
+            <label class="floating-label">Enter Formal Name <span class="asterisk">*</span></label>
+        </div>
+        <div class="required" *ngIf="isFieldValid(wbsForm,'formalName')">
+            <span class="text-danger" *ngIf="wbsForm.get('formalName')?.errors?.['required']">Formal Name is required</span>
+        </div>
+    </div>
+    
+    <div class="mb-3" [formGroup]="wbsForm" [ngClass]="{ 'float-now': decimal_places != '' }">
+        <div class="fieldValue addressform">
+            <input type="text" numbersOnly name="decimal_places" formControlName="decimal_places"  [ngClass]="displayFieldCss(wbsForm,'decimal_places')" [(ngModel)]="decimal_places"  class="form-control" min="1" max="4">
+            <label class="floating-label">Enter Decimal Places (0 - 4) 
+                <!-- <span class="asterisk">*</span> -->
+            </label>
+        </div>
+        <!-- <div class="required" *ngIf="isFieldValid(wbsForm,'decimal_places')">
+            <span class="text-danger" *ngIf="wbsForm.get('decimal_places')?.errors?.['required']">Decimal Places is required</span>
+        </div> -->
+    </div>
+
+    <div class="mb-3" [formGroup]="wbsForm" [ngClass]="{ 'float-now': formula_for_qty_calculation != '' }">
+        <div class="fieldValue addressform">
+            <input type="text" name="formula_for_qty_calculation" formControlName="formula_for_qty_calculation"  [ngClass]="displayFieldCss(wbsForm,'formula_for_qty_calculation')" [(ngModel)]="formula_for_qty_calculation"  class="form-control">
+            <p class="text-muted" style="font-size: smaller;">
+                This is used to show INPUT fields on DPR page for QTY. calculation as per unique characters in formula. <br>
+                e.g.: N or L or L*W <br>
+                i.e. N means one INPUT field and L*W means two INPUT fields. 
+            </p>
+            <label class="floating-label">Enter Formula For Qty Calculation 
+                <!-- <span class="asterisk">*</span> -->
+            </label>
+        </div>
+        <!-- <div class="required" *ngIf="isFieldValid(wbsForm,'formula_for_qty_calculation')">
+            <span class="text-danger" *ngIf="wbsForm.get('formula_for_qty_calculation')?.errors?.['required']">formula_for_qty_calculation is required</span>
+        </div> -->
+    </div>
+</div>
+    <!-- <h5 class="heading">2nd UNIT OF MEASUREMENT</h5>
+    <div>
+    <div class="allfield" *ngFor="let md of KeyScopesData; let i=index">
+        <div class="mb-5">
+            <div class="fieldValue addressform firstunit">
+                <input disabled type="text" name="keyscope" [(ngModel)]="symbol" class="form-control">
+            </div>
+        </div>
+        <span class="oftext"> of </span>
+        <div class="mb-5" [formGroup]="wbsForm">
+            <div class="fieldValue addressform firstunit">
+                <input type="number" style="margin-left: 10px !important;" name="conversion_rate" [(ngModel)]="md.conversion_rate" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Enter Conversion Rate">
+
+            </div> 
+        </div> &nbsp;&nbsp;&nbsp;
+        <div class="mb-5" [formGroup]="wbsForm">
+            <div class="fieldValue addressform firstunit" style="margin-left: 33px;">
+                <input type="text" name="second_uom" [(ngModel)]="md.second_uom" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Enter Second Unit">
+
+            </div>
+        </div>
+        <div class="mb-5">
+            <div class="fieldValue addressform">
+                <div class="AddBtn" (click)="addKeyScope()" *ngIf="i==0"><img src="assets/icons/add1.png" alt="">
+                </div>
+                <div class="RemoveBtn" (click)="removeKeyScope(i)" *ngIf="i!=0"><img src="assets/icons/minus.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    </div> -->
+
+    <button type="submit" class="btn btn-primary" (click)="addWBS()">ADD</button>
+
+</form>

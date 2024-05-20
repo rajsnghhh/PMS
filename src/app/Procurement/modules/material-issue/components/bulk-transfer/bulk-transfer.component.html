@@ -1,0 +1,170 @@
+<div class="createrequisition-section">
+    <div class="component-header">
+        <h2>Bulk Transfer</h2>
+    </div>
+    
+    <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+
+        <div class="col-lg-12 col-md-12 col-12">
+                <div class="row">
+
+                 <div class="col-lg-4 col-md-4 col-12">
+                    <div class="addressform">
+                    <label for="text">Store</label>                    
+                        <select id="sel1" class="form-control" name="store" [(ngModel)]="form.store" required
+                            (change)="filterInventory()"
+                            #store="ngModel" [ngClass]="{ 'is-invalid': f.submitted && store.errors }"
+                            [disabled]="disabledEdit" >
+                            <option value="" disabled>-- Select --</option>
+                            <option *ngFor="let siteData of storeList" value="{{siteData.id}}">
+                                {{siteData.store_name}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && store.errors" class="invalid-feedback">
+                            <div *ngIf="store.errors['required']">This is required !</div>
+                        </div>
+                   
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="addressform">
+                    <label for="text">Item Group</label>           
+                        <select id="sel1" class="form-control" name="group" [(ngModel)]="form.group"
+                            (change)="filterInventory()"
+                            #group="ngModel" [ngClass]="{ 'is-invalid': f.submitted && group.errors }"
+                            [disabled]="disabledEdit" >
+                            <option value="">-- Select --</option>
+                            <option value="{{materialGroup.id}}" *ngFor="let materialGroup of materialGroupList">{{materialGroup.name}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && group.errors" class="invalid-feedback">
+                            <div *ngIf="group.errors['required']">This is required !</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="addressform">
+                    <label for="text">Item</label>      
+                        <select id="sel1" class="form-control" name="item" [(ngModel)]="form.item"
+                            (change)="filterInventory()"
+                            #item="ngModel" [ngClass]="{ 'is-invalid': f.submitted && item.errors }"
+                            [disabled]="disabledEdit" >
+                            <option value="">-- Select --</option>
+                            <option value="{{masterData.id}}" *ngFor="let masterData of MaterilFilterList">{{masterData.material_name}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && item.errors" class="invalid-feedback">
+                            <div *ngIf="item.errors['required']">This is required !</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+           
+        </div>
+        <div class="component-body">
+            <table>
+                
+                <tr>
+                    <th>S.No</th>
+                    <th>Location</th>
+                    <th>Item Code</th>
+                    <th>Item Name</th>
+    
+                    <th>Stock Type</th>
+                    <th>Stock Qty <br> & <br> Unit</th>
+                    <th>Transfer Qty <br> & <br> Unit</th>
+                    
+                    <th>
+                        Select
+                        <br>
+                        <div class="form-check" *ngIf="itemStockList.length > 0">
+                            <input class="form-check-input" type="checkbox" 
+                                name="selectAlll"
+                                (change)="toggleeall()"
+                                [(ngModel)]="selectAll" #selectAlll="ngModel">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Select All
+                            </label>
+                        </div>
+                    </th>
+                </tr>
+                
+                <tr *ngFor="let permission of itemStockList; let i = index" [attr.data-index]="i"> 
+                    <td>#{{ i+1 }}</td>
+                    <td>
+                        {{permission.site_name}} {{permission.store_name}}
+                    </td>
+                    <td>{{permission.item_code}}</td>
+                    
+                    <td>{{permission.item_name}}</td>
+                    
+                    
+                    <td class="text-capitalize">{{permission.stock_type}}</td>
+                    <td>
+                        {{permission.opening_quantity}} 
+                        <br>
+                        {{permission.uom}}
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="Transfer Quantity" [disabled]="disabledEdit"
+                                amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$" name="quantity{{i+1}}"
+                                [(ngModel)]="itemStockList[i].req_quantity" [required]="itemStockList[i].selected" #quantity="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && quantity.errors }">
+                        <br>
+                        {{permission.uom}}
+                    </td>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" 
+                                name="selected{{i+1}}" id=""
+                                name="selected{{i+1}}"
+                                [(ngModel)]="itemStockList[i].selected" #selected="ngModel"
+                            >
+                        </div>
+                    </td>
+                </tr>
+                <tr class="text-center">
+                    <td colspan="9" *ngIf="itemStockList.length == 0">No Stock found.</td>
+                </tr>
+                
+            </table>
+        
+        </div>
+<div class="row">
+        <div class="col-lg-4 col-md-4 col-12">
+            <div class="addressform">         
+                    <label for="text">Project</label>
+                        <select class="form-control" name="project" [(ngModel)]="form.project" required
+                            #project="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project.errors }"
+                            disabled >
+                            <option value="">-- Select --</option>
+                            <option *ngFor="let siteData of projectList" value="{{siteData.id}}">
+                                {{siteData.project_data[1].value}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && project.errors" class="invalid-feedback">
+                            <div *ngIf="project.errors['required']">This is required !</div>
+                        </div>                  
+                
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-12">
+            <div class="addressform">
+                             <label for="text">Site</label>
+                        <select id="sel1" class="form-control" name="site" [(ngModel)]="form.site" required
+                            #site="ngModel" [ngClass]="{ 'is-invalid': f.submitted && site.errors }"
+                            disabled >
+                            <option value="">-- Select --</option>
+                            <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                {{siteData.site_name}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && site.errors" class="invalid-feedback">
+                            <div *ngIf="site.errors['required']">This is required !</div>
+                        </div>
+                    </div>                
+            </div>
+    </div>
+
+        <div class="btd-section">
+            <button type="button" (click)="backtolist()" class="btn-cancel">CANCEL</button>
+            <button type="submit"  class="btn-save">TRANSFER</button>
+        </div>
+    </form>
+</div>

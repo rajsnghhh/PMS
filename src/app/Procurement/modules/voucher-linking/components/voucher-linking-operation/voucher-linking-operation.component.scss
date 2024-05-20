@@ -1,0 +1,99 @@
+.invalid-feedback {
+    display: block;
+    opacity: 1 !important;
+    position: absolute;
+    font-size: 10px;
+}
+
+.form-control {
+    border-radius: 18px;
+    font-size: 15px;
+}
+
+.main-card {
+    display: flex;
+    flex-wrap: wrap;
+    transform: scale(0.7);
+    margin-top: -40px;
+    margin-bottom: -70px;
+}
+
+.split-card {
+    width: 50%;
+    padding: 0 50px;
+}
+
+.btnupdate {
+    display: flex;
+    justify-content: center;
+}
+
+.link-table-main {
+    display: flex;
+    flex-wrap: wrap;
+    .link-form {
+        width: 40%;
+        padding: 20px;
+    }
+    .link-to {
+        width: 60%;
+        padding: 20px;
+    }
+    h1 {
+        font-size: 14px;
+        color: #0d6efd;
+        font-weight: 500;
+        text-transform: uppercase;
+        margin: 0 0 0px;
+    }
+    th {
+        height: auto;
+    }
+}
+
+form {
+    margin-bottom: 0;
+}
+
+.main-body-container table th{
+	font-weight: 600 !important;
+	font-size: 14px !important;
+	line-height: 15px !important;
+}
+.main-body-container table td {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 300 !important;
+	font-size: 12px !important;
+	line-height: 15px !important;
+}
+input, select, textarea {
+	border-radius: 0px !important;
+	padding: 4px 6px 4px 9px !important;
+	font-size: 11px !important;
+    }
+.btd-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    margin-top: 20px;
+    }
+.btn-save {
+    background-image: linear-gradient(to right, #40d4e6, #6675fe);
+    padding: 7px 17px;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 400;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    width: auto;
+    }
+      
+.btn-save:hover {
+    background-image: linear-gradient(to right, #6675fe, #40d4e6);
+    color: white;
+    }

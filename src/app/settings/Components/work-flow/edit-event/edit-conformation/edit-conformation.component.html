@@ -1,0 +1,223 @@
+<form name="conformationEventForm" role="form" [formGroup]="conformationEventForm">
+
+    <div class="mb-3" [ngClass]="{ 'float-now': addConformtion.event_name != '' }">
+        <input class="form-select" type="text" id="event_name" required formControlName="event_name"
+            [(ngModel)]="addConformtion.event_name" name="event_name"
+            [ngClass]="displayFieldCss(conformationEventForm,'event_name')"
+            style=" background-image: none; padding-right: 10px; ">
+        <label class="floating-label">Enter event name <span class="asterisk">*</span></label>
+        <div class="invalid-feedback required" *ngIf="isFieldValid(conformationEventForm,'event_name')">
+            <div *ngIf="conformationEventForm.get('event_name')?.errors?.['required']">Event name is required</div>
+        </div>
+    </div>
+
+    <div class="mb-3" [ngClass]="{ 'float-now': addConformtion.event_descriptions != '' }">
+        <textarea type="text" class="form-control txtbox" id="role" formControlName="event_descriptions"
+            [(ngModel)]="addConformtion.event_descriptions"
+            [ngClass]="displayFieldCss(conformationEventForm,'event_descriptions')"></textarea>
+        <label class="floating-label">Enter event description</label>
+        <div class="required" *ngIf="isFieldValid(conformationEventForm,'event_descriptions')">
+            <span class="text-danger"
+                *ngIf="conformationEventForm.get('event_descriptions')?.errors?.['required']">Event description is
+                required</span>
+        </div>
+    </div>
+
+    <div class="mb-3" class="statusInput">
+        <p class="label">Status:</p>
+        <div class="activeRadio">
+            <input type="radio" name="status" [(ngModel)]="status" [ngModelOptions]="{standalone: true}"
+                value='True'>&nbsp;
+            <label class="label2">Active</label><br>
+        </div>
+        <div class="inActiveRadio">
+            <input type="radio" name="status" [(ngModel)]="status" [ngModelOptions]="{standalone: true}"
+                value='False'>&nbsp;
+            <label class="label2">Inactive</label>
+        </div>
+    </div>
+    <div class="mb-3">
+        <select class="form-select" formControlName="priority" [(ngModel)]="addConformtion.priority"
+            [ngClass]="displayFieldCss(conformationEventForm,'priority')" aria-label="Default select example">
+            <option value="" selected disabled>Select Priority <span class="asterisk">*</span></option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+        <label class="floating-label-select" [ngClass]="{'insideDropdown': addConformtion.priority =='' }">Select
+            Priority <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(conformationEventForm,'priority')">
+            <span class="text-danger" *ngIf="conformationEventForm.get('priority')?.errors?.['required']">Priority is
+                required</span>
+        </div>
+
+    </div>
+    <!-- <div class="mb-3">
+        <angular2-multiselect [data]="dropdownUserList" [settings]="dropdownUserSettings" formControlName="selectedUser"
+            [(ngModel)]="addConformtion.selectedUser">
+        </angular2-multiselect>
+        <label class="floating-label-select"
+            [ngClass]="{'insideDropdown': addConformtion.selectedUser.length == '0' }">Select User Mail to <span
+                class="asterisk">*</span></label>
+    </div> -->
+    <div class="mb-3" class="assigneeInput">
+        <p class="label">Notify Assignee:</p>
+        <div class="activeRadio">
+            <input type="radio" name="notify" [(ngModel)]="notify" [ngModelOptions]="{standalone: true}"
+                value="True">&nbsp;
+            <label class="label2">Yes</label><br>
+        </div>
+        <div class="inActiveRadio">
+            <input type="radio" name="notify" [(ngModel)]="notify" [ngModelOptions]="{standalone: true}"
+                value="False">&nbsp;
+            <label class="label2">No</label>
+        </div>
+    </div>
+
+    <div class="mb-3" class="assigneeInput">
+        <p class="label">Remind Assignee:</p>
+        <div class="activeRadio">
+            <input type="radio" name="remind" [(ngModel)]="remind" [ngModelOptions]="{standalone: true}"
+                value="True">&nbsp;
+            <label class="label2">Yes</label><br>
+        </div>
+        <div class="inActiveRadio">
+            <input type="radio" name="remind" [(ngModel)]="remind" [ngModelOptions]="{standalone: true}"
+                value="False">&nbsp;
+            <label class="label2">No</label>
+        </div>
+    </div>
+    <div *ngIf="remind == 'True'">
+        <div class="mb-3" [ngClass]="{ 'float-now': addConformtion.send_reminder_in_hours != '' }">
+            <input class="form-select" autocomplete="off" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="send_reminder_in_hours" required formControlName="send_reminder_in_hours"
+                [(ngModel)]="addConformtion.send_reminder_in_hours" name="send_reminder_in_hours"
+                [ngClass]="displayFieldCss(conformationEventForm,'send_reminder_in_hours')"
+                style=" background-image: none; padding-right: 10px; ">
+            <label class="floating-label">Send Reminder Before (In Hours) <span class="asterisk">*</span></label>
+            <div class="invalid-feedback required" *ngIf="isFieldValid(conformationEventForm,'send_reminder_in_hours')">
+                <div *ngIf="conformationEventForm.get('send_reminder_in_hours')?.errors?.['required']">Reminder time is required</div>
+            </div>
+        </div>
+    </div>
+    
+    <div *ngIf="notify == 'True'">
+        <div class="mb-3">
+            <angular2-multiselect [data]="dropdownUserList" [settings]="dropdownUserSettings" formControlName="ccuser"
+                [(ngModel)]="addConformtion.ccuser">
+            </angular2-multiselect>
+            <label class="floating-label-select"
+                [ngClass]="{'insideDropdown': addConformtion.ccuser.length == '0' }">Select
+                User Mail Copy To</label>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" required formControlName="trigger_type"
+                [(ngModel)]="addConformtion.trigger_type" name="trigger_type" (change)="changeDaTE()"
+                [ngClass]="displayFieldCss(conformationEventForm,'trigger_type')">
+                <option value="IMMEDIATELY">Immediately</option>
+                <option value="SET DATE">Set Date</option>
+            </select>
+            <label class="floating-label-select"
+                [ngClass]="{'insideDropdown': addConformtion.trigger_type == '' }">Select
+                trigger type<span class="asterisk">*</span></label>
+            <div *ngIf="isFieldValid(conformationEventForm,'trigger_type')" class="invalid-feedback">
+                <div *ngIf="conformationEventForm.get('trigger_type')?.errors?.['required']">This is required</div>
+            </div>
+        </div>
+
+        <div *ngIf="addConformtion.trigger_type == 'SET DATE'">
+            <div class="mb-3" [ngClass]="{ 'float-now': addConformtion.start_date != '' }">
+                <input class="form-select" autocomplete="off" type="text"
+                    onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="start_date" required
+                    formControlName="start_date" [(ngModel)]="addConformtion.start_date" name="start_date"
+                    [ngClass]="displayFieldCss(conformationEventForm,'start_date')"
+                    style=" background-image: none; padding-right: 10px; ">
+                <label class="floating-label">Start Hour<span class="asterisk">*</span></label>
+                <div class="invalid-feedback required" *ngIf="isFieldValid(conformationEventForm,'start_date')">
+                    <div *ngIf="conformationEventForm.get('start_date')?.errors?.['required']">Start hour is required
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3" [ngClass]="{ 'float-now': addConformtion.end_date != '' }">
+                <input class="form-select" autocomplete="off" type="text"
+                    onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="end_date" required
+                    formControlName="end_date" [(ngModel)]="addConformtion.end_date" name="end_date"
+                    [ngClass]="displayFieldCss(conformationEventForm,'end_date')"
+                    style=" background-image: none; padding-right: 10px; ">
+                <label class="floating-label">End Hours <span class="asterisk">*</span></label>
+                <div class="invalid-feedback required" *ngIf="isFieldValid(conformationEventForm,'end_date')">
+                    <div *ngIf="conformationEventForm.get('end_date')?.errors?.['required']">End Hour is required</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" [ngModelOptions]="{standalone: true}" [(ngModel)]="NotificationType"
+                (change)="changeTemplate()">
+                <option value="EMAIL">Email</option>
+                <option value="SMS">SMS</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': NotificationType =='' }">Select
+                notification
+                type<span class="asterisk">*</span></label>
+
+            <div class="required">
+                <span class="text-danger" *ngIf="showNotificationTypeError && NotificationType ==''">This is
+                    required</span>
+            </div>
+
+        </div>
+
+        <div class="mb-3" *ngIf="NotificationType == 'EMAIL'">
+            <select class="form-select" required formControlName="email_template_id"
+                [(ngModel)]="addConformtion.email_template_id" name="email_template_id"
+                [ngClass]="displayFieldCss(conformationEventForm,'email_template_id')">
+                <option *ngFor="let EmailTemplate of EmailTemplateList" value={{EmailTemplate.id}}>
+                    {{EmailTemplate.template_name}}</option>
+            </select>
+
+            <label class="floating-label-select"
+                [ngClass]="{'insideDropdown': addConformtion.email_template_id == '' }">Select Mail Template<span
+                    class="asterisk">*</span></label>
+            <div *ngIf="isFieldValid(conformationEventForm,'email_template_id')" class="invalid-feedback">
+                <div *ngIf="conformationEventForm.get('email_template_id')?.errors?.['required']">This is required</div>
+            </div>
+        </div>
+        <div class="mb-3" *ngIf="NotificationType == 'SMS'">
+            <select class="form-select" required formControlName="sms_template_id"
+                [(ngModel)]="addConformtion.sms_template_id" name="sms_template_id"
+                [ngClass]="displayFieldCss(conformationEventForm,'sms_template_id')">
+                <option *ngFor="let EmailTemplate of SmsTemplateList" value={{EmailTemplate.id}}>
+                    {{EmailTemplate.sms_template_name}}</option>
+            </select>
+
+            <label class="floating-label-select"
+                [ngClass]="{'insideDropdown': addConformtion.sms_template_id == '' }">Select
+                SMS Template<span class="asterisk">*</span></label>
+            <div *ngIf="isFieldValid(conformationEventForm,'sms_template_id')" class="invalid-feedback">
+                <div *ngIf="conformationEventForm.get('sms_template_id')?.errors?.['required']">This is required</div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+<div>
+    <p class="label1">Add Confirmation/Approval Level</p>
+    <div class="mb-3 option" [ngClass]="{ 'float-now': md.option !=''}" *ngFor="let md of OptionData; let i=index">
+        <select Name="option" class="form-select option-input" [(ngModel)]="md.option">
+            <option value="" selected></option>
+            <option *ngFor="let user of userList" value={{user.id}}>{{user.full_name}}</option>
+        </select>
+        <label class="floating-label">Level {{i+1}} User <span class="asterisk">*</span></label>
+        <div class="AddBtn" (click)="addOption()" *ngIf="i==0"><img src="assets/icons/add1.png" alt="">
+        </div>
+        <div class="RemoveBtn" (click)="removeOption(i)" *ngIf="i!=0"><img src="assets/icons/minus.png" alt=""></div>
+        <div class="required" *ngIf="md.option==''">
+            <span class="text-danger">Level {{i+1}} User is required</span>
+        </div>
+    </div>
+</div>
+
+<button type="submit" class="btn btn-primary" (click)="addConformationEvent()">Update</button>
+<button type="button" class="btn btn-primary non-active-btn" (click)="resetWorkFlow()">BACK</button>

@@ -1,0 +1,78 @@
+<div class="creatematerial">
+
+    <form name="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <div class="">
+            <div class="d-flex justify-content-center">
+                <div class="col-md-6">
+
+                    <div class="addressform  pb-2">
+                        <label class="mx-2">Remarks</label>
+
+                        <div class="col-md-8">
+                            <textarea formControlName="remarks"
+                                [class.is-invalid]="(!Global.isInputValid(formGroup,'remarks'))" type="text"
+                                class="form-control" placeholder=""></textarea>
+                            <div class="invalid-feedback"
+                                *ngIf="!Global.isInputRuleValid(formGroup,'remarks','required')">
+                                <div>
+                                    This field is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="addressform  pb-2r">
+                        <label class="mx-2">Attach a File</label>
+                        <div class="col-md-8">
+                            <input multiple="multiple" (change)="handleUpload($event)" type="file" class="form-control"
+                                placeholder="">
+
+                        </div>
+                    </div>
+                    <div class="d-flex mt-2 mx-2">
+                        <ng-container *ngIf="rawMaterialSaleData?.attachments?.length">
+                            <ng-container *ngFor="let item of rawMaterialSaleData?.attachments; let i = index">
+                                <a class="mx-2" target="_blank" [href]="Global.BACKEND_URL + item?.attachment">
+                                    Attachment {{ i + 1 }}
+                                </a>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="addressform  pb-2">
+                        <label class="mx-2">Narration</label>
+
+                        <div class="col-md-8">
+                            <textarea formControlName="narration"
+                                [class.is-invalid]="(!Global.isInputValid(formGroup,'narration'))" type="text"
+                                class="form-control" placeholder=""></textarea>
+                            <div class="invalid-feedback"
+                                *ngIf="!Global.isInputRuleValid(formGroup,'narration','required')">
+                                <div>
+                                    This field is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="addressform  pb-2r">
+                        <label class="mx-2">Jurisdiction</label>
+                        <div class="col-md-8">
+                            <input formControlName="jurisdiction"
+                                [class.is-invalid]="(!Global.isInputValid(formGroup,'jurisdiction'))" type="text"
+                                class="form-control" placeholder="">
+                            <div class="invalid-feedback"
+                                *ngIf="!Global.isInputRuleValid(formGroup,'jurisdiction','required')">
+                                <div>
+                                    This field is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button hidden #submitButton="" type="submit">Save</button>
+    </form>
+
+</div>

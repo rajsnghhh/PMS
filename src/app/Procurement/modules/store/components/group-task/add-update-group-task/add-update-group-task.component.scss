@@ -1,0 +1,117 @@
+.invalid-feedback {
+    display: block;
+    opacity: 1 !important;
+    position: absolute;
+    font-size: 10px;
+}
+
+.form-control {
+    border-radius: 18px;
+    font-size: 15px;
+}
+
+.asterisk {
+    color: red;
+}
+.fieldValue label {
+    margin: 0px 0px 5px 0px !important;
+    padding: 0px 0px !important;
+	display: inline-block;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	line-height: 14px;
+	color: #666;
+	font-weight: 500;
+	text-align: left;
+     }
+.fieldValue .form-control {
+    display: block;
+    width: 100%;
+    padding: 9px 9px !important;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 15px;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px !important;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+.fieldValue .form-select {
+    display: block;
+    width: 100%;
+    padding: 9px 9px !important;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 15px;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px !important;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+.eachfield input, select, textarea {
+    border-radius: 0px;
+    font-size: 12px;
+    padding: 6px 9px !important;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    width: 100%;
+    }
+.btnupdate{
+
+}
+.btnupdate .update-btn {
+	background-image: linear-gradient(to right, #40d4e6, #6675fe);
+	font-weight: initial;
+	padding: 7px 17px;
+	margin-top: 8px;
+	border-radius: 4px;
+	border: none;
+	color: white;
+	font-size: 14px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: baseline;
+	float: right;
+	min-width: 88px;
+	margin-left: 15px;
+}
+.btnupdate .update-btn {
+	background-image: linear-gradient(to right, #40d4e6, #6675fe);
+	font-weight: initial;
+	padding: 7px 17px;
+	margin-top: 8px;
+	border-radius: 4px;
+	border: none;
+	color: white;
+	font-size: 14px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: baseline;
+	float: right;
+	min-width: 88px;
+	margin-left: 15px;
+}
+.btnupdate .cancel-btn {
+	background-image: linear-gradient(to right, #b8b8b8, rgb(109, 111, 136));
+	font-weight: initial;
+	padding: 7px 17px;
+	margin-top: 8px;
+	border-radius: 4px;
+	border: none;
+	color: white;
+	font-size: 14px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: baseline;
+	float: right;
+	min-width: 88px;
+	margin-left: 15px;
+}

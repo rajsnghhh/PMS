@@ -1,0 +1,454 @@
+<div class="survey-content-main">
+    <div class="survey-header">
+        <h1>Document to be Collected</h1>
+        <button (click)="proceedNext()">SKIP NOW</button>
+    </div>
+    <div class="survey-body">
+        <form>
+            <div class="flex-div">
+            <div class="mb-3">
+                <label for="timerange">DPR</label>
+                <select class="form-select" aria-label="Default select">
+                    <option selected>Yes / No </option>
+                    <option value="1">Yes</option>
+                    <option value="2">No</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="timerange">Remarks</label>
+                <input type="text" class="form-control" id="timerange"  placeholder="Add">
+            </div> 
+            <div class="mb-3">
+                <label for="timerange">Upload Files</label>
+                <div class="fileUpload-section">
+                    <div *ngFor="let selected of listOfDPRFiles; let index = index" class="filecard">
+                        <span [outerHTML]="selected | docNametoIMG"></span>
+                        <div class="file-actio">
+                            <div><img (click)="viewSelectedDPRFile(index)" src="assets/icons/view.png" alt="" title="View" data-bs-toggle="modal" data-bs-target="#viewDPRDoc"></div>
+                            <div><img (click)="removeSelectedDPRFile(index)" src="assets/icons/delete.png" alt="" title="Delete"></div>
+                        </div>
+                    </div>
+                    <!-- <p *ngIf="isLoading">Loading.....</p> -->
+                    <div (click)="fileDPRInput.click()" class="filecard">
+                        <img src="assets/icons/upload-blue.png" alt="">
+                        <h1 *ngIf="DPRfileList.length == 0; else uploadFile">Upload Files</h1>
+                        <ng-template #uploadFile>
+                        <h1>Add More</h1>
+                        </ng-template>
+                    </div>
+                    <input style="display: none" #attachments type="file" (change)="onDPRFileChanged($event)" #fileDPRInput multiple="true" />
+                </div>
+            </div>  
+            </div>
+            <div class="flex-div">
+                <div class="mb-3">
+                    <label for="timerange">GAD</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected>Yes / No </option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Remarks</label>
+                    <input type="text" class="form-control" id="timerange"  placeholder="Add">
+                </div> 
+                <div class="mb-3">
+                    <label for="timerange">Upload Files</label>
+                    <div class="fileUpload-section">
+                        <div *ngFor="let selected of listOfGADFiles; let index = index" class="filecard">
+                            <span [outerHTML]="selected | docNametoIMG"></span>
+                            <div class="file-actio">
+                                <div><img (click)="viewSelectedGADFile(index)" src="assets/icons/view.png" alt="" title="View"></div>
+                                <div><img (click)="removeSelectedGADFile(index)" src="assets/icons/delete.png" alt="" title="Delete"></div>
+                            </div>
+                        </div>
+                        <!-- <p *ngIf="isLoading">Loading.....</p> -->
+                        <div (click)="fileGADInput.click()" class="filecard">
+                            <img src="assets/icons/upload-blue.png" alt="">
+                            <h1 *ngIf="GADfileList.length == 0; else uploadFile">Upload Files</h1>
+                            <ng-template #uploadFile>
+                            <h1>Add More</h1>
+                            </ng-template>
+                        </div>
+                        <input style="display: none" #attachments type="file" (change)="onGADFileChanged($event)" #fileGADInput multiple="true" />
+                    </div>
+                </div>  
+            </div>
+            <div class="flex-div">
+                    <div class="mb-3">
+                        <label for="timerange">L-Section</label>
+                        <select class="form-select" aria-label="Default select">
+                            <option selected>Yes / No </option>
+                            <option value="1">Yes</option>
+                            <option value="2">No</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="timerange">Remarks</label>
+                        <input type="text" class="form-control" id="timerange"  placeholder="Add">
+                    </div> 
+                    <div class="mb-3">
+                        <label for="timerange">Upload Files</label>
+                        <div class="fileUpload-section">
+                            <div *ngFor="let selected of listOfLSectionFiles; let index = index" class="filecard">
+                                <span [outerHTML]="selected | docNametoIMG"></span>
+                                <div class="file-actio">
+                                    <div><img (click)="viewSelectedLSectionFile(index)" src="assets/icons/view.png" alt="" title="View"></div>
+                                    <div><img (click)="removeSelectedLSectionFile(index)" src="assets/icons/delete.png" alt="" title="Delete"></div>
+                                </div>
+                            </div>
+                            <!-- <p *ngIf="isLoading">Loading.....</p> -->
+                            <div (click)="fileLSectionInput.click()" class="filecard">
+                                <img src="assets/icons/upload-blue.png" alt="">
+                                <h1 *ngIf="LSectionfileList.length == 0; else uploadFile">Upload Files</h1>
+                                <ng-template #uploadFile>
+                                <h1>Add More</h1>
+                                </ng-template>
+                            </div>
+                            <input style="display: none" #attachments type="file" (change)="onLSectionFileChanged($event)" #fileLSectionInput multiple="true" />
+                        </div>
+                    </div>  
+            </div> 
+            <div class="flex-div">
+                <div class="mb-3">
+                    <label for="timerange">Soil Test Report</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected>Yes / No </option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Remarks</label>
+                    <input type="text" class="form-control" id="timerange"  placeholder="Add">
+                </div> 
+                <div class="mb-3">
+                    <label for="timerange">Upload Files</label>
+                    <div class="fileUpload-section">
+                        <div *ngFor="let selected of listOfSTRFiles; let index = index" class="filecard">
+                            <span [outerHTML]="selected | docNametoIMG"></span>
+                            <div class="file-actio">
+                                <div><img (click)="viewSelectedSTRFile(index)" src="assets/icons/view.png" alt="" title="View"></div>
+                                <div><img (click)="removeSelectedSTRFile(index)" src="assets/icons/delete.png" alt="" title="Delete"></div>
+                            </div>
+                        </div>
+                        <!-- <p *ngIf="isLoading">Loading.....</p> -->
+                        <div (click)="fileSTRInput.click()" class="filecard">
+                            <img src="assets/icons/upload-blue.png" alt="">
+                            <h1 *ngIf="STRfileList.length == 0; else uploadFile">Upload Files</h1>
+                            <ng-template #uploadFile>
+                            <h1>Add More</h1>
+                            </ng-template>
+                        </div>
+                        <input style="display: none" #attachments type="file" (change)="onSTRFileChanged($event)" #fileSTRInput multiple="true" />
+                    </div>
+                </div>  
+            </div>         
+            <div class="flex-div">
+                <div class="mb-3">
+                    <label for="timerange">Data from Irrigation Department</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected>Yes / No </option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Remarks</label>
+                    <input type="text" class="form-control" id="timerange"  placeholder="Add">
+                </div> 
+                <div class="mb-3">
+                    <label for="timerange">Upload Files</label>
+                    <div class="fileUpload-section">
+                        <div *ngFor="let selected of listOfIrrigationFiles; let index = index" class="filecard">
+                            <span [outerHTML]="selected | docNametoIMG"></span>
+                            <div class="file-actio">
+                                <div><img (click)="viewSelectedIrrigationFile(index)" src="assets/icons/view.png" alt="" title="View"></div>
+                                <div><img (click)="removeSelectedIrrigationFile(index)" src="assets/icons/delete.png" alt="" title="Delete"></div>
+                            </div>
+                        </div>
+                        <!-- <p *ngIf="isLoading">Loading.....</p> -->
+                        <div (click)="fileIrrigationInput.click()" class="filecard">
+                            <img src="assets/icons/upload-blue.png" alt="">
+                            <h1 *ngIf="STRfileList.length == 0; else uploadFile">Upload Files</h1>
+                            <ng-template #uploadFile>
+                            <h1>Add More</h1>
+                            </ng-template>
+                        </div>
+                        <input style="display: none" #attachments type="file" (change)="onIrrigationFileChanged($event)" #fileIrrigationInput multiple="true" />
+                    </div>
+                </div>  
+            </div>
+            <div class="flex-div">
+                <div class="mb-3">
+                    <label for="timerange">Meet the local Panchayat</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected>Yes / No </option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Remarks</label>
+                    <input type="text" class="form-control" id="timerange"  placeholder="Add">
+                </div> 
+                <div class="mb-3">
+                    <label for="timerange">Upload Files</label>
+                    <div class="fileUpload-section">
+                        <div *ngFor="let selected of listOfPanchayatMeetFiles; let index = index" class="filecard">
+                            <span [outerHTML]="selected | docNametoIMG"></span>
+                            <div class="file-actio">
+                                <div><img (click)="viewSelectedPanchayatMeetFile(index)" src="assets/icons/view.png" alt="" title="View"></div>
+                                <div><img (click)="removeSelectedPanchayatMeetFile(index)" src="assets/icons/delete.png" alt="" title="Delete"></div>
+                            </div>
+                        </div>
+                        <!-- <p *ngIf="isLoading">Loading.....</p> -->
+                        <div (click)="filePanchayatMeetInput.click()" class="filecard">
+                            <img src="assets/icons/upload-blue.png" alt="">
+                            <h1 *ngIf="PanchayatMeetfileList.length == 0; else uploadFile">Upload Files</h1>
+                            <ng-template #uploadFile>
+                            <h1>Add More</h1>
+                            </ng-template>
+                        </div>
+                        <input style="display: none" #attachments type="file" (change)="onPanchayatMeetFileChanged($event)" #filePanchayatMeetInput multiple="true" />
+                    </div>
+                </div>  
+            </div>
+            <div class="flex-div">
+                <div class="mb-3">
+                    <label for="timerange">Meet the village pradhan for any local challenges and other issues</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected>Yes / No </option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Remarks</label>
+                    <input type="text" class="form-control" id="timerange"  placeholder="Add">
+                </div> 
+                <div class="mb-3">
+                    <label for="timerange">Upload Files</label>
+                    <div class="fileUpload-section">
+                        <div *ngFor="let selected of listOfPradhanMeetFiles; let index = index" class="filecard">
+                            <span [outerHTML]="selected | docNametoIMG"></span>
+                            <div class="file-actio">
+                                <div><img (click)="viewSelectedPradhanMeetFile(index)" src="assets/icons/view.png" alt="" title="View"></div>
+                                <div><img (click)="removeSelectedPradhanMeetFile(index)" src="assets/icons/delete.png" alt="" title="Delete"></div>
+                            </div>
+                        </div>
+                        <!-- <p *ngIf="isLoading">Loading.....</p> -->
+                        <div (click)="filePradhanMeetInput.click()" class="filecard">
+                            <img src="assets/icons/upload-blue.png" alt="">
+                            <h1 *ngIf="PradhanMeetfileList.length == 0; else uploadFile">Upload Files</h1>
+                            <ng-template #uploadFile>
+                            <h1>Add More</h1>
+                            </ng-template>
+                        </div>
+                        <input style="display: none" #attachments type="file" (change)="onPradhanMeetFileChanged($event)" #filePradhanMeetInput multiple="true" />
+                    </div>
+                </div>  
+            </div>
+            <div class="flex-div">
+                <div class="mb-3">
+                    <label for="timerange">Talk to contractors working close by to find out rates etc</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected>Yes / No </option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Remarks</label>
+                    <input type="text" class="form-control" id="timerange"  placeholder="Add">
+                </div> 
+                <div class="mb-3">
+                    <label for="timerange">Upload Files</label>
+                    <div class="fileUpload-section">
+                        <div *ngFor="let selected of listOfTalkContractorsFiles; let index = index" class="filecard">
+                            <span [outerHTML]="selected | docNametoIMG"></span>
+                            <div class="file-actio">
+                                <div><img (click)="viewSelectedTalkContractorsFile(index)" src="assets/icons/view.png" alt="" title="View"></div>
+                                <div><img (click)="removeSelectedTalkContractorsFile(index)" src="assets/icons/delete.png" alt="" title="Delete"></div>
+                            </div>
+                        </div>
+                        <!-- <p *ngIf="isLoading">Loading.....</p> -->
+                        <div (click)="fileTalkContractorsInput.click()" class="filecard">
+                            <img src="assets/icons/upload-blue.png" alt="">
+                            <h1 *ngIf="TalkContractorsfileList.length == 0; else uploadFile">Upload Files</h1>
+                            <ng-template #uploadFile>
+                            <h1>Add More</h1>
+                            </ng-template>
+                        </div>
+                        <input style="display: none" #attachments type="file" (change)="onTalkContractorsFileChanged($event)" #fileTalkContractorsInput multiple="true" />
+                    </div>
+                </div>  
+            </div>
+            <div class="flex-div">
+                <div class="mb-3">
+                    <label for="timerange">How supportive are the client engineers responsible at the site</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected>Unsupportive / Indifferent / Supportive </option>
+                        <option value="1">Unsupportive</option>
+                        <option value="2">Indifferent</option>
+                        <option value="3">Supportive</option>
+
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">How supportive are the local people</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected>Unsupportive / Indifferent / Supportive </option>
+                        <option value="1">Unsupportive</option>
+                        <option value="2">Indifferent</option>
+                        <option value="3">Supportive</option>
+
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Expected local and client expenses</label>
+                    <input type="text" class="form-control" id="timerange"  placeholder="Add">
+                </div> 
+            </div>
+            <div class="flex-div-pic">
+                <div class="mb-3">
+                    <label for="timerange">Taken photographs of how local contractors are working</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected>Yes / No </option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                </div> 
+                <div class="mb-3 position">
+                    <label for="timerange">Upload Files</label>
+                    <div class="fileUpload-section">
+                        <div *ngFor="let selected of listOfPhotographsFiles; let index = index" class="filecard">
+                            <span [outerHTML]="selected | docNametoIMG"></span>
+                            <div class="file-actio">
+                                <div><img (click)="viewSelectedPhotographsFile(index)" src="assets/icons/view.png" alt="" title="View"></div>
+                                <div><img (click)="removeSelectedPhotographsFile(index)" src="assets/icons/delete.png" alt="" title="Delete"></div>
+                            </div>
+                        </div>
+                        <!-- <p *ngIf="isLoading">Loading.....</p> -->
+                        <div (click)="filePhotographsInput.click()" class="filecard">
+                            <img src="assets/icons/upload-blue.png" alt="">
+                            <h1 *ngIf="PhotographsfileList.length == 0; else uploadFile">Upload Files</h1>
+                            <ng-template #uploadFile>
+                            <h1>Add More</h1>
+                            </ng-template>
+                        </div>
+                        <input style="display: none" #attachments type="file" (change)="onPhotographsFileChanged($event)" #filePhotographsInput multiple="true" />
+                    </div>
+                </div>  
+            </div>
+            <div class="work-card">
+                <div class="work-header">
+                    <span>GET CONTACT DETAILS OF ENGINEER OF THAT LOCAL ONGOING PROJECT</span>
+                </div>
+                <div class="work-action" *ngIf="!AddNew">
+                    <span data-bs-toggle="offcanvas" data-bs-target="#ContactDetails" aria-controls="offcanvasRight"><img src="assets/icons/add.png" alt=""> ADD NEW</span>
+                </div>
+                <section class="data-table" *ngIf="AddNew">
+                    <div class="table-description">
+                        <span data-bs-toggle="offcanvas" data-bs-target="#ContactDetails" aria-controls="offcanvasRight"><img src="assets/icons/add.png" alt=""> ADD NEW</span>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Company Name</th>
+                            <th>Contact Name</th>
+                            <th>Contact Number</th>
+                            <th>Designation</th>
+                            <th>Email Id</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content">
+                                            <div class="img-container">
+                                                <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                                <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content">
+                                            <div class="img-container">
+                                                <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                                <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content">
+                                            <div class="img-container">
+                                                <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                                <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                       
+                    </table>
+                    </section>
+            </div>           
+            <button type="submit" (click)="proceedNext()" class="btn btn-primary">NEXT</button>
+            <button type="button" class="btn btn-primary non-active-btn" (click)="GoBack()">BACK</button>
+        </form>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="ContactDetails" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Add contact details of engineer of that local ongoing project</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="left-section">
+        <app-contact-detail></app-contact-detail>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="viewDPRDoc" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            View The Doc Which You Upload
+        </div>
+    </div>
+</div>

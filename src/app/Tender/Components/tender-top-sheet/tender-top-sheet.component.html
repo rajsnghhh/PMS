@@ -1,0 +1,113 @@
+<div class="main-container" *ngFor="let tableData of formData; let tableIndex = index">
+    <div class="component-header">
+        <h2>{{tableData.name}}</h2>
+    </div>
+    <div class="component-body">
+        <table class="text-center">
+            <tr>
+                <!-- <th>S.No</th> -->
+                <th *ngFor="let val of tableData.form_fields" [ngClass]="{'hidden': val.form_label == 'Unit Head' }">{{val.form_label}}</th>
+                <!-- <th>Action</th> -->
+            </tr>
+            <tr>
+                <td *ngFor="let val of tableData.form_fields" [ngClass]="{'hidden': val.form_label == 'Unit Head' }">
+                    <section *ngIf="val.form_internal_name == 'sl_no'">
+                        <table>
+                            <tr *ngFor="let keyscoperow of keyScopeList; let keyscopeIndex = index"><td>{{keyscopeIndex+1}}</td></tr>
+                        </table>
+                    </section> 
+                    <section *ngIf="val.form_internal_name == 'type'" class="typesize">{{tableData.name}}</section> 
+                    <section *ngIf="val.form_internal_name == 'descriptions'">
+                        <table>
+                            <tr *ngFor="let keyscoperow of keyScopeList; let keyscopeIndex = index"><td> <p [outerHTML]="keyscoperow.wbs_name | textMax"></p></td></tr>
+                        </table>
+                    </section> 
+                    <section *ngIf="val.form_internal_name == 'uom'">
+                        <table>
+                            <tr *ngFor="let keyscoperow of keyScopeList; let keyscopeIndex = index">
+                                <td *ngIf="keyscoperow.uom_name"> <p [outerHTML]="keyscoperow.uom_name | textMax"></p></td>
+                                <td *ngIf="!keyscoperow.uom_name">Null</td>
+                            </tr>
+                        </table>
+                    </section> 
+                    <section *ngIf="val.form_internal_name == 'expenditure_value'">
+                        <table>
+                            <tr *ngFor="let keyscoperow of keyScopeList; let keyscopeIndex = index"><td><input [ngClass]="{'disable': prefieldData?.Data?.is_top_sheet_complete == true }" [(ngModel)]="bindData[tableData.name + '_' + keyscoperow.id + '_'+ val.form_internal_name]" type="text" amountNumber (change)="changeInTableData(tableIndex,keyscoperow,val)"></td></tr>
+                        </table>
+                    </section> 
+                    <section *ngIf="val.form_internal_name == 'sale_value'">
+                        <table>
+                            <tr *ngFor="let keyscoperow of keyScopeList; let keyscopeIndex = index"><td><input type="text" [ngClass]="{'disable': prefieldData?.Data?.is_top_sheet_complete == true }" [(ngModel)]="bindData[tableData.name + '_' + keyscoperow.id + '_'+ val.form_internal_name]" amountNumber (change)="changeInTableData(tableIndex,keyscoperow,val)"></td></tr>
+                        </table>
+                    </section> 
+                    <section *ngIf="val.form_internal_name == 'unit_head'">
+                        <table>
+                            <tr *ngFor="let keyscoperow of keyScopeList; let keyscopeIndex = index"><td><input [ngClass]="{'disable': prefieldData?.Data?.is_top_sheet_complete == true }" type="text" [(ngModel)]="bindData[tableData.name + '_' + keyscoperow.id + '_'+ val.form_internal_name]" disabled></td></tr>
+                        </table>
+                    </section> 
+                    <section *ngIf="val.form_internal_name == 'remarks'">
+                        <table>
+                            <tr *ngFor="let keyscoperow of keyScopeList; let keyscopeIndex = index"><td><input [ngClass]="{'disable': prefieldData?.Data?.is_top_sheet_complete == true }" type="text" [(ngModel)]="bindData[tableData.name + '_' + keyscoperow.id + '_'+ val.form_internal_name]" (change)="changeInTableData(tableIndex,keyscoperow,val)"></td></tr>
+                        </table>
+                    </section> 
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><b>Grand Total :</b></td>
+                <td></td>
+                <td><input type="text" name="" [(ngModel)]="bindData[tableData.name.toLowerCase() + '_total']" disabled id=""></td>
+                <td></td>
+                <td hidden></td>
+            </tr>
+            <tr *ngIf="formData.length == 0" class="text-center">
+                <td colspan="13">No data found.</td>
+            </tr>
+        </table>
+        <!-- <button class="addbtncolor" (click)="addRow(z,table.form_fields)" [ngClass]="{'disable': DisableModify == true }">Add Row</button> -->
+    </div>
+</div>
+
+<form #approval="ngForm" (ngSubmit)="approval.form.valid && submitApproval()" novalidate *ngIf="prefieldData?.Data?.is_top_sheet_complete == false">
+    <div class="flex-div">
+        <div class="mb-3">
+            <label for="selectGroup">Remarks <span class="asterisk">*</span></label>
+            <textarea [ngModelOptions]="{standalone: true}" #remarkss="ngModel" required name="" id="" cols="30" rows="5" [(ngModel)]="remarks"></textarea>
+            <div *ngIf="approval.submitted && remarkss.errors" class="invalid-feedback">
+                <div *ngIf="remarkss.errors['required']">This is required.</div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="mb-3 member-input">
+        <section class="custom-section" >
+            <label class="container">I have verified all the documents and sending for approval.
+                <input type="checkbox" #checkboxChecked="ngModel" required  name="sentForApproval" [ngModelOptions]="{standalone: true}" [(ngModel)]="Accepted">
+                <span class="checkmark"></span>
+            </label>
+        </section>
+        <div *ngIf="approval.submitted && checkboxChecked.errors" class="invalid-feedback">
+            <div *ngIf="checkboxChecked.errors['required']">Please check to proceed.</div>
+        </div>
+    </div>
+    <button type="submit" class="addbtncolor">Send For Tender Approval</button>
+</form>
+
+<form #approval="ngForm" (ngSubmit)="approval.form.valid && submitApproval()" novalidate *ngIf="prefieldData?.Data?.is_top_sheet_complete == true">
+    <div class="flex-div">
+        <div class="mb-3">
+            <label for="selectGroup">Remarks <span class="asterisk">*</span></label>
+            <textarea disabled [ngModelOptions]="{standalone: true}" #remarkss="ngModel" required name="" id="" cols="30" rows="5" [(ngModel)]="remarks"></textarea>
+        </div>
+    </div>
+    <div class="mb-3 member-input">
+        <section class="custom-section" >
+            <label class="container">I have verified all the documents and sending for approval.
+                <input type="checkbox" disabled checked name="sentForApproval" >
+                <span class="checkmark"></span>
+            </label>
+        </section>
+        
+    </div>
+</form>

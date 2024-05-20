@@ -1,0 +1,57 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+
+    <div class="creatematerial hideOnPrintScreen">
+        <div class="row">
+
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="addressform">           
+                           <label for="request">Jurisdiction</label>                      
+                                <input [disabled]="disabledEdit" type="text" class="form-control"
+                                placeholder="Please Select" id="line" name="jurisdiction"
+                                [(ngModel)]="form.jurisdiction" #jurisdiction="ngModel">     
+                
+                </div>
+
+
+                <div class="addressform">
+                       <label for="line">Terms & conditions</label>
+                   
+                            <input [disabled]="disabledEdit" type="text"
+                                class="form-control" placeholder="Type here..." id="t_and_c" name="t_and_c"
+                                [(ngModel)]="form.t_and_c" #t_and_c="ngModel">
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="addressform">
+   
+                      <label for="request">Attach&nbsp;a&nbsp;File</label>
+                            <div class="custom-file">
+                                <input [disabled]="disabledEdit" type="file" multiple="multiple"
+                                    (change)="handleUpload($event)" class="custom-file-input" id="customFile">
+                            </div>
+                            <section *ngIf="prefieldData.attachments">
+                                <section *ngFor="let attachmentdata of prefieldData.attachments">
+                                    <a *ngIf="attachmentdata.id" href="{{docUrl}}{{attachmentdata.attachment}}" target="_blank" >
+                                        <img src="assets/icons/eye.png" alt="">
+                                    </a>
+                                </section>
+                            </section>                      
+                   
+                </div>
+
+                <div class="addressform">
+           
+                        <label for="remarks">Remarks</label>
+                        <input [disabled]="disabledEdit" type="text"
+                                class="form-control" placeholder="Type here..." id="remarks" name="remarks"
+                                [(ngModel)]="form.remarks" #remarks="ngModel">              
+                </div>
+
+            </div>
+            <button hidden #submitButton="" type="submit">Save</button>
+        </div>
+    </div>
+</form>

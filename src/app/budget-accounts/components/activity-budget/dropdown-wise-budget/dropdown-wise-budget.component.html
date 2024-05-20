@@ -1,0 +1,252 @@
+<div class="container" *ngIf="projectId">
+    <div class="row justify-content-end">
+        <div class="col-md-2">
+            <button class="btn btn-outline-primary w-100" type="button" id="dropdownSelectColoum"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-plus mx-1"></i> Add
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum">
+                <li>
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#chainagewisebudget">Chainage</a>
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#activitywisebudget">Activity</a>
+                    <a class="dropdown-item" data-bs-toggle="modal"
+                        data-bs-target="#subactivitywisebudget">Sub-Activity</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="padding: 10px;" [formGroup]="fieldselections">
+
+    <div class="col-lg-3 col-md-3 col-3">
+        <div class="adform">
+            <label for="project">Project</label>
+            <select id="sel1" class="form-control"  formControlName="projectset" (change)="onProjectChainage($event)">
+                <!-- [(ngModel)]="projectId"  -->
+                <option value="">-- select --</option>
+                <option *ngFor="let project of projectList" [value]="project.id">
+                    {{project.project_data[1].value}}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-3">
+        <div class="adform">
+            <label for="chainage">Chainage</label>
+            <select id="sel1" class="form-control" [(ngModel)]="chainageId" formControlName="chainageset" (change)="onChainageActivity($event)">
+                <option value="">-- select --</option>
+                <option *ngFor="let chainage of chainageMasterList" [value]="chainage.id">
+                    {{chainage.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-3">
+        <div class="adform">
+            <label for="activity">Activity</label>
+            <select id="sel1" class="form-control" [(ngModel)]="activityId" formControlName="activityset" (change)="onActivitySubactivity($event)">
+                <option value="">-- select --</option>
+                <option *ngFor="let activity of activityMasterList" [value]="activity.id">
+                    {{activity.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-3">
+        <div class="adform">
+            <label for="subactivity">Sub-Activity</label>
+            <select id="sel1" class="form-control" [(ngModel)]="subactivityId">
+                <option value="">-- select --</option>
+                <option *ngFor="let subactivity of subactivityMasterList" [value]="subactivity.id">
+                    {{subactivity.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <!-- <div class="col-lg-3 col-md-3 col-3">
+        <div class="adform">
+            <label for="date">Date</label>
+            <input class="form-control" type="date" />
+        </div>
+    </div> -->
+
+</div>
+
+
+<section class="relative-div">
+    <div class="table-container component-body budget_table" *ngIf="subactivityId">
+        <table>
+            <tr>
+                <th colspan="7" style="text-align: center;">BUDGET</th>
+                <th colspan="3" style="text-align: center;">CONSUMPTION</th>
+                <th colspan="2" style="text-align: center;">REMAINDER</th>
+            </tr>
+
+            <tr>
+                <th *ngFor="let header of tableHeaders">{{ header }}</th>
+            </tr>
+
+            <tr>
+                <td> <input type="text"> </td>
+                <td> <input type="text"> </td>
+                <td> <input type="text"> </td>
+                <td> <input type="text"> </td>
+                <td> <input type="text"> </td>
+                <td> <input type="text"> </td>
+                <td> <input type="text"> </td>
+                <td> <input type="text"> </td>
+                <td> <input type="text"> </td>
+                <td> <input type="text"> </td>
+                <td> <input type="text"> </td>
+                <td> <input type="text"> </td>
+            </tr>
+
+
+        </table>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="chainagewisebudget" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    Add Chainage
+                </h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h4> Project Selected : {{projectName}} </h4>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" [(ngModel)]="chainage_name" type="text"
+                        placeholder="Enter Chainage Name" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-secondary" (click)="submitChainage()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="activitywisebudget" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    Add Activity
+                </h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h4> Project Selected : {{projectName}} </h4>
+                </div>
+                <div class="form-group">
+                    <label for="chainage">Chainage</label>
+
+                    <!-- <angular2-multiselect class="form-control borderHide" [data]="chainageMasterList"
+                        [(ngModel)]="chainageIds" [settings]="dropdownSettings"
+                        (onSelect)="onItemSelectChainage($event)" (onSelectAll)="onSelectAllChainage()"
+                        (onDeSelect)="onItemDeSelectChainage($event)" (onDeSelectAll)="onItemDeSelectAllChainage()">
+                    </angular2-multiselect> -->
+                    <ng-select class="form-control" [multiple]="true" name="chainage" [(ngModel)]="chainageIds">
+                        <ng-option *ngFor="let chainage of chainageMasterList"
+                            [value]="chainage.id">{{chainage.name}}</ng-option>
+                    </ng-select>
+
+                </div><br>
+                <div class="form-group">
+                    <input class="form-control" [(ngModel)]="activity_name" type="text"
+                        placeholder="Enter Activity Name" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="model_close" class="btn btn-primary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-secondary" (click)="submitActivity()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="subactivitywisebudget" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    Add Sub-Activity
+                </h2>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <h4> Project Selected : {{projectName}} </h4>
+                </div>
+
+                <!-- <div class="form-group">
+                    <label for="chainage">Chainage</label>
+                    <select id="sel1" class="form-control">
+                        <option value="">-- Select Chainage --</option>
+                        <option *ngFor="let chainage of chainageMasterList" [value]="chainage.id">
+                            {{chainage.name}}
+                        </option>
+
+                    </select>
+                </div> -->
+
+                <div class="form-group">
+                    <label for="activity">Activity</label>
+                    <ng-select class="form-control" [multiple]="true" name="activity" [(ngModel)]="activityIds">
+                        <ng-option *ngFor="let activity of activityMasterList"
+                            [value]="activity.id">{{activity.name}}</ng-option>
+                    </ng-select>
+
+
+                    <!-- <angular2-multiselect class="form-control borderHide" [data]="activityMasterList"
+                        [(ngModel)]="activityIds" [settings]="dropdownSettings">
+                    </angular2-multiselect> -->
+                    <!--  (onSelect)="onItemSelectActivity($event)" (onSelectAll)="onSelectAllActivity()"
+                        (onDeSelect)="onItemDeSelectActivity($event)" (onDeSelectAll)="onItemDeSelectAllActivity()" -->
+
+                </div><br>
+
+                <div class="form-group">
+                    <input class="form-control" [(ngModel)]="subactivity_name" type="text"
+                        placeholder="Enter Sub-Activity" />
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"id="model_close_sub_act" class="btn btn-primary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-secondary" (click)="submitSubActivity()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

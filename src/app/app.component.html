@@ -1,0 +1,30 @@
+<router-outlet></router-outlet>
+
+<div class="pms-loader" *ngIf="showLoader">
+    <span class="loader"></span>
+    <h1 *ngIf="loaderMessage != ''">{{loaderMessage}}</h1>
+</div>
+
+
+<div class="modal fade" id="viewDPRDoc" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="right: -3px; min-width: 853px;">
+        <div class="modal-content">
+            <div class="modal-header modal-custhead">
+                <button type="button" class="downloadButton" (click)="downloadUrl(url,'PMS_'+ShowFileType)"></button>
+                <button type="button" class="pdfClose" data-bs-dismiss="modal" (click)="closeDoc()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <pdf-viewer 
+                *ngIf="ShowFileType=='pdf'" 
+                [src]="url" 
+                [render-text]="true" 
+                [original-size]="false"
+                style="width: 100%; height: 90vh;">
+            </pdf-viewer>
+            <img  *ngIf="ShowFileType=='png' || ShowFileType=='jpg' || ShowFileType=='jpeg'" [src]="url" style="width: auto; height: auto;max-width: 100%;max-height: 100%;">
+            <section *ngIf="!supportedTypes.includes(ShowFileType)" >Only .pdf, .png, .jpg , .jpeg types are available for viewing !!</section>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,389 @@
+<div class="main-container">
+    <div class="left-section">
+        <ul>
+            <li class="completed" (click)="changeNav('Bridgework')" [ngClass]="{'active-nav' : activefrom == 'Bridgework'}">BRIDGE WORK</li>
+            <li (click)="changeNav('ApprochRoadWork')" [ngClass]="{'active-nav' : activefrom == 'ApprochRoadWork'}">APPROACH ROAD WORK</li>
+            <li (click)="changeNav('GPS')" [ngClass]="{'active-nav' : activefrom == 'GPS'}">GPS CO-ORDINATES</li>
+            <li (click)="changeNav('HydroData')" [ngClass]="{'active-nav' : activefrom == 'HydroData'}">HYDROLOGICAL DATA</li>
+        </ul>
+    </div>
+
+    <div class="survey-content-main" *ngIf="activefrom == 'Bridgework'">
+        <div class="survey-body">
+            <form>
+                <div class="flex-div">
+                <div class="mb-3">
+                    <label for="distance">Bridge No. / Chainage</label>
+                    <div class="custom-select-input">
+                        <select class="form-select" aria-label="Default select">
+                            <option value="Opt" selected>Opt</option>
+                            <option value="M">M</option>
+                        </select>
+                        <input type="text" class="form-control" id="Distance"  placeholder="Add">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="distance">Length of Bridge / No of spans</label>
+                    <div class="custom-select-input">
+                        <select class="form-select" aria-label="Default select">
+                            <option value="Nos" selected>Nos</option>
+                            <option value="M">M</option>
+                        </select>
+                        <input type="text" class="form-control" id="Distance"  placeholder="Add">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Type of Foundation</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected disabled>Open / Well / Pile </option>
+                        <option value="1">Open</option>
+                        <option value="2">Well</option>
+                        <option value="3">Pile</option>
+                    </select>
+                </div> 
+                <div class="mb-3">
+                    <label for="timerange">Length of Bridge / No of spans</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected disabled>RCC Box / RCC T-Beam & Slab/ ... </option>
+                        <option value="1">RCC Box</option>
+                        <option value="2">RCC T-Beam & Slab</option>
+                    </select>
+                </div> 
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Location of Bridge</label>
+                    <div class="custom-select-input">
+                        <input type="text" class="form-control" id="timerange"  placeholder="Start">
+                        <input type="text" class="form-control" id="timerange"  placeholder="End">
+                    </div>
+                </div>
+                <div class="flex-div">
+                <div class="mb-3">
+                    <label for="timerange">Is the Bridge approachable from both sides</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected disabled>Yes / No </option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Condition of Approach Road</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected disabled>None / Bad / Good / Excellent </option>
+                        <option value="1">None</option>
+                        <option value="2">Bad</option>
+                        <option value="">Good</option>
+                        <option value="">Excellent</option>
+                    </select>
+                </div>
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Is site approachable by Trailer</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected disabled>Yes / No </option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="Remarks">Remarks for approach road</label>
+                    <textarea class="form-control" id="Remarks" placeholder="Add Remarks" rows="2"></textarea>
+                </div>
+                <div class="flex-div">
+                <div class="mb-3">
+                    <label for="distance">Length of Bridge over water</label>
+                    <div class="custom-select-input">
+                        <select class="form-select" aria-label="Default select">
+                            <option value="Foot" selected>Foot</option>
+                            <option value="M">M</option>
+                        </select>
+                        <input type="text" class="form-control" id="Distance"  placeholder="Add">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="distance">Average height of Bridge</label>
+                    <div class="custom-select-input">
+                        <select class="form-select" aria-label="Default select">
+                            <option value="Meter" selected>Meter</option>
+                            <option value="M">M</option>
+                        </select>
+                        <input type="text" class="form-control" id="Distance"  placeholder="Add">
+                    </div>
+                </div>
+                </div>
+                <div class="mb-3">
+                    <label for="distance">Maximum height of Bridge</label>
+                    <div class="custom-select-input">
+                        <select class="form-select" aria-label="Default select">
+                            <option value="Foot" selected>Foot</option>
+                            <option value="M">M</option>
+                        </select>
+                        <input type="text" class="form-control" id="Distance"  placeholder="Add">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="Remarks">Any Remarks</label>
+                    <textarea class="form-control" id="Remarks" placeholder="Add Remarks" rows="2"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">NEXT</button>
+            </form>
+        </div>
+    </div>
+    <div class="survey-content-main" *ngIf="activefrom == 'ApprochRoadWork'">
+        <div class="survey-body">
+            <form>
+                <div class="mb-3">
+                    <label for="timerange">Location of Approach Road</label>
+                    <div class="custom-select-input">
+                        <input type="text" class="form-control" id="timerange"  placeholder="Start of Bridge">
+                        <input type="text" class="form-control" id="timerange"  placeholder="End of Bridge">
+                    </div>
+                </div>
+                <div class="mb-3 custom-multi-continer">
+                    <label for="distance">Length of Approach Road</label>
+                    <div class="custom-select-input">
+                        <select class="form-select" aria-label="Default select">
+                            <option value="Meter" selected>Meter</option>
+                        </select>
+                        <input type="text" class="form-control rigt-radious" id="Distance"  placeholder="Start of Bridge">
+                    </div>
+                    <div class="custom-select-input">
+                        <select class="form-select left-radious" aria-label="Default select">
+                            <option value="Meter" selected>Meter</option>
+                        </select>
+                        <input type="text" class="form-control" id="Distance"  placeholder="End of Bridge">
+                    </div>
+                </div>
+                <div class="mb-3 custom-multi-continer">
+                    <label for="distance">No of Minor Bridges in approach</label>
+                    <div class="custom-select-input">
+                        <select class="form-select" aria-label="Default select">
+                            <option value="Nos" selected>Nos</option>
+                        </select>
+                        <input type="text" class="form-control rigt-radious" id="Distance"  placeholder="Start of Bridge">
+                    </div>
+                    <div class="custom-select-input">
+                        <select class="form-select left-radious" aria-label="Default select">
+                            <option value="Nos" selected>Nos</option>
+                            <option value="M">M</option>
+                        </select>
+                        <input type="text" class="form-control" id="Distance"  placeholder="End of Bridge">
+                    </div>
+                </div>
+                <div class="mb-3 custom-multi-continer">
+                    <label for="distance">No of Culverts in approach</label>
+                    <div class="custom-select-input">
+                        <select class="form-select" aria-label="Default select">
+                            <option value="Nos" selected>Nos</option>
+                        </select>
+                        <input type="text" class="form-control rigt-radious" id="Distance"  placeholder="Start of Bridge">
+                    </div>
+                    <div class="custom-select-input">
+                        <select class="form-select left-radious" aria-label="Default select">
+                            <option value="Nos" selected>Nos</option>
+                        </select>
+                        <input type="text" class="form-control" id="Distance"  placeholder="End of Bridge">
+                    </div>
+                </div>
+                <div class="mb-3 custom-multi-continer">
+                    <label for="distance">Average height of approach</label>
+                    <div class="custom-select-input">
+                        <select class="form-select" aria-label="Default select">
+                            <option value="Meter" selected>Meter</option>
+                        </select>
+                        <input type="text" class="form-control rigt-radious" id="Distance"  placeholder="Start of Bridge">
+                    </div>
+                    <div class="custom-select-input">
+                        <select class="form-select left-radious" aria-label="Default select">
+                            <option value="Nos" selected>Meter</option>
+                        </select>
+                        <input type="text" class="form-control" id="Distance"  placeholder="End of Bridge">
+                    </div>
+                </div>
+                <div class="mb-3 custom-multi-continer">
+                    <label for="distance">Maximum height of approach</label>
+                    <div class="custom-select-input">
+                        <select class="form-select" aria-label="Default select">
+                            <option value="Opt" selected>Meter</option>
+                        </select>
+                        <input type="text" class="form-control rigt-radious" id="Distance"  placeholder="Start of Bridge">
+                    </div>
+                    <div class="custom-select-input">
+                        <select class="form-select left-radious" aria-label="Default select">
+                            <option value="Meter" selected>Meter</option>
+                        </select>
+                        <input type="text" class="form-control" id="Distance"  placeholder="End of Bridge">
+                    </div>
+                </div>
+                
+                
+                <div class="flex-div">
+                <div class="mb-3">
+                    <label for="distance">Condition of existing approach at start of bridge</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option value="Foot" selected disabled>None / Bad / Good / Excellent</option>
+                        <option value="M">None</option>
+                        <option value="M">Bad</option>
+                        <option value="M">Good</option>
+                        <option value="M">Excellent</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="distance">Condition of existing approach at end of bridge</label>
+                    
+                    <select class="form-select" aria-label="Default select">
+                        <option value="Meter" selected disabled>None / Bad / Good / Excellent</option>
+                        <option value="M">None</option>
+                        <option value="M">Bad</option>
+                        <option value="M">Good</option>
+                        <option value="M">Excellent</option>
+                    </select>
+                </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="Remarks">Any Remarks</label>
+                    <textarea class="form-control" id="Remarks" placeholder="Add Remarks" rows="2"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">NEXT</button>
+            </form>
+        </div>
+    </div>
+    <div class="survey-content-main" *ngIf="activefrom == 'GPS'">
+        <div class="survey-body">
+            <form>
+                
+                <div class="mb-3">
+                    <label for="distance">Start of Bridge</label>
+                    <input type="text" class="form-control" id="phone"  placeholder="Add co-ordinate">
+                </div>
+                <div class="mb-3">
+                    <label for="distance">Center of Bridge</label>
+                    <input type="text" class="form-control" id="phone"  placeholder="Add co-ordinate">
+                </div>
+                <div class="mb-3">
+                    <label for="distance">End of Bridge</label>
+                    <input type="text" class="form-control" id="phone"  placeholder="Add co-ordinate">
+                </div>
+                <div class="mb-3">
+                    <label for="distance">Beginning of Approach Road at start of Bridge side</label>
+                    <input type="text" class="form-control" id="phone"  placeholder="Add co-ordinate">
+                </div>
+                <div class="mb-3">
+                    <label for="distance">Beginning of Approach Road at end of Bridge side</label>
+                    <input type="text" class="form-control" id="phone"  placeholder="Add co-ordinate">
+                </div>
+
+                
+                <div *ngFor="let value of values; let i = index"> 
+                    <div class="mb-3 dynamicinput">
+                        <label for="distance">Any other location</label>
+                        <input type="text" class="form-control" id="phone"  placeholder="Add co-ordinate" [(ngModel)]="value.value" #name="ngModel" name="value{{i}}">
+                        <button (click)="removevalue(i)" *ngIf="i != 0"><img src="assets/icons/minus.png" alt=""></button>
+                        <button (click)="addvalue()" *ngIf="i == 0"><img src="assets/icons/add.png" alt=""></button>
+                    </div>
+                </div>
+                <!-- <h2>Result</h2>
+                <div *ngFor="let value of values;">
+                {{ value.value }}
+                </div> -->
+                
+                <button type="submit" class="btn btn-primary">NEXT</button>
+            </form>
+        </div>
+    </div>
+    <div class="survey-content-main" *ngIf="activefrom == 'HydroData'">
+        <div class="survey-body">
+            <form>
+                <div class="mb-3">
+                    <label for="timerange">Rainy season from</label>
+                    <div class="custom-select-input">
+                        <input type="date" class="form-control" id="timerange"  placeholder="From">
+                        <input type="date" class="form-control" id="timerange"  placeholder="To">
+                    </div>
+                </div>
+                <div class="flex-div">
+                <div class="mb-3">
+                    <label for="distance">Water depth during Dry season</label>
+                    <div class="custom-select-input">
+                        <select class="form-select" aria-label="Default select">
+                            <option value="Meter" selected>Meter</option>
+                        </select>
+                        <input type="text" class="form-control" id="Distance"  placeholder="Add">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="distance">Water depth during Rainy season</label>
+                    <div class="custom-select-input">
+                        <select class="form-select" aria-label="Default select">
+                            <option value="Foot" selected>Foot</option>
+                        </select>
+                        <input type="text" class="form-control" id="Distance"  placeholder="Add">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Water flow during Dry season</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected disabled>None / Low / Medium / High </option>
+                        <option value="1">None</option>
+                        <option value="2">Low</option>
+                        <option value="3">Medium</option>
+                        <option value="">High</option>
+                    </select>
+                </div> 
+                <div class="mb-3">
+                    <label for="timerange">Water flow during Rainy season</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected disabled>None / Low / Medium / High </option>
+                        <option value="1">None</option>
+                        <option value="2">Low</option>
+                        <option value="3">Medium</option>
+                        <option value="">High</option>
+                    </select>
+                </div> 
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Water affected by tides</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected disabled>Yes / No </option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                </div>
+                <div class="flex-div">
+                <div class="mb-3">
+                    <label for="distance">Difference in water level due to tides</label>
+                    <div class="custom-select-input">
+                        <select class="form-select" aria-label="Default select">
+                            <option value="Meter" selected>Meter</option>
+                        </select>
+                        <input type="text" class="form-control" id="Distance"  placeholder="Add">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="timerange">Source of water</label>
+                    <select class="form-select" aria-label="Default select">
+                        <option selected disabled>Rain / Dam / River / Sea </option>
+                        <option value="1">Rain</option>
+                        <option value="2">Dam</option>
+                        <option value="">River</option>
+                        <option value="">Sea</option>
+                    </select>
+                </div>
+                </div>
+                <div class="mb-3">
+                    <label for="distance">Name of Dam / River / Sea</label>
+                    <input type="text" class="form-control" id="Distance"  placeholder="Add Name">
+                </div>
+                <div class="mb-3">
+                    <label for="Remarks">Any Remarks</label>
+                    <textarea class="form-control" id="Remarks" placeholder="Add Remarks" rows="2"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">NEXT</button>
+            </form>
+        </div>
+    </div>
+</div>

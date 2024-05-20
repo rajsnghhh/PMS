@@ -1,0 +1,141 @@
+<div class="survey-main" [ngClass]="{'eval': openfromEvaluation}">
+    <div class="survey-progress">
+        <ul>
+            <li *ngFor="let navData of MenuFormList; let i=index"
+                (click)="changeNav(navData.form_name,navData.form_type_name,navData.button_name,i)"
+                [ngClass]="{'active-nav' : currentNav == navData.form_name ,'completed': navData.is_deactive==true}">
+                {{navData.form_name}}
+            </li>
+        </ul>
+    </div>
+
+    <div class="survey-content" id="scrollTO">
+        <!-- <div class="responsec-container" *ngIf="responseData.length > 0 && openTab=='edit'">
+            <table>
+                <tr>
+                    <th *ngFor="let rs of responseData">{{rs.form_label}}</th>
+                </tr>
+                <tr>
+                    <td *ngFor="let rs of responseData">{{rs.value}}</td>
+                </tr>
+            </table>
+        </div> -->
+        <section class="form-actions tender_editbtn" *ngIf="!skipDynamicForm.includes(selectedTab)">
+            <button class="header-action" *ngIf="activeTab == 'view' &&  !hideEditButtonScope.includes(selectedTab)" (click)="toggoleViewEDIT()">Edit</button>
+            <button class="header-action" *ngIf="activeTab == 'edit' && !hideEditButtonScope.includes(selectedTab)" (click)="toggoleViewEDIT()">View</button>
+        </section>
+        <div class="survey-content-main">
+            <div hidden class="survey-header">
+                <h1>{{formFieldListName}}</h1>
+                <button type="button">SKIP NOW</button>
+            </div>
+            <div class="survey-body">
+                <!-- <app-executive-summary 
+                    [TenderNumber]="tenderNumber"
+                    [DisableModify]="true"
+                    [usingIn] = "Planning"
+                    [selectedScope]="selectedTab"
+                    *ngIf="selectedTab == 'planning_executive_summary'">
+                </app-executive-summary> 
+                <app-executive-summary 
+                    [TenderNumber]="tenderNumber"
+                    [DisableModify]="true"
+                    [usingIn] = "Planning"
+                    [selectedScope]="selectedTab"
+                    *ngIf="selectedTab == 'planning_risk_evaluation'">
+                </app-executive-summary>  -->
+                <app-chainage-details 
+                    [TenderNumber]="tenderNumber"
+                    [DisableModify]="true"
+                    [usingIn] = "Planning"
+                    [selectedTab]="selectedTab"
+                    *ngIf="selectedTab == 'planning_executive_summary'">
+                </app-chainage-details>
+                <app-chainage-details 
+                    [TenderNumber]="tenderNumber"
+                    [DisableModify]="true"
+                    [usingIn] = "Planning"
+                    [selectedTab]="selectedTab"
+                    *ngIf="selectedTab == 'planning_risk_evaluation'">
+                </app-chainage-details>
+                <app-dynamic-forms 
+                    *ngIf="!skipDynamicForm.includes(selectedTab) && formFieldList?.length > 0"
+                    (parentCompFun)="genarateTenderData($event)"
+                    (changeValue)="inputCommingData($event)"
+                    [selectedTab]="selectedTab"
+                    [activeFromName]="activeFromName"
+                    [actionName]="ActionButtonName" 
+                    [formData]="formFieldList"
+                    [prefieldData]="prefieldData" 
+                    [tenderAction]="tenderActionData" #dynamicForm
+                    [chieldActionRequired]="false"
+                    >
+                </app-dynamic-forms>
+                <app-delay-mis
+                  *ngIf="selectedTab == 'planning_risk_evaluation'" #fieldvalue [projectId]="projectID" >
+                </app-delay-mis>
+                <!-- <app-dynamic-strip-view
+                    [TenderNumber]="tenderNumber"
+                    [DisableModify]="true"
+                    [usingIn] = "Planning"
+                    [projectId]="projectID"
+                    [selectedScope]="selectedTab"
+                    *ngIf="selectedTab == 'planning_work_program'">
+                </app-dynamic-strip-view> -->
+                <!-- <app-dynamic-strip-add-planning
+                    [TenderNumber]="tenderNumber"
+                    [DisableModify]="true"
+                    [usingIn] = "Planning"
+                    [projectId]="projectID"
+                    [selectedScope]="selectedTab"
+                    *ngIf="selectedTab == 'planning_mis_format'">
+                </app-dynamic-strip-add-planning> -->
+                <app-dynamic-strip-planned-achived
+                    [TenderNumber]="tenderNumber"
+                    [DisableModify]="true"
+                    [usingIn] = "Planning"
+                    [projectId]="projectID"
+                    [selectedScope]="selectedTab"
+                    *ngIf="selectedTab == 'planning_schedule_upload'">
+                </app-dynamic-strip-planned-achived>
+                <app-gantt
+                    [TenderNumber]="tenderNumber"
+                    [DisableModify]="true"
+                    [usingIn] = "Planning"
+                    [projectId]="projectID"
+                    [selectedScope]="selectedTab"
+                    *ngIf="selectedTab == 'planning_work_program' || selectedTab == 'bom_boq_with_out_time'"
+                ></app-gantt>
+
+                <app-boq-approval
+                    [TenderNumber]="tenderNumber"
+                    [DisableModify]="true"
+                    [usingIn] = "Planning"
+                    [projectId]="projectID"
+                    [selectedScope]="selectedTab"
+                    *ngIf="selectedTab == 'planning_sharing_site_schedule'"
+                ></app-boq-approval>
+                <!-- planning_work_program -->
+                
+                <!-- <app-dynamic-scacked-bar
+                    [TenderNumber]="tenderNumber"
+                    [DisableModify]="true"
+                    [usingIn] = "Planning"
+                    [projectId]="projectID"
+                    [selectedScope]="selectedTab"
+                    *ngIf="selectedTab == 'planning_mis_format'">
+                </app-dynamic-scacked-bar> -->
+                <!-- <section *ngIf="formFieldList?.length == 0">Development Under Progress !</section> -->
+                <app-planning-actions 
+                    *ngIf="addPanningActions"
+                    (parentFun)="savePlanning()" 
+                    (proceedNext)="proceedNext()"
+                    [projectId]="projectID"
+                    [selectedScope]="selectedTab"
+                    [projectData]="projectData"
+                    [actionButtonText]="MenuFormList[selectedIndex].button_name"
+                ></app-planning-actions>
+            </div>
+        </div>
+    </div>
+</div>

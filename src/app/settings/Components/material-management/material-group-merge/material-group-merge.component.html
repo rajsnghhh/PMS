@@ -1,0 +1,74 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Item Group Merge</h2>
+    </div>
+    <div class="component-body">
+    </div>
+</div>
+
+<form name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && mergeData()" novalidate>
+    <div class="flex-div boxview">
+
+        <div class="mb-3 empinfowth">
+            <label>Source/From Item Group<span class="asterisk">*</span></label>
+            <mat-select placeholder="Select From Item Group" required (click)="unitSelect()" class="form-select"
+                name="groupfrom" [(ngModel)]="addUser.groupfrom" #groupfrom="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && groupfrom.errors }">
+                <mat-option *ngFor="let category of allItemGroupFrom" [value]="category.id">
+                    <div class="country-item" [ngStyle]="setMyStyles(category.deafLevel)">
+                        <div *ngIf="!category.parent">
+                            <b> {{category.name}}</b>
+                        </div>
+                        <div *ngIf="category.parent">
+                            {{category.name}}
+                        </div>
+                    </div>
+                </mat-option>
+            </mat-select>
+
+            <div *ngIf="f.submitted && groupfrom.errors" class="invalid-feedback">
+                <div *ngIf="groupfrom.errors['required']">Please select From Item Group</div>
+            </div>
+
+            <div style="padding: 8px;margin-left: 30px;">
+                <input type="checkbox" name="vatax" [(ngModel)]="addUser.vatax" #vatax="ngModel">
+                <label for="vatax">Delete This Item Group From Master</label>
+            </div>
+            <div class="text-danger" style="font-size: 12px;margin-left: 30px;font-weight: bold;">
+                <p style="margin: 0;">*Click to Merge 2 Item Groups</p>
+                <p style="margin: 0;">*All Items Transfer 'Source Item Group' To 'Destination Item Group'</p>
+            </div>
+        </div>
+
+
+        <div class="mb-3 empinfowth">
+            <label>Destination/To Item Group<span class="asterisk">*</span></label>
+            <mat-select placeholder="Select To Item Group" required (click)="unitSelect()" class="form-select"
+                name="groupto" [(ngModel)]="addUser.groupto" #groupto="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && groupto.errors }">
+                <mat-option *ngFor="let category of allItemGroupTo" [value]="category.id">
+                    <div class="country-item" [ngStyle]="setMyStyles(category.deafLevel)">
+                        <div *ngIf="!category.parent">
+                            <b> {{category.name}}</b>
+                        </div>
+                        <div *ngIf="category.parent">
+                            {{category.name}}
+                        </div>
+                    </div>
+                </mat-option>
+            </mat-select>
+
+
+
+            <div *ngIf="f.submitted && groupto.errors" class="invalid-feedback">
+                <div *ngIf="groupto.errors['required']">Please select To Item Group</div>
+            </div>
+            <div class="text-danger mt-2" style="font-size: 12px;margin-left: 20px;font-weight: bold;">
+                <p style="margin: 0;">*Note (1):Data Merge of (All Company/All Site/All Year)</p>
+                <p style="margin: 0;">*Note (2):Once Data Merge then data can't be reversed.</p>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="float: left; margin-left: 45%;">Merge</button>
+    </div>
+
+</form>

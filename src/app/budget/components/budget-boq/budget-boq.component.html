@@ -1,0 +1,33 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="flex-div">
+        <div class="mb-3" [ngClass]="{ 'float-now': form.name != '' }">
+            <label class="floating-label">Name<span class="asterisk">*</span></label>
+            <input type="text" [ngClass]="{'disable': disableFrom == true }" class="form-control" name="name" [(ngModel)]="form.name" required #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.errors }" />
+            <div *ngIf="f.submitted && name.errors" class="invalid-feedback">
+              <div *ngIf="name.errors['required']">Name is required</div>
+            </div>
+          </div>
+    </div>
+    <div class="flex-div">
+        <div class="mb-3" [ngClass]="{ 'float-now': form.start_date != '' }">
+            <label class="floating-label">Start Date<span class="asterisk">*</span></label>
+            <input type="date" [ngClass]="{'disable': disableFrom == true }" class="form-control" name="start_date" [(ngModel)]="form.start_date" required  #start_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && start_date.errors }" />
+            <div *ngIf="f.submitted && start_date.errors" class="invalid-feedback">
+              <div *ngIf="start_date.errors['required']">Start date is required</div>
+            </div>
+          </div>
+          <div class="mb-3" [ngClass]="{ 'float-now': form.end_date != '' }">
+            <label class="floating-label">End date<span class="asterisk">*</span></label>
+            <input type="date" [ngClass]="{'disable': disableFrom == true }" class="form-control" name="end_date" [(ngModel)]="form.end_date" required end_date #end_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && end_date.errors }" />
+            <div *ngIf="f.submitted && end_date.errors" class="invalid-feedback">
+              <div *ngIf="end_date.errors['required']">End date is required</div>
+            </div>
+          </div>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" *ngIf="scope == 'add'">Add</button>
+      <button type="submit" class="btn btn-primary" *ngIf="scope == 'edit'">Update</button>
+      <button type="submit" class="btn btn-primary" *ngIf="scope == 'amend'">Amend</button>
+    </div>
+</form>

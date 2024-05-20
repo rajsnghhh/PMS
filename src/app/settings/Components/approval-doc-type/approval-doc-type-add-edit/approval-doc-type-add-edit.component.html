@@ -1,0 +1,48 @@
+<form class="allfield" name="addPersonalInformation" #f="ngForm" (ngSubmit)="f.form.valid && personalSubmit()"
+    novalidate>
+
+<div class="row">
+
+
+
+
+    <div class="col-lg-6">
+        <div class="fieldValue">
+            <label>Form Name</label>
+            <select class="form-select" name="indent" [ngClass]="{ 'is-invalid': f.submitted && indent.errors }"
+                [(ngModel)]="addPersonalInformation.indent" required #indent="ngModel">
+                <option value="">Select Indent</option>
+                <option value="{{projectSite.indent_id}}" *ngFor="let projectSite of indentList">{{projectSite.indent_no}}</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && indent.errors" class="invalid-feedback">
+            <div *ngIf="indent.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="fieldValue">
+            <label>Department Type</label>
+            <input type="text" class="form-control" name="department_type"
+                [ngClass]="{ 'is-invalid': f.submitted && department_type.errors }"
+                [(ngModel)]="addPersonalInformation.department_type" required #department_type="ngModel"
+                placeholder="Enter opening quantity">
+        </div>
+        <div *ngIf="f.submitted && department_type.errors" class="invalid-feedback">
+            <div *ngIf="department_type.errors['required']">This is required</div>
+        </div>
+    </div>
+     
+
+
+</div>
+
+
+
+
+    <div class="btnupdate row">
+        <button type="submit" class="btn btn-primary" *ngIf="canvasScope == 'add' ">ADD</button>
+        <button type="submit" class="btn btn-primary" *ngIf="canvasScope == 'update' ">UPDATE</button>
+        <button type="button" class="btn btn-primary non-active-btn" (click)="CloseComponent()">CANCEL</button>
+    </div>
+</form>

@@ -1,0 +1,101 @@
+<div class="main-container">
+    <div class="component-header">
+        <!-- <h2>Item Wise Vendor List</h2> -->
+    </div>
+</div>
+
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="flex-div">
+        <div class="mb-3" [ngClass]="{ 'float-now': form.month != '' }">
+            <label class="floating-label">Month - Year<span class="asterisk">*</span></label>
+            <select [ngClass]="{'disable': disableFrom == true }" (change)="onclickFilter()" class="form-control" name="month" [(ngModel)]="form.month" required  #month="ngModel" [ngClass]="{ 'is-invalid': f.submitted && month.errors }">
+                <option value="" disabled>Select Month</option>
+                <option value="{{i+1}}" *ngFor="let monthD of monthList;let i=index">{{monthD}}</option>
+            </select>
+            <select [ngClass]="{'disable': disableFrom == true }" (change)="onclickFilter()" class="form-control" name="year" [(ngModel)]="form.year" required  #year="ngModel" [ngClass]="{ 'is-invalid': f.submitted && year.errors }">
+                <option value="" disabled>Select Year</option>
+                <option value="{{yearD}}" *ngFor="let yearD of yearList;let i=index">{{yearD}}</option>
+            </select>
+            <div *ngIf="f.submitted && (month.errors || year.errors)" class="invalid-feedback">
+              <div>Month - Year is required</div>
+            </div>
+        </div>
+        <div class="mb-3" [ngClass]="{ 'float-now': true }">
+            <label class="floating-label">Select Site<span class="asterisk">*</span></label>
+            <ng-select [items]="siteList" 
+                bindLabel="site_name" 
+                bindValue="id" 
+                [multiple]="true"
+                class="form-control"
+                (change)="onclickFilter()"
+                placeholder = ""
+                [(ngModel)]="form.sites"
+                required
+                [ngClass]="{ 'is-invalid': f.submitted && sites.errors }"
+                name="sites" 
+                #sites="ngModel"
+            >
+            </ng-select>
+            <div *ngIf="f.submitted && sites.errors" class="invalid-feedback">
+              <div *ngIf="sites.errors['required']">Site is required</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="checkBoxContailer">
+        <div class="left-container">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="effectefForm" [(ngModel)]="effectefForm" [ngModelOptions]="{standalone: true}" (change)="selectDeselectAll()">
+                <label class="form-check-label" for="effectefForm">
+                  Effected Forms
+                </label>
+            </div>
+        </div>
+        <div class="right-contatiner">
+            <div class="form-check" *ngFor="let effecteditem of effectedList;let i=index">
+                <input class="form-check-input" type="checkbox" name="{{effecteditem.sluck}}" [ngModelOptions]="{standalone: true}" [(ngModel)]="effecteditem.value" id="{{effecteditem.sluck}}">
+                <label class="form-check-label" for="{{effecteditem.sluck}}">
+                  {{effecteditem.lable}}
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <!-- <button type="submit" class="btn btn-primary" (click)>Close</button> -->
+    </div>
+</form>
+
+
+
+<div class="component-body">
+    <div  class="scrollable-table-container" style="padding: 20px;">
+        <table>
+            <tr>
+                <th>S No.</th>
+                <th>Financial Year</th>
+                <th>Month Year</th>
+                <th>Is Close</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr *ngFor="let item of lockList;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{item.year}}</td>
+                <td>{{monthList[item.month-1]}} - {{item.year}}</td>
+                <td></td>
+                <td>
+                    <img (click)="editItem(item)" src="assets/icons/editing.png" alt="">
+                </td>
+                <td>
+                    <img src="assets/icons/delete.png" (click)="deleteItem(item)" alt="">
+                </td>
+            </tr>
+            <tr class="text-center" *ngIf="lockList?.length==0">
+                <td colspan="6">No data found.</td>
+            </tr>
+
+        </table>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="survey-content-main">
+    <div class="survey-body">
+        <form role="form" [formGroup]="itemForm">
+            <div class="mb-3">
+                <select class="form-select" aria-label="Default select example" formControlName="item_name"
+                    [(ngModel)]="addItem.Itemname" [ngClass]="displayFieldCss(itemForm,'item_name')">
+                    <option value="" selected disabled>Select Item</option>
+                    <option>Item 1</option>
+                </select>
+                <label class="floating-label-select" [ngClass]="{'insideDropdown': addItem.Itemname =='' }">Select Item
+                    <span class="asterisk">*</span></label>
+                <div class="required" *ngIf="isFieldValid(itemForm,'item_name')">
+                    <span class="text-danger" *ngIf="itemForm.get('item_name')?.errors?.['required']">Item is
+                        required</span>
+                </div>
+            </div>
+
+            <div class="mb-3" [ngClass]="{ 'float-now': addItem.Gpsname != '' }">
+                <input type="text" class="form-control" formControlName="gps" [(ngModel)]="addItem.Gpsname"
+                    [ngClass]="displayFieldCss(itemForm,'gps')" id="phone">
+                <label class="floating-label">GPS CO-ordinates<span class="asterisk">*</span></label>
+                <div class="required" *ngIf="isFieldValid(itemForm,'gps')">
+                    <span class="text-danger" *ngIf="itemForm.get('gps')?.errors?.['required']">GPS CO-ordinates is
+                        required</span>
+                </div>
+            </div>
+
+            <div class="mb-3" [ngClass]="{ 'float-now': addItem.Locationname != '' }">
+                <input type="text" class="form-control" formControlName="location" [(ngModel)]="addItem.Locationname"
+                    [ngClass]="displayFieldCss(itemForm,'location')" id="phone">
+                <label class="floating-label">Location<span class="asterisk">*</span></label>
+                <div class="required" *ngIf="isFieldValid(itemForm,'location')">
+                    <span class="text-danger" *ngIf="itemForm.get('location')?.errors?.['required']">Location is
+                        required</span>
+                </div>
+            </div>
+
+
+            <div class="mb-3" [ngClass]="{ 'float-now': addItem.Leadname != '' }">
+                <div class="custom-select-input">
+                    <select class="form-select" aria-label="Default select">
+                        <option value="KM" selected>KM</option>
+                        <option value="M">M</option>
+                    </select>
+                    <input type="text" class="form-control" formControlName="lead" [(ngModel)]="addItem.Leadname"
+                    [ngClass]="displayFieldCss(itemForm,'lead')" id="phone">
+                    <label class="floating-label dualinput">Lead From Site<span class="asterisk">*</span></label>
+                    </div>
+                    <div class="required" *ngIf="isFieldValid(itemForm,'lead')">
+                        <span class="text-danger" *ngIf="itemForm.get('lead')?.errors?.['required']">Lead is required</span>
+                    </div>
+            </div> 
+
+            <button type="submit" class="btn btn-primary" (click)="submitItem()">UPDATE</button>
+        </form>
+    </div>
+</div>

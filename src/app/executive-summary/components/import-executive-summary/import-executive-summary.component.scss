@@ -1,0 +1,224 @@
+.header {
+    background-color: #F7F7F7;
+    font-weight: 500;
+    height: 45px;
+    padding-top: 9px;
+    padding-left: 24px;
+    font-size: 12px;
+}
+
+.upload {
+    background-color: #F4F4F4;
+    font-weight: 500;
+    height: 175px;
+    margin-top: 30px;
+    margin-left: 37px;
+    border-radius: 8px;
+    margin-right: 37px;
+    padding-left: 24px;
+    font-size: 12px;
+    float: initial;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    border: dotted;
+    border-color: rgb(95, 143, 239);
+}
+
+.upload2 {
+    background-color: #F4F4F4;
+    font-weight: 500;
+    height: 175px;
+    margin-top: 30px;
+    margin-left: 37px;
+    border-radius: 8px;
+    margin-right: 37px;
+    position: relative;
+    padding-left: 24px;
+    font-size: 12px;
+    float: initial;
+    display: flex;
+    justify-content: center;
+    border: dotted;
+    border-color: rgb(95, 143, 239);
+}
+
+.filename {
+    margin-top: 70px;
+    margin-left: 145px;
+    position: absolute;
+    padding-left: 24px;
+}
+
+.header2 {
+    background-color: rgb(255 241 231);
+    font-weight: 500;
+    height: 65px;
+    padding-top: 23px;
+    margin-top: 32px;
+    padding-left: 16px;
+    font-size: 12px;
+}
+
+.header3 {
+    background-color: rgb(255 241 231);
+    font-weight: 500;
+    height: 65px;
+    padding-top: 23px;
+    margin-top: 30px;
+    padding-left: 16px;
+    font-size: 12px;
+}
+
+.format {
+    margin-top: -57px;
+    display: flex;
+    font-size: small;
+    justify-content: center;
+}
+
+.format2 {
+    margin-top: 105px;
+    margin-right: 12px;
+}
+
+.addbutton{
+    margin-top: 20px;
+    margin-right: 24px;
+}
+
+.addbutton1{
+    margin-top: 70px;
+    margin-left: 38px;
+}
+
+.tick{
+    background-color: #F4F4F4;
+    font-weight: 500;
+    height: 65px;
+    padding-top: 23px;
+    margin-top: 32px;
+    padding-left: 16px;
+    font-size: 12px;
+}
+
+.list {
+    // list-style: none;
+    margin: 0;
+    padding: 0;
+    display: table;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.heading1 {
+    background-color: #F4FAFF;
+    height: 48px;
+    padding-top: 15px;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-around;
+    font-size: 14px;
+    // margin-right: 66px;
+}
+
+.list-data {
+    height: 60px;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid #e4e1e1;
+    font-size: 12px;
+}
+
+.firstname {
+    border-radius: 25px;
+    font-size: 12px;
+    padding: 4px 40px;
+    padding-left: 10px;
+    padding-top: 6px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #000000;
+}
+
+.arrow {
+    width: 18px;
+    height: 12px;
+    margin-top: -7px;
+    margin-left: 176px;
+    display: flex;
+}
+
+.filecolum {
+    float: left;
+    margin-left: 38px;
+    margin-top: -7px;
+}
+
+.pmsfield {
+    width: 170px;
+    float: right;
+    margin-right: 110px;
+    margin-top: -24px;
+    padding: 5px 17px;
+}
+
+.maptick {
+    margin-left: 446px;
+    width: 25px;
+    height: 27px;
+    margin-top: 7px;
+    display: flex;
+    position: absolute;
+    top: 18px;
+}
+
+.filecolumhead {
+    padding-top: 42px;
+    font-size: 14px;
+    position: relative;
+}
+
+.table-header {
+    overflow-y: scroll;
+    max-height: calc(95vh - 50px);
+}
+
+.filecard {
+    height: 65px;
+    margin-right: 34px;
+    float: right;
+    margin-top: 34px;
+}
+
+.filecard2 {
+    height: 43px;
+    margin-left: -30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+}
+
+.uploadsuccess {
+    width: 35px;
+}
+
+.asterisk {
+    margin-top: -2px; color: red; font-size: 15px;
+}
+
+.form-select.is-valid:not([multiple]):not([size]) {
+    background-image : none;
+    background-size : none;
+    padding-right: 0.125rem;
+
+}
+
+.offcanvas.offcanvas-end {
+    width: 50% !important;
+    min-width: 520px !important;
+    border: none !important;
+  }

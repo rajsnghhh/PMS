@@ -1,0 +1,15 @@
+<div class="main-container">
+
+    <div class="row">
+        <div class="col-sm-8 col-xs-12">
+            <div class="fortnight">
+                <app-calendar (parentCompFun)="funcParent($event)"></app-calendar>
+            </div>
+        </div>
+
+        <div class="col-sm-4 col-xs-12">
+            <app-view-fortnight #changeMonth></app-view-fortnight>
+        </div>
+    </div>
+
+</div>

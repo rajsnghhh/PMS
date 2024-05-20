@@ -1,0 +1,131 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Planning Structure List</h2>
+
+        <div class="action-button-container">  
+            <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown" aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>  
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span ><img src="assets/usermanagement/download_csv.png"  class="export" ><strong>CSV</strong> </span>
+                </li>
+            </ul>       
+            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole" aria-controls="offcanvasRight">ADD NEW <img src="assets/header/add.png" alt=""></button>
+        </div>
+    </div>
+    <div class="component-body">
+                <div class="scrollable-table-container">
+        <table class="company-list">
+            <thead>
+            <tr>
+                <th class="entiti">S.No</th>
+                <th class="entiti">Structure Code</th>
+                <th class="entiti">Structure Name</th>
+                <th class="headwidth  entiti actionwidth">Action </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            
+            <tr> 
+                <td>1</td>
+                <td class="tdwidth address-field-col">
+                    ROB
+                </td>
+                <td class="tdwidth party-address addwidth">
+                    Rail Over Bridge
+                </td>
+                <td class="tdwidth  surveybutton">
+                    <div class="custom-section">
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                            <div class="dropdown-content drpdwnwidth">
+                                <div class="img-container">
+                                    <span class="mt-2"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightEditRole"><img src="assets/usermanagement/edit.png" alt=""  aria-controls="offcanvasRight">&nbsp;&nbsp;<label>Edit Planning Structure</label></span>
+                                    <span  data-bs-toggle="modal" data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png" alt=""  >&nbsp;&nbsp;<label>Delete Planning Structure</label></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            
+            </tr>
+            <tr> 
+                <td>2</td>
+                <td class="tdwidth address-field-col">
+                    RUB
+                </td>
+                <td class="tdwidth party-address addwidth">
+                    Rail Under Bridge
+                </td>
+                <td class="tdwidth  surveybutton">
+                    <div class="custom-section">
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                            <div class="dropdown-content drpdwnwidth">
+                                <div class="img-container">
+                                    <span class="mt-2"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightEditRole"><img src="assets/usermanagement/edit.png" alt=""  aria-controls="offcanvasRight">&nbsp;&nbsp;<label>Edit Planning Structure</label></span>
+                                    <span  data-bs-toggle="modal" data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png" alt=""  >&nbsp;&nbsp;<label>Delete Planning Structure</label></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            
+            </tr>
+            </tbody>
+            <tr class="text-center">
+                <td colspan="10" *ngIf="companyList.length == 0">No data found.</td>
+            </tr>
+            
+        </table>
+                </div>
+    
+    </div>
+<!-- <app-table-paginate></app-table-paginate> -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLabeladdrole" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Add Planning Structure</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body planbody">
+            <app-add-planning-structure></app-add-planning-structure>
+        </div>
+    </div>
+</div>
+
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightEditRole" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Edit Planning Structure</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body planbody">
+        <app-edit-planning-structure #editCompany></app-edit-planning-structure>
+    </div>
+</div>
+
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="">Are You Sure ?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Do you want to delete this Planning Structure ?
+        </div>
+        <div class="modal-footer">
+            <button (click)="deleteAlertCompany()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>
+

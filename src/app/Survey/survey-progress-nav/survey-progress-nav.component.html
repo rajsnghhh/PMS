@@ -1,0 +1,4 @@
+<ul>
+    <li *ngFor="let data of dataList.slice(0,-1); let index = index" (click)="changeNav(index)" class="completed" [ngClass]="{'active-nav' : currentNav == index}">{{data.name}}
+    </li>
+</ul>

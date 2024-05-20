@@ -1,0 +1,107 @@
+<div class="survey-content-main">
+    <div class="survey-header">
+        <h1>Nature of Work</h1>
+        <button (click)="proceedNext()">SKIP NOW</button>
+    </div>
+    <div class="survey-body">
+        <form>
+
+            <div class="mb-3">
+                <label for="WorkName">Name of Work</label>
+                <select class="form-select" aria-label="Default select">
+                    <option selected>Bridgework</option>
+                    <option value="1">Roadwork</option>
+                    <option value="2">Railway / Earthwork</option>
+                    <option value="3">Canal Lining</option>
+                </select>
+            </div> 
+      
+            <div class="work-card">
+                <div class="work-header">
+                    <span>BRIDGE WORK</span>
+                </div>
+                <div class="work-action">
+                    <span data-bs-toggle="offcanvas" data-bs-target="#brizeWorkCanvas" aria-controls="offcanvasRight"><img src="assets/icons/add.png" alt=""> ADD DETAILS</span>
+                </div>
+            </div>
+
+            <div class="work-card">
+                <div class="work-header">
+                    <span>ROAD WORK</span>
+                </div>
+                <div class="work-action">
+                    <span data-bs-toggle="offcanvas" data-bs-target="#roadWorkCanvas" aria-controls="offcanvasRight"><img src="assets/icons/add.png" alt=""> ADD DETAILS</span>
+                </div>
+            </div>
+
+            <div class="work-card">
+                <div class="work-header">
+                    <span>Railway / Earthwork</span>
+                </div>
+                <div class="work-action">
+                    <span data-bs-toggle="offcanvas" data-bs-target="#railwayWorkCanvas" aria-controls="offcanvasRight"><img src="assets/icons/add.png" alt=""> ADD DETAILS</span>
+                </div>
+            </div>
+
+            <div class="work-card">
+                <div class="work-header">
+                    <span>Canal Lining</span>
+                </div>
+                <div class="work-action">
+                    <span data-bs-toggle="offcanvas" data-bs-target="#CanalLiningWorkCanvas" aria-controls="offcanvasRight"><img src="assets/icons/add.png" alt=""> ADD DETAILS</span>
+                </div>
+            </div>
+
+            <button type="submit" (click)="proceedNext()" class="btn btn-primary">NEXT</button>
+            <button type="button" class="btn btn-primary non-active-btn" (click)="GoBack()">BACK</button>
+            
+
+        </form>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="brizeWorkCanvas" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Bridge Work Details</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <app-bridge-work></app-bridge-work>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="roadWorkCanvas" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Road Work Details</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="left-section">
+            <app-road-work></app-road-work>
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="railwayWorkCanvas" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Railway / Earthwork Work Details</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="left-section">
+
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="CanalLiningWorkCanvas" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Canal Lining Work Details</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="left-section">
+
+        </div>
+    </div>
+</div>

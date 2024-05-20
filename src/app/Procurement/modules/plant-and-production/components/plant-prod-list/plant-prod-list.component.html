@@ -1,0 +1,56 @@
+<div class="createrequisition-section">
+
+    <div class="main-body-container table-responsive">
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th scope="col">Sr No</th>
+                    <th scope="col">Manual Slip Number</th>
+                    <th scope="col">Created Date</th>
+                    <th scope="col">Item Code</th>
+                    <th scope="col">Sale Date</th>
+                    <th scope="col">Vehicle Number</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Receive Date</th>
+                    <th scope="col">Receive Reading</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of procurementPlantProd; let i = index">
+                    <td># {{i+1}}</td>
+                    <td>{{item.manual_slip_number}}</td>
+                    <td>{{item.created_at.substring(0,10).split('-').reverse().join('-')}}</td>
+                    <td>{{item.request_code}}</td>
+                    <td>{{item.sale_date.substring(0,10).split('-').reverse().join('-')}}</td>
+                    <td>{{item.vehicle_number}}</td>
+                    <td>{{item.items[0].quantity}}</td>
+                    <td>{{item.receive_date.substring(0,10).split('-').reverse().join('-')}}</td>
+                    <td>{{item.receive_reading}}</td>
+                    <td>
+                        <div class="table-action">
+                            <img src="assets/icons/dots.png" alt="">
+                            <ul>
+                                <li (click)="viewByID(item.id)">View <span>
+                                    <img class="eye-docicon" src="assets/icons/eye.png" alt=""></span>
+                                </li>
+                                <li (click)="updateByID(item.id)">Update <span>
+                                    <img src="assets/icons/amend.jpg" alt=""></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+
+                <tr class="text-center">
+                    <td colspan="15" *ngIf="procurementPlantProd.length == 0">No data found.</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()" *ngIf="procurementPlantProd.length > 0"></app-table-paginate>

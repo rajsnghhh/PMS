@@ -1,0 +1,54 @@
+.table-action {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    img {
+        width: 20px;
+        height: 20px;
+    }
+
+    ul {
+        position: absolute;
+        display: none;
+        background: #fff;
+        right: 25px;
+        top: -5px;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        min-width: 150px;
+        box-shadow: 1px 1px 15px gray;
+        z-index: 999;
+        border-radius: 9px;
+        padding: 10px;
+        li {
+            text-align: left;
+            border-bottom: 1px solid #cfcfcf;
+            padding: 8px 5px;
+            color: black;
+            span {
+                float: right;
+                img {
+                    height: 15px;
+                    width: 15px;
+                }
+            }
+        }
+    }
+    ul::after {
+        content: "";
+        position: absolute;
+        top: 10px;
+        right: -5px;
+        margin: 0 auto;
+        width: 0;
+        height: 0;
+        border-top: 10px solid #fff;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        transform: rotate(30deg);
+    }
+}
+.table-action:hover ul{
+    display: block;
+}

@@ -1,0 +1,47 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Item Unit Detail</h2>
+    </div>
+
+    <form name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && onSearch()" novalidate style="margin-bottom: 19px;">
+        <div class="flex-div">
+            <div class="mb-3">
+                <select class="form-select" required aria-label="Default select example" name="unitfrom"
+                    [(ngModel)]="addUser.unitfrom" #unitfrom="ngModel"
+                    [ngClass]="{ 'is-invalid': f.submitted && unitfrom.errors }">
+                    <option selected disabled value="">Source Unit</option>
+                    <option value="{{item.id}}" *ngFor="let item of uomList">{{item.formal_name}} ({{item.symbol}})</option>
+                </select>
+                <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.unitfrom =='' }">Source Unit<span class="asterisk">*</span>
+                    </label>
+                <div *ngIf="f.submitted && unitfrom.errors" class="invalid-feedback">
+                    <div *ngIf="unitfrom.errors['required']">Please select Unit</div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Search</button>
+    </form>
+    <div class="component-body">
+        <table>
+
+            <tr>
+                <th class="actionbutton">S.No</th>
+                <th>Records Found</th>
+                <th>In Table</th>
+                <th>In Field</th>
+            </tr>
+
+            <tr *ngFor="let used of usedDetails; let i =index">
+                <td class="actionbutton">{{ (pageSize*(page-1)) + i+1.}}</td>
+                <td>{{used.count}}</td>
+                <td>{{used.name}}</td>
+                <td>{{used.field}}</td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="4" *ngIf="usedDetails?.length == 0">No data found.</td>
+            </tr>
+
+        </table>
+        <app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>
+    </div>
+</div>

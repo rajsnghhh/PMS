@@ -1,0 +1,16 @@
+<div class="mb-3">
+    <select class="form-select" [(ngModel)]="eventType" disabled (change)="changeTemplate()">
+        <option value="CONFIRMATION">Confirmation</option>
+        <option value="USER EVENT">User Event</option>
+    </select>
+    <label class="floating-label-select" [ngClass]="{'insideDropdown': eventType =='' }">Select event type
+      <span class="asterisk">*</span></label>
+    <div class="required">
+        <span class="text-danger" *ngIf="showeventTypeError && eventType ==''">This is required</span>
+    </div>
+</div>
+
+<button type="submit" class="btn btn-primary" (click)="proceedNext()" *ngIf="eventType == ''">ADD</button>
+
+<app-edit-conformation #editConfirmation  *ngIf="eventType == 'CONFIRMATION'" (parentFun)="closeCanvas()"></app-edit-conformation>
+<app-edit-user-event #editUserEvent *ngIf="eventType == 'USER EVENT'" (parentFun)="closeCanvas()"></app-edit-user-event>

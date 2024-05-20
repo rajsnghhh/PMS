@@ -1,0 +1,911 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+
+    <div class="tabs">
+        <div class="tab" [class.active]="activeTab === 'tab1'" (click)="openTab(event, 'tab1')">Work Detail</div>
+        <div class="tab" [class.active]="activeTab === 'tab2'" (click)="openTab(event, 'tab2')">Terms & Conditions</div>
+        <div class="tab" [class.active]="activeTab === 'tab3'" (click)="openTab(event, 'tab3')">Requirement</div>
+        <div class="tab" [class.active]="activeTab === 'tab4'" (click)="openTab(event, 'tab4')">Material</div>
+        <div class="tab" [class.active]="activeTab === 'tab5'" (click)="openTab(event, 'tab5')">Labour</div>
+        <div class="tab" [class.active]="activeTab === 'tab6'" (click)="openTab(event, 'tab6')">Extra Notes</div>
+        <div class="tab" [class.active]="activeTab === 'tab7'" (click)="openTab(event, 'tab7')">Hire Contract</div>
+    </div>
+
+    <!-- Tab 1 begins here for work details -->
+
+    <div class="tab-content p-0" id="tab1">
+        <div class="workdetail-task">
+            <input type="checkbox" id="place_of_supply" class="form-check-input" [(ngModel)]="form.place_of_supply"
+                #place_of_supply="ngModel" name="place_of_supply">
+            <label for="place_of_supply">Fill Work Detail On Selection of Task.</label>
+        </div>
+
+        <div class="createtable-section">
+            <div class="table-responsive">
+                <table class="text-nowrap">
+                    <tr>
+                        <th>Sr.&nbsp;No</th>
+                        <th>Work</th>
+                        <th>Work Detail</th>
+                        <th>Qty/ Unit/ Rate</th>
+                        <th>Work Amt/ Disc Rate/ Amt</th>
+                        <th>Taxable Amt./ GST Tax</th>
+                        <th>SGST Rate/ Amt.</th>
+                        <th>CGST Rate/ Amt.</th>
+                        <th>IGST Rate/ Amt.</th>
+                        <th>Net Amt.</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr class="">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="align-middle">
+                            <a (click)="addWorkDetails()" type="button" class="tablebtn-save">ADD
+                                <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png" alt=""></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr class="tablebg" *ngFor="let item of form.details; let i = index">
+                        <td>#{{i+1}}</td>
+
+                        <td style="width: 10%;">
+                            <div class="tablegroup">
+                                <!-- <div class="row"> -->
+                                <div class="col-md-4">
+                                    <label for="task{{i+1}}">Service<br>Item:</label>
+                                </div><br>
+                                <div class="col-md-12">
+                                    <select class="form-control" name="task{{i+1}}" [(ngModel)]="form.details[i].task"
+                                        required #task="ngModel" [ngClass]="{'is-invalid': f.submitted && task.errors}">
+                                        <option value="" disabled>-- select --</option>
+                                        <option *ngFor="let groupTask of groupTaskList" value="{{groupTask.id}}">
+                                            {{groupTask.short_name}}</option>
+                                    </select>
+                                </div>
+                                <!-- </div> -->
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.details[i].work_detail" #work_detail="ngModel"
+                                    name="work_detail{{i+1}}">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder="" required
+                                    [(ngModel)]="form.details[i].quantity" #quantity="ngModel" name="quantity{{i+1}}"
+                                    [ngClass]="{ 'is-invalid': f.submitted && quantity.errors }" amountNumber
+                                    (ngModelChange)="showDetailsCalculatedAmt(i)">
+                            </div>
+                            <div class="tablegroup">
+                                <select class="form-control" name="uom{{i+1}}" [(ngModel)]="form.details[i].uom"
+                                    #uom="ngModel" [ngClass]="{ 'is-invalid': f.submitted && uom.errors }" required>
+
+                                    <option value="" disabled>-- unit --</option>
+                                    <option *ngFor="let uom of uomList" [value]="uom.id">{{uom.symbol}}</option>
+                                </select>
+                            </div>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder="" required
+                                    [(ngModel)]="form.details[i].rate" #rate="ngModel" name="details_rate{{i+1}}"
+                                    [ngClass]="{ 'is-invalid': f.submitted && rate.errors }" amountNumber
+                                    (ngModelChange)="showDetailsCalculatedAmt(i)">
+                            </div>
+                        </td>
+
+                        <td style="width: 10%;">
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.details[i].amount" #amount="ngModel" name="details_amount{{i+1}}"
+                                    amountNumber (ngModelChange)="showDetailsCalculatedAmt(i)" readonly>
+                            </div>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.details[i].discount_pecentage" #discount_pecentage="ngModel"
+                                    name="details_discount_pecentage{{i+1}}" amountNumber
+                                    (ngModelChange)="showDetailsCalculatedAmt(i)">
+                            </div>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.details[i].discount" #discount="ngModel"
+                                    name="details_discount{{i+1}}" amountNumber
+                                    (ngModelChange)=" set_discount_pecentage_blanck(i)"><!-- -->
+                            </div>
+                        </td>
+
+
+                        <td>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.details[i].taxable_amount" #taxable_amount="ngModel"
+                                    name="details_taxable_amount{{i+1}}" readonly amountNumber
+                                    (ngModelChange)="showDetailsCalculatedAmt(i)">
+                            </div>
+
+                            <div class="tablegroup">
+                                <select class="form-control" name="tax{{i+1}}" [(ngModel)]="form.details[i].tax"
+                                    #tax="ngModel" (change)="taxDetailsAutoFilled($event,i)">
+
+                                    <option value="" disabled>-- tax --</option>
+                                    <option value="{{taxHead.id}}" *ngFor="let taxHead of taxHeads">{{taxHead.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </td>
+
+                        <td style="width: 10%;">
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.details[i].sgst_pecentage" #sgst_pecentage="ngModel"
+                                    name="details_sgst_pecentage{{i+1}}" (ngModelChange)="showDetailsCalculatedAmt(i)"
+                                    amountNumber readonly>
+                            </div>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.details[i].sgst_amount" #sgst_amount="ngModel"
+                                    name="details_sgst_amount{{i+1}}" amountNumber
+                                    (ngModelChange)="showDetailsCalculatedAmt(i)" readonly>
+                            </div>
+                        </td>
+                        <td style="width: 10%;">
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.details[i].cgst_pecentage" #cgst_pecentage="ngModel"
+                                    name="details_cgst_pecentage{{i+1}}" amountNumber
+                                    (ngModelChange)="showDetailsCalculatedAmt(i)" readonly>
+                            </div>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.details[i].cgst_amount" #cgst_amount="ngModel"
+                                    name="details_cgst_amount{{i+1}}"
+                                    [ngClass]="{ 'is-invalid': f.submitted && cgst_amount.errors }" amountNumber
+                                    (ngModelChange)="showDetailsCalculatedAmt(i)" readonly>
+                            </div>
+                        </td>
+
+                        <td style="width: 10%;">
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder="" required
+                                    [(ngModel)]="form.details[i].igst_pecentage" #igst_pecentage="ngModel"
+                                    name="details_igst_pecentage{{i+1}}"
+                                    [ngClass]="{ 'is-invalid': f.submitted && igst_pecentage.errors }" amountNumber
+                                    (ngModelChange)="showDetailsCalculatedAmt(i)" readonly>
+                            </div>
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.details[i].igst_amount" #igst_amount="ngModel"
+                                    name="details_igst_amount{{i+1}}" amountNumber
+                                    (ngModelChange)="showDetailsCalculatedAmt(i)" readonly>
+                            </div>
+                        </td>
+
+                        <td style="width: 10%;">
+                            <div class="tablegroup">
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    [(ngModel)]="form.details[i].net_amount" #net_amount="ngModel"
+                                    name="details_net_amount{{i+1}}" amountNumber
+                                    (ngModelChange)="showDetailsCalculatedAmt(i)" readonly>
+                            </div>
+                        </td>
+
+                        <td class="align-middle">
+                            <a (click)="deleteWorkDetails(i)" type="submit" class="vector-delete">DEL<i class="fa"
+                                    aria-hidden="true"><img src="assets/img/vector-delete.png" alt=""></i></a>
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 2 begins here for Terms & Conditions -->
+
+    <div class="tab-content" id="tab2">
+
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Terms & Conditions</legend>
+            <div class="createtable-section">
+                <table>
+                    <tr>
+                        <th>Sr.&nbsp;No</th>
+                        <th>Title</th>
+                        <th>Particulars</th>
+                    </tr>
+
+
+                    <tr class="tablebg" *ngFor="let item of terms_conditions_of_wo; let i = index">
+                        <td>#{{i+1}}</td>
+                        <td>
+                            <input type="text" placeholder="" id="title{{i}}" class="form-control" name="title"
+                                [(ngModel)]="form.terms_conditions[i].title" [ngModelOptions]="{standalone: true}"
+                                #title="ngModel">
+                        </td>
+                        <td>
+                            <input type="text" placeholder="" id="description{{i}}" class="form-control"
+                                name="description" [(ngModel)]="form.terms_conditions[i].description"
+                                #description="ngModel" [ngModelOptions]="{standalone: true}">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </fieldset>
+    </div>
+
+    <!-- Tab 3 begins here for Requirement/Terms & Conditions -->
+
+    <div class="tab-content" id="tab3">
+
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Requirement</legend>
+            <div class="createtable-section">
+                <table>
+
+                    <tr>
+                        <th>Sr.&nbsp;No</th>
+                        <th>Requirement</th>
+                        <th>Action</th>
+                    </tr>
+
+                    <tr class="">
+                        <td></td>
+                        <td></td>
+                        <td class="align-middle narrow-column"><a (click)="addRequirements()" type="submit"
+                                class="tablebtn-save">ADD <i class="fa" aria-hidden="true"><img
+                                        src="assets/img/vector-add.png" alt=""></i></a></td>
+                    </tr>
+
+                    <tr class="tablebg" *ngFor="let item of form.requirements; let i = index">
+                        <td>#{{i+1}}</td>
+                        <td>
+                            <textarea [(ngModel)]="form.requirements[i].requirement" class="form-control"
+                                name="requirement{{i+1}}" name="requirement" #requirement="ngModel">
+                          </textarea>
+                        </td>
+                        <td class="align-middle narrow-column">
+                            <a (click)="deleteRequirements(i)" type="button" class="vector-delete">DEL
+                                <i class="fa" aria-hidden="true"><img src="assets/img/vector-delete.png" alt=""></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </fieldset>
+
+        <!-- <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Terms & Conditions</legend>
+            <div class="createtable-section">
+                <table>
+                    <tr>
+                        <th>Sr.&nbsp;No</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+
+                    <tr class="tablebg" *ngFor="let item of form.payment_schedule; let i = index">
+                        <td>{{i+1}}</td>
+                        <td><input type="text" [(ngModel)]="form.payment_schedule[i].percent" class="form-control"
+                                name="percent{{i+1}}" required name="percent" #percent="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && percent.errors }">
+                        </td>
+                        <td><input type="text" [(ngModel)]="form.payment_schedule[i].percent" class="form-control"
+                                name="percent{{i+1}}" required name="percent" #percent="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && percent.errors }">
+                        </td> 
+
+                        <td class="align-middle narrow-column">
+                            <a (click)="addRequirements()" type="button" class="tablebtn-save">ADD
+                                <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png" alt=""></i>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </fieldset> -->
+
+    </div>
+
+    <!-- Tab 4 begins here for materials -->
+    <div class="tab-content" id="tab4">
+        <div class="createtable-section table-responsive">
+            <table class="text-nowrap">
+                <tr>
+                    <th>Sr.&nbsp;No</th>
+                    <th>Material</th>
+                    <th>Qty./Unit</th>
+                    <th>Days/Rate/Amount</th>
+                    <th>Taxable Amount/GST Tax</th>
+                    <th>SGST Rate/Amt.</th>
+                    <th>CGST Rate/Amt.</th>
+                    <th>IGST Rate/Amt.</th>
+                    <th>Net Amount</th>
+                    <th>Remarks</th>
+                    <th>Charge Type</th>
+                    <th>Action</th>
+                </tr>
+                <tr class="">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="align-middle narrow-column"><a (click)="addMoreMaterial()" type="submit"
+                            class="tablebtn-save">ADD <i class="fa" aria-hidden="true"><img
+                                    src="assets/img/vector-add.png" alt=""></i></a></td>
+                </tr>
+                <tr class="tablebg" *ngFor="let item of form.materials; let i = index">
+                    <td>#{{i+1}}</td>
+                    <td>
+                        <div class="tablegroup">
+
+                            <label>Item Group</label>
+                            <select class="form-control" name="requested_material_group{{i+1}}"
+                                [(ngModel)]="form.materials[i].requested_material_group"
+                                #requested_material_group="ngModel"
+                                (change)="typeChange(form.materials[i].requested_material_group,i)">
+                                <option value="" disabled>Select Material Group</option>
+                                <option *ngFor="let materialGroup of masterlist" [value]="materialGroup.id">
+                                    {{materialGroup.name}}</option>
+                            </select>
+
+                            <label>Item Sub Group</label>
+                            <select class="form-control" name="requested_material_sub_group{{i+1}}"
+                                [(ngModel)]="form.materials[i].requested_material_sub_group"
+                                #requested_material_sub_group="ngModel"
+                                (change)="subTypeChange(form.materials[i].requested_material_sub_group, i)">
+                                <option value="" disabled>Select Material Sub Group</option>
+                                <option *ngFor="let subGroup of form.materials[i].MaterilSubGroupList"
+                                    [value]="subGroup.id">{{subGroup.name}}</option>
+                            </select>
+
+                            <label>Item</label>
+                            <select class="form-control" name="material{{i+1}}" [(ngModel)]="form.materials[i].material"
+                                #material="ngModel" (change)="setUOM($event,i)">
+                                <option value="" disabled>Select Material</option>
+                                <option *ngFor="let masterData of form.materials[i].MaterilFilterList"
+                                    [value]="masterData.id">{{masterData.material_name}}</option>
+                            </select>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                name="materials_quantity{{i+1}}" [(ngModel)]="form.materials[i].quantity"
+                                #quantity="ngModel" amountNumber (ngModelChange)="showMaterialsCalculatedAmt(i)">
+                        </div>
+                        <div class="tablegroup">
+                            <select class="form-control" name="unit{{i+1}}" [(ngModel)]="form.materials[i].unit"
+                                #unit="ngModel">
+
+                                <option value="" disabled>-- select unit --</option>
+                                <option *ngFor="let uom of uomList" [value]="uom.id">{{uom.symbol}}</option>
+                            </select>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                name="materials_days{{i+1}}" [(ngModel)]="form.materials[i].days" #days="ngModel"
+                                amountNumber>
+                        </div>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                name="materials_rate{{i+1}}" [(ngModel)]="form.materials[i].rate" #rate="ngModel"
+                                amountNumber (ngModelChange)="showMaterialsCalculatedAmt(i)">
+                        </div>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.materials[i].amount" #amount="ngModel" name="materials_amount{{i+1}}"
+                                amountNumber (ngModelChange)="showMaterialsCalculatedAmt(i)" readonly>
+                        </div>
+
+                    </td>
+
+                    <td>
+
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.materials[i].taxable_amount" #taxable_amount="ngModel"
+                                name="materials_taxable_amount{{i+1}}" readonly amountNumber
+                                (ngModelChange)="showMaterialsCalculatedAmt(i)">
+                        </div>
+
+                        <div class="tablegroup">
+                            <select class="form-control" name="materialtax{{i+1}}" [(ngModel)]="form.materials[i].tax"
+                                #tax="ngModel" (change)="taxMaterialsAutoFilled($event,i)">
+
+                                <option value="" disabled>-- tax --</option>
+                                <option value="{{taxHead.id}}" *ngFor="let taxHead of taxHeads">{{taxHead.name}}
+                                </option>
+                            </select>
+                        </div>
+
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.materials[i].sgst_pecentage" #sgst_pecentage="ngModel"
+                                name="materials_sgst_pecentage{{i+1}}" (ngModelChange)="showMaterialsCalculatedAmt(i)"
+                                amountNumber readonly>
+                        </div>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.materials[i].sgst_amount" #sgst_amount="ngModel"
+                                name="materials_sgst_amount{{i+1}}" amountNumber
+                                (ngModelChange)="showMaterialsCalculatedAmt(i)" readonly>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.materials[i].cgst_pecentage" #cgst_pecentage="ngModel"
+                                name="materials_cgst_pecentage{{i+1}}" amountNumber
+                                (ngModelChange)="showMaterialsCalculatedAmt(i)" readonly>
+                        </div>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.materials[i].cgst_amount" #cgst_amount="ngModel"
+                                name="materials_cgst_amount{{i+1}}" amountNumber
+                                (ngModelChange)="showMaterialsCalculatedAmt(i)" readonly>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.materials[i].igst_pecentage" #igst_pecentage="ngModel"
+                                name="materials_igst_pecentage{{i+1}}" amountNumber
+                                (ngModelChange)="showMaterialsCalculatedAmt(i)" readonly>
+                        </div>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.materials[i].igst_amount" #igst_amount="ngModel"
+                                name="materials_igst_amount{{i+1}}" amountNumber
+                                (ngModelChange)="showMaterialsCalculatedAmt(i)" readonly>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.materials[i].net_amount" #net_amount="ngModel"
+                                name="materials_net_amount{{i+1}}" amountNumber
+                                (ngModelChange)="showMaterialsCalculatedAmt(i)" readonly>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                name="materials_remarks{{i+1}}" [(ngModel)]="form.materials[i].remarks"
+                                #remarks="ngModel">
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                name="materials_charge_type{{i+1}}" [(ngModel)]="form.materials[i].charge_type"
+                                #charge_type="ngModel">
+                        </div>
+                    </td>
+
+                    <td class="align-middle narrow-column">
+                        <a (click)="deleteMaterials(i)" type="submit" class="vector-delete">DEL <i class="fa"
+                                aria-hidden="true"><img src="assets/img/vector-delete.png" alt=""></i></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Tab 5 begins here for labours -->
+
+    <div class="tab-content" id="tab5">
+        <div class="createtable-section table-responsive">
+            <table class="text-nowrap">
+                <tr>
+                    <th>Sr.&nbsp;No</th>
+                    <th>Category</th>
+                    <th>Nos./Qty.</th>
+                    <th>Rate/Amt.</th>
+                    <th>Taxable Amount/GST Tax</th>
+                    <th>SGST Rate/Amt.</th>
+                    <th>CGST Rate/Amt.</th>
+                    <th>IGST Rate/Amt.</th>
+                    <th>Net Amount</th>
+                    <th>Action</th>
+                </tr>
+                <tr class="">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="align-middle narrow-column"><a (click)="addMoreLabour()" type="submit"
+                            class="tablebtn-save">ADD <i class="fa" aria-hidden="true"><img
+                                    src="assets/img/vector-add.png" alt=""></i></a></td>
+                </tr>
+                <tr class="tablebg" *ngFor="let item of form.labors; let i = index">
+                    <td>#{{i+1}}</td>
+                    <td>
+                        <div class="tablegroup">
+                            <select class="form-control" name="category{{i+1}}" [(ngModel)]="form.labors[i].category"
+                                #category="ngModel">
+                                <option value="" disabled>-- select category --</option>
+                                <option value="{{labmasterData.id}}" *ngFor="let labmasterData of labourMasterlist">
+                                    {{labmasterData.cost_type}} |
+                                    {{labmasterData.component}} | {{labmasterData.name}} </option>
+                            </select>
+
+
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                name="labors_quantity{{i+1}}" [(ngModel)]="form.labors[i].quantity" #quantity="ngModel"
+                                amountNumber (ngModelChange)="showLaborsCalculatedAmt(i)">
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder="" name="labors_rate{{i+1}}"
+                                [(ngModel)]="form.labors[i].rate" #rate="ngModel" amountNumber
+                                (ngModelChange)="showLaborsCalculatedAmt(i)">
+                        </div>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder="" name="labors_amount{{i+1}}"
+                                [(ngModel)]="form.labors[i].amount" #amount="ngModel" amountNumber
+                                (ngModelChange)="showLaborsCalculatedAmt(i)" readonly>
+                        </div>
+                    </td>
+
+                    <td>
+
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.labors[i].taxable_amount" #taxable_amount="ngModel"
+                                name="labors_taxable_amount{{i+1}}" readonly amountNumber
+                                (ngModelChange)="showLaborsCalculatedAmt(i)">
+                        </div>
+
+                        <div class="tablegroup">
+                            <select class="form-control" name="laborstax{{i+1}}" [(ngModel)]="form.labors[i].tax"
+                                #tax="ngModel" (change)="taxLaboursAutoFilled($event,i)">
+
+                                <option value="" disabled>-- tax --</option>
+                                <option value="{{taxHead.id}}" *ngFor="let taxHead of taxHeads">{{taxHead.name}}
+                                </option>
+                            </select>
+                        </div>
+
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.labors[i].sgst_pecentage" #sgst_pecentage="ngModel"
+                                name="labors_sgst_pecentage{{i+1}}" (ngModelChange)="showLaborsCalculatedAmt(i)"
+                                amountNumber>
+                        </div>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.labors[i].sgst_amount" #sgst_amount="ngModel"
+                                name="labors_sgst_amount{{i+1}}" amountNumber
+                                (ngModelChange)="showLaborsCalculatedAmt(i)" readonly>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.labors[i].cgst_pecentage" #cgst_pecentage="ngModel"
+                                name="labors_cgst_pecentage{{i+1}}" amountNumber
+                                (ngModelChange)="showLaborsCalculatedAmt(i)">
+                        </div>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.labors[i].cgst_amount" #cgst_amount="ngModel"
+                                name="labors_cgst_amount{{i+1}}" amountNumber
+                                (ngModelChange)="showLaborsCalculatedAmt(i)" readonly>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.labors[i].igst_pecentage" #igst_pecentage="ngModel"
+                                name="labors_igst_pecentage{{i+1}}" amountNumber
+                                (ngModelChange)="showLaborsCalculatedAmt(i)">
+                        </div>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.labors[i].igst_amount" #igst_amount="ngModel"
+                                name="labors_igst_amount{{i+1}}" amountNumber
+                                (ngModelChange)="showLaborsCalculatedAmt(i)" readonly>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.labors[i].net_amount" #net_amount="ngModel"
+                                name="labors_net_amount{{i+1}}" amountNumber
+                                (ngModelChange)="showLaborsCalculatedAmt(i)" readonly>
+                        </div>
+                    </td>
+
+                    <td class="align-middle narrow-column">
+                        <a (click)="deleteLabours(i)" type="submit" class="vector-delete">DEL <i class="fa"
+                                aria-hidden="true"><img src="assets/img/vector-delete.png" alt=""></i></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Tab 6 begins here for Extra Notes -->
+
+    <div class="tab-content" id="tab6">
+
+        <textarea class="form-control" id="data" placeholder="Notes:" style="background-color: #80808012;"
+            [(ngModel)]="form.extra_notes" #extra_notes="ngModel" name="extra_notes"></textarea>
+
+    </div>
+
+    <!-- Tab 7 begins here for Hire Contract -->
+
+    <div class="tab-content" id="tab7">
+        <div class="createtable-section table-responsive">
+            <table class="text-nowrap">
+                <tr>
+                    <th style="width: 4%;">Sr.&nbsp;No</th>
+                    <th style="width: 90%;">Details</th>
+                    <th style="width: 6%;">Action</th>
+                </tr>
+                <tr class="">
+                    <td></td>
+                    <td></td>
+                    <td class="align-middle narrow-column"><a (click)="addMoreHireContract()" type="submit"
+                            class="tablebtn-save">ADD <i class="fa" aria-hidden="true"><img
+                                    src="assets/img/vector-add.png" alt=""></i></a></td>
+                </tr>
+                <tr class="tablebg" *ngFor="let item of form.hire_contracts; let i = index">
+                    <td>#{{i+1}}</td>
+                    <td>
+                        <div class="tablegroup mainPart">
+
+                            <div class="eachpart">
+                                <label>Hire</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_hire{{i+1}}" [(ngModel)]="form.hire_contracts[i].hire"
+                                    #hire="ngModel">
+                            </div>
+
+                            <div class="eachpart">
+                                <label>Contract Code</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_contract_code{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].contract_code" #contract_code="ngModel">
+                            </div>
+
+                            <div class="eachpart">
+                                <label>From Date</label>
+                                <input type="date" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_from_date{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].from_date" #from_date="ngModel">
+                            </div>
+
+                            <div class="eachpart">
+                                <label>To</label>
+                                <input type="date" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_to_date{{i+1}}" [(ngModel)]="form.hire_contracts[i].to_date"
+                                    #to_date="ngModel">
+                            </div>
+
+                            <div class="eachpart">
+                                <label>Machine Category</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_machine_category{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].machine_category" #machine_category="ngModel">
+                            </div>
+
+                            <div class="eachpart">
+                                <label>Machine<span class="asterisk">*</span></label>
+                                <select class="form-control" required name="hire_contracts_machine{{i+1}}"
+                                    [ngClass]="{ 'is-invalid': f.submitted && machine.errors }"
+                                    [(ngModel)]="form.hire_contracts[i].machine" #machine="ngModel">
+                                    <option value="" disabled>-- Please select --</option>
+                                    <option value="{{pnEmasterData.id}}" *ngFor="let pnEmasterData of PnEmasterlist">
+                                        {{pnEmasterData.plant_machinery_data[0].value}} |
+                                        {{pnEmasterData.plant_machinery_data[1].value}} | Monthly Charge -
+                                        {{pnEmasterData.plant_machinery_data[25].value}}</option>
+                                </select>
+                                <div *ngIf="f.submitted && machine.errors" class="invalid-feedback">
+                                    <div *ngIf="machine.errors['required']">This is required !</div>
+                                </div>
+                            </div>
+
+                            <div class="eachpart">
+                                <label>Required Avg.</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_required_avg{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].required_avg" #required_avg="ngModel"
+                                    amountNumber>
+                            </div>
+
+                            <div class="eachpart">
+                                <label>Type</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_required_avg_type{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].required_avg_type" #required_avg_type="ngModel">
+                            </div>
+
+                            <div class="eachpart">
+                                <label>Charges Base</label>
+                                <select class="form-control" name="hire_contracts_charges_base{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].charges_base" #charges_base="ngModel">
+                                    <option value="" disabled>-- Please select --</option>
+                                    <option value="Yearly">Yearly</option>
+                                    <option value="Monthly">Monthly</option>
+                                    <option value="Weekly">Weekly</option>
+                                    <option value="Daily">Daily</option>
+                                </select>
+                            </div>
+                            <div class="eachpart">
+                                <label>Rate</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_rate{{i+1}}" [(ngModel)]="form.hire_contracts[i].rate"
+                                    #rate="ngModel" amountNumber>
+                            </div>
+                            <div class="eachpart">
+                                <label>Per</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_per{{i+1}}" [(ngModel)]="form.hire_contracts[i].per"
+                                    #per="ngModel">
+                            </div>
+
+
+                            <div class="eachpart">
+                                <label>Min. Working Days</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_min_working_days{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].min_working_days" #min_working_days="ngModel"
+                                    amountNumber>
+                            </div>
+                            <div class="eachpart">
+                                <label>Allow BD Days</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_allow_bd_days{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].allow_bd_days" #allow_bd_days="ngModel"
+                                    amountNumber>
+                            </div>
+                            <div class="eachpart">
+                                <label>Allow Idle Days</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_allow_idle_days{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].allow_idle_days" #allow_idle_days="ngModel"
+                                    amountNumber>
+                            </div>
+
+                            <div class="eachpart">
+                                <label>Operator Charges</label>
+                                <select class="form-control" name="hire_contracts_operator_charges{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].operator_charges" #operator_charges="ngModel">
+                                    <option value="" disabled>-- Please select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="eachpart" *ngIf="form.hire_contracts[i].operator_charges=='Yes'">
+                                <label>OC Amount</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_operator_charges_amount{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].operator_charges_amount"
+                                    #operator_charges_amount="ngModel" amountNumber>
+                            </div>
+                            <div class="eachpart">
+                                <label>Helper Charges</label>
+                                <select class="form-control" name="hire_contracts_helper_charges{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].helper_charges" #helper_charges="ngModel">
+                                    <option value="" disabled>-- Please select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="eachpart" *ngIf="form.hire_contracts[i].helper_charges=='Yes'">
+                                <label>HC Amount</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_helper_charges_amount{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].helper_charges_amount"
+                                    #helper_charges_amount="ngModel" amountNumber>
+                            </div>
+                            <div class="eachpart">
+                                <label>Maintenance Charges</label>
+                                <select class="form-control" name="hire_contracts_maintenance_charges{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].maintenance_charges"
+                                    #maintenance_charges="ngModel">
+                                    <option value="" disabled>-- Please select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="eachpart" *ngIf="form.hire_contracts[i].maintenance_charges=='Yes'">
+                                <label>MC Amount</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_maintenance_charges_amount{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].maintenance_charges_amount"
+                                    #maintenance_charges_amount="ngModel" amountNumber>
+                            </div>
+                            <div class="eachpart">
+                                <label>Fuel Included</label>
+                                <select class="form-control" name="hire_contracts_fuel_included{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].fuel_included" #fuel_included="ngModel">
+                                    <option value="" disabled>-- Please select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="eachpart" *ngIf="form.hire_contracts[i].fuel_included=='Yes'">
+                                <label>Fuel Amount</label>
+                                <input type="text" class="form-control" id="data" placeholder=""
+                                    name="hire_contracts_fuel_included_amount{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].fuel_included_amount"
+                                    #fuel_included_amount="ngModel" amountNumber>
+                            </div>
+
+                            <div class="eachpart">
+                                <label>Remark</label>
+                                <textarea type="text" class="form-control" id="data" placeholder="" name="remark{{i+1}}"
+                                    [(ngModel)]="form.hire_contracts[i].remark" #remark="ngModel"></textarea>
+                            </div>
+
+
+                        </div>
+                    </td>
+
+
+                    <td class="align-middle narrow-column">
+                        <a (click)="deleteHireContract(i)" type="submit" class="vector-delete">DEL <i class="fa"
+                                aria-hidden="true"><img src="assets/img/vector-delete.png" alt=""></i></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <button hidden #submitButton="" type="submit">Save</button>
+
+</form>

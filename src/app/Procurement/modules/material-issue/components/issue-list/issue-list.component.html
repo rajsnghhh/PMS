@@ -1,0 +1,73 @@
+<div class="createrequisition-section">
+
+    <div class="main-body-container">
+
+        <div class="component-header" style="display: flex; justify-content: flex-end;">
+            <div *ngIf="issueCheckboxIds.length>0">
+                <button 
+                    data-bs-toggle="offcanvas" 
+                    data-bs-target="#offcanvasRightLabeladdrole"
+                    aria-controls="offcanvasRight" 
+                    (click)="issueByIDs()"
+                >
+                    MATERIAL ISSUE RETURN<img src="assets/header/add.png" alt="">
+                </button>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Sr No</th>
+                    <th scope="col">Issue No & Date</th>
+                    <th scope="col">Issue Type</th>
+                    <th scope="col">Issue Location</th>
+                    <th scope="col">Site Location</th>
+                    <th scope="col">Store Location</th>
+                    <th scope="col">Issue Transfer From</th>
+                    <th scope="col">Remarks</th>
+                    <th scope="col">Manual Slip No.</th>
+                    <th scope="col">RST No.</th>
+                    <th scope="col">LR No.</th>
+                    <th scope="col">Gate Pass No.</th>
+                    <th scope="col">Return</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of procurementIssueList;index as i">
+                    <td>{{i+1}}</td>
+                    <td>Issue No : <b>{{item.issue_request_code?item.issue_request_code:'-'}}</b><br>
+                        {{item.issue_item_created_at.substring(0,10).split('-').reverse().join('-')}}</td>
+                    <td>{{item.issue_type}}</td>
+                    <td>{{item.issue_location}}</td>
+                    <td>{{item.issue_site}}</td>
+                    <td>{{item.issue_store}}</td>
+                    <td>{{item.issue_transfer_from}}</td>
+                    <td>{{item.remarks?item.remarks:'-'}}</td>
+                    <td>{{item.manual_slip_number?item.manual_slip_number:'-'}}</td>
+                    <td>{{item.rst_number?item.rst_number:'-'}}</td>
+                    <td>{{item.lr_number?item.lr_number:'-'}}</td>
+                    <td>{{item.gate_pass_number?item.gate_pass_number:'-'}}</td>
+                    <td>
+                        <input type="checkbox" class="form-check-input" value=""
+                        (change)="onIssueCheckboxChange($event, item.issue_id)" *ngIf="item.status=='approved'">
+                    </td>
+                    <td>
+                        <div class="table-action">
+                            <img src="assets/icons/dots.png" alt="">
+                            <ul>
+                                <li (click)="viewByID(item.issue_id)">View <span><img src="assets/icons/eye.png"
+                                            alt=""></span></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="text-center">
+                    <td colspan="13" *ngIf="procurementIssueList.length == 0">No data found.</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

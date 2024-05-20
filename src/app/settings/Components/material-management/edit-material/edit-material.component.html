@@ -1,0 +1,319 @@
+<form role="form">
+    <div class="mainform" [formGroup]="addmaterialForm">
+        <div class="mb-3 eachfield" [ngClass]="{ 'float-now': addMaterial.code != '' }">
+            <input type="text" class="form-control" id="role" formControlName="code" [(ngModel)]="addMaterial.code"
+                [ngClass]="displayFieldCss(addmaterialForm,'code')">
+            <label class="floating-label">Material Code <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'code')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('code')?.errors?.['required']">Material Code is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3 eachfield" [ngClass]="{ 'float-now': addMaterial.name != '' }">
+            <input type="text" class="form-control" id="role" formControlName="name" [(ngModel)]="addMaterial.name"
+                [ngClass]="displayFieldCss(addmaterialForm,'name')">
+            <label class="floating-label">Material Name <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'name')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('name')?.errors?.['required']">Material Name is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3 eachfield" [ngClass]="{ 'float-now': addMaterial.description != '' }">
+            <input type="text" class="form-control" id="role" formControlName="description"
+                [(ngModel)]="addMaterial.description" [ngClass]="displayFieldCss(addmaterialForm,'description')">
+            <label class="floating-label">Material Description <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'description')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('description')?.errors?.['required']">Material
+                    Description is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3 eachfield">
+            <select class="form-select" formControlName="mtype" (change)="typeChange(addMaterial.mtype)"
+                [(ngModel)]="addMaterial.mtype" [ngClass]="displayFieldCss(addmaterialForm,'mtype')"
+                aria-label="Default select example">
+                <option value="" selected disabled>Select Material Type </option>
+                <option *ngFor="let type of materialTypeList" value={{type.id}}>{{type.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.mtype =='' }">Select Material
+                Type <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'mtype')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('mtype')?.errors?.['required']">Material Type is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3 eachfield">
+            <select class="form-select" formControlName="msubtype" [(ngModel)]="addMaterial.msubtype"
+                [ngClass]="displayFieldCss(addmaterialForm,'msubtype')" aria-label="Default select example">
+                <option value="" selected disabled>Select Material Sub Type </option>
+                <option *ngFor="let subtype of materialSubTypeList?.material_sub_type" value={{subtype.id}}>
+                    {{subtype.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.msubtype =='' }">Select
+                Material Sub Type <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'msubtype')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('msubtype')?.errors?.['required']">Material Sub
+                    Type is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3 eachfield">
+            <select class="form-select" formControlName="costhead" (change)="costheadChange(addMaterial.costhead)"
+                [(ngModel)]="addMaterial.costhead" [ngClass]="displayFieldCss(addmaterialForm,'costhead')"
+                aria-label="Default select example">
+                <option value="" selected disabled>Select Material Cost Head </option>
+                <option *ngFor="let typehead of materialCostHeadList" value={{typehead.id}}>{{typehead.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.costhead =='' }">Select
+                Material Cost Head <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'costhead')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('costhead')?.errors?.['required']">Material Cost
+                    Head is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3 eachfield">
+            <select class="form-select" formControlName="subcosthead" [(ngModel)]="addMaterial.subcosthead"
+                [ngClass]="displayFieldCss(addmaterialForm,'subcosthead')" aria-label="Default select example">
+                <option value="" selected disabled>Select Material Sub Cost Head</option>
+                <option *ngFor="let subtype of materialSubCostHeadList?.material_sub_cost_head" value={{subtype.id}}>
+                    {{subtype.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.subcosthead =='' }">Select
+                Material Sub Cost Head <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'subcosthead')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('subcosthead')?.errors?.['required']">Material Sub
+                    Cost Head is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3 eachfield" [ngClass]="{'filefield': imageValue !='' }">
+            <input type="file" class="form-control" name="imagefile" accept="image/*" (change)="uploadFile($event)"
+                placeholder="sdfghjk">
+        </div>
+        <span *ngIf="imageValue" (click)="previewDoc(imageValue)"><img class="prefiew-icon" src="assets/icons/eye.png" alt=""></span>
+        <span *ngIf="imageValue" (click)="removeDoc()"><img class="prefiew-icon" src="assets/icons/delete.png" alt=""></span>
+
+
+        <div class="mb-3 eachfield">
+            <select class="form-select" formControlName="uom" [(ngModel)]="addMaterial.uom"
+                (change)="uomChange(addMaterial.uom)" [ngClass]="displayFieldCss(addmaterialForm,'uom')"
+                aria-label="Default select example">
+                <option value="" selected disabled>Select Standard Unit of Measurement (UOM)</option>
+                <option *ngFor="let unitmeasure of uomList" value={{unitmeasure.id}}>{{unitmeasure.symbol}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.uom =='' }">Select Standard
+                Unit of Measurement (UOM) <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'uom')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('uom')?.errors?.['required']">Standard Unit of
+                    Measurement is
+                    required</span>
+            </div>
+        </div>
+
+        <!-- <div class="mb-3 eachfield">
+            <select class="form-select" formControlName="seconduom" [(ngModel)]="addMaterial.seconduom"
+                aria-label="Default select example">
+                <option value="" selected disabled>Select 2nd Unit of Measurement (UOM)</option>
+                <option *ngFor="let subtype of secondUomList?.second_unit_of_mesurement" value={{subtype.id}}>
+                    {{secondUomList.symbol}} of {{subtype.conversion_rate}} {{subtype.second_uom}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.seconduom =='' }">Select 2nd
+                Unit of Measurement (UOM)</label>
+        </div> -->
+
+        <div class="mb-3 eachfield">
+            <select class="form-select" formControlName="seconduom" [(ngModel)]="addMaterial.seconduom"
+                aria-label="Default select example">
+                <option value="" selected disabled>2nd Unit of Measurement (UOM)</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.seconduom =='' }">2nd
+                Unit of Measurement (UOM)</label>
+        </div>
+
+        <div class="mainuomtable" *ngIf="addMaterial.seconduom=='Yes'">
+            <div class="allfield" *ngFor="let md of KeyScopesData; let i=index">
+                <div class="mb-3" [ngClass]="{ 'float-now': md.primary_rate != '' }">
+                    <div class="fieldValue firstunit prmrate">
+                        <input type="text" name="primary_rate" [ngModelOptions]="{standalone: true}" [(ngModel)]="md.primary_rate" class="form-control"
+                        [ngModelOptions]="{standalone: true}" >
+                        <label class="floating-label primryfloat">Primary Rate</label>
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <div class="fieldValue firstunit symbl">
+                        <input type="text" disabled [(ngModel)]="prevuomList" class="form-control"
+                        [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+                <span class="oftext"> = </span>
+                <div class="mb-3" [ngClass]="{ 'float-now': md.conversion_rate != '' }">
+                    <div class="fieldValue firstunit conrate">
+                        <input type="text" name="conversion_rate" [ngModelOptions]="{standalone: true}" [(ngModel)]="md.conversion_rate" class="form-control">
+                        <label class="floating-label convfloat">Conversion Rate</label>
+                    </div>
+                </div>
+                <div class="mb-3" [ngClass]="{ 'float-now': md.second_uom != '' }">
+                    <div class="fieldValue firstunit scnduom">
+                        <input type="text" class="form-control" name="second_uom" [ngModelOptions]="{standalone: true}" [(ngModel)]="md.second_uom">
+                        <label class="floating-label scnduomfloat">Second Unit</label>
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <div class="fieldValue">
+                        <div class="AddBtn" (click)="addKeyScope()" *ngIf="i==0"><img src="assets/icons/add1.png"
+                                alt="">
+                        </div>
+                        <div class="RemoveBtn" (click)="removeKeyScope(i)" *ngIf="i!=0"><img
+                                src="assets/icons/minus.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3 eachfield">
+            <select class="form-select" formControlName="nature" [(ngModel)]="addMaterial.nature"
+                [ngClass]="displayFieldCss(addmaterialForm,'nature')" aria-label="Default select example">
+                <option value="" selected disabled>Select Material Nature/Properties</option>
+                <option *ngFor="let nature of naturePropertiesList" value={{nature.id}}>{{nature.name}}</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.nature =='' }">Select
+                Material Nature/Properties <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'nature')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('nature')?.errors?.['required']">Material
+                    Nature/Properties is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3 eachfield" [ngClass]="{ 'float-now': addMaterial.leadtime != '' }">
+            <input type="number" class="form-control" id="role" formControlName="leadtime"
+                [(ngModel)]="addMaterial.leadtime" [ngClass]="displayFieldCss(addmaterialForm,'leadtime')">
+            <label class="floating-label">Material Lead Time (In Days) <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'leadtime')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('leadtime')?.errors?.['required']">Material Lead
+                    Time is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3 eachfield">
+            <select class="form-select" formControlName="valuation" [(ngModel)]="addMaterial.valuation"
+                [ngClass]="displayFieldCss(addmaterialForm,'valuation')" aria-label="Default select example">
+                <option value="" selected disabled>Select Material Valuation</option>
+                <option value="FIFO">FIFO</option>
+                <option value="LIFO">LIFO</option>
+                <option value="Weighted Average Rate">Weighted Average Rate</option>
+                <option value="Average Rate">Average Rate</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.valuation =='' }">Select
+                Material Valuation <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'valuation')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('valuation')?.errors?.['required']">Material
+                    Valuation is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3 eachfield" [ngClass]="{ 'float-now': addMaterial.tolerance != '' }">
+            <input type="number" class="form-control" id="role" formControlName="tolerance"
+                [(ngModel)]="addMaterial.tolerance" [ngClass]="displayFieldCss(addmaterialForm,'tolerance')">
+            <label class="floating-label">Material Tolerance in (%) <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'tolerance')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('tolerance')?.errors?.['required']">Material
+                    Tolerance is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3 eachfield" [ngClass]="{ 'float-now': addMaterial.wastage != '' }">
+            <input type="number" class="form-control" id="role" formControlName="wastage"
+                [(ngModel)]="addMaterial.wastage" [ngClass]="displayFieldCss(addmaterialForm,'wastage')">
+            <label class="floating-label">Material Wastages or Bulking Factors in (%) <span
+                    class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'wastage')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('wastage')?.errors?.['required']">Material Wastages
+                    or Bulking Factors is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3 eachfield">
+            <select class="form-select" formControlName="shortclose" [(ngModel)]="addMaterial.shortclose"
+                [ngClass]="displayFieldCss(addmaterialForm,'shortclose')" aria-label="Default select example">
+                <option value="" selected disabled>Material Short Close Required</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.shortclose =='' }">Material
+                Short Close Required <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'shortclose')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('shortclose')?.errors?.['required']">Material Short
+                    Close Value is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3 eachfield">
+            <select class="form-select" formControlName="gstapplicable" [(ngModel)]="addMaterial.gstapplicable"
+                [ngClass]="displayFieldCss(addmaterialForm,'gstapplicable')" aria-label="Default select example">
+                <option value="" selected disabled>GST Applicable</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addMaterial.gstapplicable =='' }">GST
+                Applicable <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'gstapplicable')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('gstapplicable')?.errors?.['required']">GST
+                    Applicable Value is
+                    required</span>
+            </div>
+        </div>
+
+        <div *ngIf="addMaterial.gstapplicable=='Yes'" class="mb-3 eachfield"
+            [ngClass]="{ 'float-now': addMaterial.cgst != '' }">
+            <input type="number" class="form-control" id="role" formControlName="cgst" [(ngModel)]="addMaterial.cgst"
+                [ngClass]="displayFieldCss(addmaterialForm,'cgst')">
+            <label class="floating-label">CGST (9.00%) <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'cgst')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('cgst')?.errors?.['required']">CGST is
+                    required</span>
+            </div>
+        </div>
+
+        <div *ngIf="addMaterial.gstapplicable=='Yes'" class="mb-3 eachfield"
+            [ngClass]="{ 'float-now': addMaterial.sgst != '' }">
+            <input type="number" class="form-control" id="role" formControlName="sgst" [(ngModel)]="addMaterial.sgst"
+                [ngClass]="displayFieldCss(addmaterialForm,'sgst')">
+            <label class="floating-label">SGST (9.00%) <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'sgst')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('sgst')?.errors?.['required']">SGST is
+                    required</span>
+            </div>
+        </div>
+
+        <div *ngIf="addMaterial.gstapplicable=='Yes'" class="mb-3 eachfield"
+            [ngClass]="{ 'float-now': addMaterial.igst != '' }">
+            <input type="number" class="form-control" id="role" formControlName="igst" [(ngModel)]="addMaterial.igst"
+                [ngClass]="displayFieldCss(addmaterialForm,'igst')">
+            <label class="floating-label">IGST (18.00%) <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addmaterialForm,'igst')">
+                <span class="text-danger" *ngIf="addmaterialForm.get('igst')?.errors?.['required']">IGST is
+                    required</span>
+            </div>
+        </div>
+
+
+    </div>
+    <button type="button" (click)="addnewMaterial()">UPDATE</button>
+</form>

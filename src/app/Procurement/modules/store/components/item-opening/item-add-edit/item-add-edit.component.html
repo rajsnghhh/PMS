@@ -1,0 +1,230 @@
+<form class="allfield" name="addPersonalInformation" #f="ngForm" (ngSubmit)="f.form.valid && personalSubmit()"
+    novalidate>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Site <span class="asterisk">*</span></label>
+            <select class="form-select" disabled name="site" [ngClass]="{ 'is-invalid': f.submitted && site.errors }"
+                (change)="getStoreList()"    
+                [(ngModel)]="addPersonalInformation.site" required #site="ngModel">
+                <option value="">Select Site</option>
+                <option value="{{projectSite.id}}" *ngFor="let projectSite of projectSiteList">{{projectSite.site_name}}</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && site.errors" class="invalid-feedback">
+            <div *ngIf="site.errors['required']">Site is required</div>
+        </div>
+    </div>
+
+    <div class="mb-3 field" *ngIf="addPersonalInformation.site && projectStoreList.length>0 " >
+        <div class="fieldValue">
+            <label>Store</label>
+            <select class="form-select" name="store" [ngClass]="{ 'is-invalid': f.submitted && store.errors }"
+                [(ngModel)]="addPersonalInformation.store" #store="ngModel">
+                <option value="">Select Store</option>
+                <option [ngValue]="projectStore.id" *ngFor="let projectStore of projectStoreList">{{projectStore.store_name}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Group <span class="asterisk">*</span></label>
+            <select class="form-select" name="group" [ngClass]="{ 'is-invalid': f.submitted && group.errors }"
+                (change)="groupTypeChange(addPersonalInformation.group)"
+                [(ngModel)]="addPersonalInformation.group" required #group="ngModel">
+                <option value="">Select Group</option>
+                <option value="{{materialGroup.id}}" *ngFor="let materialGroup of materialGroupList">{{materialGroup.name}}</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && group.errors" class="invalid-feedback">
+            <div *ngIf="group.errors['required']">Group is required</div>
+        </div>
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Sub Group <span class="asterisk">*</span></label>
+            <select class="form-select" name="subgroup" [ngClass]="{ 'is-invalid': f.submitted && subgroup.errors }"
+                (change)="subTypeChange(addPersonalInformation.subgroup)"
+                [(ngModel)]="addPersonalInformation.subgroup" required #subgroup="ngModel">
+                <option value="">Select Sub Group</option>
+                <option value="{{materiSubGroup.id}}" *ngFor="let materiSubGroup of MaterilSubGroupList">{{materiSubGroup.name}}</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && group.errors" class="invalid-feedback">
+            <div *ngIf="group.errors['required']">Sub Group is required</div>
+        </div>
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Item <span class="asterisk">*</span></label>
+            <!-- (change)="setMaterialMasterData(false)" -->
+            <!-- (change)="selectMaterial()" -->
+            <select class="form-select" name="material" [ngClass]="{ 'is-invalid': f.submitted && material.errors }"
+                (change)="changeItem()"
+                [(ngModel)]="addPersonalInformation.material" required #material="ngModel"> 
+                <option value="">Select Item</option>
+                <option value="{{masterData.id}}" *ngFor="let masterData of MaterilFilterList">{{masterData.material_name}}</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && group.errors" class="invalid-feedback">
+            <div *ngIf="group.errors['required']">Item is required</div>
+        </div>
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Item UOM <span class="asterisk">*</span></label>
+            <input type="text" class="form-control" name="item_uom"
+            disabled
+            [(ngModel)]="addPersonalInformation.item_uom" 
+            placeholder="">
+        </div>
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Stock Type <span class="asterisk">*</span></label>
+            <select class="form-select" name="stock_type" [ngClass]="{ 'is-invalid': f.submitted && stock_type.errors }"
+                [(ngModel)]="addPersonalInformation.stock_type" required #stock_type="ngModel">
+                <option value="">Select Stock Type</option>
+                <option value="party">Party</option>
+                <option value="self">Self</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && stock_type.errors" class="invalid-feedback">
+            <div *ngIf="stock_type.errors['required']">Stock Type is required</div>
+        </div>
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Opening Quantity <span class="asterisk">*</span></label>
+            <input type="text" class="form-control" name="opening_quantity" numbersOnly maxlength="12"
+                (change)="calculateItemAmount()"
+                [ngClass]="{ 'is-invalid': f.submitted && opening_quantity.errors }"
+                [(ngModel)]="addPersonalInformation.opening_quantity" required #opening_quantity="ngModel"
+                placeholder="Enter opening quantity">
+        </div>
+        <div *ngIf="f.submitted && opening_quantity.errors" class="invalid-feedback">
+            <div *ngIf="opening_quantity.errors['required']">Opening quantity is required</div>
+        </div>
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Opening Quantity UOM <span class="asterisk">*</span></label>
+            
+            <select class="form-select" name="uom_opening_qty" [ngClass]="{ 'is-invalid': f.submitted && uom_opening_qty.errors }"
+                [(ngModel)]="addPersonalInformation.uom_opening_qty" 
+                #uom_opening_qty="ngModel"
+                required
+            > 
+                <option value="">Select</option>
+                <ng-container *ngFor="let uomData of uomList">
+                    <option value="{{uomData.id}}" *ngIf="avliableUom.includes(uomData.id)">{{uomData.symbol}}</option>
+                </ng-container>
+                
+            </select>
+        </div>
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Opening Weight</label>
+            <input type="text" class="form-control" name="opening_weight" numbersOnly maxlength="12"
+                [ngClass]="{ 'is-invalid': f.submitted && opening_weight.errors }"
+                [(ngModel)]="addPersonalInformation.opening_weight" #opening_weight="ngModel"
+                placeholder="Enter opening quantity">
+        </div>
+        <!-- <div *ngIf="f.submitted && opening_weight.errors" class="invalid-feedback">
+            <div *ngIf="opening_weight.errors['required']">Opening wei is required</div>
+        </div> -->
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Opening Weight UOM <span class="asterisk"></span></label>
+            <select class="form-select" name="uom_opening_weight" [ngClass]="{ 'is-invalid': f.submitted && uom_opening_weight.errors }"
+
+                [(ngModel)]="addPersonalInformation.uom_opening_weight" 
+                #uom_opening_weight="ngModel"
+            > 
+                <option value="">Select</option>
+                <ng-container *ngFor="let uomData of uomList">
+                    <option value="{{uomData.id}}" *ngIf="avliableUom.includes(uomData.id)">{{uomData.symbol}}</option>
+                </ng-container>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && uom_opening_weight.errors" class="invalid-feedback">
+            <div *ngIf="uom_opening_weight.errors['required']">This is required</div>
+        </div>
+    </div>
+
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Unit Rate <span class="asterisk">*</span></label>
+            <input type="text" class="form-control" name="cost_per_unit" amountNumber 
+                (change)="calculateItemAmount()"
+                [ngClass]="{ 'is-invalid': f.submitted && cost_per_unit.errors }"
+                [(ngModel)]="addPersonalInformation.cost_per_unit" required #cost_per_unit="ngModel"
+                placeholder="Enter Unit Rate">
+        </div>
+        <div *ngIf="f.submitted && cost_per_unit.errors" class="invalid-feedback">
+            <div *ngIf="cost_per_unit.errors['required']">Unit Rate is required</div>
+        </div>
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Unit Rate UOM <span class="asterisk">*</span></label>
+            <!-- <select class="form-select" name="uom_opening_cost_per_unit" required [ngClass]="{ 'is-invalid': f.submitted && uom_opening_cost_per_unit.errors }"
+                
+                [(ngModel)]="addPersonalInformation.uom_opening_cost_per_unit" #uom_opening_cost_per_unit="ngModel"> 
+                <option value="">Select</option>
+                <option value="{{uomData.id}}" *ngFor="let uomData of uomList">{{uomData.symbol}}</option>
+            </select> -->
+            <select class="form-select" name="uom_opening_cost_per_unit" [ngClass]="{ 'is-invalid': f.submitted && uom_opening_cost_per_unit.errors }"
+            [(ngModel)]="addPersonalInformation.uom_opening_cost_per_unit" 
+            #uom_opening_cost_per_unit="ngModel"
+            required
+            > 
+            <option value="">Select</option>
+            <option value="{{uomData.id}}" *ngFor="let uomData of uomList">{{uomData.symbol}}</option>
+            </select>
+        </div>
+        <!-- <div *ngIf="f.submitted && uom_opening_cost_per_unit.errors" class="invalid-feedback">
+            <div *ngIf="uom_opening_cost_per_unit.errors['required']">This is required</div>
+        </div> -->
+    </div>
+
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Item Amount</label>
+            <input type="text" disabled class="form-control" name="item_Amount" numbersOnly 
+                [ngClass]="{ 'is-invalid': f.submitted && item_Amount.errors }"
+                [(ngModel)]="addPersonalInformation.item_Amount" #item_Amount="ngModel"
+                placeholder="">
+        </div>
+    </div>
+    
+    <div class="mb-3 field">
+        <div class="fieldValue">
+            <label>Remarks</label>
+            <textarea type="textarea" class="form-control" name="remarks" 
+            [ngClass]="{ 'is-invalid': f.submitted && remarks.errors }"
+            [(ngModel)]="addPersonalInformation.remarks" #remarks="ngModel"
+            placeholder="Remarks">
+            </textarea>
+        </div>
+    </div>
+
+    <div class="btnupdate">
+        <button type="submit" class="btn btn-primary" *ngIf="canvasScope == 'add' ">ADD</button>
+        <button type="submit" class="btn btn-primary" *ngIf="canvasScope == 'update' ">UPDATE</button>
+        <button type="button" class="btn btn-primary non-active-btn" (click)="CloseComponent()">CANCEL</button>
+    </div>
+</form>

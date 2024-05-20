@@ -1,0 +1,159 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && addUpdateWorkIndent()" novalidate>
+    
+    <div class="mb-3 float-now" >
+        <div class="row">
+            <div class="col-md-9">
+                <input type="text" name="workOrder_code" class="form-control" [(ngModel)]="form.workOrder_code" #workOrder_code="ngModel">
+            </div>
+            <div class="col-md-3">
+                <input type="number" name="workOrder_no" class="form-control" [(ngModel)]="form.workOrder_no" #workOrder_no="ngModel">
+            </div>
+        </div>
+        <label class="floating-label">WO Indent No.</label>
+        <!-- <input type="text" name="wo_no" class="form-control"> -->
+    </div>
+    <div class="mb-3 float-now" >
+        <input type="date" name="date" class="form-control" [(ngModel)]="form.date" #date="ngModel">
+        <label class="floating-label">Date</label>
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': form.location != '' }">
+        <!-- <select class="form-control" name="location" [(ngModel)]="form.location" required #location="ngModel" [ngClass]="{ 'is-invalid': f.submitted && location.errors }" 
+        >
+            <option disabled>-- select --</option>
+            <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                {{siteData.site_name}}</option>
+        </select> -->
+        <input type="text" class="form-control" [disabled]="true" [value]="localStorageData?.site_data?.site_name">
+        <label class="floating-label-select">Location</label>
+
+        <!-- <div *ngIf="f.submitted && location.errors" class="invalid-feedback" style="display: block;">
+            <div *ngIf="location.errors['required']">Location is required</div>
+        </div> -->
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': form.work_desc != '' }">
+        <textarea name="work_desc" class="form-control" [(ngModel)]="form.work_desc" #work_desc="ngModel" required cols="30" rows="5"></textarea>
+        <label class="floating-label">Work Desc./Subject<span class="asterisk">*</span></label>
+
+        <div *ngIf="f.submitted && work_desc.errors" class="invalid-feedback" style="display: block;">
+            <div *ngIf="work_desc.errors['required']">Work Description is required</div>
+        </div>
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': form.work_type != '' }">
+        <input type="text" name="work_type" class="form-control" [(ngModel)]="form.work_type" required #work_type="ngModel">
+        <label class="floating-label">Work Type<span class="asterisk">*</span></label>
+
+        <div *ngIf="f.submitted && work_type.errors" class="invalid-feedback" style="display: block;">
+            <div *ngIf="work_type.errors['required']">Work Type is required</div>
+        </div>
+    </div>
+
+    <div class="createtable-section table-responsive">
+        <label >Work Detail</label>
+        <table class="text-nowrap">
+            <tr>
+                <th colspan="1" style="min-width: 150px;">Work<span class="asterisk">*</span></th>
+                <th colspan="1" style="min-width: 150px;">Work Detail<span class="asterisk">*</span></th>
+                <th colspan="1" style="min-width: 150px;">Quantity/Unit<span class="asterisk">*</span></th>
+                
+                <th>Action</th>
+            </tr>
+            <tr class="">
+                <td colspan="1"></td>
+                <td colspan="1"></td>
+                <td colspan="1"></td>
+                
+                <td class="align-middle">
+                    <a  (click)="addItem()" class="tablebtn-save">ADD <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png" alt=""></i></a>
+                </td>
+            </tr>
+            <tr class="tablebg" *ngFor="let item of form.requested_items; let i = index">
+                <td colspan="1">
+                    <select class="form-select" name="work" [ngClass]="{ 'float-now': form.requested_items[i].work != '' }"
+                        [(ngModel)]="form.requested_items[i].work" required #work="ngModel"
+                    >
+                        <option value="">Select Group Task</option>
+                        <option *ngFor="let groupTask of groupTaskList" value="{{groupTask.id}}">{{groupTask.short_name}}</option>
+                    </select>
+                    <!-- <label class="floating-label-select">Service Item
+                        <span class="asterisk">*</span>
+                    </label> -->
+                    <div *ngIf="f.submitted && work.errors" class="invalid-feedback" style="display: block;">
+                        <div *ngIf="work.errors['required']">Group task is required</div>
+                    </div>
+                </td>
+                <td colspan="1">
+                    <div class="mb-3" [ngClass]="{ 'float-now': form.requested_items[i].work_detail != '' }">
+                        <textarea name="work_detail{{i+1}}"  [(ngModel)]="form.requested_items[i].work_detail" required #work_detail="ngModel" cols="30" rows="1" class="form-control"></textarea>
+
+                        <label class="floating-label">Work Description<span class="asterisk">*</span></label>
+
+                        <div *ngIf="f.submitted && work_detail.errors" class="invalid-feedback" style="display: block;">
+                            <div *ngIf="work_detail.errors['required']">Work Detail is required</div>
+                        </div>
+                    </div>
+                </td>
+                <td colspan="1">
+                    <div class="mb-3" [ngClass]="{ 'float-now': form.requested_items[i].quantity != '' }">
+                        <input type="text" name="quantity{{i+1}}" class="form-control" [(ngModel)]="form.requested_items[i].quantity"
+                        pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$" amountNumber
+                        required #quantity="ngModel">
+                        <label class="floating-label">Qty.<span class="asterisk">*</span></label>
+                        <div *ngIf="f.submitted && quantity.errors" class="invalid-feedback" style="display: block;">
+                            <div *ngIf="quantity.errors['required']">Quantity is required</div>
+                            <div *ngIf="quantity.errors['pattern']">Valid Quantity is required</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3" [ngClass]="{ 'float-now': form.requested_items[i].uom != '' }">
+                        <select class="form-control" name="uom{{i+1}}" [(ngModel)]="form.requested_items[i].uom" required #uom="ngModel">
+
+                            <option *ngFor="let unit of uomList; let i = index" value="{{unit.id}}">{{unit.symbol}}</option>
+                        </select>
+                        <label class="floating-label-select">Unit
+                            <span class="asterisk">*</span>
+                        </label>
+                        <div *ngIf="f.submitted && uom.errors" class="invalid-feedback" style="display: block;">
+                            <div *ngIf="uom.errors['required']">Unit is required</div>
+                        </div>
+                    </div>
+                </td>
+                
+                <td class="align-middle">
+                    <a (click)="delete(i)" type="submit" class="vector-delete">DEL <i class="fa" aria-hidden="true"><img src="assets/img/vector-delete.png" alt=""></i></a>
+                    
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="mb-3 float-now" >
+        <select class="form-control"
+        [(ngModel)]="form.employee_name" required #employee_name="ngModel" [ngModelOptions]="{standalone: true}">
+            <option value="">-- select --</option>
+            <option *ngFor="let user of userList" value="{{user.id}}">
+                {{user.full_name}}
+            </option>
+        </select>
+        <label class="floating-label">Employee Name<span class="asterisk">*</span></label>
+        <div *ngIf="f.submitted && employee_name.errors" class="invalid-feedback" style="display: block;">
+            <div *ngIf="employee_name.errors['required']">Employee Name is required</div>
+        </div>
+    </div>
+    <div class="mb-3 eachfield">
+        <!-- multiple="multiple" -->
+        <input type="file" multiple="multiple" (change)="handleUpload($event)" class="custom-file-input" id="customFile">
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': form.jurisdiction != '' }">
+        <input type="text" name="jurisdiction" class="form-control" [(ngModel)]="form.jurisdiction" #jurisdiction="ngModel">
+        <label class="floating-label">Jurisdiction</label>
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': form.remark != '' }">
+        <textarea name="remark" class="form-control" [(ngModel)]="form.remark" #remark="ngModel" cols="30" rows="5"></textarea>
+        <label class="floating-label">Remarks</label>
+    </div>
+
+    <div class="pull_right">
+        <button type="submit" class="save_work">Save</button>
+    </div>
+</form>
+    

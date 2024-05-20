@@ -1,0 +1,295 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Work Order List</h2>
+
+        <div class="action-button-container">
+            <button hidden data-bs-toggle="offcanvas" (click)="multistageApproval()">Multi Stage Approve
+                <img src="assets/icons/check.png" alt="">
+            </button>
+            <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="addNew()">ADD NEW <img src="assets/header/add.png"
+                    alt=""></button>
+            <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight" (click)="addGST()">ADD GST <img src="assets/header/add.png"
+                    alt=""></button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Advanced Search Section -->
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
+                Advanced Search
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse hide" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+
+                <form [formGroup]="workOrderAdvancedSearchForm" (ngSubmit)="onSubmit()">
+
+                    <div class="row">
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label>From&nbsp;Date</label><input type="date" formControlName="date__gte"
+                                    placeholder="" id="date" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label>To&nbsp;Date</label><input type="date" formControlName="date__lte" placeholder=""
+                                    id="date" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label>Work&nbsp;Order&nbsp;No.</label>
+                                <input type="text" formControlName="wo_no" class="form-control" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label>Site</label>
+                                <select id="sel1" class="form-control" ngDefaultControl formControlName="site">
+                                    <option value="">-- select --</option>
+                                    <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                        {{siteData.site_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label>Location&nbsp;Site</label>
+                                <select id="sel1" class="form-control" ngDefaultControl formControlName="job_site">
+                                    <option value="">-- select --</option>
+                                    <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                        {{siteData.site_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label>Location</label>
+                                <input type="text" formControlName="location" class="form-control" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label>Type</label>
+
+                                <div>
+                                    <input type="radio" id="gst" name="type" value="gst" ngDefaultControl
+                                        formControlName="type">
+                                    <label for="gst">GST</label>
+                                </div>
+
+                                <div>
+                                    <input type="radio" id="vat" name="type" value="vat" ngDefaultControl
+                                        formControlName="type">
+                                    <label for="vat">VAT</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label for="show_revise" class="checkbox-label">Show Revise WO Only</label>
+                                <input type="checkbox" formControlName="updated_by__isnull" id="show_revise"
+                                    class="custom-checkbox">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label>Contract&nbsp;Type</label>
+                                <input type="text" class="form-control" ngDefaultControl
+                                    formControlName="procurement_work_order_hire_contracts__hire">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label>Machine</label>
+                                <input type="text" class="form-control" ngDefaultControl
+                                    formControlName="procurement_work_order_hire_contracts__machine_category">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label>Final&nbsp;Sanction&nbsp;Status</label>
+                                <select id="sel1" class="form-control" ngDefaultControl formControlName="status">
+                                    <option value="">-- select --</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="approved">Approved</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label>Party</label>
+                                <select id="sel1" class="form-control" ngDefaultControl formControlName="party">
+                                    <option value="">-- select --</option>
+                                    <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                                        {{vendor.vendor_master_data.vendor_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label>Add&nbsp;Entry&nbsp;Date&nbsp;From</label>
+                                <input type="date" formControlName="created_at__gte" class="form-control"
+                                    placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label>Add&nbsp;Entry&nbsp;Date&nbsp;To</label>
+                                <input type="date" formControlName="created_at__lte" class="form-control"
+                                    placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label>Update&nbsp;Entry&nbsp;Date&nbsp;From</label>
+                                <input type="date" formControlName="updated_at__gte" class="form-control"
+                                    placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-3">
+                            <div class="adform">
+                                <label>Update&nbsp;Entry&nbsp;Date&nbsp;To</label>
+                                <input type="date" formControlName="updated_at__lte" class="form-control"
+                                    placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-3">
+                                <div class="adform">
+                                    <label>Added&nbsp;By</label>
+                                    <select id="sel1" class="form-control" formControlName="created_by"
+                                        ngDefaultControl>
+                                        <option disabled>-- select --</option>
+                                        <option *ngFor="let user of userList" value="{{user.id}}">
+                                            {{user.full_name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-3">
+                                <div class="adform">
+                                    <label>Edit&nbsp;By</label>
+                                    <select id="sel1" class="form-control" formControlName="updated_by"
+                                        ngDefaultControl>
+                                        <option disabled>-- select --</option>
+                                        <option *ngFor="let user of userList" value="{{user.id}}">
+                                            {{user.full_name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-3">
+                                <div class="adform">
+                                    <label>Task&nbsp;Group</label>
+                                    <select id="sel1" class="form-control" ngDefaultControl
+                                        formControlName="procurement_work_order_details__task__primary">
+                                        <option value="">-- select --</option>
+                                        <option *ngFor="let groupTask of groupTaskList" value="{{groupTask.id}}">
+                                            {{groupTask.short_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-3">
+                                <div class="adform">
+                                    <label>Task</label>
+                                    <select id="sel1" class="form-control"
+                                        formControlName="procurement_work_order_details__task" ngDefaultControl>
+                                        <option value="">-- select --</option>
+                                        <option *ngFor="let groupTask of groupTaskList" value="{{groupTask.id}}">
+                                            {{groupTask.short_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-lg-3 col-md-3 col-3">
+                                <div class="adform">
+                                    <label>Service&nbsp;Item</label>
+                                    <select id="sel1" class="form-control" ngDefaultControl
+                                        formControlName="procurement_work_order_materials__material"><!--  (change)="typeChange()" -->
+                                        <option value="">-- select --</option>
+                                        <option *ngFor="let type of materialTypeList" value={{type.id}}>
+                                            {{type.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-6">
+                                <div class="adform">
+                                    <label>(Doc/&nbsp;File)&nbsp;Status</label>
+
+                                    <div>
+                                        <input type="radio" id="asc" name="order" value="false" ngDefaultControl
+                                            formControlName="procurement_work_order_attachments__isnull">
+                                        <label for="asc">With&nbsp;Attachment</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="radio" id="desc" name="order" value="true" ngDefaultControl
+                                            formControlName="procurement_work_order_attachments__isnull">
+                                        <label for="desc">Without&nbsp;Attachment</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="btd-section">
+                                <button type="submit" class="btn-save">SEARCH</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- Advanced Search Section End -->
+
+
+    <app-work-order-list [workOrderAdvancedSearchFormValue]="workOrderAdvancedSearchFormValue"></app-work-order-list>

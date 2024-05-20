@@ -1,0 +1,150 @@
+.checkBoxContailer {
+    border: 1px solid blue;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px;
+    background: #d7e7ff;
+    border-radius: 12px;
+    padding: 15px;
+    .left-container {
+        width: 20%;
+        border-right: 1px solid blue;
+    }
+    label {
+        cursor: pointer;
+    }
+    .right-contatiner {
+        width: 80%;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0 17px;
+        .form-check {
+            width: 200px;
+        }
+    }
+    .form-check-input[type=checkbox] {
+        padding: unset;
+    }
+}
+::ng-deep.ng-select {
+    background: transparent !important;
+    .ng-select-container {
+        border: none;
+        padding: 0;
+        margin: 0;
+        background: transparent !important;
+    } 
+}
+.floating-label {
+    z-index: 9;
+}
+form {
+    margin: 0 15px 60px 15px;
+}
+
+td img {
+    margin: auto;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+::ng-deep .fieldValue label {
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 14px;
+    color: #666;
+    font-weight: 400;
+    margin: 0px 0px 10px 0px;
+    text-align: left;
+    width: 100%;
+    }
+
+
+
+::ng-deep .fieldValue .form-control{
+    display: block;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 8px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    appearance: auto;
+    margin: 0px 0px 10px 0px;
+    }
+
+
+
+
+
+::ng-deep .fieldValue select {
+    display: block;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px !important;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    appearance: auto;
+    margin: 0px 0px 10px 0px;
+    }
+
+    ::ng-deep .ng-select {
+        background: transparent !important;
+        border-radius: 0px;
+        padding: 0px 7px;
+    }
+
+
+    .fieldValue input, select, textarea {
+        border-radius: 0px !important;
+        font-size: 12px;
+        padding: 10px 20px;
+        margin-bottom: 12px;
+    }
+
+
+    .component-body table th {
+        background-color: #5577ff;
+        color: white;
+        font-size: 13px;
+        padding: 10px;
+        font-weight: 500;
+        line-height: 15px;
+    }
+    
+    
+    .component-body table td {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 300 !important;
+        font-size: 12px !important;
+        line-height: 15px !important;
+    }
+
+    .checkBoxContailer { margin: 10px 0px 20px; }
+    

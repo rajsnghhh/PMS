@@ -1,0 +1,120 @@
+<form role="form" [formGroup]="addLabourMasterForm">
+
+    <div class="flex-div">
+
+        <div class="mb-3">
+            <select class="form-select" formControlName="costType" [(ngModel)]="addLabourTemplate.costType"
+                [ngClass]="displayFieldCss(addLabourMasterForm,'costType')" aria-label="Default select example">
+                <option value="" selected disabled>Select Cost Type <span class="asterisk">*</span></option>
+                <option value="DC">DC</option>
+                <option value="IDC">IDC</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addLabourTemplate.costType =='' }">Select
+                Cost Type <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addLabourMasterForm,'costType')">
+                <span class="text-danger" *ngIf="addLabourMasterForm.get('costType')?.errors?.['required']">Cost Type is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" formControlName="Component" [(ngModel)]="addLabourTemplate.Component"
+                [ngClass]="displayFieldCss(addLabourMasterForm,'Component')" aria-label="Default select example">
+                <option value="" selected disabled>Select Component<span class="asterisk">*</span></option>
+                <option value="Labour">Labour</option>
+                <option value="PROW">PROW</option>
+            </select>
+            <label class="floating-label-select"
+                [ngClass]="{'insideDropdown': addLabourTemplate.Component =='' }">Select
+                Component <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addLabourMasterForm,'Component')">
+                <span class="text-danger" *ngIf="addLabourMasterForm.get('Component')?.errors?.['required']">Component
+                    is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addLabourTemplate.labourName != '' }">
+            <input type="text" class="form-control" formControlName="labourName"
+                [(ngModel)]="addLabourTemplate.labourName"
+                [ngClass]="displayFieldCss(addLabourMasterForm,'labourName')">
+            <label class="floating-label">Enter Labour Name <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addLabourMasterForm,'labourName')">
+                <span class="text-danger" *ngIf="addLabourMasterForm.get('labourName')?.errors?.['required']">Labour
+                    Name is required</span>
+            </div>
+        </div>
+
+        <!-- <div class="mb-3" [ngClass]="{ 'float-now': addLabourTemplate.uom != '' }">
+            <input type="text" class="form-control" formControlName="uom" [(ngModel)]="addLabourTemplate.uom"
+                [ngClass]="displayFieldCss(addLabourMasterForm,'uom')">
+            <label class="floating-label">Enter Uom <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addLabourMasterForm,'uom')">
+                <span class="text-danger" *ngIf="addLabourMasterForm.get('uom')?.errors?.['required']"> Uom is
+                    required</span>
+            </div>
+        </div> -->
+
+        <div class="mb-3">
+            <select class="form-select" formControlName="uom" [(ngModel)]="addLabourTemplate.uom"
+                [ngClass]="displayFieldCss(addLabourMasterForm,'uom')" aria-label="Default select example">
+                <option value="" selected disabled>Select UOM <span class="asterisk">*</span></option>
+                <option *ngFor="let uom of uomList" value={{uom.id}}>{{uom.formal_name}} ({{uom.symbol}})</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addLabourTemplate.uom =='' }">Select UOM
+                <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addLabourMasterForm,'uom')">
+                <span class="text-danger" *ngIf="addLabourMasterForm.get('uom')?.errors?.['required']">Unit Of
+                    Measurement is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addLabourTemplate.basicWage != '' }">
+            <input type="text" class="form-control" formControlName="basicWage"
+                [(ngModel)]="addLabourTemplate.basicWage" [ngClass]="displayFieldCss(addLabourMasterForm,'basicWage')">
+            <label class="floating-label">Enter Basic Wage <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addLabourMasterForm,'basicWage')">
+                <span class="text-danger" *ngIf="addLabourMasterForm.get('basicWage')?.errors?.['required']"> Basic Wage
+                    is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addLabourTemplate.vda != '' }"
+            *ngIf="addLabourTemplate.component === 'Labour' ||  addLabourMasterForm.value.Component === 'Labour'">
+            <input type="text" class="form-control" formControlName="vda" [(ngModel)]="addLabourTemplate.vda"
+                [ngClass]="displayFieldCss(addLabourMasterForm,'vda')">
+            <label class="floating-label">Enter VDA <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addLabourMasterForm,'vda')">
+                <span class="text-danger" *ngIf="addLabourMasterForm.get('vda')?.errors?.['required']"> VDA is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addLabourTemplate.pf != '' }"
+            *ngIf="addLabourTemplate.component === 'Labour' ||  addLabourMasterForm.value.Component === 'Labour'">
+            <input type="text" class="form-control" formControlName="pf" [(ngModel)]="addLabourTemplate.pf"
+                [ngClass]="displayFieldCss(addLabourMasterForm,'pf')">
+            <label class="floating-label">Enter PF <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addLabourMasterForm,'pf')">
+                <span class="text-danger" *ngIf="addLabourMasterForm.get('pf')?.errors?.['required']"> PF is
+                    required</span>
+            </div>
+        </div>
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addLabourTemplate.esi != '' }"
+        *ngIf="addLabourTemplate.component === 'Labour' ||  addLabourMasterForm.value.Component === 'Labour'">
+            <input type="text" class="form-control" formControlName="esi" [(ngModel)]="addLabourTemplate.esi"
+                [ngClass]="displayFieldCss(addLabourMasterForm,'esi')">
+            <label class="floating-label">Enter ESI <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addLabourMasterForm,'esi')">
+                <span class="text-danger" *ngIf="addLabourMasterForm.get('esi')?.errors?.['required']"> ESI is
+                    required</span>
+            </div>
+        </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="addUpdateLabourMaster()">{{addUpdateButton}}</button>
+</form>

@@ -1,0 +1,259 @@
+.permissions-section {
+    .treeview-permissions {
+        .tree{
+            --spacing : 1.5rem;
+            --radius  : 10px;
+            padding: 0;
+            margin: 0;
+        }
+    
+        .permission-main-button {
+            background-image: unset;
+            background-color: unset;
+            color: black;
+            width: 100%;
+            text-align: left;
+            display: block;
+            padding: 10px 15px;
+            border: 1px solid #dddddd;
+            border-radius: 0;
+            margin: 0;
+        }
+    
+        .card-body {
+            border: 1px solid #dddddd;
+            border-radius: 0;
+            padding: 15px 0px;
+        }
+        
+        
+        .tree li{
+            display      : block;
+            position     : relative;
+            padding-left : calc(2 * var(--spacing) - var(--radius) - 2px);
+        }
+        
+        .tree ul{
+            margin-left  : calc(var(--radius) - var(--spacing));
+            padding-left : 0;
+        }
+        
+        .tree ul li{
+            border-left : 2px solid #ddd;
+            margin: 10px 0px;
+            margin-bottom: 0;
+           
+        }
+
+        .submenu {
+            width: 100%;
+        }
+        
+        .tree ul li:last-child{
+            border-color : transparent;
+        }
+
+        .details ul{
+            display: none;
+        }
+
+        .subdetails ul {
+            display: none !important;
+        }
+        
+        .subdetails[open] ul {
+            display: flex !important;
+            flex-wrap: wrap;
+            margin: 0;
+        }
+
+        .tree .details[open] ul {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0;
+        }
+        
+        .tree ul li::before{
+            content      : '';
+            display      : block;
+            position     : absolute;
+            top          : calc(var(--spacing) / -2.5);
+            left         : -2px;
+            width        : calc(var(--spacing) + 2px);
+            height       : calc(var(--spacing) + 1px);
+            border       : solid #ddd;
+            border-width : 0 0 2px 2px;
+        }
+        
+        .tree summary{
+            display : block;
+            cursor  : pointer;
+        }
+        
+        .tree summary::marker,
+        .tree summary::-webkit-details-marker{
+            display : none;
+        }
+        
+        .tree summary:focus{
+            outline : none;
+        }
+        
+        .tree summary:focus-visible{
+            outline : 1px dotted #000;
+        }
+        
+        summary {
+            width: 95%;
+            margin-left: 3%;
+            background: #f4f4f4;
+            border-radius: 5px;
+            padding: 0 10px;
+            font-weight: 200;
+        }
+    
+        .tree li::after,
+        .tree summary::before{
+            content       : '';
+            display       : block;
+            position      : absolute;
+            top           : calc(var(--spacing) / 3 - var(--radius));
+            left          : calc(var(--spacing) - var(--radius) - 1px);
+            width         : calc(3 * var(--radius));
+            height        : calc(3 * var(--radius));
+            background    : #fff;
+        }
+        
+        .tree summary::before{
+            content     : ' ';
+            z-index     : 1;
+            background  : #fff;
+            background-image: url(../../../../assets/usermanagement/off-button.png);
+            color       : #fff;
+            line-height : calc(2 * var(--radius) - 2px);
+            text-align  : center;
+            background-size: cover;
+        }
+        
+        .tree .details[open] > summary::before{
+        content : '';
+        background-image: url(../../../../assets/usermanagement/on-button.png);
+        }
+        .lastNodeHed {
+            display: flex;
+            max-width: 100%;
+            li {
+                padding-left: 0px;
+                position: relative;
+                cursor: pointer;
+            }
+            li::after {
+                display: none;
+            }
+            .lastNode::before{
+                border: none!important;
+            }
+            .childNode {
+                border-left: none!important;
+            }
+            .nobefore::before{
+                border: none!important;
+            }
+        }
+    }
+    
+    .treeview-permissions {
+        margin-bottom: 20px;
+        display: grid;
+    }
+    .space {
+        height: 8px;
+    }
+    
+    .lastNodeHed {
+        .container {
+            display: block;
+            position: relative;
+            cursor: pointer;
+            font-size: 10px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            padding-left: 24px;
+        }
+          
+        /* Hide the browser's default checkbox */
+        .container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 3px;
+            height: 15px;
+            width: 15px;
+            border: 1px solid #0d6efd;
+            left: 0;
+            background: white;
+        }
+        
+        /* On mouse-over, add a grey background color */
+        .container:hover input ~ .checkmark {
+            background-color:blue($color: #000000);
+        }
+        
+        /* When the checkbox is checked, add a blue background */
+        .container input:checked ~ .checkmark {
+            background-color:white;
+        }
+        
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        /* Show the checkmark when checked */
+        .container input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        /* Style the checkmark/indicator */
+        .container .checkmark:after {
+            left: 5px;
+            top: 1px;
+            width: 4px;
+            height: 9px;
+            border: solid #0d6efd;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+    }
+
+    .main-menu-bottom-space {
+        margin-bottom: 20px;
+    }
+}
+
+.hidden {
+    display: none!important;
+}
+
+.space-line {
+    min-width: 30px;
+}
+
+.required{
+    font-size: 12px;
+    top: 33px;
+    margin-left: 12px;
+}

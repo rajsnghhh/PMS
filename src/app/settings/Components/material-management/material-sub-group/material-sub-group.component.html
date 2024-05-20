@@ -1,0 +1,208 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Material Sub Group List</h2>
+
+        <div class="action-button-container">
+            <!-- <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown" aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>   -->
+            <!-- <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span ><img src="assets/usermanagement/download_csv.png"  class="export" ><strong>CSV</strong> </span>
+                </li>
+            </ul>        -->
+            <button data-bs-toggle="offcanvas" (click)="addnew()" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight">ADD NEW <img src="assets/header/add.png" alt=""></button>
+        </div>
+    </div>
+
+
+    <form name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && onSearch()" novalidate>
+        <div class="flex-div">
+
+            <div class="mb-3 empinfowth" [ngClass]="{ 'float-now': addUser.name != '' }">
+                <input type="text" class="form-control" id="add1" name="name" [(ngModel)]="addUser.name"
+                    #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.errors }">
+                <label class="floating-label">Enter Sub Group Name <span class="asterisk">*</span></label>
+                <div *ngIf="f.submitted && name.errors" class="invalid-feedback">
+                    <div *ngIf="name.errors['required']">Sub Group Name is required</div>
+                </div>
+            </div>
+            <div class="mb-3 empinfowth">
+                <select class="form-select" aria-label="Default select example" name="itemtype"
+                    [(ngModel)]="addUser.itemtype" #itemtype="ngModel"
+                    [ngClass]="{ 'is-invalid': f.submitted && itemtype.errors }">
+                    <option selected disabled value="">Select Item Type</option>
+                    <option value="{{item.id}}" *ngFor="let item of itemTypelist">{{item.name}}</option>
+                </select>
+                <label class="floating-label-select" [ngClass]="{'insideDropdown': addUser.itemtype =='' }">Select Item
+                    type</label>
+                <div *ngIf="f.submitted && itemtype.errors" class="invalid-feedback">
+                    <div *ngIf="itemtype.errors['required']">Please select Item Type</div>
+                </div>
+            </div>
+
+            <div class="mb-3 empinfowth">
+                <span class="lebelforRadio">Purchase A/c Status</span>
+                <input name="optPurAcStatus" type="radio" value="Assigned" (click)="showPurCombo('Assigned');">
+                Assigned&nbsp;
+                <input name="optPurAcStatus" type="radio" value="Not Assigned" (click)="showPurCombo('Not Assigned');">
+                Not Assigned&nbsp;
+                <input name="optPurAcStatus" type="radio" value="Both" checked="checked"
+                    (click)="showPurCombo('Both');">
+                Both
+            </div>
+
+            <div class="mb-3 empinfowth">
+                <div *ngIf="purchaseAcntStatus!='Not Assigned'">
+                    <select class="form-select" aria-label="Default select example" name="purchaseAccount "
+                        [(ngModel)]="addUser.purchaseAccount" #purchaseAccount="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && purchaseAccount .errors }">
+                        <option selected disabled value="">Purchase A/C</option>
+                        <option *ngFor="let account of accountNameList" value={{account.id}}>{{account.name}}</option>
+                    </select>
+                    <label class="floating-label-select"
+                        [ngClass]="{'insideDropdown': addUser.purchaseAccount  =='' }">Select
+                        Purchase A/C</label>
+                </div>
+            </div>
+
+            <div class="mb-3 empinfowth">
+                <span class="lebelforRadio">Sales A/c Status</span>
+                <input name="optSalAcStatus" type="radio" value="Assigned" (click)="showSalesPurCombo('Assigned');">
+                Assigned&nbsp;
+                <input name="optSalAcStatus" type="radio" value="Not Assigned"
+                    (click)="showSalesPurCombo('Not Assigned');">
+                Not Assigned&nbsp;
+                <input name="optSalAcStatus" type="radio" value="Both" checked="checked"
+                    (click)="showSalesPurCombo('Both');">
+                Both
+            </div>
+
+            <div class="mb-3 empinfowth">
+                <div *ngIf="salesAcntStatus!='Not Assigned'">
+                    <select class="form-select" aria-label="Default select example" name="salesAccount "
+                        [(ngModel)]="addUser.salesAccount" #salesAccount="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && salesAccount .errors }">
+                        <option selected disabled value="">Sales A/C</option>
+                        <option *ngFor="let account of accountNameList" value={{account.id}}>{{account.name}}</option>
+                    </select>
+                    <label class="floating-label-select"
+                        [ngClass]="{'insideDropdown': addUser.salesAccount  =='' }">Select
+                        Sales A/C</label>
+                </div>
+            </div>
+
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+
+    </form>
+
+
+
+    <div class="component-body">
+        <table>
+
+            <tr>
+                <th class="actionbutton">S.No</th>
+                <th>Material Sub Group Name</th>
+                <th>Code</th>
+                <th>Material Group</th>
+                <th>Item Type</th>
+                <th>Purchase A/C</th>
+                <th>Sale A/C</th>
+                <th>Tolenrance Lavel</th>
+                <th>Is Production</th>
+                <th>Production Type</th>
+                <th class="actionbutton">Action </th>
+            </tr>
+
+            <tr *ngFor="let company of materialList; let i = index">
+                <td class="actionbutton">{{i+1.}}</td>
+                <td>{{company.name}}</td>
+                <td>{{company.code}}</td>
+                <td>{{company.parentName}}</td>
+                <td>{{company.item_type_details?.name}}</td>
+                <td>{{company.purchase_account_details[0]?.name}}</td>
+                <td>{{company.sales_account_details[0]?.name}}</td>
+                <td>{{company.tolerance_level}}</td>
+                <td>
+                    <div *ngIf="company.is_production_type">Yes</div>
+                    <div *ngIf="!company.is_production_type">No</div>
+                </td>
+                <td>{{company.production_type_details?.name}}</td>
+                <td class="actionbutton">
+                    <div class="custom-section">
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                            <div class="dropdown-content editwidth">
+                                <div class="img-container">
+                                    <span class="mt-2" (click)="editcompanyid(company.id)" data-bs-toggle="offcanvas"
+                                        data-bs-target="#offcanvasRightEditRole"><img
+                                            src="assets/usermanagement/edit.png" alt=""
+                                            aria-controls="offcanvasRight">&nbsp;&nbsp;<label>Edit Material Sub
+                                            Group</label></span>
+                                    <span (click)="deleteCompany(company.id)" data-bs-toggle="modal"
+                                        data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png"
+                                            alt="">&nbsp;&nbsp;<label>Delete Material Sub Group</label></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+            <tr class="text-center">
+                <td colspan="10" *ngIf="materialList.length == 0">No data found.</td>
+            </tr>
+
+        </table>
+
+    </div>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLabeladdrole"
+        aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Add Material Sub Group</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-add-edit-material-sub (parentFun)="closeCanvas()" *ngIf="scope == 'add'"
+                [scope]="scope"></app-add-edit-material-sub>
+        </div>
+    </div>
+</div>
+
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightEditRole" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Edit Material Sub Group</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <app-add-edit-material-sub (parentFun)="closeCanvas()" *ngIf="scope == 'edit'" [selectedId]="selectedId"
+            [scope]="scope"></app-add-edit-material-sub>
+    </div>
+</div>
+
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this Material Sub Group ?
+            </div>
+            <div class="modal-footer">
+                <button (click)="deleteAlertCompany()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>

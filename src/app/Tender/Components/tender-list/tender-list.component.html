@@ -1,0 +1,261 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Tender Evalutions Summary</h2>
+
+        <div class="action-button-container">
+            <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown"
+                aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span><img src="assets/usermanagement/download_csv.png" class="export"><strong>CSV</strong> </span>
+                </li>
+            </ul>
+            <button hidden data-bs-toggle="offcanvas" data-bs-target="#filterby" aria-controls="offcanvasRight">Filter
+                By</button>
+            <button [routerLink]="['/pms/tender/add-new']">ADD NEW TENDER</button>
+        </div>
+
+    </div>
+    <div class="component-body custom-table" *ngIf="TenderPermission == true">
+        <div class="scrollable-table-container table_scroll">
+
+            <table class="scrollable-table" #customscroll>
+
+                <tr class="sticky_thead">
+                    <th class="posion-fixed-left-sno entiti">S.No</th>
+                    <th class="posion-fixed-left entiti standwidth">Entities</th>
+                    <th class="headwidth">Total Tender<br>Identified (Nos.)</th>
+                    <th class="headwidth">Total Tender<br>Participated (Nos.)</th>
+                    <th class="headwidth">Total Tender Value<br>Participated (₹ in Crs.)</th>
+                    <th class="headwidth">Total Bid BG<br>Infused-Cuml.<br>(Eq. value- ₹ in Crs.)</th>
+                    <th class="headwidth">Tender Technical<br>Opened (Nos.)</th>
+                    <th class="headwidth">Tender Financial<br>Opened (Nos.)</th>
+                    <th class="headwidth">Tender Financial<br>Opened (₹ in Crs.)</th>
+                    <th class="resulttable">
+                        <table >
+                            <tr>
+                                <th class="resultpart no-padding text-center resultwdth">Results</th>
+                            </tr>
+                            <tr>
+                                <th class="resultpart no-padding text-center resultwdth">L1-SINPL</th>
+                            </tr>
+                            <tr>
+                                <table>
+                                    <tr>
+                                        <th class="resultpart no-padding resultwdth">(Nos.)</th>
+                                        <th class="resultpart no-padding resultwdth">(₹ in Crs.)</th>
+                                    </tr>
+                                </table>
+                            </tr>
+                        </table>
+                    </th>
+                
+                    <th class="resultpart headwidth">Performance Index<br>(% of Succes by Nos.)</th>
+                    <th class="resultpart headwidth">Performance Index<br>(% of Succes by Value)</th>
+                    <th class="resultpart headwidth">Bid BG Returned<br>(Eq. value- ₹ in Crs.)</th>
+                    <th class="resultpart headwidth">BG Yet to Return<br>on Fin.Opened<br>(Eq. Value ₹ in Crs.)</th>
+                    <th class="resultpart headwidth lstheight">BG Yet to Return<br>for no Fin.Opened<br>(Eq. Value ₹ in
+                        Crs.)</th>
+                </tr>
+
+                <tr class="notapplicable">
+                    <td class="posion-fixed-left-sno notapplicable">#</td>
+                    <td class="posion-fixed-left entities standwidth notapplicable">N/A</td>
+                    <td class="tdwidth" (click)="alltender('not_applicable')"><a
+                            class="text-info">{{TenderList?.not_applicable_tender_count}}</a>
+                    </td>
+                    <td class="tdwidth"></td>
+                    <td class="tdwidth"></td>
+                    <td class="tdwidth"></td>
+                    <td class="tdwidth"></td>
+                    <td class="tdwidth"></td>
+                    <td class="tdwidth"></td>
+                    <td>
+                <tr>
+                    <table>
+                        <tr>
+                            <td class="result-padding resultwdth resdivider"
+                                style="background-color: rgb(255, 238, 238);"></td>
+                            <td class="result-padding resultwdth" style="background-color: rgb(255, 238, 238);"></td>
+                        </tr>
+                    </table>
+                </tr>
+                </td>
+                <td class="tdwidth"></td>
+                <td class="tdwidth"></td>
+                <td class="tdwidth"></td>
+                <td class="tdwidth"></td>
+                <td class="tdwidth">.</td>
+                </tr>
+
+                <tr>
+                    <td class="posion-fixed-left-sno">#</td>
+                    <td class="posion-fixed-left entities standwidth">Standalone-SINPL</td>
+                    <td class="tdwidth" (click)="alltender('single')"><a
+                            class="text-info">{{TenderList?.total_tender}}</a></td>
+                    <td class="tdwidth" (click)="alltender('participated_single')"><a
+                            class="text-info">{{TenderList?.total_tender_participated}}</a></td>
+                    <td class="tdwidth">{{TenderList?.total_tender_participated_in_cr}}</td>
+                    <td class="tdwidth">{{TenderList?.total_BidBG_infused}}</td>
+                    <td class="tdwidth" (click)="alltender('technical_single')"><a
+                            class="text-info">{{TenderList?.technical_opened_tender_count}}</a></td>
+                    <td class="tdwidth" (click)="alltender('financial_single')"><a
+                            class="text-info">{{TenderList?.financial_opened_tender_count}}</a></td>
+                    <td class="tdwidth">{{TenderList?.financial_opened_tender_sum_in_crs}}</td>
+                    <td>
+                <tr>
+                    <table>
+                        <tr>
+                            <td class="result-padding resultwdth resdivider" (click)="alltender('l1_single')"><a
+                                    class="text-info">{{TenderList?.standalone_l1_tender_count}}</a></td>
+                            <td class="result-padding resultwdth">{{TenderList?.standalone_l1_tender_sum_in_crs}}</td>
+                        </tr>
+                    </table>
+                </tr>
+                </td>
+                <td class="tdwidth">{{TenderList?.performance_rate_by_nos}}</td>
+                <td class="tdwidth">{{TenderList?.performance_rate_by_value}}</td>
+                <td class="tdwidth">{{TenderList?.bg_returned_value}}</td>
+                <td class="tdwidth">{{TenderList?.bg_returned_on_financial_opened}}</td>
+                <td class="tdwidth">{{TenderList?.bg_yet_to_return_for_no_financial_opened}}</td>
+                <!-- <td class="posion-fixed-right surveybutton">
+                    </td> -->
+                </tr>
+
+                <tr>
+                    <td class="posion-fixed-left-sno">#</td>
+                    <td class="posion-fixed-left entities standwidth">In JV with</td>
+                    <td class="tdwidth"></td>
+                    <td class="tdwidth"></td>
+                    <td class="tdwidth"></td>
+                    <td class="tdwidth"></td>
+                    <td class="tdwidth"></td>
+                    <td class="tdwidth"></td>
+                    <td class="tdwidth"></td>
+                    <td>
+                <tr>
+                    <table>
+                        <tr>
+                            <td class="result-padding resultwdth resdivider"></td>
+                            <td class="result-padding resultwdth"></td>
+                        </tr>
+                    </table>
+                </tr>
+                </td>
+                <td class="tdwidth"></td>
+                <td class="tdwidth"></td>
+                <td class="tdwidth"></td>
+                <td class="tdwidth"></td>
+                <td class="tdwidth">.</td>
+                <!-- <td class="posion-fixed-right surveybutton">
+                    </td> -->
+                </tr>
+
+                <tr *ngFor="let jvitem of TenderJVList; let i = index">
+                    <td class="posion-fixed-left-sno">{{(pageSize*(page-1)) + i+1.}}</td>
+                    <td class="posion-fixed-left entities standwidth" (click)="viewtenderjvmaster('jv',jvitem.id)"><a
+                            class="text-info">
+                            <p [outerHTML]="jvitem?.name | textMax"></p>
+                        </a></td>
+                    <td class="tdwidth" (click)="alljvtender('jv',jvitem.id,i)"><a
+                            class="text-info">{{jvitem?.total_tender}}</a></td>
+                    <td class="tdwidth" (click)="alljvtender('participated_jv',jvitem.id,i)"><a
+                            class="text-info">{{jvitem?.total_tender_participated}}</a></td>
+                    <!-- <td>{{TenderJVList?.total_tender_participated_in_cr}}</td> -->
+                    <td class="tdwidth">{{jvitem?.total_tender_participated_in_cr}}</td>
+                    <td class="tdwidth">{{jvitem?.total_BidBG_infused}}</td>
+                    <td class="tdwidth" (click)="alljvtender('technical_open_jv',jvitem.id,i)"><a
+                            class="text-info">{{jvitem?.technical_opened_tender_count}}</a></td>
+                    <td class="tdwidth" (click)="alljvtender('financial_open_jv',jvitem.id,i)"><a
+                            class="text-info">{{jvitem?.financial_opened_tender_count}}</a></td>
+                    <td class="tdwidth">{{jvitem?.financial_opened_tender_sum_in_crs}}</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td class="result-padding resultwdth resdivider"
+                                    (click)="alljvtender('l1_jv',jvitem.id,i)"><a
+                                        class="text-info">{{jvitem?.jv_l1_tender_count}}</a></td>
+                                <!-- <div class="resline"></div> -->
+                                <td class="result-padding resultwdth">{{jvitem?.jv_l1_tender_sum_in_crs}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="tdwidth">{{jvitem?.performance_rate_by_nos}}</td>
+                    <td class="tdwidth">{{jvitem?.performance_rate_by_value}}</td>
+                    <td class="tdwidth">{{jvitem?.bg_returned_value}}</td>
+                    <td class="tdwidth">{{jvitem?.bg_returned_on_financial_opened}}</td>
+                    <td class="tdwidth">{{jvitem?.bg_yet_to_return_for_no_financial_opened}}</td>
+                    <!-- <td class="posion-fixed-right surveybutton">
+                    </td> -->
+                </tr>
+
+            </table>
+            <!-- <table>
+                <tr class="text-center" *ngIf="TenderList.length == 0">
+                    <td>No data found.</td>
+                </tr>
+            </table> -->
+            
+            <div class="tablescroll_btn">
+                <div class="btn_action prev_btn" (click)="previous()">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="btn_action next_btn" (click)="next()">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="addZone" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Add Tender</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="editZone" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Edit Tender</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="filterby" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Filter By</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-filter-tender></app-filter-tender>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this Tender ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <app-table-paginate (emitpage)="getPaginate()"></app-table-paginate> -->

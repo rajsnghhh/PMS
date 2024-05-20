@@ -1,0 +1,204 @@
+.heading{
+	color: grey;
+	display: flex;
+	width: 100%;
+	font-size: 14px;
+}
+
+
+.addressform , textarea {
+	border-radius: 0px;
+	font-size: 12px;
+	padding: 5px 8px !important;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal !important;
+	line-height: 28px;
+}
+
+
+button {
+	background-image: linear-gradient(to right, #40d4e6, #6675fe);
+	font-weight: initial;
+	padding: 0px 16px;
+	border-radius: 4px;
+	border: none;
+	color: white;
+	line-height: 30px;
+	font-size: 13px;
+	font-weight: 300;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 5px;
+	align-items: baseline;
+	max-width: 83px;
+	text-decoration: none;
+}
+
+
+===============================================================
+
+
+
+.addressform {
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	gap: 12px;
+	width: 100%;
+	margin-bottom: 7px;
+    }
+.addressform label {
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 14px;
+    color: #666;
+    font-weight: 400;
+    margin: 0px 0px;
+    vertical-align: middle;
+    text-align: right;
+    min-width: 110px;
+    }
+.addressform .form-control{
+    display: block;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 8px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    appearance: auto;
+    }
+
+====================================
+
+::ng-deep 
+
+=======================================
+
+
+.createtable-section table th {
+	background-color: #5577ff;
+	color: white;
+	font-size: 14px;
+	padding: 10px;
+	font-weight: 600;
+	line-height: 15px;
+}
+
+
+.component-body table td {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 300 !important;
+	font-size: 12px !important;
+	line-height: 15px !important;
+}
+
+
+=======================================================
+
+.fieldValue label {
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 14px;
+    color: #666;
+    font-weight: 400;
+    margin: 0px 0px 10px 0px;
+    text-align: left;
+    width: 100%;
+    }
+
+
+
+.fieldValue .form-control{
+    display: block;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 8px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    appearance: auto;
+    margin: 0px 0px 10px 0px;
+    }
+
+
+
+
+
+::ng-deep .fieldValue .ng-select-container {
+    display: block;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    appearance: auto;
+    margin: 0px 0px 10px 0px;
+    }
+
+
+
+::ng-deep .btn-primary { margin-right: 5px;}   
+
+
+
+========================================================================
+
+
+.component-body table th {
+	background-color: #5577ff;
+	color: white;
+	font-size: 13px;
+	padding: 10px;
+	font-weight: 500;
+	line-height: 15px;
+}
+
+
+.component-body table td {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 300 !important;
+	font-size: 12px !important;
+	line-height: 15px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

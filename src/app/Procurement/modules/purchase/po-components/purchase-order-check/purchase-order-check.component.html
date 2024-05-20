@@ -1,0 +1,73 @@
+<div class="createrequisition-section">
+
+    <div class="main-container">
+        <div class="component-header">
+            <div class="action-button-container">
+                <button (click)="scopeChange('list')">List</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-body-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Sr No</th>
+                    <th scope="col">Order No.</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Indent No.</th>
+                    <th scope="col">Quotation No.</th>
+                    <th scope="col">Delivery Site / Billing Site</th>
+                    <th scope="col">Vendor</th>
+                    <th scope="col">PO/GRN Status</th>
+                    <th scope="col">PO Qty.</th>
+                    <th scope="col">GRN Qty.</th>
+                    <th scope="col">Pending Qty</th>
+                    <th scope="col">Item Amount</th>
+                    <th scope="col">Discount</th>
+                    <th scope="col">Total GST</th>
+                    <th scope="col">Misc. Charges</th>
+                    <th scope="col">Total Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of purchaseOrderList;index as i">
+                    <td>{{i+1}}</td>
+                    <td>{{item.request_code}}</td>
+                    <td>{{item.created_at.substring(0,10).split('-').reverse().join('-')}}</td>
+                    <td>{{item.linked_docs?.indent?item.linked_docs?.indent:'-'}}</td>
+                    <td>{{item.linked_docs?.quotation?item.linked_docs?.quotation:'-'}}</td>
+                    <td>Delivery Site : {{item.delivery_site?item.delivery_site:'-'}}<br>
+                        Billing Site : {{item.billing_site?item.billing_site:'-'}}</td>
+                        <td>{{item.vendor_details?.data?.vendor_name?item.vendor_details?.data?.vendor_name:'-'}}</td>
+                        <td>{{item.status?item.status:'-'}}
+                         <br>
+                        <input type="checkbox" class="form-check-input" value="" (change)="onPurchaseOrderCheckboxChange($event, item.id)">
+                        <br>
+                        <input type="text" class="remarkInput" placeholder="Remark" [(ngModel)]="item.checked_remarks" >
+
+                    </td>
+                    <td>{{item?.total_item_item_quantity}}</td>
+                    <td>{{item?.grn_quantity}}</td>
+                    <td>{{item?.total_item_item_quantity - item?.grn_quantity}}</td>
+                    <td>{{item?.total_item_item_amount | currency:"INR":"symbol"}}</td>
+                    <td>{{item?.total_item_disc_amount | currency:"INR":"symbol"}}</td>
+                    <td>{{item?.total_item_sgst_amount + item?.total_item_igst_amount + item?.total_item_cgst_amount + item?.total_item_utgst_amount | currency:"INR":"symbol"}}</td>
+                    <td>{{item?.total_expense_total_expense_amount + item?.total_tax_total_tax_amount | currency:"INR":"symbol"}}</td>
+
+                    <td>{{item?.total_amount | currency:"INR":"symbol"}}</td>
+                    
+                </tr>
+
+                <tr class="text-center">
+                    <td colspan="16" *ngIf="purchaseOrderList?.length == 0">No data found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-primary" (click)="checkSubmit()">Check</button>
+    </div>
+
+</div>

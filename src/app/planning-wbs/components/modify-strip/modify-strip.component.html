@@ -1,0 +1,84 @@
+<form role="form" [formGroup]="stripForm" (ngSubmit)="scrollToFirstInvalidControl()">
+<div class="allfield" *ngFor="let mmd of MainKeyScopesData; let j=index">
+    <div class="maincontainer">
+        <div class="flex-div">
+
+            <div class="mb-3">
+                <label class="primrayfloat">Issue <span class="asterisk">*</span></label>
+                <select class="form-select issueheight" formControlName="issue" [ngClass]="displayFieldCss(stripForm,'issue')" aria-label="Default select example">
+                    <option value="" selected disabled>Select Issue</option>
+                    <option *ngFor="let Issue of dropdownIssueList" value={{Issue.id}}>{{Issue.reasons}}</option>
+                </select>
+                <div class="required" *ngIf="isFieldValid(stripForm,'issue')">
+        <span class="text-danger" *ngIf="stripForm.get('issue')?.errors?.['required']">Issue is required</span>
+      </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="primrayfloat">Sub Issue <span class="asterisk">*</span></label>
+                <select class="form-select issueheight" formControlName="subissue" [ngClass]="displayFieldCss(stripForm,'subissue')" aria-label="Default select example">
+                    <option value="" selected disabled>Select Issue</option>
+                    <option *ngFor="let Subissue of dropdownSubIssueList?.delay_breakups" value={{Subissue.id}}>
+                        {{Subissue.name}}</option>
+                </select>
+                <div class="required" *ngIf="isFieldValid(stripForm,'subissue')">
+        <span class="text-danger" *ngIf="stripForm.get('subissue')?.errors?.['required']">Sub Issue is required</span>
+      </div>
+            </div>
+        </div>
+
+        <div class="mainuomtable">
+            <div class="allfield" *ngFor="let md of mmd.underarray; let i=index">
+                <div class="mb-3 mbwidth">
+                    <div class="fieldValue firstunit prmrate">
+                        <label class="primryfloat">Start of Affected Area in M</label>
+                        <input type="text" name="startarea" class="form-control range" intNumber [ngClass]="displayFieldCss(stripForm,'startarea')">
+                        <div class="required" *ngIf="isFieldValid(stripForm,'startarea')">
+                            <span class="text-danger" *ngIf="stripForm.get('startarea')?.errors?.['required']">Start Area is required</span>
+                          </div>
+                    </div>
+                </div>
+                <div class="mb-3" [ngClass]="{ 'float-now': md.endarea != '' }">
+                    <div class="fieldValue firstunit conrate">
+                        <label class="convfloat">End of Affected Area in M</label>
+                        <input type="text" name="endarea" class="form-control range1" intNumber [ngClass]="displayFieldCss(stripForm,'endarea')">
+                        <div class="required" *ngIf="isFieldValid(stripForm,'endarea')">
+                            <span class="text-danger" *ngIf="stripForm.get('endarea')?.errors?.['required']">End Area is required</span>
+                          </div>
+                    </div>
+                </div>
+                <div class="mb-3" [ngClass]="{ 'float-now': md.date != '' }">
+                    <div class="fieldValue firstunit scnduom">
+                        <label class="scnduomfloat">Expected End Date</label>
+                        <input type="date" class="form-control range2" name="date" [ngClass]="displayFieldCss(stripForm,'date')">
+                        <div class="required" *ngIf="isFieldValid(stripForm,'date')">
+                            <span class="text-danger" *ngIf="stripForm.get('date')?.errors?.['required']">End Date is required</span>
+                          </div>
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <div class="fieldValue">
+                        <div class="AddBtn" (click)="addKeyScope(j)" *ngIf="i==0"><img src="assets/icons/add1.png"
+                                alt="">
+                        </div>
+                        <div class="RemoveBtn" (click)="removeKeyScope(i,j)" *ngIf="i!=0"><img
+                                src="assets/icons/minus.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mb-5">
+        <div class="fieldValue">
+            <div class="AddBtn2" (click)="MainaddKeyScope()" *ngIf="j==0"><img src="assets/icons/add1.png" alt="">
+            </div>
+            <div class="RemoveBtn2" (click)="MainremoveKeyScope(j)" *ngIf="j!=0"><img src="assets/icons/minus.png"
+                    alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="submit" class="btn btn-primary submitbtn" (click)="modifyStrip()">SUBMIT</button>
+</form>

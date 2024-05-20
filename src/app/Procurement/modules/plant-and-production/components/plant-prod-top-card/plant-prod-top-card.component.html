@@ -1,0 +1,145 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="creatematerial">
+        <h3>
+            <span *ngIf="scope == 'add'">Create </span> <span *ngIf="scope == 'update'">Update</span> <span
+                *ngIf="scope == 'view'">View</span> Plant Production
+        </h3>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="addressform">
+                    <label for="ssil">Project&nbsp;</label> 
+             
+                                <select class="form-control" disabled id="sel1" name="project"
+                                    [(ngModel)]="form.project" required #project="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && project.errors }"
+                                    (change)="getProjeDependentSiteData()">
+                                    <option disabled>Please Select</option>
+                                    <option *ngFor="let projectData of projectList" value="{{projectData.id}}">
+                                        {{projectData.project_data[1].value}}</option>
+                                </select>
+                                <div *ngIf="f.submitted && project.errors" class="invalid-feedback">
+                                    <div *ngIf="project.errors['required']">This is required !</div>
+                                </div>
+                                  
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-12">
+
+                <div class="addressform">         
+                    <label for="ssil">Site&nbsp;Location</label>
+                        <select class="form-control" id="sel1" disabled name="site"
+                                    [(ngModel)]="form.site" required #site="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && site.errors }"
+                                    (change)="getProjeDependentStoreData()">
+                                    <option>Please Select</option>
+                                    <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                        {{siteData.site_name}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && site.errors" class="invalid-feedback">
+                            <div *ngIf="site.errors['required']">This is required !</div>
+                        </div>                     
+                </div>
+            </div>  
+            <div class="col-lg-6 col-md-6 col-12">
+
+                <div class="addressform">
+            
+                        <label for="ssil">Store&nbsp;</label>              
+                                <select class="form-control" id="sel1" [disabled]="disabledEdit" name="store"
+                                    [(ngModel)]="form.store" required #store="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && store.errors }">
+                                    <option>Please Select</option>
+                                    <option *ngFor="let storeData of storeList" value="{{storeData.id}}">
+                                        {{storeData.store_name}}</option>
+                                </select>
+                                <div *ngIf="f.submitted && store.errors" class="invalid-feedback">
+                                    <div *ngIf="store.errors['required']">This is required !</div>
+                                </div>                                                
+                </div>
+            </div>
+       
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="addressform">                        
+                        <label for="request-code">Request&nbsp;Code</label>  
+                            <input type="text" class="form-control" placeholder="" id="request-code" name="request_code"
+                                [(ngModel)]="form.request_code" required #request_code="ngModel"
+                                [disabled]="disabledEdit"
+                                [ngClass]="{ 'is-invalid': f.submitted && request_code.errors }">
+                            <div *ngIf="f.submitted && request_code.errors" class="invalid-feedback">
+                                <div *ngIf="request_code.errors['required']">This is required !</div>
+                            </div>                                  
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-12">          
+                        <div class="addressform">                       
+                             <label>Sale&nbsp;Date</label>
+                                    <input type="Date" class="form-control" [disabled]="disabledEdit" [min]="mindate"
+                                        max="{{maxdate}}" placeholder="" name="sale_date" [(ngModel)]="form.sale_date"
+                                        #sale_date="ngModel">
+                                    <!-- <div *ngIf="f.submitted && sale_date.errors" class="invalid-feedback">
+                                        <div *ngIf="sale_date.errors['required']">This is required !</div>
+                                    </div> -->  
+                     
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="addressform">              
+                          <label for="vehicle-number">Vehicle&nbsp;No.</label>  
+                            <input type="text" class="form-control" placeholder="" id="vehicle-number"
+                                name="vehicle_number" [(ngModel)]="form.vehicle_number" required
+                                #vehicle_number="ngModel" [disabled]="disabledEdit"
+                                [ngClass]="{ 'is-invalid': f.submitted && vehicle_number.errors }">
+                            <div *ngIf="f.submitted && vehicle_number.errors" class="invalid-feedback">
+                                <div *ngIf="vehicle_number.errors['required']">This is required !</div>
+                            </div>                   
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="addressform">   
+                            <label for="manual-slip-number">Manual&nbsp;Slip&nbsp;No.</label>                    
+                            <input type="text" class="form-control" placeholder="" id="manual-slip-number"
+                                name="manual_slip_number" [(ngModel)]="form.manual_slip_number" required
+                                #manual_slip_number="ngModel" [disabled]="disabledEdit"
+                                [ngClass]="{ 'is-invalid': f.submitted && manual_slip_number.errors }">
+                            <div *ngIf="f.submitted && manual_slip_number.errors" class="invalid-feedback">
+                                <div *ngIf="manual_slip_number.errors['required']">This is required !</div>
+                            </div>                 
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-12">        
+          
+                        <div class="addressform">
+                               <label>Receive&nbsp;Date</label>
+                                    <input type="Date" class="form-control" [disabled]="disabledEdit" [min]="mindate"
+                                        max="{{maxdate}}" placeholder="" name="receive_date"
+                                        [(ngModel)]="form.receive_date" #receive_date="ngModel">
+                                    <!-- <div *ngIf="f.submitted && receive_date.errors" class="invalid-feedback">
+                                        <div *ngIf="receive_date.errors['required']">This is required !</div>
+                                    </div> -->
+                        </div>             
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="addressform">         
+                            <label for="receive-reading">Receive&nbsp;Reading</label> 
+                            <input type="text" class="form-control" placeholder="" id="receive-reading"
+                                name="receive_reading" [disabled]="disabledEdit" [(ngModel)]="form.receive_reading"
+                                required #receive_reading="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && receive_reading.errors }">
+                            <div *ngIf="f.submitted && receive_reading.errors" class="invalid-feedback">
+                                <div *ngIf="receive_reading.errors['required']">This is required !</div>
+                            </div>                    
+               
+                </div>
+            </div>
+
+            <button hidden #submitButton="" type="submit">Save</button>
+        </div>
+    </div>
+</form>

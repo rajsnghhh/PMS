@@ -1,0 +1,114 @@
+.main-container {
+    position: relative;
+    .left-section {
+        position: absolute;
+        width: 250px;
+        background: #f0f2ff;
+        height: 100vh;
+        left: -250px;
+        top: 0;
+        ul {
+            list-style-type: none;
+            padding: 0;
+            li{
+                color: #6676ff;
+                position: relative;
+                font-size: 13px;
+                font-weight: 400;
+                padding: 10px 0px 10px 35px;
+                cursor: pointer;
+            }
+            li:hover {
+                font-weight: 500;
+            }
+            li::before {
+                content: "";
+                background-color: #b0b8ff;
+                border-radius: 50px;
+                height: 15px;
+                overflow: hidden;
+                width: 15px;
+                display: block;
+                position: absolute;
+                left: 15px;
+                top: 13px;
+            }
+            .completed::before {
+                background-image: url("../../../../../../assets/icons/check.png");
+                background-size: 50% 50%;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-color: #6676ff;
+            }
+        }
+        
+        .active-nav {
+            border-bottom: 1.5px solid #5577ff;
+            background: white;
+        }
+    }
+}
+.custom-select-input {
+    input:first-child {
+        border-radius: 25px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+.survey-body {
+    padding: 10px 15PX!important;
+    overflow-y: scroll;
+    height: calc(100vh - 50px);
+}
+
+.mb-3 label {
+    font-size: 10px!important;
+    display: inline-flex;
+    width: 100%;
+    font-weight: 500!important;
+}
+.custom-select-input select {
+    max-width: 75px!important;
+    padding: 9px 15px;
+}
+.custom-multi-continer {
+    display: flex;
+    flex-wrap: wrap;
+    .custom-select-input {
+        width: 50%;
+    }
+    .rigt-radious {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .left-radious {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    label {
+        width: 100%;
+    }
+}
+
+.dynamicinput {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    label {
+        width: 100%;
+    }
+    input {
+        width: 90%;
+    }
+    button {
+        width: 10%;
+        min-width: unset;
+        background: unset;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+        img{
+            max-width: 25px;
+        }
+    }
+}

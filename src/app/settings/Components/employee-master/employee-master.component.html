@@ -1,0 +1,128 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Employer Master List</h2>
+
+        <div class="action-button-container">
+            <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown"
+                aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span><img src="assets/usermanagement/download_csv.png" class="export"><strong>CSV</strong> </span>
+                </li>
+            </ul>
+            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight">ADD NEW <img src="assets/header/add.png" alt=""></button>
+        </div>
+    </div>
+    <div class="component-body">
+        <table>
+
+            <tr>
+                <th>S.No</th>
+                <th>Employee Name</th>
+                <th>PAN No.</th>
+                <th>GST No.</th>
+                <th>Email Id</th>
+                <th>Phone No.</th>
+                <th>Address</th>
+                <th>Action </th>
+            </tr>
+
+            <tr *ngFor="let company of companyList; let i = index">
+                <td>{{ (pageSize*(page-1)) + i+1.}}</td>
+                <td (click)="empMasterTender(company.id)">
+                    <a class="empname">{{company.employee_name}}</a>
+                </td>
+                <td>
+                    {{company.pan_no}}
+                </td>
+                <td>
+                    {{company.gst_no}}
+                </td>
+                <td>
+                    {{company.email_id}}
+                </td>
+                <td>
+                    {{company.phone_no}}
+                </td>
+                <td>
+                    {{company.address}}
+                </td>
+                <td>
+                    <div class="custom-section">
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                            <div class="dropdown-content">
+                                <div class="img-container">
+                                    <span class="mt-2" (click)="editcompanyid(company.id)" data-bs-toggle="offcanvas"
+                                        data-bs-target="#offcanvasRightEditRole"><img
+                                            src="assets/usermanagement/edit.png" alt=""
+                                            aria-controls="offcanvasRight">&nbsp;&nbsp;<label>Edit Employer
+                                            Master</label></span>
+                                    <span (click)="deleteCompany(company.id)" data-bs-toggle="modal"
+                                        data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png"
+                                            alt="">&nbsp;&nbsp;<label>Delete Employer Master</label></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+            <tr class="text-center">
+                <td colspan="8" *ngIf="companyList.length == 0">No data found.</td>
+            </tr>
+
+        </table>
+
+    </div>
+    <!-- <app-table-paginate></app-table-paginate> -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLabeladdrole"
+        aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Add Employer Master</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <app-add-employee-master></app-add-employee-master>
+        </div>
+    </div>
+</div>
+
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightEditRole" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Edit Employer Master</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <app-edit-employee-master #editCompany></app-edit-employee-master>
+    </div>
+</div>
+
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this Employer Master ?
+            </div>
+            <div class="modal-footer">
+                <button (click)="deleteAlertCompany()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

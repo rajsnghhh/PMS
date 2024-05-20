@@ -1,0 +1,14 @@
+<div class="createrequisition-section">
+
+    <app-work-order-top-card (parrentAction)="appendData($event)"></app-work-order-top-card>
+    <!-- [scope]="scope" [prefieldData]="prefieldData" -->
+    <app-work-order-table-card (parrentAction)="appendData($event)"></app-work-order-table-card>
+    <app-work-order-last-card (parrentAction)="appendData($event)"></app-work-order-last-card>
+
+    <div class="btd-section">
+        <!--  *ngIf="scope == 'view'"--> <button type="button" (click)="backtolist()" class="btn-cancel">CANCEL</button>
+        <!-- *ngIf="scope == 'add'"  --> <button type="submit" class="btn-save" (click)="createWO()">SAVE</button>
+        <!-- *ngIf="scope == 'update'" --> 
+        <!-- <button type="submit" class="btn-save" (click)="updateWO()">UPDATE</button> -->
+    </div>
+</div>

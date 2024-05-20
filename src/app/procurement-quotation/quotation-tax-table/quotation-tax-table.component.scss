@@ -1,0 +1,303 @@
+.addressform {
+    margin-top: 16px;
+    position: relative;
+    }
+.addressform .form-control {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 42px;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    position: relative;
+    appearance: auto;
+    }
+.form-control::placeholder {
+    color: #9D9D9D;
+    opacity: 1;
+    }
+.addressform label {
+    display: inline-block;
+    font-size: 16px;
+    color: #666;
+    font-weight: 400;
+    margin: 10px 0px;
+    vertical-align: middle;
+    text-align: right;
+    width: 100%;
+    }
+.control-sect{
+    margin: 0px 0px;
+    padding: 0px 0px;
+    width: 100%;
+    position: relative;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .createtable-section table {
+        width: 100%;
+        padding-bottom: 35px;
+        }
+    .createtable-section table td {
+        font-size: 12px;
+        padding: 11px 15px;
+        font-weight: 400;
+        min-height: 42px;
+        vertical-align: top;
+        }
+    .createtable-section table td p {
+        font-size: 14px;
+        color: #666666;
+        font-weight: 400;
+        padding: 0px;
+        margin: 0px 0px;
+        }
+    .createtable-section table td p  a{
+           text-decoration: none;
+            }
+    .createtable-section table tr:nth-child(2n+1) {
+        background: #f8f8f8;
+        }
+    .createtable-section table th {
+        background-color: #5577ff;
+        color: white;
+        font-size: 14px;
+        padding: 13px;
+        font-weight: 500;
+    }
+    
+    .tablegroup{
+        margin: 0px 0px;
+        padding: 0px 0px;
+        position: relative;    
+        }
+    .tablegroup label {
+        font-size: 15px;
+        color: #262626;
+        font-weight: 500;
+        margin-bottom: 2px;
+      }
+    .tablegroup label span {
+        color: #fa0808;
+        }
+
+.issuetext {
+    color: #262626 !important;
+    font-size:13px ;
+    }
+
+.issuetext a {
+    color: #6372A6;
+    text-decoration: none;
+    }
+
+    .tablegroup .form-control {
+        display: block;
+        width: 100%;
+        padding: 6px 10px;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #b1adad;
+        appearance: none;
+        background-color: var(--bs-body-bg);
+        background-clip: padding-box;
+        border: #b9b8b8 1px solid;
+        border-radius: 5px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        position: relative;
+        margin-bottom: 9px;
+        appearance: auto;
+        }
+    .tablegroup .form-control3 {
+        width: 60%;
+        }
+    .tablegroup .form-control2 {
+        background: #EFEFEF;
+        border: #EFEFEF 1px solid;
+        }
+    .tablegroup-text {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 5px;
+        margin-top: 6px;
+        }
+    .tablegroup-text .form-control2 {
+        background: #EFEFEF;
+        padding: 4px 8px;
+        border: #EFEFEF 1px solid;
+        }
+    .tablegroup-text h2 {
+        margin: 0px 0px;
+        padding: 0px 0px;
+        font-size: 15px;
+        color: #666666;
+        font-weight: 500;
+        }
+    .tablebg{
+        background: #f6f8ff;
+        border: 1px solid #D9D9D9 !important;
+        }
+    .tablebg2{
+        background: #ffffff;
+        border: 1px solid #D9D9D9 !important;
+        }
+    .tablebtn-save {
+        background-image: linear-gradient(to right, #40d4e6, #6675fe);
+        font-weight: initial;
+        padding: 3px 16px;
+        border-radius: 28px;
+        border: none;
+        color: white;
+        line-height: 30px;
+        font-size: 16px;
+        font-weight: 600;
+        display: flex;
+        justify-content: center;
+        justify-content: space-between;
+        gap: 5px;
+        align-items: baseline;
+        width: 81px;
+        text-decoration: none;
+       }
+    .tablebtn-save .fa {
+        width: 13px;
+       }
+    .tablebtn-save .fa img {
+        width: 13px;
+       }
+    .tablebtn-save:hover {
+        background-image: linear-gradient(to right, #6675fe, #40d4e6);
+        color: white;
+        }
+    .vector-delete {
+        background-image: linear-gradient(to right, #df2929, #ea4646);
+        font-weight: initial;
+        padding: 5px 16px;
+        border-radius: 28px;
+        border: none;
+        color: white;
+        line-height: 30px;
+        font-size: 16px;
+        font-weight: 600;
+        display: flex;
+        justify-content: center;
+        justify-content: space-between;
+        gap: 5px;
+        align-items: baseline;
+        width: 81px;
+        text-decoration: none;
+       }
+    .vector-delete .fa {
+        width: 11px;
+       }
+    .vector-delete .fa img {
+        width: 11px;
+       }
+    .vector-delete:hover {
+    background-image: linear-gradient(to right, #ea4646, #df2929);
+    color: white;
+    }
+    .tablegroup h5{
+        font-size: 15px;
+        color: #6372A6;
+        font-weight: 600;
+        margin-top: 20px;
+        }
+.tablegroup h5 a{
+    color: #6372A6;
+    text-decoration: none;
+    }
+.tablegroup h5 a:hover{
+    color: #6372A6;
+    text-decoration: underline;
+    }
+    .groupcontrol {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 12px;
+        }
+    .groupcontrol label {
+        font-size: 15px;
+        color: #262626;
+        font-weight: 600;
+        padding: 0px 0px 8px 0px;
+        }
+    .tablegroup-card {
+        border: #e1e1e1 0px solid;
+        padding: 0px;
+        border-radius: 6px;
+        }
+    
+    .tablegroup-card_text {
+        padding: 0px;
+        display: flex;
+        justify-self: start;
+        gap: 12px;
+        }
+    .createtable-section table td  h3 {
+        font-size: 15px;
+        color: #262626;
+        font-weight: 600;
+        padding: 0px 0px 8px 0px;
+        }
+    .tablegroup-email .input-group {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -ms-flex-align: stretch;
+        align-items: stretch;
+        width: 100%;
+        }
+    .tablegroup-email .input-group > .custom-file, .input-group > .custom-select, .input-group > .form-control {
+        position: relative;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        width: 1%;
+        margin-bottom: 0;
+        }
+     .tablegroup-email .input-group > .input-group-append > .btn, .input-group > .input-group-append > .input-group-text, .input-group > .input-group-prepend:first-child > .btn:not(:first-child), .input-group > .input-group-prepend:first-child > .input-group-text:not(:first-child), .input-group > .input-group-prepend:not(:first-child) > .btn, .input-group > .input-group-prepend:not(:first-child) > .input-group-text {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border: #b9b8b8 1px solid;
+        background: #fff;
+        }
+.tablegroup-top {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: start;
+    }
+.tablegroup .form-check-input[type="radio"] {
+	border-radius: 50%;
+	margin-right: 3px;
+    }
+.tablegroup .form-check-inline {
+    margin-right: 9px;
+    margin-bottom: 2px;
+    }

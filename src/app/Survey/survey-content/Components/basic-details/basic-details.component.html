@@ -1,0 +1,32 @@
+<div class="survey-content-main">
+    <div class="survey-header">
+        <h1>Basic Details</h1>
+        <button (click)="proceedNext()">SKIP NOW</button>
+    </div>
+    <div class="survey-body">
+        <form>
+            <div class="flex-div">
+
+                <div class="mb-3">
+                    <label for="WorkName">Name of Work</label>
+                    <input type="text" class="form-control" id="WorkName" placeholder="Add Name">
+                </div>
+                <div class="mb-3">
+                    <label for="surverDate">Date of Survey</label>
+                    <input type="date" class="form-control" id="surverDate" placeholder="Select Date">
+                </div>
+                <div class="mb-3">
+                    <label for="clientName">Name of Client</label>
+                    <input type="text" class="form-control" id="clientName" placeholder="Add Name">
+                </div>
+                <div class="mb-3">
+                    <label for="surveyor">Survey Done By</label>
+                    <input type="text" class="form-control" id="surveyor" placeholder="Add Name">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" (click)="proceedNext()">NEXT</button>
+        </form>
+
+    </div>
+</div>

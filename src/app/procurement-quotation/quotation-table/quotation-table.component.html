@@ -1,0 +1,297 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+  <div class="createtable-section table-responsive">
+      <table class="text-nowrap">
+          <tr>
+              <th>Sr.&nbsp;No</th>
+              <!-- <th *ngIf="scope=='add' || scope=='update'">Search Item</th> -->
+              <th>Item Group <span class="asterisk">*</span></th>
+              <th>Item Sub Group <span class="asterisk">*</span></th>
+              <th>Item <span class="asterisk">*</span></th>
+              <th>Item Code</th>
+              <th>Technical Specification(S)</th>
+              <th style=" min-width: 100px; ">Stock Qty./Unit <span class="asterisk">*</span></th>
+              <th style=" min-width: 100px; ">Weight</th>
+              <th style=" min-width: 100px; ">Unit Rate <span class="asterisk">*</span></th>
+              <th style=" min-width: 100px; ">Item Amount</th>
+              <th>Disc Rate(%) / Amount</th>
+              <th style=" min-width: 100px; ">Amount</th>
+              <th>Remarks</th>
+              <th>Status</th>
+              <th>Action</th>
+          </tr>
+          <tr class="tablebg" *ngFor="let item of form.quotation_items; let i = index">
+              <td>#{{i+1}}</td>
+
+              <td style=" min-width: 150px; ">
+                  <div class="tablegroup">
+                      <label>Item Group</label>
+                      <div class="selectb_custom">
+                      <ng-select [disabled]="true" class="" name="requested_material_group{{i+1}}"
+                          [(ngModel)]="form.quotation_items[i].requested_material_group" required
+                          #requested_material_group="ngModel"
+                          [ngClass]="{ 'is-invalid': f.submitted && requested_material_group.errors }"
+                          (change)="typeChange(form.quotation_items[i].requested_material_group,i)">
+                          <ng-option *ngFor="let materialGroup of masterlist"
+                              [value]="materialGroup.id">{{materialGroup.name}}</ng-option>
+                      </ng-select>
+                        
+                    </div>
+                  </div>
+              </td>
+              <td style=" min-width: 150px; ">
+                  <div class="tablegroup">
+                      <label>Item Sub Group</label>
+                      <ng-select [disabled]="true" class="" name="requested_material_sub_group{{i+1}}"
+                          [(ngModel)]="form.quotation_items[i].requested_material_sub_group" required
+                          #requested_material_sub_group="ngModel"
+                          [ngClass]="{ 'is-invalid': f.submitted && requested_material_sub_group.errors }"
+                          (change)="subTypeChange(form.quotation_items[i].requested_material_sub_group, i)">
+                          <ng-option *ngFor="let subGroup of form.quotation_items[i].MaterilSubGroupList"
+                              [value]="subGroup.id">{{subGroup.name}}</ng-option>
+                      </ng-select>
+                  </div>
+              </td>
+              <td style=" min-width: 150px; ">
+                  <div class="tablegroup">
+                      <label>Item</label>
+                      <ng-select [disabled]="true" class="" name="item{{i+1}}"
+                          [(ngModel)]="form.quotation_items[i].requested_material" required
+                          #item="ngModel"
+                          [ngClass]="{ 'is-invalid': f.submitted && item.errors }"
+                          (change)="setMaterialMasterData(i,false)">
+                          <ng-option *ngFor="let masterData of form.quotation_items[i].MaterilFilterList"
+                              [value]="masterData.id">{{masterData.material_name}}</ng-option>
+                          </ng-select>
+                  </div>
+              </td>
+              <td>
+                  <div class="tablegroup">
+                      <label>{{form.quotation_items[i]?.MaterialmasterData?.material_code}}</label>
+                  </div>
+              </td>
+              <td>
+                  <div class="tablegroup">
+                      <label>{{form.quotation_items[i]?.MaterialmasterData?.material_nature_name}}</label>
+                  </div>
+              </td>
+
+              <td>
+                  <div class="tablegroup">
+                      <input type="text" [disabled]="disabledEdit" class="form-control" placeholder=""
+                          amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                          name="quantity{{i+1}}" [(ngModel)]="form.quotation_items[i].quantity" required
+                          #quantity="ngModel" [ngClass]="{ 'is-invalid': f.submitted && quantity.errors }"
+                          (change)="changeInputValue('')">
+                      <select
+                          class="form-control"
+                          #uom="ngModel"
+                          required
+                          [disabled]="disabledEdit"
+                          [ngClass]="{ 'is-invalid': f.submitted && uom.errors }"
+                          [(ngModel)]="form.quotation_items[i].uom"
+                          [ngModelOptions]="{standalone: true}">
+                          <ng-container *ngFor="let uomData of uomList">
+                              <option value="{{uomData.id}}" *ngIf="form.quotation_items[i]?.MaterialmasterData?.uomList?.includes(uomData.id)">{{uomData.symbol}}</option>    
+                          </ng-container>
+                      </select>
+                  </div>
+              </td>
+              <td>
+                  <div class="tablegroup">
+                      <input type="text" (change)="changeInputValue('')" [disabled]="disabledEdit" class="form-control" placeholder=""
+                      amountNumber 
+                      name="weight{{i+1}}" [(ngModel)]="form.quotation_items[i].weight" 
+                      #weight="ngModel" [ngClass]="{ 'is-invalid': f.submitted && weight.errors }" class="form-control" id="data" placeholder="" >
+                  </div>  
+              </td>
+              <td>
+                  <div class="tablegroup">
+                      <input type="text" (change)="changeInputValue('')" [disabled]="disabledEdit" class="form-control" placeholder=""
+                      amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                      name="rate{{i+1}}" [(ngModel)]="form.quotation_items[i].rate" required
+                      #rate="ngModel" [ngClass]="{ 'is-invalid': f.submitted && rate.errors }" class="form-control" id="data" placeholder="" >
+                  </div>  
+              </td>
+              <td>
+                  <div class="tablegroup">
+                      <input type="text" [disabled]="true" class="form-control" placeholder=""
+                      amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                      name="item_amount{{i+1}}" [(ngModel)]="form.quotation_items[i].item_amount" required
+                      #item_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && item_amount.errors }" class="form-control" id="data" placeholder="" >
+                  </div>  
+
+              </td>
+              <td>
+                  <div class="tablegroup">
+                      <input type="text" [disabled]="disabledEdit" class="form-control" placeholder=""
+                      amountNumber (change)="changeInputValue('discountP')" 
+                      pattern="^(?:100(?:\.00?)?|\d?\d(?:\.\d\d?)?)$"
+                      name="disc_percentage{{i+1}}" [(ngModel)]="form.quotation_items[i].disc_percentage" 
+                      #disc_percentage="ngModel" [ngClass]="{ 'is-invalid': f.submitted && disc_percentage.errors }" class="form-control" id="data" placeholder="" >
+                  </div>  
+                  <div class="tablegroup">
+                      <input type="text" [disabled]="disabledEdit" class="form-control" placeholder=""
+                      amountNumber (change)="changeInputValue('discountA')"
+                      name="disc_amount{{i+1}}" [(ngModel)]="form.quotation_items[i].disc_amount"
+                      #disc_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && disc_amount.errors }" class="form-control" id="data" placeholder="" >
+                  </div>  
+              </td>
+              
+              <td>
+                  <div class="tablegroup">
+                      <input type="text" [disabled]="true" class="form-control" placeholder=""
+                      amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$"
+                      name="total_amount{{i+1}}" [(ngModel)]="form.quotation_items[i].total_amount" required
+                      #total_amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && total_amount.errors }" class="form-control" id="data" placeholder="" >
+                  </div>
+              </td>
+              
+              <td>
+                  <div class="tablegroup" *ngFor="let note of form.quotation_items[i].notes; let N_I = index">
+                      <label>{{note.note_title}}</label>
+                      <input [disabled]="disabledEdit" *ngIf="note.note_title == 'Justification'" type="text"
+                          class="form-control form-control2" id="text" placeholder="" name="notes_justify{{i+1}}"
+                          [(ngModel)]="form.quotation_items[i].notes[N_I].note_details" required
+                          #notes_justify="ngModel" [ngClass]="{ 'is-invalid': f.submitted && notes_justify.errors }">
+                      <input [disabled]="disabledEdit" *ngIf="note.note_title!= 'Justification'" type="text"
+                          class="form-control form-control2" id="text" placeholder=""
+                          [(ngModel)]="form.quotation_items[i].notes[N_I].note_details"
+                          [ngModelOptions]="{standalone: true}">
+                  </div>
+              </td>
+              <td>
+                  <div class="tablegroup">
+                      <label class="text-capitalize">{{item.status}}</label>
+                  </div>
+              </td>
+              <td class="align-middle">
+                  <a (click)="delete(i)" [ngClass]="{ 'disabled': disabledEdit }" type="submit"
+                      class="vector-delete">DEL <i class="fa" aria-hidden="true"><img
+                              src="assets/img/vector-delete.png" alt=""></i></a>
+              </td>
+          </tr>
+          <tr *ngIf="form.quotation_items.length>0">
+              <td colspan="6">Total</td>
+              <td>
+                  {{this.form?.total_item_item_quantity}}
+              </td>
+              <td>
+                  {{ this.form?.total_item_item_weight}}
+              </td>
+              <td>
+
+              </td>
+              <td>
+                  {{ this.form?.total_item_item_amount |currency:"INR":"symbol"}}
+              </td>
+              <td>
+                  {{ this.form?.total_item_disc_amount |currency:"INR":"symbol"}}
+              </td>
+              <td>
+                  {{ this.form?.total_item_total_amount |currency:"INR":"symbol"}}
+              </td>
+              <td colspan="3"></td>
+          </tr>
+          <tr *ngIf="form.quotation_items.length==0">
+              <td colspan="18" class="text-center">No Item Added Yet</td>
+              <td *ngIf="scope=='add'"></td>
+          </tr>
+      </table>
+  </div>
+  <div class="createtable-section table-responsive">
+      <table class="text-nowrap">
+          <ng-container *ngFor="let taxRow of quotation_tax; let i = index">
+          <tr *ngIf="!taxRow.hidden">
+              <td style=" text-align: right; ">
+                  {{taxRow.calculate_on}}
+                  <div class="addressform" *ngIf="quotation_tax[i].options.length > 0">
+                      <div class="requested-group">
+                          <div class="form-check-inline" *ngFor="let option of quotation_tax[i].options">
+                              <label class="form-check-label">
+                                  <input [disabled]="disabledEdit" name="selectedOption{{i+1}}" [(ngModel)]="quotation_tax[i].choice" type="radio" (change)="changeRadioOptions(i)" class="form-check-input" value="{{option.value}}"
+                                  > {{option.name}}
+                              </label>
+                          </div>
+                      </div>
+                  </div>
+              </td>
+              <td>{{taxRow.name}}</td>
+              <td>
+                  <div class="tablegroup"  *ngIf="quotation_tax[i].inclided_applicable">
+                      <section class="chackbox-container hideOnPrintScreen">
+                          <input [disabled]="disabledEdit" type="checkbox" (change)="calculateTaxes()" name="included{{i+1}}" id=""
+                              [(ngModel)]="quotation_tax[i].included"
+                          >
+                          <p>Incl.</p>
+                      </section>
+                  </div>
+              </td>
+              <td>
+                  <span *ngIf="quotation_tax[i].tax_head_applicable">@</span>
+              </td>
+              <td>
+                  <div class="tablegroup" *ngIf="quotation_tax[i].tax_head_applicable">
+                      <select [disabled]="disabledEdit" class="form-control" id="sel1" (change)="taxHeadChange(i,'')" name="tax_head{{i+1}}"
+                          [(ngModel)]="quotation_tax[i].tax_head" #tax_head="ngModel"
+                          [ngClass]="{ 'is-invalid': f.submitted && tax_head.errors }">
+                          <option value="">Select </option>
+                          <option *ngFor="let tax of taxHeads" value="{{tax.id}}">{{tax.name}}</option>
+                      </select>
+                  </div>
+              </td>
+              <td>
+                  <div class="tablegroup" *ngIf="quotation_tax[i].tax_percentage_applicable">
+                      <input 
+                          type="text" 
+                          [disabled]="disabledEdit" 
+                          class="form-control" 
+                          placeholder=""
+                          amountNumber 
+                          pattern="^(?:100(?:\.00?)?|\d?\d(?:\.\d\d?)?)$"
+                          (change)="calculateTaxes()"
+                          name="tax_percentage{{i+1}}" 
+                          [ngModelOptions]="{standalone: true}"
+                          [(ngModel)]="quotation_tax[i].tax_percentage" 
+                          #tax_percentage="ngModel" 
+                          [ngClass]="{ 'is-invalid': f.submitted && tax_percentage.errors }"
+                      >
+                  </div>
+              </td>
+              <td>
+                  <span *ngIf="quotation_tax[i].tax_percentage_applicable">%</span>
+              </td>
+              <td>
+                  <div class="tablegroup">
+                      <input 
+                          type="text" 
+                          [disabled]="disabledEdit" 
+                          class="form-control" 
+                          placeholder=""
+                          amountNumber 
+                          (change)="changeamount(i)"
+                          name="tax_amount{{i+1}}" 
+                          [ngModelOptions]="{standalone: true}"
+                          [(ngModel)]="quotation_tax[i].tax_amount" 
+                          #tax_amount="ngModel" 
+                          [ngClass]="{ 'is-invalid': f.submitted && tax_amount.errors }"
+                      >
+                  </div>
+              </td>
+          </tr>
+          </ng-container>
+          <tr>
+              <td></td>
+              <td>Total Value</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                  {{ this.form?.afterAll_tax_Amount |currency:"INR":"symbol"}}
+              </td>
+          </tr>
+      </table>
+  </div>
+  <button hidden #submitButton="" type="submit">Save</button>
+</form>

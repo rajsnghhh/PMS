@@ -1,0 +1,123 @@
+<form class="allfield" name="addPersonalInformation" #f="ngForm" (ngSubmit)="f.form.valid && personalSubmit()"
+    novalidate>
+
+<div class="row">
+
+
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Effective Date</label>
+            <input type="date" class="form-control" name="effective_date"
+                [ngClass]="{ 'is-invalid': f.submitted && effective_date.errors }"
+                [(ngModel)]="addPersonalInformation.effective_date" required #effective_date="ngModel"
+                placeholder="">
+        </div>
+        <div *ngIf="f.submitted && effective_date.errors" class="invalid-feedback">
+            <div *ngIf="effective_date.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Source city</label>
+            <select class="form-select" name="source_city" [ngClass]="{ 'is-invalid': f.submitted && source_city.errors }"
+                [(ngModel)]="addPersonalInformation.source_city" required #source_city="ngModel">
+                <option value="">Source city</option>
+                <option value="{{projectSite.city_id}}" *ngFor="let projectSite of cityList">{{projectSite.name}}</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && source_city.errors" class="invalid-feedback">
+            <div *ngIf="source_city.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Destination city</label>
+            <select class="form-select" name="destination_city" [ngClass]="{ 'is-invalid': f.submitted && destination_city.errors }"
+                [(ngModel)]="addPersonalInformation.destination_city" required #destination_city="ngModel">
+                <option value="">Destination city</option>
+                <option value="{{projectSite.city_id}}" *ngFor="let projectSite of cityList">{{projectSite.name}}</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && destination_city.errors" class="invalid-feedback">
+            <div *ngIf="destination_city.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Distance in KM</label>
+            <input type="text" class="form-control" name="distance" amountNumber
+                [ngClass]="{ 'is-invalid': f.submitted && distance.errors }"
+                [(ngModel)]="addPersonalInformation.distance" required #distance="ngModel"
+                placeholder="Enter Distance">
+        </div>
+        <div *ngIf="f.submitted && distance.errors" class="invalid-feedback">
+            <div *ngIf="distance.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Tolerance level</label>
+            <input type="text" class="form-control" name="tolerance_level" amountNumber
+                [ngClass]="{ 'is-invalid': f.submitted && tolerance_level.errors }"
+                [(ngModel)]="addPersonalInformation.tolerance_level" required #tolerance_level="ngModel"
+                placeholder="Enter Tolerance">
+        </div>
+        <div *ngIf="f.submitted && tolerance_level.errors" class="invalid-feedback">
+            <div *ngIf="tolerance_level.errors['required']">This is required</div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Account</label>
+            <select class="form-select" name="Account" [ngClass]="{ 'is-invalid': f.submitted && account.errors }"
+                [(ngModel)]="addPersonalInformation.account" required #account="ngModel">
+                <option value="">Select Account</option>
+                <option value="{{materialGroup.id}}" *ngFor="let materialGroup of accountList">{{materialGroup.name}}</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && account.errors" class="invalid-feedback">
+            <div *ngIf="account.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Rate / MT</label>
+            <input type="text" class="form-control" name="rate_mt" amountNumber
+                [ngClass]="{ 'is-invalid': f.submitted && rate_mt.errors }"
+                [(ngModel)]="addPersonalInformation.rate_mt" required #rate_mt="ngModel"
+                placeholder="Enter">
+        </div>
+        <div *ngIf="f.submitted && rate_mt.errors" class="invalid-feedback">
+            <div *ngIf="rate_mt.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Rate / Bag</label>
+            <input type="text" class="form-control" name="rate_bag" amountNumber
+                [ngClass]="{ 'is-invalid': f.submitted && rate_bag.errors }"
+                [(ngModel)]="addPersonalInformation.rate_bag" required #rate_bag="ngModel"
+                placeholder="Enter">
+        </div>
+        <div *ngIf="f.submitted && rate_bag.errors" class="invalid-feedback">
+            <div *ngIf="rate_bag.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="btnupdate row">
+        <button type="submit" class="btn btn-primary" *ngIf="canvasScope == 'add' ">ADD</button>
+        <button type="submit" class="btn btn-primary" *ngIf="canvasScope == 'update' ">UPDATE</button>
+        <button type="button" class="btn btn-primary non-active-btn" (click)="CloseComponent()">CANCEL</button>
+    </div>
+
+
+    </div>
+</form>

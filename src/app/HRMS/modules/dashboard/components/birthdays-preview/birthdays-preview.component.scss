@@ -1,0 +1,70 @@
+::ng-deep{
+    .owl-nav {
+        display: none !important;
+    }
+    .owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span {
+        background: #3F65FF !important;
+    }
+    .owl-stage {
+        .birth-item1 {
+            background: #D9D9D9;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: auto;
+            max-width: 190px;
+            padding-top: 30px;
+            .profile {
+                border-radius: 50px;
+                height: 40px;
+                width: 40px !important;
+            }
+            p {
+                color: #666666;
+                font-size: 10px;
+                line-height: 1;
+            }
+            h5 {
+                color: #000000;
+                font-size: 12px;
+                font-weight: 500;
+            }
+            h4 {
+                color: #000000;
+                font-size: 12px;
+                font-weight: 500;
+            }
+        }
+        
+    }
+}
+.notice-container {
+    border: 1px solid #D9D9D9;
+    padding: 20px 20px 10px 20px;
+    border-radius: 18px;
+    h1 {
+        color: #3F65FF;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+    }
+    img {
+        width: 30px;
+        margin: 6px auto;
+    }
+
+    .ProfileIcon {
+        height: 30px;
+        width: 30px;
+        display: block;
+        margin: 6px auto;
+        background: Gray;
+        border-radius: 50px;
+        border: 1px solid black;
+    }
+}
+.iocn {
+    margin: 0 !important;
+    width: 30px !important;
+    margin-right: 10px !important;
+}

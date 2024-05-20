@@ -1,0 +1,163 @@
+.invalid-feedback {
+    display: block;
+    opacity: 1 !important;
+    position: absolute;
+    font-size: 10px;
+}
+
+.form-control {
+    border-radius: 18px;
+    font-size: 15px;
+}
+form {
+    margin: 0 20% 90px 20%;
+}
+
+
+
+
+
+
+.createtable-section table th {
+	background-color: #5577ff;
+	color: white;
+	font-size: 14px;
+	padding: 10px;
+	font-weight: 600;
+	line-height: 15px;
+}
+
+
+.component-body table td {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 300 !important;
+	font-size: 12px !important;
+	line-height: 15px !important;
+}
+
+
+
+
+.fieldValue .form-control{
+    display: block;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 8px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    appearance: auto;
+    }
+
+
+
+.fieldValue label {
+        display: inline-block;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 13px;
+        line-height: 14px;
+        color: #666;
+        font-weight: 400;
+        margin: 0px 0px;
+        vertical-align: middle;
+        text-align: right;
+        min-width: 110px;   
+}
+
+
+
+
+form {
+	margin: 10% 5%;
+}
+
+
+
+
+.addressform {
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	gap: 12px;
+	width: 100%;
+	margin-bottom: 7px;
+}
+
+
+.addressform label {
+	display: inline-block;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px !important;
+	line-height: 14px;
+	color: #666;
+	font-weight: 400 !important;
+	margin: 0px 0px !important;
+	vertical-align: middle;
+	text-align: right;
+	min-width: 127px;
+}
+
+
+.addressform .form-control {
+	display: block;
+	width: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 7px 8px;
+	font-size: 14px;
+	font-weight: 300;
+	line-height: 1.5;
+	color: #9D9D9D;
+	appearance: none;
+	background-color: var(--bs-body-bg);
+	background-clip: padding-box;
+	border: var(--bs-border-width) solid var(--bs-border-color);
+	border-radius: 0px;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	position: relative;
+	appearance: auto;
+}
+
+.addressform .form-select {
+	display: block;
+	width: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 7px 8px;
+	font-size: 14px;
+	font-weight: 300;
+	line-height: 1.5;
+	color: #9D9D9D;
+	appearance: none;
+	background-color: var(--bs-body-bg);
+	background-clip: padding-box;
+	border: var(--bs-border-width) solid var(--bs-border-color);
+	border-radius: 0px;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	position: relative;
+	appearance: auto;
+}
+
+
+::ng-deep .ng-select .ng-select-container { border: none !important;}
+
+.ng-select {
+	position: relative;
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+    background-color: var(--bs-body-bg);
+	background-clip: padding-box;
+	border: var(--bs-border-width) solid var(--bs-border-color);
+	border-radius: 0px;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+}
+
+

@@ -1,0 +1,81 @@
+.creatematerial {
+    margin: 0px 0px 20px 0px;
+    padding: 23px 15px;
+    background: #f4f4f4;
+    width: 100%;
+    position: relative;
+}
+
+.creatematerial h3 {
+    margin: 0px 0px 12px 0px;
+    padding: 0px 0px;
+    font-size: 15px;
+    color: #666666;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 25px;
+    width: 100%;
+}
+
+.addressform {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 7px;
+}
+
+.addressform .form-control {
+    display: block;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 7px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #9D9D9D;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    position: relative;
+    appearance: auto;
+}
+
+.form-control::placeholder {
+    color: #9D9D9D;
+    opacity: 1;
+}
+
+.addressform label {
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 14px;
+    color: #666;
+    font-weight: 400;
+    margin: 0px 0px;
+    vertical-align: middle;
+    text-align: right;
+    min-width: 110px;
+}
+
+.control-sect {
+    margin: 0px 0px;
+    padding: 0px 0px;
+    width: 100%;
+    position: relative;
+}
+
+.vector-arrow {
+    position: absolute;
+    right: 21px;
+    top: 12px;
+}
+
+.addressform .form-control[type='date'] {
+    min-width: 150px;
+}

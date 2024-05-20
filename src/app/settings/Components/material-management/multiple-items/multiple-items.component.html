@@ -1,0 +1,80 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Multiple Items</h2>
+    </div>
+    <div class="component-body">
+        <table class="text-nowrap">
+            <tr>
+                <th style="width: 6%;">S.No.</th>
+                <th style="width: 14%;">Mat. Type</th>
+                <th style="width: 14%;">Description</th>
+                <th style="width: 10%;">Main Group<span class="asterisk">*</span></th>
+                <th style="width: 8%;">Sub Group</th>
+                <th style="width: 14%;">SAP Material Code</th>
+                <th style="width: 8%;">Item Name<span class="asterisk">*</span></th>
+                <th style="width: 14%;">Unit<span class="asterisk">*</span></th>
+                <th style="width: 14%;">HSN</th>
+                <th style="width: 14%;">Remarks</th>
+                <th style="width: 4%;">Action</th>
+            </tr>
+
+            <tr *ngFor="let data of restrictData;let i =index">
+                <td>#{{i+1}}</td>
+                <td>
+                    <input class="inputCss" [(ngModel)]="data.materialType" placeholder="Mat. Type" type="text">
+                </td>
+                <td>
+                    <input class="inputCss" [(ngModel)]="data.description" placeholder="Description" type="text">
+                </td>
+                <td style="width: 14%;">
+                    <select [(ngModel)]="data.group" (change)="typeChange(data.group)">
+                        <option selected disabled value="">Select Group</option>
+                        <option value={{group.id}} *ngFor="let group of materialTypeList">{{group.name}}</option>
+                    </select>
+                    <div *ngIf="data.group==''" class="invalid-feedback">
+                        <div>Group is required</div>
+                    </div>
+                </td>
+                <td style="width: 14%;">
+                    <select [(ngModel)]="data.subGroup">
+                        <option selected disabled value="">Sub Group</option>
+                        <option value={{subGroup.id}} *ngFor="let subGroup of materialSubTypeList">{{subGroup.name}}</option>
+                    </select>
+                </td>
+                <td>
+                    <input class="inputCss" [(ngModel)]="data.sapMaterialCode" placeholder="SAP Code" type="text">
+                </td>
+                <td style="width: 14%;">
+                    <input class="inputCss" [(ngModel)]="data.name" placeholder="Item Name" type="text" >
+                    <div *ngIf="data.name==''" class="invalid-feedback">
+                        <div>Item Name is required</div>
+                    </div>
+                </td>
+                <td style="width: 14%;">
+                    <select [(ngModel)]="data.unit">
+                        <option selected disabled value="">Unit</option>
+                        <option value={{unit.id}} *ngFor="let unit of unitList">{{unit.formal_name}}</option>
+                    </select>
+                    <div *ngIf="data.unit==''" class="invalid-feedback">
+                        <div>Unit is required</div>
+                    </div>
+                </td>
+                <td style="width: 8%;">
+                    <input class="inputCss" [(ngModel)]="data.hsn" placeholder="HSN Code" type="text" >
+                </td>
+                <td style="width: 8%;">
+                    <input class="inputCss" [(ngModel)]="data.remarks" placeholder="Remarks" type="text" >
+                </td>
+                <td style="width: 4%;">
+                    <button *ngIf="i == restrictData.length - 1" class="addbtn" (click)=addRow()>Add</button>
+                    <button *ngIf="i != restrictData.length - 1" class="deletebtn" (click)=deleteRow(i)>Delete</button>
+                </td>
+            </tr>
+        </table>
+        <div class="btd-section">
+            <button type="button" class="btn-save" (click)="onSave()">Save</button>
+        </div>
+    </div>
+
+
+</div>

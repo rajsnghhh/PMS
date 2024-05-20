@@ -1,0 +1,137 @@
+<div class="component-body" >
+    <div class="colaps-element">
+        <section>
+            <button type="button" class="collapsible2"
+                >JV Master Information</button>
+        </section>
+        <div class="work-card1">
+        <div class="maintable">
+            <div class="work-header1">General Details</div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">ENTITIES</label><br>
+                    <section class="lbody">
+                       {{jvList.party_name}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">PAN NUMBER</label><br>
+                    <section class="lbody">
+                        {{jvList.pan_no}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">GST NUMBER</label><br>
+                    <section class="lbody">
+                        {{jvList.gst_no}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">EMAIL ID</label><br>
+                    <section class="lbody">
+                        {{jvList.email_id}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">PHONE NUMBER</label><br>
+                    <section class="lbody">
+                        {{jvList.phone_no}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">ADDRESS</label><br>
+                    <section class="lbody">
+                        {{jvList.party_address}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">Contact Person Name</label><br>
+                    <section class="lbody">
+                        {{jvList.contact_person_name}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">Contact Person Number</label><br>
+                    <section class="lbody">
+                        {{jvList.contact_person_phone_no}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">Contact Person Email Id</label><br>
+                    <section class="lbody">
+                        {{jvList.contact_person_email_id}}
+                    </section>
+                </div>
+            </div>
+
+            <div class="work-header1">Technical Eligibilities</div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">Avilable Threshold (in Crs.)</label><br>
+                    <section class="lbody">
+                        {{jvList.available_threshold}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">Value of Similar Works (in Crs.)</label><br>
+                    <section class="lbody">
+                        {{jvList.value_of_similar_works}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">Maximum Span Length of Bridge Avilable (in Mtr.)</label><br>
+                    <section class="lbody">
+                        {{jvList.maximum_span_length_of_bridge_avail}}
+                    </section>
+                </div>
+            </div>
+
+            <div class="work-header1">Financial Eligibilities</div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">Average Annual Turnover (in Crs.) (Last 5 years)</label><br>
+                    <section class="lbody">
+                        {{jvList.average_annual_turn_over}}
+                    </section>
+                </div>
+            </div>
+            <div class="tablebody">
+                <div>
+                    <label class="lheader">Net Worth (in Crs.)</label><br>
+                    <section class="lbody">
+                        {{jvList.net_worth}}
+                    </section>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="colaps-element">
+        <section>
+            <button type="button" class="collapsible"
+                >JV Master Details</button>
+        </section>
+        <app-tender-jv-list  [varName]="varValue"></app-tender-jv-list>
+    </div>
+</div>

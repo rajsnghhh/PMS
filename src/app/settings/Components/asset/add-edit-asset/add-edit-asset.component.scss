@@ -1,0 +1,8 @@
+input[type='date']:in-range::-webkit-datetime-edit-year-field,input[type='date']:in-range::-webkit-datetime-edit-month-field,input[type='date']:in-range::-webkit-datetime-edit-day-field,input[type='date']:in-range::-webkit-datetime-edit-text{  color: transparent;}
+
+.action-button-container{
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	gap: 1px;
+    }

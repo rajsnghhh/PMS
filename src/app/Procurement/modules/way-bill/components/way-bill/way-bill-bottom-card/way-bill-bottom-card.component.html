@@ -1,0 +1,38 @@
+<form name="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div class="px-5">
+    <div class="d-flex justify-content-center">
+      <div class="col-md-6">
+        <div class="d-flex justify-content-end align-items-center">
+          <label class="mx-2">Attach a File</label>
+          <div class="col-md-8">
+            <input
+              multiple="multiple"
+              (change)="handleUpload($event)"
+              type="file"
+              class="form-control"
+              placeholder=""
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="d-flex mt-2 mx-2">
+          <ng-container *ngIf="wayBillData?.attachments?.length">
+            <ng-container
+              *ngFor="let item of wayBillData?.attachments; let i = index"
+            >
+              <a
+                class="mx-2"
+                target="_blank"
+                [href]="Global.BACKEND_URL + item?.attachment"
+              >
+                Attachment {{ i + 1 }}
+              </a>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button hidden #submitButton="" type="submit">Save</button>
+</form>

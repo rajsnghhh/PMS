@@ -1,0 +1,126 @@
+<form class="allfield" name="addPersonalInformation" #f="ngForm" (ngSubmit)="f.form.valid && personalSubmit()"
+    novalidate>
+
+
+
+
+<div class="row">
+
+
+    <div class="col-lg-6 mb-3 field">
+        <div class="addressform">
+        
+            <label>Select Financial Year</label>
+            <select class="form-select" (change)="getItemList()" name="financial_year" [ngClass]="{ 'is-invalid': f.submitted && financial_year.errors }"
+                [(ngModel)]="addPersonalInformation.financial_year" required #financial_year="ngModel">
+                <option value="">Financial Year</option>
+                <option value="{{projectSite.id}}" *ngFor="let projectSite of financialYearData">{{projectSite.description}}</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && financial_year.errors" class="invalid-feedback">
+            <div *ngIf="financial_year.errors['required']">This is required</div>
+        </div>
+       
+    </div>
+
+    <div class="col-lg-6 mb-3">
+        <div class="addressform">
+            <label>Site<span class="asterisk">*</span></label>
+            <ng-select 
+                [items]="siteList" 
+                bindLabel="site_name" 
+                (change)="getItemList()"
+                bindValue="id" 
+                [ngClass]="{ 'is-invalid': f.submitted && site.errors }"
+                [(ngModel)]="addPersonalInformation.site"
+                required
+                name="site" 
+                #site="ngModel"
+            >
+            </ng-select>
+        </div>
+        <div *ngIf="f.submitted && site.errors" class="invalid-feedback">
+            <div>Please select atleast one site to proceed.</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-3">
+        <div class="addressform">
+            <label>Select Item Group<span class="asterisk">*</span></label>
+            <ng-select 
+                [items]="materialTypeList" 
+                bindLabel="name" 
+                required
+                bindValue="id" 
+                (change)="getItemList()"
+                [ngClass]="{ 'is-invalid': f.submitted && item_type.errors }"
+                [(ngModel)]="addPersonalInformation.item_type"
+                name="item_type" 
+                #item_type="ngModel"
+            >
+            </ng-select>
+        </div>
+        <div *ngIf="f.submitted && item_type.errors" class="invalid-feedback">
+            <div>This is required.</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-3">
+        <div class="addressform">
+            <label>Select Inventory<span class="asterisk">*</span></label>
+            <ng-select 
+                [items]="inventoryList" 
+                bindLabel="item_name" 
+                required
+                (change)="changeInventory()"
+                bindValue="id" 
+                [ngClass]="{ 'is-invalid': f.submitted && inventory.errors }"
+                [(ngModel)]="addPersonalInformation.inventory"
+                name="inventory" 
+                #inventory="ngModel"
+            >
+            </ng-select>
+        </div>
+        <div *ngIf="f.submitted && inventory.errors" class="invalid-feedback">
+            <div>This is required.</div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-6 mb-3 field">
+        <div class="addressform">
+            <label>Min quantity</label>
+            <input type="text" class="form-control" name="min_quantity" amountNumber
+                [ngClass]="{ 'is-invalid': f.submitted && min_quantity.errors }" required
+                [(ngModel)]="addPersonalInformation.min_quantity" #min_quantity="ngModel"
+                placeholder="">
+        </div>
+        <div *ngIf="f.submitted && min_quantity.errors" class="invalid-feedback">
+            <div *ngIf="min_quantity.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-3 field">
+        <div class="addressform">
+            <label>Max quantity</label>
+            <input type="text" class="form-control" name="max_quantity" required amountNumber
+                [ngClass]="{ 'is-invalid': f.submitted && max_quantity.errors }"
+                [(ngModel)]="addPersonalInformation.max_quantity" #max_quantity="ngModel"
+                placeholder="">
+        </div>
+        <div *ngIf="f.submitted && max_quantity.errors" class="invalid-feedback">
+            <div *ngIf="max_quantity.errors['required']">This is required</div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+    <div class="btnupdate">
+        <button type="submit" class="btn btn-primary">UPDATE</button>
+    </div>
+</form>

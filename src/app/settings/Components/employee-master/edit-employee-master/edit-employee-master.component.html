@@ -1,0 +1,59 @@
+<form role="form" [formGroup]="editcompanyForm">
+
+    <div class="mb-3" [ngClass]="{ 'float-now': companyname != '' }">
+        <input type="text" class="form-control" id="role" formControlName="name"
+            [ngClass]="displayFieldCss(editcompanyForm,'name')" [(ngModel)]="companyname">
+        <label class="floating-label">Enter Name <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(editcompanyForm,'name')">
+            <span class="text-danger" *ngIf="editcompanyForm.get('name')?.errors?.['required']">Name is required</span>
+        </div>
+    </div>
+
+    <div class="mb-3" [ngClass]="{ 'float-now': pannumber!= '' }">
+        <input type="text" class="form-control" id="role" formControlName="pan" (keyup)="PANupCase($event)"
+            maxlength="10" [(ngModel)]="pannumber" [ngClass]="displayFieldCss(editcompanyForm,'pan')">
+        <label class="floating-label">Enter PAN No.</label>
+        <div class="required" *ngIf="editcompanyForm.get('pan')?.errors?.['pattern']">
+            <span class="text-danger">Valid PAN is required</span>
+        </div>
+    </div>
+
+    <div class="mb-3" [ngClass]="{ 'float-now': gstnumber!= '' }">
+        <input type="text" class="form-control" id="role" formControlName="gst" [(ngModel)]="gstnumber" 
+        [ngClass]="displayFieldCss(editcompanyForm,'gst')">
+        <label class="floating-label">Enter GST No.</label>
+        <div class="required" *ngIf="isFieldValid(editcompanyForm,'gst')">
+            <span class="text-danger" *ngIf="editcompanyForm.get('gst')?.errors?.['pattern']">
+            Valid GST is required</span>
+            </div>
+    </div>
+
+    <div class="mb-3" [ngClass]="{ 'float-now': emailid!= '' }">
+        <input type="text" class="form-control" id="role" formControlName="email" [(ngModel)]="emailid"
+            autocomplete="off" [ngClass]="displayFieldCss(editcompanyForm,'email')">
+        <label class="floating-label">Enter Email Id</label>
+        <div class="required" *ngIf="editcompanyForm.get('email')?.errors?.['pattern']">
+            <span class="text-danger">Valid Email is required</span>
+        </div>
+    </div>
+
+    <div class="mb-3" [ngClass]="{ 'float-now': phonenumber != '' }">
+        <input type="text" class="form-control" id="role" formControlName="phone" numbersOnly
+            pattern="^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" minlength="4" maxlength="10"
+            [(ngModel)]="phonenumber" [ngClass]="displayFieldCss(editcompanyForm,'phone')">
+        <label class="floating-label">Enter Phone No.</label>
+        <div class="required" *ngIf="editcompanyForm.get('phone')?.errors?.['pattern']">
+            <span class="text-danger">Valid Phone is required</span>
+        </div>
+    </div>
+
+    <div class="mb-3" [ngClass]="{ 'float-now': address != '' }">
+        <textarea type="text" class="form-control" id="role" formControlName="address" [(ngModel)]="address"></textarea>
+        <label class="floating-label">Enter Address</label>
+        <!-- <div class="required" *ngIf="isFieldValid(editcompanyForm,'name')">
+            <span class="text-danger" *ngIf="editcompanyForm.get('name')?.errors?.['required']">Name is required</span>
+        </div> -->
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="editCompany()">UPDATE</button>
+</form>

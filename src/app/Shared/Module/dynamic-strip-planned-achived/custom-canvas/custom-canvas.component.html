@@ -1,0 +1,21 @@
+<section class="custom-canvas-container">
+    <canvas id="myCanvas" #myCanvas (mousemove)="onCanvasMouseMove($event,parsegetInt(((leftPosition*graphUnitScope)/UnitBlockSizeInPX)+unitArray[0]))" width="{{canvasWidth}}"
+        height="{{canvasHeight}}"></canvas>
+    <div *ngIf="showTultip" class="custom-tultip" [style.top.px]="topPosition"
+        [style.left.px]="leftPosition > (canvasWidth-400)?canvasWidth-400:leftPosition">
+        <h1 class="grn">{{StripDetails[focussedOnStrip?.issue_index]?.wbs_name}}</h1>
+        <h1>{{StripDetails[focussedOnStrip?.issue_index]?.children[focussedOnStrip?.delay_breakups_Index]?.wbs_name}}
+        </h1>
+        <h2>Focused on : <span class="grn">{{parsegetInt(((leftPosition*graphUnitScope)/UnitBlockSizeInPX)+unitArray[0])}} M</span></h2>
+        <ul>
+            <li>
+                Total Issues : {{focussedOnStrip?.count}}
+            </li>
+            <li *ngIf="showEfectedRange">
+                Range Affected : <span class="grn">{{focussedOnStrip?.peacon_strip[efectedID].affected_start_meter}} M</span> - <span class="grn">{{focussedOnStrip?.peacon_strip[efectedID].affected_end_meter}} M</span>
+            </li>
+            <li *ngIf="focussedOnStrip.count > 0" class="grn" (click)="checkAction(StripDetails[focussedOnStrip?.issue_index]?.children[focussedOnStrip?.delay_breakups_Index],parsegetInt(((leftPosition*graphUnitScope)/UnitBlockSizeInPX)+unitArray[0]),'update')">Update</li>
+            <li class="grn" (click)="checkAction(StripDetails[focussedOnStrip?.issue_index]?.children[focussedOnStrip?.delay_breakups_Index],parsegetInt(((leftPosition*graphUnitScope)/UnitBlockSizeInPX)+unitArray[0]),'add')">Add New</li>
+        </ul>
+    </div>
+</section>

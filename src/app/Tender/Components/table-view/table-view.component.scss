@@ -1,0 +1,142 @@
+::ng-deep.component-body {
+    // display: flex;
+    // flex-wrap: wrap;
+
+    .component-header {
+        width: 100%;
+        margin-top: 10px;
+        float: right;
+        height: 100% !important;
+        display: block !important;
+
+        .action-button-container {
+            right: 11px;
+            top: -4px;
+        }
+    }
+
+
+
+    .colaps-element {
+        width: 100%;
+
+        .collapsible {
+            background-color: #0079fe47;
+            color: black;
+            cursor: pointer;
+            padding: 9px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 14px;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .active,
+        .collapsible:hover {
+            background-color: #0079feba;
+        }
+
+        .collapsible:after {
+            content: "˅";
+            color: #00000094;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+            font-size: 22px;
+            position: absolute;
+            right: 27px;
+            top: 10px;
+            font-family: monospace;
+        }
+
+        .active:after {
+            content: "^";
+        }
+
+        .content {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: white;
+            margin-bottom: 10px;
+        }
+
+        .content.active-content {
+            max-height: unset;
+        }
+    }
+
+
+}
+
+.maintable {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 6px;
+    border: 1px solid #d9d9d97d;
+    border-radius: 0;
+    overflow: hidden;
+
+    .tablebody {
+        display: flex;
+        width: 25%;
+        border: 1px solid #e9ecef;
+        padding: 1px 16px;
+        div {
+            width: 100%;
+        }
+
+        .lheader {
+            color: #0d6efd;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .lbody {
+            font-size: 13px;
+            font-weight: 500;
+        }
+    }
+}
+
+input {
+    pointer-events: none;
+    border: none;
+    width: 100%;
+}
+
+select {
+    border: none;
+    pointer-events: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
+
+.view-file {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.bboleanNA {
+    font-weight: 400;
+}
+
+.tablebody.hidden {
+    display: none !important;
+}
+
+.prefix {
+    position: absolute;
+    font-size: 13px;
+}
+.phonenumber{
+    padding-left: 25px !important;
+}

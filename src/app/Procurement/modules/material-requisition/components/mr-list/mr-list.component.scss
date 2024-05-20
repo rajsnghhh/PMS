@@ -1,0 +1,60 @@
+.createrequisition-section {
+	margin: 12px 12px;
+	padding: 0px 0px;
+	width: auto;
+	position: relative;
+}
+
+.main-body-container table th {
+	font-weight: 600 !important;
+	font-size: 14px !important;
+	line-height: 15px !important;
+}
+
+.main-body-container table td {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 300 !important;
+	font-size: 12px !important;
+	line-height: 15px !important;
+}
+
+.eye-docicon {
+	width: 15px;
+}
+
+//.createrequisition-section .table-responsive {
+//	max-height: 350px;
+//}
+.createrequisition-section .table-responsive thead{
+	position: sticky;
+    top: 0;
+}
+
+// table button design
+.table_scroll {
+	position: relative;
+  
+	.tablescroll_btn {
+	  display: flex;
+	  gap: 15px;
+	  position: fixed;
+	  right: 5%;
+	  justify-content: flex-end;
+	  bottom: 4%;
+	  width: 50%;
+	  z-index: 999;
+	  margin-left: auto;
+	  
+	  .btn_action{
+		width: 30px;
+		height: 30px;
+		background: #5577FF;
+		border-radius: 50%;
+		color: #fff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+	  }
+	}
+  }

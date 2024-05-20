@@ -1,0 +1,221 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Single Log Book Machine</h2>
+
+        <div class="action-button-container">
+            <!-- <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown" aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>  
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span ><img src="assets/usermanagement/download_csv.png"  class="export" ><strong>CSV</strong> </span>
+                </li>
+            </ul>        -->
+            <button hidden data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLabeladdrole"
+                aria-controls="offcanvasRight">ADD NEW <img src="assets/header/add.png" alt=""></button>
+        </div>
+    </div>
+
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    Advanced Search
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+    
+                    <form [formGroup]="singleLogBookAdvancedSearchForm" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-6">
+                                <div class="mb-3 row">
+                                    <div class="col-md-6">
+                                        <div class="addressform">
+                                        <label>From</label>
+                                        <input type="date" name="date__gte" formControlName="date__gte" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="addressform">
+                                        <label>To</label>
+                                        <input type="date" name="date__lte" formControlName="date__lte" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-6">
+                                <div class="addressform">
+                                    <label>Location</label>
+                                    <select class="form-control" name="store" formControlName="store" >
+                                        <option disabled>-- select --</option>
+                                        <option *ngFor="let storeData of storeList" value="{{storeData.id}}">
+                                            {{storeData.store_name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-6">
+                                <div class="addressform">
+                                    <label>Machine</label>
+                                    <select class="form-control" name="plantmachinery__in" formControlName="plantmachinery__in" >
+                                        <option value="">Select</option>
+                                        <option value="{{pnEmasterData.id}}" *ngFor="let pnEmasterData of PnEmasterlist">
+                                            {{pnEmasterData.plant_machinery_data[0].value}} |
+                                            {{pnEmasterData.plant_machinery_data[1].value}} | Monthly Charge -
+                                            {{pnEmasterData.plant_machinery_data[25].value}} 
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-6">
+                                <div class="addressform">
+                                    <label class="floating-label">Driver/Operator </label>
+                                    <input type="text" class="form-control" name="driver_operator" formControlName="driver_operator" >
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-6">
+                                <div class="addressform">
+                                    <label >Owner </label>
+                                    <input type="radio" name="owner" formControlName="owner" value="self"> Self 
+                                    <input type="radio" name="owner" formControlName="owner" value="hired"> Hired
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="btd-section">
+                                <button type="submit" class="btn-save">SEARCH</button>
+                            </div>
+                        </div>
+    
+                    </form>
+    
+                </div>
+            </div>
+        </div>
+
+    <div class="component-body">
+        <table>
+            <tr>
+                <th>Sr.No</th>
+                <th>Log Book Date</th>
+                <!-- <th>Type</th> -->
+                <!-- <th>Category</th> -->
+                <th>Machine</th>
+                <th>Driver Name</th>
+                <th colspan="3">Run</th>
+                <th colspan="4">Fuel</th>
+                <th>Avg.</th>
+                <th>Action </th>
+            </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <!-- <th></th> -->
+                <!-- <th></th> -->
+                <th></th>
+                <th></th>
+                <th>From</th>
+                <th>To</th>
+                <th>Total</th>
+                <th>Opening</th>
+                <th>Issue</th>
+                <th>Closing</th>
+                <th>Cons.</th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            <tr *ngFor="let transport of singleLogBookList; let i = index" [attr.data-index]="i">
+
+                <td>{{ (pageSize*(page-1)) + i+1.}}</td>
+                <td>{{ transport.date }}</td>
+                <!-- <td>{{ transport.date }}</td> -->
+                <!-- <td>{{ transport.plant_machinery_details.data.plant___equipment }}</td> -->
+                <td>{{ transport.plant_machinery_details.data.plant___equipment }}</td>
+                <td>{{ transport.driver_operator }}</td>
+                <td>{{ transport.from_time }}</td>
+                <td>{{ transport.to_time }}</td>
+                <td></td>
+                <td>{{ transport.fuel_opening }}</td>
+                <td>{{ transport.issue }}</td>
+                <td>{{ transport.fuel_closing }}</td>
+                <td>{{ transport.consumption }}</td>
+                <td>{{ transport.average }}</td>
+                <td>
+                    <div class="custom-section">
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                            <div class="dropdown-content">
+                                <div class="img-container">
+                                    <!-- <span class="mt-2" data-bs-toggle="offcanvas" (click)="editRack(rack,'view')"
+                                        data-bs-target="#offcanvasRightLabeladdrole"><img
+                                            src="assets/usermanagement/view.png" alt=""
+                                            aria-controls="offcanvasRight">&nbsp;&nbsp;<label>View</label></span> -->
+                                    <span class="mt-2" data-bs-toggle="offcanvas" (click)="editMaterialWastage(transport,'edit')"
+                                        data-bs-target="#offcanvasRightLabeladdrole"><img
+                                            src="assets/usermanagement/edit.png" alt=""
+                                            aria-controls="offcanvasRight">&nbsp;&nbsp;<label>Edit</label></span>
+                                    <span data-bs-toggle="modal" (click)="deleteAlertWastage(transport)"
+                                        data-bs-target="#deleteUser"><img src="assets/usermanagement/delete.png"
+                                            alt="">&nbsp;&nbsp;<label>Delete</label></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            <tr class="text-center">
+                <td colspan="15" *ngIf="singleLogBookList.length == 0">No data found.</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLabeladdrole"
+        aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">{{addUpdateMaterialWastage}}</h5>
+            <button #closeButton type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close" (click)="closeModal()"></button>
+        </div>
+        <div class="offcanvas-body planbody" *ngIf="onEditTransportData">
+            <app-add-update-single-log-book [prefieldData]="onEditTransportData" [onEditAccess]="onEditAccess" (getSingleLogBookList)="getSingleLogBookList()" (closeModal)="closeModal()"></app-add-update-single-log-book>
+        </div>
+        <div class="offcanvas-body planbody" *ngIf="!onEditTransportData">
+            <app-add-update-single-log-book [onEditAccess]="onEditAccess" (getSingleLogBookList)="getSingleLogBookList()" (closeModal)="closeModal()"></app-add-update-single-log-book>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this single log book ?
+            </div>
+            <div class="modal-footer">
+                <button (click)="deleteSingleLogBook()" type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>

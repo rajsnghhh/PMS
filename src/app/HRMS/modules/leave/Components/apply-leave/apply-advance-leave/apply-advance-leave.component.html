@@ -1,0 +1,159 @@
+<div class="fullpage">
+    <div class="headerportion">
+        <div class="topheader" [ngClass]="{ buttomActive: ActiveClass=='advance' }" (click)="onTab('advance')">
+            <h1 [ngClass]="{ headerActive: ActiveClass=='advance' }">APPLY ADVANCE LEAVE</h1>
+        </div>
+        <div class="topheader" [ngClass]="{ buttomActive: ActiveClass=='special' }" (click)="onTab('special')">
+            <h1 [ngClass]="{ headerActive: ActiveClass=='special' }">APPLY SPECIAL LEAVE</h1>
+        </div>
+        <div class="topheader" [ngClass]="{ buttomActive: ActiveClass=='applied' }" (click)="onTab('applied')">
+            <h1 [ngClass]="{ headerActive: ActiveClass=='applied' }">APPLIED LEAVES</h1>
+        </div>
+    </div>
+    <div *ngIf="ActiveClass=='advance'">
+        <form role="form">
+            <div class="mainbody">
+                <div class="leftBody">
+                    <div class="fieldValue" [formGroup]="advanceLeaveForm">
+                        <label>Start Date<span class="asterisk">*</span></label>
+                        <input type="date" min="{{currentDate}}" class="form-control inputcss" formControlName="start_date"
+                            placeholder="Start Date">
+                        <div class="required" *ngIf="isFieldValid(advanceLeaveForm,'start_date')">
+                            <span class="text-danger"
+                                *ngIf="advanceLeaveForm.get('start_date')?.errors?.['required']">Start Date is
+                                required</span>
+                        </div>
+                    </div>
+                    <div class="fieldValue" [formGroup]="advanceLeaveForm">
+                        <label>End Date<span class="asterisk">*</span></label>
+                        <input type="date" min="{{currentDate}}" class="form-control inputcss" formControlName="end_date"
+                            placeholder="End Date">
+                        <div class="required" *ngIf="isFieldValid(advanceLeaveForm,'end_date')">
+                            <span class="text-danger" *ngIf="advanceLeaveForm.get('end_date')?.errors?.['required']">End
+                                Date is required</span>
+                        </div>
+                    </div>
+                    <div class="uploadDoc">
+                        <label>Upload Document</label>
+                        <input class="filedisplay" (change)="uploadAdvanceLeaveFile($event)" type="file" #advanceLeavefile>
+                        <button class="docbtn" (click)="advanceLeavefile.click()">UPLOAD FILE</button>
+                    </div>
+                </div>
+                <div class="rightBody">
+                    <div class="fieldrightValue">
+                        <label class="uploadleavetype">Select Leave Type<span class="asterisk">*</span></label>
+                        <div class="radiobtn" [formGroup]="advanceLeaveForm">
+                            <input type="radio" formControlName="leavetype" id="allleave" name="leavetype"
+                                value="AL">
+                            <label for="allleave">All Leave (From Leave Balance)</label><br>
+                            <input type="radio" formControlName="leavetype" id="absent" name="leavetype" value="AB">
+                            <label for="absent">Absent (Leave Without Pay)</label>
+                        </div>
+                        <div class="required mt-5" *ngIf="isFieldValid(advanceLeaveForm,'leavetype')">
+                            <span class="text-danger"
+                                *ngIf="advanceLeaveForm.get('leavetype')?.errors?.['required']">Leave Type is
+                                required</span>
+                        </div>
+                    </div>
+                    <div class="uploadDoc" [formGroup]="advanceLeaveForm">
+                        <label>Reason for Leave<span class="asterisk">*</span></label>
+                        <textarea class="textareafield" formControlName="leavereason"
+                            placeholder="Add Reason"></textarea>
+                        <div class="required pt-3" *ngIf="isFieldValid(advanceLeaveForm,'leavereason')">
+                            <span class="text-danger"
+                                *ngIf="advanceLeaveForm.get('leavereason')?.errors?.['required']">Reason for Leave is
+                                required</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="applydiv" (click)="advanceLeaveSubmit()"><button class="docbtnapply">APPLY</button></div>
+        </form>
+    </div>
+    <div *ngIf="ActiveClass=='special'">
+        <form role="form">
+        <div class="mainbody">
+            <div class="leftBody">
+                <div class="fieldValue" [formGroup]="specialLeaveForm">
+                    <label>Start Date<span class="asterisk">*</span></label>
+                    <input type="date" min="{{currentDate}}" class="form-control inputcss" formControlName="start_date"
+                        placeholder="Start Date">
+                    <div class="required" *ngIf="isFieldValid(specialLeaveForm,'start_date')">
+                        <span class="text-danger"
+                            *ngIf="specialLeaveForm.get('start_date')?.errors?.['required']">Start Date is
+                            required</span>
+                    </div>
+                </div>
+                <div class="fieldValue" [formGroup]="specialLeaveForm">
+                    <label>End Date<span class="asterisk">*</span></label>
+                        <input type="date" min="{{currentDate}}" class="form-control inputcss" formControlName="end_date"
+                            placeholder="End Date">
+                        <div class="required" *ngIf="isFieldValid(specialLeaveForm,'end_date')">
+                            <span class="text-danger" *ngIf="specialLeaveForm.get('end_date')?.errors?.['required']">End
+                                Date is required</span>
+                        </div>
+                </div>
+                <div class="uploadDoc" id="special">
+                    <label>Upload Document</label>
+                        <input class="filedisplay" (change)="uploadSpecialFile($event)" type="file" #specialLeavefile>
+                        <button class="docbtn" (click)="specialLeavefile.click()">UPLOAD FILE</button>
+                </div>
+            </div>
+            <div class="rightBody">
+                <div class="fieldrightValue">
+                    <label class="uploadleavetype">Select Leave Type<span class="asterisk">*</span></label>
+                    <div class="radiobtn" [formGroup]="specialLeaveForm">
+                        <div class="leavebtn">
+                            <input type="radio" formControlName="leavetype" id="maternity" name="leavetype" value="MT">
+                            <label for="maternity">Maternity</label><br>
+                        </div>
+                        <div class="leavebtn">
+                            <input type="radio" formControlName="leavetype" id="bereavement" name="leavetype" value="BT">
+                            <label for="bereavement">Bereavement</label><br>
+                        </div>
+                        <div class="leavebtn">
+                            <input type="radio" formControlName="leavetype" id="covid" name="leavetype" value="CO">
+                            <label for="covid">Covid</label><br>
+                        </div>
+                    </div>
+                    <div class="required mt-5" *ngIf="isFieldValid(specialLeaveForm,'leavetype')">
+                        <span class="text-danger"
+                            *ngIf="specialLeaveForm.get('leavetype')?.errors?.['required']">Leave Type is
+                            required</span>
+                    </div>
+                </div>
+                <div class="uploadDoc" [formGroup]="specialLeaveForm">
+                    <label>Reason for Leave<span class="asterisk">*</span></label>
+                    <textarea class="textareafield" formControlName="leavereason" placeholder="Add Reason"></textarea>
+                    <div class="required pt-3" *ngIf="isFieldValid(specialLeaveForm,'leavereason')">
+                        <span class="text-danger"
+                            *ngIf="specialLeaveForm.get('leavereason')?.errors?.['required']">Reason for Leave is
+                            required</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="applydiv" (click)="specialLeaveSubmit()"><button class="docbtnapply">APPLY</button></div>
+        </form>
+    </div>
+    <div class="appliedleaveBody" *ngIf="ActiveClass=='applied'">
+        <table class="tableBody">
+            <tr>
+                <th>ID</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Leave Type</th>
+                <th>Justification</th>
+                <th>Status</th>
+            </tr>
+            <tr *ngFor="let leave of leaveList;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{leave.start_date | date:'dd-MM-yyyy'}}</td>
+                <td>{{leave.end_date | date:'dd-MM-yyyy'}}</td>
+                <td>{{leave.full_leave_type}}</td>
+                <td>{{leave.reason}} <img *ngIf="leave.document != null" (click)="leaveDocView(leave.document)" src="assets/icons/docview.png " alt=""></td>
+                <td>{{leave.full_status}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

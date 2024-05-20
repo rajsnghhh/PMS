@@ -1,0 +1,105 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Merge Transport Name</h2>
+    </div>
+
+    <div class="component-body">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-12">
+                <div class="adform">
+                    <label>From Date</label>
+                    <input type="date" name="fromDate " [(ngModel)]="searchForm.fromDate" placeholder="" id="fromDate"
+                        class="form-control">
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-12">
+                <div class="adform">
+                    <label>To Date</label>
+                    <input type="date" name="toDate " [(ngModel)]="searchForm.toDate" placeholder="" id="toDate"
+                        class="form-control">
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-12">
+                <div class="adform">
+                    <label>Vendor</label>
+                    <angular2-multiselect class="form-control borderHide" [data]="dropdownMultiselectGroupList" name="vendor"
+                        [(ngModel)]="searchForm.vendor" [settings]="dropdownMultiselectGroupListSettings"
+                        (onSelect)="onMultiSelectAddUser($event)" (onDeSelect)="OnMultiDeSelectAddUser($event)"
+                        (onSelectAll)="onMultiSelectAddUserAll($event)"
+                        (onDeSelectAll)="onMultiDeSelectAddUserAll($event)">
+                    </angular2-multiselect>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-2"> 
+             <button type="button" class="btn btn-primary srch" (click)="searchVender()">Search</button>
+        </div>
+    </div>
+
+
+    <div class="alert">
+        <form [formGroup]="venderForm">
+            <table width="60%" border="0" cellpadding="0" cellspacing="0" align="center" class="Table_Border">
+                <thead style="background-color:#80808030;">
+                    <tr>
+                        <th colspan="2" class="	tabletd" style="text-align:center;padding: 10px;"><strong>
+
+                                <span style="color:#F00;text-align:left;">Apply Account merge option in all
+                                    Company and all
+                                    Site</span></strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: aliceblue;border: 1px solid #8080804d;">
+                        <td width="30%" height="21" align="right" class="tabletd"
+                            style="text-align:right;padding-bottom:18px">Merge From Source <span
+                                class="error-valid">*</span> <br>(Which Not Exist In Transport Bill)
+                        </td>
+
+                        <td width="60%" class="tabletd" align="left">
+                            <mat-select formControlName="venderFromId"
+                                placeholder="Select Vendor" class="form-control" multiple>
+                                <input class="form-control w-100" formControlName="filerVendor"
+                                    (keyup)="venderInputFrom($event)" focused="'true'" type="text" autocomplete="off"
+                                    placeholder="Search Vendor">
+                                <mat-divider></mat-divider>
+                                <mat-option (click)="venderSelect()" *ngFor="let vendor of vendorListFrom" [value]="vendor.id">
+                                    {{vendor.vendor_master_data.vendor_name}}
+                                </mat-option>
+                                <mat-option [value]="" *ngIf="vendorListFrom.length==0">
+                                    No Records.
+                                </mat-option>
+                            </mat-select>
+                            <br>
+                            <span style="color:#F00;text-align:left;">After merge This account will be deleted
+                                from all
+                                Company and all Site </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="20%" align="right" class="tabletd" style="text-align:right">Merge With To /
+                            Destination <span class="error-valid">*</span></td>
+
+                        <mat-select formControlName="venderId" placeholder="Select Vendor"
+                            class="form-control" multiple>
+                            <input class="form-control w-100" formControlName="filerVendor"
+                                (keyup)="venderInput($event)" focused="'true'" type="text" autocomplete="off"
+                                placeholder="Search Vendor">
+                            <mat-divider></mat-divider>
+                            <mat-option (click)="venderSelect()" *ngFor="let vendor of vendorList" [value]="vendor.id">
+                                {{vendor.vendor_master_data.vendor_name}}
+                            </mat-option>
+                            <mat-option [value]="" *ngIf="vendorList.length==0">
+                                No Records.
+                            </mat-option>
+                        </mat-select>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        <div align="center" class="btnClass">
+            <button type="button" class="btn btn-primary save" (click)="mergeVender()">Save</button>
+        </div>
+    </div>
+</div>

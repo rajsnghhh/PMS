@@ -1,0 +1,265 @@
+<div class="survey-content-main">
+    <div class="survey-header">
+        <h1>Competition Analysis</h1>
+        <button (click)="proceedNext()">SKIP NOW</button>
+    </div>
+    <div class="survey-body">
+        <form>
+            <div class="work-card">
+                <div class="work-header">
+                    <span>NAMES OF OTHER COMPANIES WHO HAVE SURVEYED YET THE SITE</span>
+                </div>
+                <div class="work-action" *ngIf="!AddCompanySurvey">
+                    <span data-bs-toggle="offcanvas" data-bs-target="#CompanySurvey"
+                        aria-controls="offcanvasRight"><img src="assets/icons/add.png" alt=""> ADD NEW</span>
+                </div>
+                <section class="data-table" *ngIf="AddCompanySurvey">
+                    <div class="table-description">
+                        <span data-bs-toggle="offcanvas" data-bs-target="#CompanySurvey" aria-controls="offcanvasRight"><img src="assets/icons/add.png" alt=""> ADD NEW</span>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Company Name</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>ABCD</td>
+                            <td>
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content">
+                                            <div class="img-container">
+                                                <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                                <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ABCD</td>
+                            <td>
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content">
+                                            <div class="img-container">
+                                                <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                                <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>                      
+                    </table>
+                    </section>
+            </div>
+            <div class="work-card">
+                <div class="work-header">
+                    <span>COMPANIES WORKING NEARBY</span>
+                </div>
+                <div class="work-action" *ngIf="!AddCompanyWorking">
+                    <span data-bs-toggle="offcanvas" data-bs-target="#CompanyWorking"
+                        aria-controls="offcanvasRight"><img src="assets/icons/add.png" alt=""> ADD NEW</span>
+                </div>
+                <section class="data-table" *ngIf="AddCompanyWorking">
+                    <div class="table-description">
+                        <span data-bs-toggle="offcanvas" data-bs-target="#CompanyWorking" aria-controls="offcanvasRight"><img src="assets/icons/add.png" alt=""> ADD NEW</span>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Company Name</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>ABCD</td>
+                            <td>
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content">
+                                            <div class="img-container">
+                                                <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                                <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ABCD</td>
+                            <td>
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content">
+                                            <div class="img-container">
+                                                <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                                <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>                      
+                    </table>
+                    </section>
+            </div>
+            <div class="work-card">
+                <div class="work-header">
+                    <span>COMPANIES WHO WE CAN EXPECT TO PARTICIPATE FOR THIS WORK</span>
+                </div>
+                <div class="work-action" *ngIf="!AddCompanyParticipate">
+                    <span data-bs-toggle="offcanvas" data-bs-target="#CompanyParticipate"
+                        aria-controls="offcanvasRight"><img src="assets/icons/add.png" alt=""> ADD NEW</span>
+                </div>
+                <section class="data-table" *ngIf="AddCompanyParticipate">
+                    <div class="table-description">
+                        <span data-bs-toggle="offcanvas" data-bs-target="#CompanyParticipate" aria-controls="offcanvasRight"><img src="assets/icons/add.png" alt=""> ADD NEW</span>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Company Name</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>ABCD</td>
+                            <td>
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content">
+                                            <div class="img-container">
+                                                <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                                <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ABCD</td>
+                            <td>
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content">
+                                            <div class="img-container">
+                                                <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                                <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>                      
+                    </table>
+                    </section>
+            </div>
+            <div class="work-card">
+                <div class="work-header">
+                    <span>RATES AT WHICH LAST FEW WORKS WERE AWARDED AND TO WHOM</span>
+                </div>
+                <div class="work-action" *ngIf="!AddWorksAwarded">
+                    <span data-bs-toggle="offcanvas" data-bs-target="#WorksAwarded"
+                        aria-controls="offcanvasRight"><img src="assets/icons/add.png" alt=""> ADD NEW</span>
+                </div>
+                <section class="data-table" *ngIf="AddWorksAwarded">
+                    <div class="table-description">
+                        <span data-bs-toggle="offcanvas" data-bs-target="#WorksAwarded" aria-controls="offcanvasRight"><img src="assets/icons/add.png" alt=""> ADD NEW</span>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Company Name</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>ABCD</td>
+                            <td>
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content">
+                                            <div class="img-container">
+                                                <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                                <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ABCD</td>
+                            <td>
+                                <div class="custom-section">
+                                    <div class="dropdown">
+                                        <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                        <div class="dropdown-content">
+                                            <div class="img-container">
+                                                <a href="#"><img src="assets/usermanagement/edit.png" alt=""></a>
+                                                <a href="#"><img src="assets/usermanagement/delete.png" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>                      
+                    </table>
+                    </section>
+            </div>
+            <button type="submit" (click)="proceedNext()" class="btn btn-primary">NEXT</button>
+            <button type="button" class="btn btn-primary non-active-btn" (click)="GoBack()">BACK</button>
+        </form>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="CompanySurvey" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Names of other companies who have surveyed yet the site</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="left-section">
+            <app-company-survey></app-company-survey>
+        </div>
+    </div>
+</div>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="CompanyWorking" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Companies working nearby</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="left-section">
+            <app-company-working></app-company-working>
+        </div>
+    </div>
+</div>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="CompanyParticipate" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Companies who we can expect to perticipate for this work</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="left-section">
+            <app-company-participate></app-company-participate>
+        </div>
+    </div>
+</div>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="WorksAwarded" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Rates at which last few works were awarded and to whom</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="left-section">
+            <app-works-awarded></app-works-awarded>
+        </div>
+    </div>
+</div>

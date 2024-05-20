@@ -1,0 +1,103 @@
+<div class="nav-position" *ngIf="router.url == '/hrms/attendance'">
+    HRMS <span class="active-link"> - Attendance</span>
+    <div class="clock">
+        <span><img src="assets/usermanagement/calander.png" alt="">{{datetime | date :  "dd-MM-y"}} </span>
+        <span><img src="assets/usermanagement/clock.png" alt="">{{datetime | date : 'shortTime'}}</span>
+    </div>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/leave/apply-leave'">
+    HRMS-Leave<span class="active-link"> - Apply Leave</span>
+    <div class="clock">
+        <span><img src="assets/usermanagement/calander.png" alt="">{{datetime | date :  "dd-MM-y"}} </span>
+        <span><img src="assets/usermanagement/clock.png" alt="">{{datetime | date : 'shortTime'}}</span>
+    </div>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/profile/view'">
+    Profile -<span class="active-link"> View</span>
+    <div class="clock">
+        <span><img src="assets/usermanagement/calander.png" alt="">{{datetime | date :  "dd-MM-y"}} </span>
+        <span><img src="assets/usermanagement/clock.png" alt="">{{datetime | date : 'shortTime'}}</span>
+    </div>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/profile/resetpassword'">
+    Profile -<span class="active-link"> Reset Password</span>
+    <div class="clock">
+        <span><img src="assets/usermanagement/calander.png" alt="">{{datetime | date :  "dd-MM-y"}} </span>
+        <span><img src="assets/usermanagement/clock.png" alt="">{{datetime | date : 'shortTime'}}</span>
+    </div>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/attendance/view-attendance'">
+    HRMS - Attendance<span class="active-link"> - My Attendance</span>
+    <div class="clock">
+        <span><img src="assets/usermanagement/calander.png" alt="">{{datetime | date :  "dd-MM-y"}} </span>
+        <span><img src="assets/usermanagement/clock.png" alt="">{{datetime | date : 'shortTime'}}</span>
+    </div>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/settings/setting-details'">
+    Settings - <span class="active-link"> Setting Details</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/settings/location-zone'">
+    Settings <span class="active-link"> - Zone</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/settings/companyMaster'">
+    Settings <span class="active-link"> - Company Master</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/settings/department'">
+    Settings <span class="active-link"> - Department</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/settings/role'">
+    Settings <span class="active-link"> - Role Hierarchy</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/settings/employmentType'">
+    Settings <span class="active-link"> - Employment Type</span>
+</div>
+
+<div class="nav-position" *ngIf="router.url == '/hrms/settings/module-configuration'">
+    Settings <span class="active-link"> - Modules List</span>
+</div>
+
+<div class="nav-position" *ngIf="router.url == '/hrms/settings/module-configuration/edit'">
+    Settings - Modules List<span class="active-link"> - Module Configuration</span>
+</div>
+
+<div class="nav-position" *ngIf="router.url == '/hrms/settings/email-config'">
+    Settings <span class="active-link"> - Email Configuration</span>
+</div>
+
+<div class="nav-position" *ngIf="router.url == '/hrms/settings/sms-config'">
+    Settings <span class="active-link"> - SMS Configuration</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/settings/module-configuration/add'">
+    Settings - Modules<span class="active-link"> - Add Field</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/settings/module-configuration/update'">
+    Settings - Modules<span class="active-link"> - Update Field</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/settings/workflow-list'">
+    Settings <span class="active-link"> - Workflow Rules</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/settings/workflow'">
+    Survey<span class="active-link"> - Workflow</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms'">
+    HRMS <span class="active-link"> - Dashboard</span>
+    <div class="clock">
+        <span><img src="assets/usermanagement/calander.png" alt="">{{datetime | date :  "dd-MM-y"}} </span>
+        <span><img src="assets/usermanagement/clock.png" alt="">{{datetime | date : 'shortTime'}}</span>
+    </div>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/mediclaim'">
+    HRMS <span class="active-link"> - Mediclaim</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/mediclaim/view-mediclaim'">
+    HRMS - Mediclaim <span class="active-link"> - Mediclaim Enrollment View</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/mediclaim/useful-information'">
+    HRMS - Mediclaim <span class="active-link"> - Useful Information</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/holiday'">
+    HRMS <span class="active-link"> - Holiday Calendar</span>
+</div>
+<div class="nav-position" *ngIf="router.url == '/hrms/holiday/holiday_list'">
+    HRMS - Holiday Calendar <span class="active-link"> - Holiday List</span>
+</div>

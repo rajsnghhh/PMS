@@ -1,0 +1,239 @@
+<div class="table-responsive-custom" #customscroll>
+    <table>
+        <thead class="text-center">
+            <tr>
+                <th rowspan="2" class="custom-sticy-new">
+                    Details of Risks
+                </th>
+
+                <th rowspan="2" class="custom-sticy">
+                    Risk WBS Assignment 
+                </th>
+
+                <th rowspan="2">
+                    Delay Code
+                </th>
+
+                <th rowspan="2">
+                    Mitigation Plans 
+                </th>
+                <th rowspan="2">
+                    Obligations 
+                </th>
+                <th rowspan="2">
+                    Responsible Manager 
+                </th>
+                <th rowspan="2">
+                    Side
+                </th>
+
+                <th colspan="3">
+                    Length Affected (Ch.)
+                </th>
+                <th colspan="3">
+                    Impact in Scope(rs)
+                </th>
+                <th colspan="5">
+                    Time Impact till the Mitigations (rt)
+                </th>
+                <th colspan="5">
+                    Effect in Budget(rc)
+                </th>
+                <th rowspan="2">
+                    Wtd. Risk
+                </th>
+                <th rowspan="2">
+                    Type(R)
+                </th>
+                <th rowspan="2">
+                    Remarks
+                </th>
+            </tr>
+
+            <tr>
+                <th>
+                    From
+                </th>
+                <th>
+                    To
+                </th>
+                <th>
+                    Length(RM)
+                </th>
+
+                <th>
+                    % of Project Length Affected
+                </th>
+                <th>
+                    Scope Affected (₹ Crs.)
+                </th>
+                <th>
+                    % of Scope Affected (rs)
+                </th>
+                <th>
+                    Mitigation Expected by
+                </th>
+                <th>
+                    From 
+                </th>
+                <th>
+                    To
+                </th>
+                <th>
+                    Days Likely to be affected
+                </th>
+                <th>
+                    % wrt Contract Durations (rt)
+                </th>
+                <th>
+                    Value of Direct Impact wrt Revenue/Sale (₹ in Crs.)
+                </th>
+                <th>
+                    Estimated Indirect Expenses expected to be incurred for Mitigations (₹ in Crs.)
+                </th>
+                <th>
+                    Contingency (₹ in Crs.) 
+                </th>
+                <th>
+                    Gross Impact in Cost (₹ in Crs.)
+                </th>
+                <th>
+                    % wrt Contract Price (rc)
+                </th>
+            </tr>
+            
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let tabledata of delayMisData">
+                <td class="custom-sticy-new">
+                    <input type="text" name="details_of_risks"
+                    [(ngModel)]="bindData['details_of_risks' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'details_of_risks')">
+                </td>
+                <td class="custom-sticy">{{tabledata.reasons}}</td>
+                <td>{{tabledata.delay_code}}</td>
+                <td>
+                    <input type="text" name="mitigation_plan"
+                    [(ngModel)]="bindData['mitigation_plan' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'mitigation_plan')">
+                </td>
+                <td>{{tabledata.obligations}}</td>
+                <td>
+                    <input type="text" name="responsible_manager"
+                    [(ngModel)]="bindData['responsible_manager' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'responsible_manager')">
+                </td>
+                <td>
+                    <input type="text" name="side"
+                    [(ngModel)]="bindData['side' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'side')">
+                </td>
+                <td>
+                    <input type="number" name="length_affected_from"
+                    [(ngModel)]="bindData['length_affected_from' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'length_affected_from')">
+                </td>
+                <td>
+                    <input type="number" name="length_affected_to"
+                    [(ngModel)]="bindData['length_affected_to' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'length_affected_to')">
+                </td>
+                <td class="inputDisable">
+                    <input type="number" name="length_rm"
+                    [(ngModel)]="bindData['length_rm' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'length_rm')">
+                </td>
+                <td class="inputDisable">
+                    <input type="number" name="project_length_affected_in_percentage"
+                    [(ngModel)]="bindData['project_length_affected_in_percentage' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'project_length_affected_in_percentage')">
+                </td>
+                <td>
+                    <input type="number" name="scope_affected"
+                    [(ngModel)]="bindData['scope_affected' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'scope_affected')">
+                </td>
+                <td class="inputDisable">
+                    <input type="number" name="scope_affected_in_percentage"
+                    [(ngModel)]="bindData['scope_affected_in_percentage' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'scope_affected_in_percentage')">
+                </td>
+                <td>
+                    <input type="date" name="mitigation_expected_by"
+                    [(ngModel)]="bindData['mitigation_expected_by' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'mitigation_expected_by')">
+                </td>
+                <td>
+                    <input type="date" name="mitigation_from"
+                    [(ngModel)]="bindData['mitigation_from' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'mitigation_from')">
+                </td>
+                <td class="inputDisable">
+                    <input type="date" name="mitigation_to"
+                    [(ngModel)]="bindData['mitigation_to' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'mitigation_to')">
+                </td>
+                <td class="inputDisable">
+                    <input type="number" name="likely_days_affected"
+                    [(ngModel)]="bindData['likely_days_affected' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'likely_days_affected')">
+                </td>
+                <td class="inputDisable">
+                    <input type="number" name="contract_durations_in_percentage"
+                    [(ngModel)]="bindData['contract_durations_in_percentage' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'contract_durations_in_percentage')">
+                </td>
+                <td>
+                    <input type="number" name="value_of_direct_impact_wrt_revenue_or_sales"
+                    [(ngModel)]="bindData['value_of_direct_impact_wrt_revenue_or_sales' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'value_of_direct_impact_wrt_revenue_or_sales')">
+                </td>
+                <td>
+                    <input type="number" name="estimated_indirect_expenses"
+                    [(ngModel)]="bindData['estimated_indirect_expenses' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'estimated_indirect_expenses')">
+                </td>
+                <td>
+                    <input type="number" name="contigency"
+                    [(ngModel)]="bindData['contigency' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'contigency')">
+                </td>
+                <td class="inputDisable">
+                    <input type="number" name="gross_impact"
+                    [(ngModel)]="bindData['gross_impact' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'gross_impact')">
+                </td>
+                <td class="inputDisable">
+                    <input type="number" name="contract_price_in_percentage"
+                    [(ngModel)]="bindData['contract_price_in_percentage' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'contract_price_in_percentage')">
+                </td>
+                <td class="inputDisable">
+                    <input type="number" name="wtd_risk"
+                    [(ngModel)]="bindData['wtd_risk' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'wtd_risk')">
+                </td>
+                <td class="inputDisable">
+                    <input type="text" name="type_r"
+                    [(ngModel)]="bindData['type_r' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'type_r')">
+                </td>
+                <td>
+                    <input type="text" name="remarks"
+                    [(ngModel)]="bindData['remarks' + tabledata.id]"
+                    (change)="changeInput(tabledata.id,'remarks')">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="tablescroll_btn">
+        <div class="btn_action prev_btn" (click)="previous()">
+            <i class="fa-solid fa-chevron-left"></i>
+        </div>
+        <div class="btn_action next_btn" (click)="next()">
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+    </div>
+</div>

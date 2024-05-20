@@ -1,0 +1,139 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Fabrication Work List</h2>
+
+        <div hidden class="action-button-container">
+            <button [routerLink]="['/pms/store/procurement/fabrication-work/add']">ADD NEW <img
+                    src="assets/header/add.png" alt=""></button>
+
+        </div>
+    </div>
+
+    <div class="component-body">
+
+        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSearch()" novalidate>
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-3">
+                    <div class="adform">
+                        <label>From</label><input type="date" name="date__gte " [(ngModel)]="form.date__gte "
+                            #date__gte="ngModel" placeholder="" id="date__gte" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-3">
+                    <div class="adform">
+                        <label>To</label><input type="date" name="date__lte " [(ngModel)]="form.date__lte "
+                            #date__lte="ngModel" placeholder="" id="date__lte" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-3">
+                    <div class="adform">
+                        <label>FAB No.</label>
+                        <input type="text" name="voucher_no " [(ngModel)]="form.voucher_no " #voucher_no="ngModel"
+                            placeholder="" id="voucher_no" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-3">
+                    <div class="adform">
+                        <label>No Of Job's</label><input type="number" name="number_of_jobs "
+                            [(ngModel)]="form.number_of_jobs " #number_of_jobs="ngModel" placeholder=""
+                            id="number_of_jobs" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-4">
+                    <div class="adform">
+                        <label>Item</label>
+                        <ng-select class="form-control" [multiple]="true"
+                            name="procurement_item_stock_jv_item__item__in"
+                            [(ngModel)]="form.procurement_item_stock_jv_item__item__in"
+                            #procurement_item_stock_jv_item__item__in="ngModel">
+                            <ng-option *ngFor="let masterData of itemList"
+                                [value]="masterData.id">{{masterData.material_name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-3">
+                    <div class="adform">
+                        <label>Site</label>
+                        <select id="sel1" disabled class="form-control" ngDefaultControl name="site " [(ngModel)]="form.site "
+                            #site="ngModel">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                {{siteData.site_name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btd-section">
+                <button type="submit" class="btn-save">Search</button>
+            </div>
+        </form>
+        <table class="table">
+            <tr class="header-row">
+                <th style="width: 12%;">S No.</th>
+                <th style="width: 12%;">FAB. Date</th>
+                <th style="width: 12%;">FAB No.</th>
+                <th style="width: 12%;">Site</th>
+                <th style="width: 12%;">Contractor</th>
+                <th style="width: 13%;">No Of Job's</th>
+                <th style="width: 13%;">Work Order</th>
+            </tr>
+            <tr class="table-row-not-expanded" *ngFor="let covenant of fabricationList; let i = index">
+                <td (click)="underTableClick(i)" colspan="7">
+                    <div class="allTd">
+                        <div class="eachTd">{{i+1}}.</div>
+                        <div class="eachTd">{{covenant.date | date:"dd-MM-yyyy"}}</div>
+                        <div class="eachTd">{{covenant.voucher_no}}</div>
+                        <div class="mideachTd">{{covenant.site_details[0]?.site_name}}</div>
+                        <div class="mideachTd">{{covenant.contractor_details.data?.vendor_name}}</div>
+                        <div class="mideachTd">{{covenant.number_of_jobs}}</div>
+                        <div class="lasteachTd">{{covenant.work_order_details[0]?.request_code}}</div>
+                    </div>
+                    <div *ngIf="covenant.isExpanded" class="expanded-panel" (click)="underTableClick(i)">
+                        <div class="table-container">
+                            <table class="table">
+                                <tr class="header-row">
+                                    <th class="header">Sr</th>
+                                    <th class="header">Item Name</th>
+                                    <th class="header">Qty</th>
+                                    <th class="header">Unit</th>
+                                    <th class="header">Weight</th>
+                                </tr>
+                                <tr class="table-row" *ngFor="let item of covenant.raw_materials;let k=index">
+                                    <td class="cell text-center">{{k+1}}</td>
+                                    <td class="cell text-center">{{item.materials_details[0][0]?.material_name}}</td>
+                                    <td class="cell text-center">{{item.quantity}}</td>
+                                    <td class="cell text-center">{{item.uom_details[0]?.symbol}}</td>
+                                    <td class="cell text-center">{{item.weight}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-container">
+                            <table class="table">
+                                <tr class="header-row">
+                                    <th class="header">Sr</th>
+                                    <th class="header">Labour Category</th>
+                                    <th class="header">No Of Duty</th>
+                                    <th class="header">Rate</th>
+                                    <th class="header">Amount</th>
+                                </tr>
+                                <tr class="table-row" *ngFor="let labr of covenant.labors;let m=index">
+                                    <td class="cell text-center">{{m+1}}</td>
+                                    <td class="cell text-center">{{labr.category_details[0]?.name}}</td>
+                                    <td class="cell text-center">{{labr.no_of_duty}}</td>
+                                    <td class="cell text-center">{{labr.rate}}</td>
+                                    <td class="cell text-center">{{labr.amount}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+            <tr *ngIf="fabricationList?.length==0">
+                <td colspan="7" class="text-center">No Data Found!</td>
+            </tr>
+        </table>
+    </div>
+</div>

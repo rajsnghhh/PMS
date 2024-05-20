@@ -1,0 +1,33 @@
+.component-body {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    border: 1px solid #d9d9d900;
+    box-shadow: 0px 0px 5px 0px rgb(136 136 136 / 23%);
+    border-radius: 15px;
+    padding: 0 4%;
+    margin: 8px 0px 17px 0px;
+
+    .content {
+        display: flex;
+        width: 33%;
+        margin-top: 20px;
+        margin-bottom: 25px;
+        font-size: 14px;
+        cursor: pointer;
+
+        img {
+            max-width: 32px;
+            height: 22px;
+            margin-top: -2px;
+            margin-right: 14px;
+        }
+    }
+
+    .headinglabel {
+        width: 100%;
+        color:#55A4FF;
+        font-size: 17px;
+        margin-top: 10px;
+    }
+}

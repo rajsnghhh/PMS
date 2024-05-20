@@ -1,0 +1,158 @@
+<div class="mb-3">
+    <select class="form-select" [(ngModel)]="NotificationType" (change)="changeTemplate()">
+        <option value="EMAIL">Email</option>
+        <option value="SMS">SMS</option>
+    </select>
+    <label class="floating-label-select" [ngClass]="{'insideDropdown': NotificationType =='' }">Select notification
+        type<span class="asterisk">*</span></label>
+
+    <div class="required">
+        <span class="text-danger" *ngIf="showNotificationTypeError && NotificationType ==''">This is required</span>
+    </div>
+
+</div>
+
+<button type="submit" class="btn btn-primary" (click)="proceedNext()" *ngIf="NotificationType == ''">ADD</button>
+
+<ng-container *ngIf="NotificationType == 'EMAIL'">
+
+    <form name="addNotificationForm" role="form" [formGroup]="addNotificationForm">
+        
+        <div class="mb-3" [ngClass]="{ 'float-now': addEmail.title != '' }">
+            <input class="form-select" type="text" id="title" required formControlName="title"
+                [(ngModel)]="addEmail.title" name="title" [ngClass]="displayFieldCss(addNotificationForm,'title')"
+                style=" background-image: none; padding-right: 10px; ">
+            <label class="floating-label">Enter Title <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addNotificationForm,'title')">
+                <div *ngIf="addNotificationForm.get('title')?.errors?.['required']">This is required</div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <angular2-multiselect [data]="dropdownUserList" [settings]="dropdownUserSettings"
+                formControlName="selectedUser" [(ngModel)]="addEmail.selectedUser">
+            </angular2-multiselect>
+            <label class="floating-label-select"
+                [ngClass]="{'insideDropdown': addEmail.selectedUser.length == '0' }">Select User Mail to <span
+                    class="asterisk">*</span></label>
+        </div>
+
+        <div class="mb-3">
+            <angular2-multiselect [data]="dropdownUserList" [settings]="dropdownUserSettings" formControlName="ccuser"
+                [(ngModel)]="addEmail.ccuser">
+            </angular2-multiselect>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addEmail.ccuser.length == '0' }">Select
+                User Mail Copy To</label>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" required formControlName="email_template_id"
+                [(ngModel)]="addEmail.email_template_id" name="email_template_id"
+                [ngClass]="displayFieldCss(addNotificationForm,'email_template_id')">
+                <option *ngFor="let EmailTemplate of EmailTemplateList" value={{EmailTemplate.id}}>
+                    {{EmailTemplate.template_name}}</option>
+            </select>
+
+            <label class="floating-label-select"
+                [ngClass]="{'insideDropdown': addEmail.email_template_id == '' }">Select Mail Template<span
+                    class="asterisk">*</span></label>
+            <div *ngIf="isFieldValid(addNotificationForm,'email_template_id')" class="invalid-feedback">
+                <div *ngIf="addNotificationForm.get('email_template_id')?.errors?.['required']">This is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" required formControlName="trigger_type" [(ngModel)]="addEmail.trigger_type"
+                name="trigger_type" (change)="changeDaTE()"
+                [ngClass]="displayFieldCss(addNotificationForm,'trigger_type')">
+                <option value="Immediately">Immediately</option>
+                <option value="Set Date">Set Date</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addEmail.trigger_type == '' }">Select
+                trigger type<span class="asterisk">*</span></label>
+            <div *ngIf="isFieldValid(addNotificationForm,'trigger_type')" class="invalid-feedback">
+                <div *ngIf="addNotificationForm.get('trigger_type')?.errors?.['required']">This is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3" *ngIf="addEmail.trigger_type == 'Set Date'">
+            <input class="form-select" type="datetime-local" id="birthdaytime" required formControlName="date"
+                [(ngModel)]="addEmail.date" name="trigger_type" [ngClass]="displayFieldCss(addNotificationForm,'date')"
+                style=" background-image: none; padding-right: 10px; ">
+            <div *ngIf="isFieldValid(addNotificationForm,'trigger_type')" class="invalid-feedback">
+                <div *ngIf="addNotificationForm.get('date')?.errors?.['required']">This is required</div>
+            </div>
+        </div>
+
+
+
+
+
+        <button type="submit" class="btn btn-primary" (click)="addEmailNotification()">ADD</button>
+        <button type="button" class="btn btn-primary non-active-btn" (click)="resetADD()">BACK</button>
+    </form>
+</ng-container>
+<ng-container *ngIf="NotificationType == 'SMS'">
+    <form name="addNotificationForm" role="form" [formGroup]="addNotificationForm">
+
+        <div class="mb-3" [ngClass]="{ 'float-now': addEmail.title != '' }">
+            <input class="form-select" type="text" id="title" required formControlName="title"
+                [(ngModel)]="addEmail.title" name="title" [ngClass]="displayFieldCss(addNotificationForm,'title')"
+                style=" background-image: none; padding-right: 10px; ">
+            <label class="floating-label">Enter Title <span class="asterisk">*</span></label>
+            <div class="required" *ngIf="isFieldValid(addNotificationForm,'title')">
+                <div *ngIf="addNotificationForm.get('title')?.errors?.['required']">This is required</div>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <angular2-multiselect [data]="dropdownUserList" [settings]="dropdownUserSettings"
+                formControlName="selectedUser" [(ngModel)]="addEmail.selectedUser">
+            </angular2-multiselect>
+            <label class="floating-label-select"
+                [ngClass]="{'insideDropdown': addEmail.selectedUser.length == '0' }">Select User SMS to <span
+                    class="asterisk">*</span></label>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" required formControlName="sms_template_id"
+                [(ngModel)]="addEmail.sms_template_id" name="sms_template_id"
+                [ngClass]="displayFieldCss(addNotificationForm,'sms_template_id')">
+                <option *ngFor="let EmailTemplate of SmsTemplateList" value={{EmailTemplate.id}}>
+                    {{EmailTemplate.sms_template_name}}</option>
+            </select>
+
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addEmail.sms_template_id == '' }">Select
+                SMS Template<span class="asterisk">*</span></label>
+            <div *ngIf="isFieldValid(addNotificationForm,'sms_template_id')" class="invalid-feedback">
+                <div *ngIf="addNotificationForm.get('sms_template_id')?.errors?.['required']">This is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" required formControlName="trigger_type" (change)="changeDaTE()"
+                [(ngModel)]="addEmail.trigger_type" name="trigger_type"
+                [ngClass]="displayFieldCss(addNotificationForm,'trigger_type')">
+                <option value="Immediately">Immediately</option>
+                <option value="Set Date">Set Date</option>
+            </select>
+            <label class="floating-label-select" [ngClass]="{'insideDropdown': addEmail.trigger_type == '' }">Select
+                trigger type<span class="asterisk">*</span></label>
+            <div *ngIf="isFieldValid(addNotificationForm,'trigger_type')" class="invalid-feedback">
+                <div *ngIf="addNotificationForm.get('trigger_type')?.errors?.['required']">This is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3" *ngIf="addEmail.trigger_type == 'Set Date'">
+            <input class="form-select" type="datetime-local" id="birthdaytime" required formControlName="date"
+                [(ngModel)]="addEmail.date" name="trigger_type" [ngClass]="displayFieldCss(addNotificationForm,'date')"
+                style=" background-image: none; padding-right: 10px;">
+            <div *ngIf="isFieldValid(addNotificationForm,'date')" class="invalid-feedback">
+                <div *ngIf="addNotificationForm.get('date')?.errors?.['required']">This is required</div>
+            </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary" (click)="addEmailNotification()">ADD</button>
+        <button type="button" class="btn btn-primary non-active-btn" (click)="resetADD()">BACK</button>
+    </form>
+</ng-container>

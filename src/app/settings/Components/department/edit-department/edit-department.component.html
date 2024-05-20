@@ -1,0 +1,24 @@
+<form role="form" [formGroup]="editDepartmentForm">
+
+    <div class="mb-3" [ngClass]="{ 'float-now': departmentname != '' }">
+        <input type="text" class="form-control" id="role" formControlName="name"
+            [ngClass]="displayFieldCss(editDepartmentForm,'name')" [(ngModel)]="departmentname">
+            <label class="floating-label">Enter Department Name <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(editDepartmentForm,'name')">
+            <span class="text-danger" *ngIf="editDepartmentForm.get('name')?.errors?.['required']">Department Name is required</span>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <select class="form-select" formControlName="depthead" [(ngModel)]="departmentheadname"
+        [ngClass]="displayFieldCss(editDepartmentForm,'depthead')" aria-label="Default select example">
+            <option value="" selected disabled>Select Department Head </option>
+            <option *ngFor="let dept of departmentlist" value={{dept.id}}>{{dept.full_name}}</option>
+        </select>
+        <label class="floating-label-select">Select Department Head <span class="asterisk">*</span></label>
+        <div class="required" *ngIf="isFieldValid(editDepartmentForm,'depthead')">
+            <span class="text-danger" *ngIf="editDepartmentForm.get('depthead')?.errors?.['required']">Department Head is required</span>
+          </div>
+      </div>
+    <button type="submit" class="btn btn-primary" (click)="editDepartment()">UPDATE</button>
+</form>

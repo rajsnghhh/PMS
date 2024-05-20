@@ -1,0 +1,11 @@
+<div class="createrequisition-section">
+    <section>    
+        <app-plant-prod-top-card (parentAction)="appendData($event)" [scope]="scope" [prefieldData]="prefieldData"></app-plant-prod-top-card>
+        <app-create-plant-prod-table (parentAction)="appendData($event)" [scope]="scope" [prefieldData]="prefieldData"></app-create-plant-prod-table>
+    </section>
+    <div class="btd-section">
+        <button type="button" (click)="backtolist()" class="btn-cancel" >CANCEL</button>
+        <button type="submit" *ngIf="scope == 'add'" class="btn-save" (click)="createPlantProd()">SAVE</button>
+        <button type="submit" *ngIf="scope == 'update'" class="btn-save" (click)="updatePlantProd()">UPDATE</button>
+    </div>
+</div>

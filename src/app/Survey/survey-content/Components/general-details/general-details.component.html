@@ -1,0 +1,48 @@
+<div class="survey-content-main">
+    <div class="survey-header">
+        <h1>General Data</h1>
+        <button (click)="proceedNext()">SKIP NOW</button>
+    </div>
+    <div class="survey-body">
+        <form>
+            <div class="flex-div">
+            <div class="mb-3">
+                <label for="timerange">Months Available for Available Season</label>
+                <div class="custom-select-input">
+                    <input type="date" class="form-control" id="timerange"  placeholder="From">
+                    <input type="date" class="form-control" id="timerange"  placeholder="To">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="timerange">How is the Accessibility to Site</label>
+                <select class="form-select" aria-label="Default select">
+                    <option selected>Not accessible / Bad / Accessible / Good </option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div> 
+            <div class="mb-3">
+                <label for="timerange">How Fast do you Think the Work be Executed for Various Projects</label>
+                <select class="form-select" aria-label="Default select">
+                    <option selected>Very Slow / Slow / Average / Fast / Very Fast </option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>  
+            </div>
+            <div class="mb-3">
+                <label for="Remarks">Remarks for Accessibility</label>
+                <textarea class="form-control" id="Remarks" placeholder="Add Remarks" rows="2"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="Challenges">List Biggest Challenges Which can be Faced During Execution and its Solution</label>
+                <textarea class="form-control" id="Challenges" placeholder="Add Here" rows="2"></textarea>
+            </div>
+            
+            <button type="submit" (click)="proceedNext()" class="btn btn-primary">NEXT</button>
+            <button type="button" class="btn btn-primary non-active-btn" (click)="GoBack()">BACK</button>
+        </form>
+    </div>
+</div>

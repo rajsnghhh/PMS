@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="row justify-content-end">
+        <div class="col-md-2">
+            <button class="btn btn-outline-primary w-100" type="button" id="dropdownSelectColoum"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-plus mx-1"></i> Add
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum">
+                <li *ngFor="let add of add_list">
+                    <a class="dropdown-item" href="javascript:void(0)" (click)="addRowItem(add?.value)"
+                        data-bs-toggle="modal" data-bs-target="#datewisebudget">{{ add?.label }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row my-2" [formGroup]="rowFormGroup">
+        <div class="col-md-3">
+            <ng-select formControlName="project" placeholder="Select Project"
+                [class.is-invalid]="!Global.isInputValid(rowFormGroup, 'project')">
+                <ng-option *ngFor="let project of projects" [value]="project?.id">{{
+                    project?.project_data[1].value
+                    }}</ng-option>
+            </ng-select>
+        </div>
+        <div class="col-md-3">
+            <ng-select formControlName="chainage" placeholder="Select Chainage"
+                [class.is-invalid]="!Global.isInputValid(rowFormGroup, 'chainage')">
+                <ng-option *ngFor="let level of this.levels[0]" [value]="level?.level">{{ level?.name }}</ng-option>
+            </ng-select>
+        </div>
+        <div class="col-md-3">
+            <ng-select placeholder="Select Activity" formControlName="activity"
+                [class.is-invalid]="!Global.isInputValid(rowFormGroup, 'activity')">
+                <ng-option *ngFor="let level of this.levels[1]" [value]="level?.level">{{ level?.name }}</ng-option>
+            </ng-select>
+        </div>
+        <div class="col-md-3">
+            <ng-select placeholder="Select Sub Activity" formControlName="sub_activity"
+                [class.is-invalid]="!Global.isInputValid(rowFormGroup, 'sub_activity')">
+                <ng-option *ngFor="let level of this.levels[2]" [value]="level?.level">{{ level?.name }}</ng-option>
+            </ng-select>
+        </div>
+    </div>
+    <div class="row">
+        <!-- <app-entry-activity-budget></app-entry-activity-budget> -->
+        <app-budget-summary></app-budget-summary>
+    </div>
+</div>
+
+<div class="modal fade" id="datewisebudget" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    {{ add_list[this.tab_content]?.label }} Name
+                </h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" [formGroup]="formGroup">
+                    <input class="form-control" formControlName="name" type="text"
+                        [class.is-invalid]="!Global.isInputValid(formGroup, 'name')"
+                        placeholder="Enter {{ add_list[this.tab_content]?.label }} Name" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button [disabled]="this.formGroup.disabled" type="button" class="btn btn-secondary"
+                    (click)="submitRow()">
+                    {{ !this.formGroup.disabled ? "Save" : "Saving..." }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

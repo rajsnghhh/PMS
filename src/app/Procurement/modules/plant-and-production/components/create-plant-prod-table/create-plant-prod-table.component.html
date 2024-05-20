@@ -1,0 +1,90 @@
+
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <div class="createtable-section table-responsive">
+        <table class="text-nowrap">
+            <tr>
+                <th>Sr.&nbsp;No</th>
+                <th>Item Group</th>
+                <th>Item Sub Group</th>
+                <th>Item</th>
+                <th>Qty./Unit</th>
+                <th>Action</th>
+            </tr>
+            <tr class="">
+                <td colspan="5"></td>
+                <td class="align-middle"><a [ngClass]="{ 'disabled': disabledEdit }" (click)="addItem()" type="submit" class="tablebtn-save">ADD <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png" alt=""></i></a></td>
+            </tr>
+            <tr class="tablebg" *ngFor="let item of form.items; let i = index">
+                <td>#{{i+1}}</td>
+               
+                  <td style=" min-width: 150px; ">
+                    <div class="tablegroup">
+                        <label>Item Group</label>
+                        <ng-select [disabled]="disabledEdit" class="" name="requested_material_group{{i+1}}" [(ngModel)]="form.items[i].requested_material_group" required #requested_material_group="ngModel" [ngClass]="{ 'is-invalid': f.submitted && requested_material_group.errors }" (change)="typeChange(form.items[i].requested_material_group,i)">
+                            <ng-option *ngFor="let materialGroup of masterlist" [value]="materialGroup.id">{{materialGroup.name}}</ng-option>
+                        </ng-select>
+                    </div>  
+                  </td>
+                  <td style=" min-width: 150px; ">
+                    <div class="tablegroup">
+                        <label>Item Sub Group</label>
+                        <ng-select [disabled]="disabledEdit" class="" name="requested_material_sub_group{{i+1}}" [(ngModel)]="form.items[i].requested_material_sub_group" required #requested_material_sub_group="ngModel" [ngClass]="{ 'is-invalid': f.submitted && requested_material_sub_group.errors }" (change)="subTypeChange(form.items[i].requested_material_sub_group, i)">
+                            <ng-option *ngFor="let subGroup of form.items[i].MaterilSubGroupList" [value]="subGroup.id">{{subGroup.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                  </td>
+                  <td style=" min-width: 150px; ">
+                    <div class="tablegroup">
+                        <label>Item</label>
+                        <ng-select [disabled]="disabledEdit" class="" name="item{{i+1}}" [(ngModel)]="form.items[i].item" required #item="ngModel" [ngClass]="{ 'is-invalid': f.submitted && item.errors }" (change)="setMaterialMasterData(i,false,form.items[i].item)">
+                            <ng-option *ngFor="let masterData of form.items[i].MaterilFilterList" [value]="masterData.id">{{masterData.material_name}}</ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="tablegroup tablegroup-text"><h2>
+                        (Bal.&nbsp;Qty.&nbsp;=</h2 > 
+                        <div class="form-control form-control2" data-bs-toggle="tooltip" data-bs-placement="right" title="Balance Quantity.">{{form.items[i].currentStock}}</div>
+                        <h2>)</h2>
+                    </div>
+                    <section class="boq-material-details" *ngIf="form.items[i].item">
+                        <img src="assets/icons/details.png" alt="">
+                        <table>
+                            <tr>
+                                <th>BOQ Name</th>
+                                <th>BOQ Item</th>
+                                <th>Budgeted Quantity</th>
+                            </tr>
+                            <tr *ngFor="let masterialBoQdata of form.items[i].MaterialBOQ">
+    
+                                <td>{{masterialBoQdata.wbs_list__boq__name}}</td>
+                                <td>{{masterialBoQdata.wbs_list__wbs}}</td>
+                                <td>{{masterialBoQdata.budgeted_quantity}}</td>
+                            </tr>
+                            <tr *ngIf="form.items[i]?.MaterialBOQ?.length==0">
+                                <td colspan="3" style=" text-align: center; ">
+                                    Item Not found on BOQ. Please add Justification
+                                </td>
+                            </tr>
+                        </table>
+                    </section>
+                  </td>
+                  <td>
+                    <div class="tablegroup">
+                        <input type="text" [disabled]="disabledEdit" class="form-control" id="data" placeholder="" amountNumber pattern="^(?!0*[.,]0*$|[.,]0*$|0*$)\d+[,.]?\d{0,3}$" name="quantity{{i+1}}" [(ngModel)]="form.items[i].quantity" required #quantity="ngModel" [ngClass]="{ 'is-invalid': f.submitted && quantity.errors }" (change)="checkFromStock(i)">
+    
+                        <select  class="form-control" [disabled]="disabledEdit" id="sel1" [(ngModel)]="form.items[i].unit" [ngModelOptions]="{standalone: true}">
+                            <option value="{{uomData.id}}" *ngFor="let uomData of form.items[i].uomlistData">{{uomData.symbol}}</option>
+                        </select>
+                    </div>    
+                  </td>
+                <td class="align-middle">
+                    <a (click)="delete(i)" [ngClass]="{ 'disabled': disabledEdit }" type="submit" class="vector-delete">DEL <i class="fa" aria-hidden="true"><img src="assets/img/vector-delete.png" alt=""></i></a>
+                </td>
+            </tr>
+            <tr *ngIf="form.items.length==0">
+                <td colspan="18" class="text-center">No Item Added Yet</td>
+            </tr>
+            <button hidden  #submitButton="" type="submit">Save</button>
+        </table>
+    </div>
+    </form>
+    

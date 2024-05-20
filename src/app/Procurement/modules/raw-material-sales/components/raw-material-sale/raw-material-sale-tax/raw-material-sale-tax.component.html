@@ -1,0 +1,632 @@
+<form name="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <ng-container *ngIf="add_type == 'gst'; else normalTax">
+    <div class="createtable-section table-responsive">
+      <table class="text-nowrap">
+        <tr>
+          <th>Sr.&nbsp;No</th>
+          <th>Expense Type</th>
+          <th>Calculate On Amount</th>
+          <th>Percent</th>
+          <th>Gross Amount</th>
+          <th>GST Tax Type</th>
+          <th>SGST Rate / Amt.</th>
+          <th>CGST Rate / Amt.</th>
+          <th>IGST Rate / Amt.</th>
+          <th>Total Amount</th>
+          <th>Action</th>
+        </tr>
+        <ng-container formArrayName="raw_material_sales_expense">
+          <ng-container
+            *ngFor="
+              let item of raw_material_sales_expense.controls;
+              let i = index;
+              let last = last
+            "
+            [formGroupName]="i"
+          >
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>
+                <div>
+                  <ng-select
+                    style="min-width: 150px"
+                    appendTo="body"
+                    formControlName="expense_head"
+                    placeholder="Please Select"
+                    [class.is-invalid]="
+                      raw_material_sales_expense.at(i).get('expense_head')
+                        ?.errors &&
+                      raw_material_sales_expense.at(i).get('expense_head')
+                        ?.touched
+                    "
+                  >
+                    <ng-option
+                      *ngFor="let expense of expenseList"
+                      [value]="expense.id"
+                      >{{ expense.name }}</ng-option
+                    >
+                  </ng-select>
+                  <div class="mt-2">
+                    <label>SAC CODE</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      formControlName="sac_code"
+                      [class.is-invalid]="
+                        raw_material_sales_expense.at(i).get('sac_code')
+                          ?.errors &&
+                        raw_material_sales_expense.at(i).get('sac_code')
+                          ?.touched
+                      "
+                    />
+                  </div>
+                </div>
+              </td>
+              <td>
+                <input
+                  readonly
+                  class="form-control"
+                  type="text"
+                  formControlName="taxable_amount"
+                  [class.is-invalid]="
+                    raw_material_sales_expense.at(i).get('taxable_amount')
+                      ?.errors &&
+                    raw_material_sales_expense.at(i).get('taxable_amount')
+                      ?.touched
+                  "
+                />
+              </td>
+              <td>
+                <div class="input-group">
+                  <input
+                    amountNumber
+                    class="form-control"
+                    (input)="calculateGrossAmount(i)"
+                    type="text"
+                    formControlName="expense_percentage"
+                    [class.is-invalid]="
+                      raw_material_sales_expense.at(i).get('expense_percentage')
+                        ?.errors &&
+                      raw_material_sales_expense.at(i).get('expense_percentage')
+                        ?.touched
+                    "
+                  />
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">%</div>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                <input
+                  class="form-control"
+                  readonly
+                  type="text"
+                  formControlName="gross_amount"
+                  [class.is-invalid]="
+                    raw_material_sales_expense.at(i).get('gross_amount')
+                      ?.errors &&
+                    raw_material_sales_expense.at(i).get('gross_amount')
+                      ?.touched
+                  "
+                />
+              </td>
+              <td>
+                <ng-select
+                  (change)="gstTaxHeadSelect(i)"
+                  formControlName="tax_head"
+                  placeholder="Please Select"
+                  [class.is-invalid]="
+                    raw_material_sales_expense.at(i).get('tax_head')?.errors &&
+                    raw_material_sales_expense.at(i).get('tax_head')?.touched
+                  "
+                >
+                  <ng-option
+                    *ngFor="let taxHead of taxHeads"
+                    [value]="taxHead.id"
+                    >{{ taxHead.name }}</ng-option
+                  >
+                </ng-select>
+              </td>
+              <td>
+                <div class="">
+                  <div>
+                    <input
+                      readonly
+                      class="form-control"
+                      type="text"
+                      formControlName="sgst_percentage"
+                      [class.is-invalid]="
+                        raw_material_sales_expense.at(i).get('sgst_percentage')
+                          ?.errors &&
+                        raw_material_sales_expense.at(i).get('sgst_percentage')
+                          ?.touched
+                      "
+                    />
+                  </div>
+                  <div class="pt-2">
+                    <input
+                      readonly
+                      class="form-control"
+                      type="text"
+                      formControlName="sgst_amount"
+                      [class.is-invalid]="
+                        raw_material_sales_expense.at(i).get('sgst_amount')
+                          ?.errors &&
+                        raw_material_sales_expense.at(i).get('sgst_amount')
+                          ?.touched
+                      "
+                    />
+                  </div>
+                  <div class="py-2">
+                    <b>UTGST</b>
+                  </div>
+                  <div>
+                    <input
+                      readonly
+                      class="form-control"
+                      type="text"
+                      formControlName="utgst_percentage"
+                      [class.is-invalid]="
+                        raw_material_sales_expense.at(i).get('utgst_percentage')
+                          ?.errors &&
+                        raw_material_sales_expense.at(i).get('utgst_percentage')
+                          ?.touched
+                      "
+                    />
+                  </div>
+                  <div class="pt-2">
+                    <input
+                      readonly
+                      class="form-control"
+                      type="text"
+                      formControlName="utgst_amount"
+                      [class.is-invalid]="
+                        raw_material_sales_expense.at(i).get('utgst_amount')
+                          ?.errors &&
+                        raw_material_sales_expense.at(i).get('utgst_amount')
+                          ?.touched
+                      "
+                    />
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="">
+                  <div>
+                    <input
+                      readonly
+                      class="form-control"
+                      type="text"
+                      formControlName="cgst_percentage"
+                      [class.is-invalid]="
+                        raw_material_sales_expense.at(i).get('cgst_percentage')
+                          ?.errors &&
+                        raw_material_sales_expense.at(i).get('cgst_percentage')
+                          ?.touched
+                      "
+                    />
+                  </div>
+                  <div class="py-2">
+                    <input
+                      readonly
+                      class="form-control"
+                      type="text"
+                      formControlName="cgst_amount"
+                      [class.is-invalid]="
+                        raw_material_sales_expense.at(i).get('cgst_amount')
+                          ?.errors &&
+                        raw_material_sales_expense.at(i).get('cgst_amount')
+                          ?.touched
+                      "
+                    />
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="">
+                  <div>
+                    <input
+                      readonly
+                      class="form-control"
+                      type="text"
+                      formControlName="igst_percentage"
+                      [class.is-invalid]="
+                        raw_material_sales_expense.at(i).get('igst_percentage')
+                          ?.errors &&
+                        raw_material_sales_expense.at(i).get('igst_percentage')
+                          ?.touched
+                      "
+                    />
+                  </div>
+                  <div class="pt-2">
+                    <input
+                      readonly
+                      class="form-control"
+                      type="text"
+                      formControlName="igst_amount"
+                      [class.is-invalid]="
+                        raw_material_sales_expense.at(i).get('igst_amount')
+                          ?.errors &&
+                        raw_material_sales_expense.at(i).get('igst_amount')
+                          ?.touched
+                      "
+                    />
+                  </div>
+                  <div class="py-2">
+                    <b>CESS</b>
+                  </div>
+                  <div>
+                    <input
+                      readonly
+                      class="form-control"
+                      type="text"
+                      formControlName="cess_percentage"
+                      [class.is-invalid]="
+                        raw_material_sales_expense.at(i).get('cess_percentage')
+                          ?.errors &&
+                        raw_material_sales_expense.at(i).get('cess_percentage')
+                          ?.touched
+                      "
+                    />
+                  </div>
+                  <div class="pt-2">
+                    <input
+                      readonly
+                      class="form-control"
+                      type="text"
+                      formControlName="cess_amount"
+                      [class.is-invalid]="
+                        raw_material_sales_expense.at(i).get('cess_amount')
+                          ?.errors &&
+                        raw_material_sales_expense.at(i).get('cess_amount')
+                          ?.touched
+                      "
+                    />
+                  </div>
+                </div>
+              </td>
+              <td>
+                <input
+                  readonly
+                  class="form-control"
+                  type="text"
+                  formControlName="total_expense_amount"
+                  [class.is-invalid]="
+                    raw_material_sales_expense.at(i).get('total_expense_amount')
+                      ?.errors &&
+                    raw_material_sales_expense.at(i).get('total_expense_amount')
+                      ?.touched
+                  "
+                />
+              </td>
+              <td class="align-middle">
+                <a
+                  *ngIf="!last"
+                  (click)="deleteItem(i)"
+                  type="submit"
+                  class="vector-delete m-2"
+                  >DEL
+                  <i class="fa" aria-hidden="true"
+                    ><img src="assets/img/vector-delete.png" alt="" /></i
+                ></a>
+                <a
+                  *ngIf="last"
+                  (click)="addItems(i)"
+                  type="submit"
+                  class="tablebtn-save m-2"
+                >
+                  ADD
+                  <i class="fa" aria-hidden="true">
+                    <img src="assets/img/vector-add.png" alt="" />
+                  </i>
+                </a>
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+
+        <ng-container formArrayName="raw_material_sales_tax">
+          <ng-container
+            *ngFor="
+              let item of raw_material_sales_tax.controls;
+              let i = index;
+              let last = last
+            "
+            [formGroupName]="i"
+          >
+            <tr>
+              <td>#</td>
+              <td>
+                {{ item.value.name }}
+              </td>
+              <td></td>
+              <td></td>
+
+              <td></td>
+              <td></td>
+              <td>
+                <div
+                  class="input-group"
+                  *ngIf="['Discount'].includes(item.value.name)"
+                >
+                  <input
+                    (input)="totalDiscount(i)"
+                    class="form-control"
+                    type="text"
+                    formControlName="tax_percentage"
+                    [class.is-invalid]="
+                      raw_material_sales_tax.at(i).get('tax_percentage')
+                        ?.errors &&
+                      raw_material_sales_tax.at(i).get('tax_percentage')
+                        ?.touched
+                    "
+                  />
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">%</div>
+                  </div>
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+              <td>
+                <div *ngIf="['Discount'].includes(item.value.name)">
+                  <input
+                    class="form-control"
+                    readonly
+                    type="text"
+                    formControlName="total_tax_amount"
+                    [class.is-invalid]="
+                      raw_material_sales_tax.at(i).get('total_tax_amount')
+                        ?.errors &&
+                      raw_material_sales_tax.at(i).get('total_tax_amount')
+                        ?.touched
+                    "
+                  />
+                </div>
+                <div *ngIf="['Round Off'].includes(item.value.name)">
+                  <input
+                    class="form-control"
+                    (input)="calculateRoundOff(i)"
+                    type="text"
+                    formControlName="total_tax_amount"
+                    [class.is-invalid]="
+                      raw_material_sales_tax.at(i).get('total_tax_amount')
+                        ?.errors &&
+                      raw_material_sales_tax.at(i).get('total_tax_amount')
+                        ?.touched
+                    "
+                  />
+                </div>
+              </td>
+              <td class="align-middle">
+                <div *ngIf="['Discount'].includes(item.value.name)">-</div>
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+        <tr>
+          <td colspan="9">Total Bill Value</td>
+          <td>
+            <input
+              class="form-control"
+              readonly
+              [value]="totalBill?.value"
+              type="text"
+            />
+          </td>
+          <td class="align-middle"></td>
+        </tr>
+        <!-- <button hidden #submitButton="" type="submit">Save</button> -->
+      </table>
+    </div>
+  </ng-container>
+  <ng-template #normalTax>
+    <div class="createtable-section table-responsive">
+      <table class="text-nowrap">
+        <ng-container formArrayName="raw_material_sales_tax">
+          <ng-container
+            *ngFor="
+              let item of raw_material_sales_tax.controls;
+              let i = index;
+              let last = last
+            "
+            [formGroupName]="i"
+          >
+            <tr>
+              <td class="text-center">
+                <ng-container *ngIf="i == 6">
+                  <div class="d-flex align-raw_material_sales_tax-center">
+                    <!-- <ng-container *ngFor="let tax_type of ENTRY_TAX_TYPE_CHOICES">
+                                        <label class="mx-1">
+                                            <input type="radio" [name]="'type'" [value]="tax_type.value"
+                                                formControlName="type">
+                                            {{tax_type.label}}
+                                        </label>
+                                    </ng-container> -->
+                    <label class="mx-1">
+                      <input
+                        type="radio"
+                        (change)="onCommonRowChanged(i)"
+                        name="choice"
+                        value="on_item_value"
+                        formControlName="choice"
+                      />
+                      On Item Value
+                    </label>
+                    <label class="mx-1">
+                      <input
+                        type="radio"
+                        (change)="onCommonRowChanged(i)"
+                        name="choice"
+                        value="on_before_vat_cst"
+                        formControlName="choice"
+                      />
+                      On Before VAT/CST
+                    </label>
+                    <label class="mx-1">
+                      <input
+                        type="radio"
+                        (change)="onCommonRowChanged(i)"
+                        name="choice"
+                        value="on_after_vat_cst"
+                        formControlName="choice"
+                      />
+                      On After VAT/CST
+                    </label>
+                  </div>
+                  <div class="mt-2">
+                    <div class="text-danger">
+                      <div
+                        *ngIf="
+                          raw_material_sales_tax.at(i).get('choice')?.errors
+                        "
+                      >
+                        Please choose any one.
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </td>
+              <td>
+                <div *ngIf="i == 6">
+                  <input
+                    formControlName="extra"
+                    (change)="onCommonRowChanged(i)"
+                    class="form-check-input"
+                    type="checkbox"
+                  />
+                  <label class="form-check-label mx-2">
+                    Is Entry Tax Paid
+                  </label>
+                </div>
+              </td>
+              <td>
+                <span>{{ item.value.name }}</span>
+              </td>
+              <td>
+                <div
+                  *ngIf="
+                    ![
+                      'Freight',
+                      'Round Off',
+                      'Others',
+                      'Edu Cess.',
+                      'SHE Cess.'
+                    ].includes(item.value.name)
+                  "
+                >
+                  @
+                </div>
+              </td>
+              <td>
+                <div
+                  *ngIf="
+                    ![
+                      'Freight',
+                      'Round Off',
+                      'Others',
+                      'Edu Cess.',
+                      'SHE Cess.'
+                    ].includes(item.value.name)
+                  "
+                >
+                  <ng-select
+                    formControlName="tax_head"
+                    placeholder="Please Select"
+                    (change)="onVatTaxHeadChange(i)"
+                    [class.is-invalid]="
+                      raw_material_sales_tax.at(i).get('tax_head')?.errors &&
+                      raw_material_sales_tax.at(i).get('tax_head')?.touched
+                    "
+                  >
+                    <ng-option
+                      *ngFor="let taxHead of taxHeads"
+                      [value]="taxHead.id"
+                      >{{ taxHead.name }}</ng-option
+                    >
+                  </ng-select>
+                </div>
+              </td>
+              <td>
+                <div
+                  *ngIf="
+                    ![
+                      'Freight',
+                      'Round Off',
+                      'Others',
+                      'Edu Cess.',
+                      'SHE Cess.'
+                    ].includes(item.value.name)
+                  "
+                >
+                  <input
+                    formControlName="included"
+                    class="form-check-input"
+                    type="checkbox"
+                  />
+                  <label class="form-check-label mx-2"> Incl. </label>
+                </div>
+              </td>
+              <td>
+                <div
+                  class="input-group"
+                  *ngIf="
+                    !['Freight', 'Round Off', 'Others'].includes(
+                      item.value.name
+                    )
+                  "
+                >
+                  <input
+                    amountNumber
+                    (input)="taxAmountCal(i)"
+                    class="form-control"
+                    type="text"
+                    formControlName="tax_percentage"
+                    [class.is-invalid]="
+                      raw_material_sales_tax.at(i).get('tax_percentage')
+                        ?.errors &&
+                      raw_material_sales_tax.at(i).get('tax_percentage')
+                        ?.touched
+                    "
+                  />
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">%</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <input
+                  amountNumber
+                  class="form-control"
+                  type="text"
+                  (input)="taxPercentageCal(i)"
+                  formControlName="tax_amount"
+                  [class.is-invalid]="
+                    raw_material_sales_tax.at(i).get('tax_amount')?.errors &&
+                    raw_material_sales_tax.at(i).get('tax_amount')?.touched
+                  "
+                />
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+        <tr>
+          <td colspan="2"></td>
+          <td>Total Value</td>
+          <td colspan="4"></td>
+          <td>
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              [value]="totalAmount + totalTax() | number : '1.2-2'"
+            />
+          </td>
+        </tr>
+        <!-- <button hidden #submitButton="" type="submit">Save</button> -->
+      </table>
+    </div>
+  </ng-template>
+  <button hidden #submitButton="" type="submit">Save</button>
+</form>

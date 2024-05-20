@@ -1,0 +1,111 @@
+.hideOnPrintScreen {
+    display: none !important;
+}
+.print-button {
+    float: right;
+    position: relative;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    z-index: 999;
+}
+.segnature-section {
+    display: flex;
+    justify-content: space-between;
+    text-decoration: underline;
+    font-size: 12px;
+    margin: 0 50px;
+    margin-top: 100px;
+}
+.print-button img {
+    height: 30px;
+    width: 30px;
+}
+
+.creatematerial h3{
+    display: none;
+}
+
+.align-middle, .btn-cancel, .boq-material-details, .tablegroup-text, .ng-arrow-wrapper {
+    display: none !important;
+}
+
+.row {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    flex-wrap: wrap;
+}
+
+label, select, input, .form-control, p, .tablegroup-text, .ng-select-container {
+    border: none !important;
+    font-size: inherit !important;
+    color: black !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    text-wrap: wrap;
+}
+select::-ms-expand {
+    display: none !important;
+}
+select {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    text-indent: 1px !important;
+    text-overflow: '' !important;
+}
+.creatematerial {
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+table, tr, th, td {
+    background: transparent !important;
+    font-size: 10px !important;
+    border:  1px solid black !important;
+    color: black !important;
+    padding: 0px !important;
+}
+
+table tr:nth-child(2) {
+    display: none !important;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    background: none;
+}
+
+.companyDetails {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+.companyCard h1 {
+    text-align: center;
+    font-size: 14px;
+}
+.print-heade h1 {
+    text-align: center;
+    text-decoration: underline;
+    margin: 25px 0px 25px 0px;
+    font-size: 16px;
+}
+
+@media print 
+{
+   @page
+   {
+    size: 8.5in 5.5in;
+    size: landscape;
+  }
+}

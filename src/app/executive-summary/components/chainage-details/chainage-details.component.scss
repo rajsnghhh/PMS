@@ -1,0 +1,90 @@
+.addbtn {
+    width: 57px;
+    background-color: #162efe;
+    color: white;
+    border-radius: 5px;
+}
+
+.deletebtn {
+    width: 57px;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+}
+
+.inputCss {
+    width: 100%;
+    font-size: revert-layer;
+    border: 1px solid #80808075;
+    border-radius: 3px;
+    min-height: 26px;
+}
+
+select {
+    width: 100%;
+    font-size: revert-layer;
+    border: 1px solid #80808075;
+    border-radius: 3px;
+    min-height: 26px;
+}
+
+::ng-deep .c-btn {
+    min-height: unset !important;
+    font-size: unset !important;
+}
+
+.asterisk {
+    color: red;
+}
+
+.component-body table td {
+    padding: 2px 2px !important;
+}
+
+.showOnly {
+    border: 1px solid gray;
+    width: 20px;
+    padding: 0;
+    margin: 0;
+    top: 10px;
+    left: 45px;
+    border-radius: 0;
+    background: transparent;
+    position: absolute;
+}
+
+.customCode {
+    padding-left: 70px;
+}
+
+.invalid-feedback {
+    display: block !important;
+}
+
+.editbtn {
+    width: 57px;
+    background-color: #162efe;
+    color: white;
+    border-radius: 5px;
+}
+.tendertab ul li button {
+    padding: 6px 10px;
+    min-width: 80px;
+    font-size: 11px;
+}
+
+button:focus {
+    outline: none;
+}
+
+.acc_btn {
+    padding: 5px 14px;
+}
+
+.accordion-header{
+    margin: 0;
+}
+
+.accordion-body {
+    padding: 14px;
+}

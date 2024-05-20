@@ -1,0 +1,41 @@
+.main-body-container {
+  max-width: 100%;
+  overflow-x: scroll;
+  table {
+    th {
+      background: #5577FF;
+      color: #FFFFFF;
+      font-weight: 200;
+      font-size: 14px;
+      max-width: auto;
+      width: auto;
+    }
+    td,th {
+      border: 1px solid #e2e2e2b5;
+      .table-icon {
+        height: 20px;
+        width: 20px;
+      }
+      .bold {
+        font-weight: 500;
+        color: #262626;
+      }
+      .success {
+        font-weight: 500;
+        color: #3CC763;
+      }
+      .blue {
+        font-weight: 500;
+        color: #5577FF;
+      }
+    }
+    td {
+      color: #666666;
+      font-size: 12px;
+      max-width: auto;
+      width: auto;
+      text-wrap: wrap;
+    }
+
+  }
+}

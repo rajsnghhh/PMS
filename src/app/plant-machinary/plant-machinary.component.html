@@ -1,0 +1,118 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Plant Machinery</h2>
+        <div class="action-button-container">
+            <button class="btn btn-secondary" type="button" id="dropdownSelectColoum" data-bs-toggle="dropdown" aria-expanded="false">EXPORT<img src="assets/usermanagement/Export.png"></button>  
+            <ul class="dropdown-menu" aria-labelledby="dropdownSelectColoum" style="width: 0%;">
+                <li class="downloadall" (click)="downloadPdf()">
+                    <span><img src="assets/usermanagement/download_pdf.png" class="export"><strong>PDF</strong> </span>
+                </li>
+                <li class="downloadall" (click)="downloadCsv()">
+                    <span ><img src="assets/usermanagement/download_csv.png"  class="export" ><strong>CSV</strong> </span>
+                </li>
+            </ul>  
+            <button (click)="addNewGroup(null)">Add Plant Machinery<img src="assets/header/add.png" alt=""></button>
+        </div>
+    </div>
+
+    <div class="component-body">
+        <div class="scrollable-table-container table_scroll">
+
+            <table class="scrollable-table" *ngIf="plantMachineryList.length > 0" #customscroll>
+
+                <tr>
+                    <th class="posion-fixed-left-sno">S.No</th>
+                    <th *ngFor="let tditem of plantMachineryList[0].plant_machinery_data; let i = index"
+                        [ngClass]="{'posion-fixed-left': i == 0 }">
+                        {{tditem.form_label}}</th>
+                    <th class="posion-fixed-right lstheight ">Action</th>
+                </tr>
+
+                <tr *ngFor="let item of plantMachineryList; let i = index">
+                    <td class="posion-fixed-left-sno"> {{ (pageSize*(page-1)) + i+1.}}</td>
+                    <td class="fstwidth"
+                        *ngFor="let tditem of plantMachineryList[i].plant_machinery_data; let j = index"
+                        [ngClass]="{'posion-fixed-left': j == 0 }">
+                        {{tditem.value?tditem.value:'-'}}</td>
+                    <td class="posion-fixed-right surveybutton">
+                        <div class="custom-section">
+                            <div class="dropdown">
+                                <span class="dropbtn"><img src="assets/icons/dots.png" alt=""></span>
+                                <div class="dropdown-content">
+                                    <div class="img-container">
+                                        <div class="img-container">
+                                            <span (click)="addNewGroup(item)" data-bs-toggle="offcanvas"
+                                                data-bs-target="#offcanvasRightLabelEditPlant"><label>Edit Plant
+                                                    Machinery</label></span>
+                                            <span data-bs-toggle="offcanvas" (click)="deletePlantValue(item)"
+                                                data-bs-toggle="modal" data-bs-target="#deleteGroup"><label>Delete Plant
+                                                    Machinery</label></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+            <table>
+                <tr class="text-center" *ngIf="plantMachineryList.length == 0">
+                    <td colspan="3">No data found.</td>
+                </tr>
+            </table>
+            <div class="tablescroll_btn">
+                <div class="btn_action prev_btn" (click)="previous()">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="btn_action next_btn" (click)="next()">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end importbox" tabindex="-1" id="offcanvasRightLabelAddPlant"
+    aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Add New Plant Machinery</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <app-add-plant-machinary (parentFun)="closeAddCanvas()"></app-add-plant-machinary>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end importbox" tabindex="-1" id="offcanvasRightLabelEditPlant"
+    aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Update Plant Machinery</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body" *ngIf="editItem">
+        <app-add-plant-machinary (parentFun)="closeAddCanvas()" [editItem]="editItem"></app-add-plant-machinary>
+    </div>
+</div>
+
+<app-table-paginate (emitpage)="getPaginate()"></app-table-paginate>
+
+
+<div class="modal fade" id="deleteGroup" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this data ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="deletePlantModel()">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>

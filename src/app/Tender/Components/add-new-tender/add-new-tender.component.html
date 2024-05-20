@@ -1,0 +1,129 @@
+<div class="survey-main" [ngClass]="{'eval': openfromEvaluation}">
+    <div class="survey-progress">
+        <ul>
+            <li *ngFor="let navData of MenuFormList"
+                (click)="changeNav(navData.form_name,navData.form_type_name,navData.button_name)"
+                [ngClass]="{'active-nav' : currentNav == navData.form_name,'hidden' : showNav(navData.form_type_name) == true ,'completed': navData.is_deactive==true, 'disable': navData.is_active==true}">
+                {{navData.form_name}}
+            </li>
+        </ul>
+    </div>
+    <div class="survey-content" id="scrollTO">
+        <div class="responsec-container table_scroll" *ngIf="responseData.length > 0 && openTab=='edit'">
+            <table #customscroll>
+                <tr>
+                    <th *ngFor="let rs of responseData">{{rs.form_label}}</th>
+                </tr>
+                <tr>
+                    <td *ngFor="let rs of responseData">{{rs.value}}</td>
+                </tr>
+            </table>
+            
+            <div class="tablescroll_btn">
+                <div class="btn_action prev_btn" (click)="previous()">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="btn_action next_btn" (click)="next()">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+        <div class="survey-content-main">
+            <div hidden class="survey-header">
+                <h1>{{formFieldListName}}</h1>
+                <button type="button" (click)="proceedNext()">SKIP NOW</button>
+            </div>
+            <div class="survey-body">
+                <div class="form-conatainer">
+                    <app-tender-exicutive-commttee 
+                        [TenderNumber]="TenderNumber"
+                        [MenuFormList]="MenuFormList" 
+                        [tenderFlags]="tenderFlags" 
+                        [selectedTab]="selectedTab" 
+                        *ngIf="selectedTab == 'tender_executive_commitee' || selectedTab == 'tender_final_approval'">
+                    </app-tender-exicutive-commttee>
+                    <app-jv-share-analytics
+                        [TenderNumber]="TenderNumber"
+                        [selectedTab]="selectedTab" 
+                        *ngIf="selectedTab == 'percentage_share_analytics'"
+                    ></app-jv-share-analytics>
+                    <app-chainage-details 
+                        [selectedTab]="selectedTab"
+                        [prefieldData]="prefieldData"
+                        [usingIn]="UsingIn"
+                        [TenderNumber]="TenderNumber"
+                        [DisableModify]="!prefieldData?.results?.form_editable"
+                        (emitPrefieldData)="getPrefildData()"
+                        *ngIf="selectedTab == 'tender_executive_summary'">
+                    </app-chainage-details>
+                    <app-lmpi-boq
+                        [TenderNumber]="TenderNumber"
+                        [selectedTab]="selectedTab" 
+                        [DisableModify]="!prefieldData?.results?.form_editable"
+                        *ngIf="selectedTab == 'tender_lmpi_group'"  
+                    >
+                    </app-lmpi-boq>
+                    <app-tender-top-sheet
+                        [TenderNumber]="TenderNumber"
+                        [DisableModify]="!prefieldData?.Data?.form_editable"
+                        [formData]="tempformFieldList"
+                        [prefieldData]="prefieldData" 
+                        *ngIf="selectedTab == 'tender_top_sheet'">
+                    </app-tender-top-sheet>
+                    <div class="alert alert-warning" role="alert" *ngIf="showAlert">
+                        Resend request from <b>{{prefieldData.Data.resend_user_name}}</b>
+                        <p><b>Remarks :</b> {{prefieldData.Data.resend_for_recommendation_remarks}}</p>
+                    </div>
+                    <app-dynamic-forms 
+                        *ngIf="!disableDynamicFormScope.includes(selectedTab)"
+                        (parentCompFun)="genarateTenderData($event)"
+                        (proceedNext)="proceedNext()" 
+                        [selectedTab]="selectedTab"
+                        [activeFromName]="activeFromName"
+                        [actionName]="ActionButtonName" 
+                        [formData]="formFieldList"
+                        [prefieldData]="prefieldData" 
+                        [chieldActionRequired]="true"
+                        [tenderAction]="tenderActionData" #dynamicForm>
+                    </app-dynamic-forms>
+                </div>
+                <div class="lowerSection"  *ngIf="activeFromName == 'tender_survey_details' && !surveyDataOpen">
+                    <div class="flexcss">
+                        <img class="survey" src="assets/img/surveyImage.png" alt="">
+                    </div>
+                    <div class="flexcss">
+                        <span><b>Admin and Liasoning</b> has been assigned to <b>{{prefieldData.results?.survey_assigned_members[0].liason_members}}</b>&nbsp;<span *ngIf="prefieldData.results?.is_liason_survey_complete==true"> and completed on <b>{{prefieldData.results.liason_survey_completion_date | date:'dd MMM, yyyy'}}</b><img class="statusIcon" src="assets/usermanagement/tick.png" alt=""></span></span>  
+                    </div>
+
+                    <div class="flexcss">
+                        <span><b>Physical Fesibility</b> has been assigned to <b>{{prefieldData.results?.survey_assigned_members[0].physical_feasibility_members}}</b>&nbsp;<span *ngIf="prefieldData.results?.is_physical_survey_complete==true"> and completed on <b>{{prefieldData.results.physical_survey_completion_date | date:'dd MMM, yyyy'}}</b><img class="statusIcon" src="assets/usermanagement/tick.png" alt=""></span></span>  
+                    </div>
+                    <div class="flexcss" >
+                        <span><b>Material rate</b> has been assigned to <b>{{prefieldData.results?.survey_assigned_members[0].material_members}}</b>&nbsp;<span *ngIf="prefieldData.results?.is_material_survey_complete==true"> and completed on <b>{{prefieldData.results.material_survey_completion_date | date:'dd MMM, yyyy'}}</b><img class="statusIcon" src="assets/usermanagement/tick.png" alt=""></span></span>  
+                    </div>
+                    <div class="flexcss">
+                        <span><b>Statutory and Taxation</b> has been assigned to <b>{{prefieldData.results?.survey_assigned_members[0].taxation_members}}</b>&nbsp;<span *ngIf="prefieldData.results?.is_taxation_survey_complete==true"> and completed on <b>{{prefieldData.results.taxation_survey_completion_date | date:'dd MMM, yyyy'}}</b><img class="statusIcon" src="assets/usermanagement/tick.png" alt=""></span></span>  
+                    </div>
+                    <div class="flexcss">
+                        <button type="button" class="startSurvey" (click)="viewSurvey()">View SURVEY</button>
+                        <button type="button"  *ngIf="prefieldData.results?.is_survey_complete_button_show==true" class="startSurvey" (click)="surveyComplete()">Complete Survey</button>
+
+                    </div>
+                    <!-- <div class="flexcss" *ngIf="prefieldData.results.survey_status == 'due'">
+                        <span>Survey has been assigned to <b>{{prefieldData.results.survey_assigned_members}}</b>.Not started yet!</span>  
+                    </div>
+                    <div class="flexcss" *ngIf="prefieldData.results.survey_status == 'in_progress'">
+                        <span>Survey has been started by <b>{{prefieldData.results.survey_assigned_members}}</b>.Not completed yet!</span>  
+                        <button type="button" class="startSurvey" (click)="viewSurvey()">View SURVEY</button>
+                    </div>
+                    <div class="flexcss" *ngIf="prefieldData.results.survey_status == 'completed'">
+                        <span>Survey has been completed by <b>{{prefieldData.results.survey_assigned_members}}</b> </span> 
+                        <button type="button" class="startSurvey" (click)="viewSurvey()">View SURVEY</button>
+                    </div> -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

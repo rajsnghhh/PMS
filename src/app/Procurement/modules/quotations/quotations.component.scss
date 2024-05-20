@@ -1,0 +1,345 @@
+h1 {
+    font-size: 18px;
+    padding: 11px 0px 0px 3px;
+    color: #57f;
+    text-transform: capitalize;
+}
+
+kendo-pdf-export {
+    font-family: "DejaVu Sans", "Arial", sans-serif;
+    font-size: 12px;
+}
+ 
+.action-buttons {
+    display: flex;
+    justify-content: end;
+}
+.view-details-main {
+    margin: 10px;
+
+    section {
+        border: 2px solid #001d8f;
+        margin: 15px 0px 0px 0px;
+        z-index: 999;
+    }
+
+    .card {
+        border-radius: 0;
+        border: 2px solid #001d8f;
+        padding: 3px 10px 25px 10px;
+    }
+
+    table {
+        width: 100%;
+
+        th {
+            font-size: 12px;
+            background-color: #57f;
+            color: white;
+            font-weight: 200;
+            padding: 5px;
+            border: 1px solid #57f;
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        tr,
+        td {
+            border: 1px solid;
+        }
+    }
+
+    .parrentTable {
+        th {
+            background-color: #001d8f;
+            height: 65px;
+        }
+    }
+
+    h1 {
+        font-size: 12px;
+        color: #57f;
+        margin-bottom: 0;
+    }
+
+    .center {
+        text-align: center;
+    }
+}
+
+.top-space {
+    margin-top: -95px;
+}
+
+.uomCol {
+    max-width: 80px;
+}
+
+select {
+    max-width: 200px;
+    border: none;
+    background: transparent !important;
+    appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+    z-index: -999;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.lowest-quote {
+    background: white;
+    width: 45px;
+    height: 35px;
+    padding: 0px;
+    margin: 0;
+    font-weight: 800;
+    font-size: 23px;
+    float: right;
+    text-align: center;
+    border-radius: 3px;
+}
+
+.quotation-comapair-container {
+    box-sizing: border-box;
+    margin: 10px;
+
+    *,
+    *:before,
+    *:after {
+        box-sizing: inherit;
+    }
+
+    .intro {
+        max-width: 1280px;
+        margin: 1em auto;
+    }
+
+    .table-scroll {
+        position: relative;
+        width: 100%;
+        z-index: 1;
+        margin: auto;
+        overflow: auto;
+        height: 440px;
+        padding-right: 10px;
+    }
+
+    button.exportbtn {
+        background-image: linear-gradient(to right, #40d4e6, #6675fe);
+        padding: 7px 17px;
+        border-radius: 4px;
+        border: none;
+        color: white;
+        font-size: 14px;
+        font-weight: 400;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: baseline;
+        width: auto;
+        margin: 0 0 10px 10px;
+    }
+
+    .table-scroll table {
+        width: 100%;
+        height: 100%;
+        // min-width: 1280px;
+        margin: auto;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .table-wrap {
+        position: relative;
+    }
+
+    .table-scroll th,
+    .table-scroll td {
+        padding: 5px 10px;
+        border: 1px solid #57f;
+        background: #fff;
+        vertical-align: top;
+    }
+
+    .table-scroll thead th {
+        background: #57f;
+        color: #fff;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        height: 70px;
+    }
+
+    /* safari and ios need the tfoot itself to be position:sticky also */
+    .table-scroll tfoot,
+    .table-scroll tfoot th,
+    .table-scroll tfoot td {
+        position: -webkit-sticky;
+        position: sticky;
+        bottom: 0;
+        background: #666;
+        color: #fff;
+        z-index: 4;
+    }
+
+    a:focus {
+        background: red;
+    }
+
+    /* testing links*/
+
+    th:first-child {
+        position: -webkit-sticky;
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        background: #ccc;
+    }
+
+    thead th:first-child,
+    tfoot th:first-child {
+        z-index: 5;
+    }
+
+    .custom-div-container {
+        display: flex;
+        flex-wrap: wrap;
+
+        .customDiv {
+            width: 25%;
+            border: 1px solid #57f;
+            padding: 5px 10px;
+        }
+    }
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+}
+
+.custom-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #333;
+    border-radius: 4px;
+    outline: none;
+    margin-right: 8px;
+    cursor: pointer;
+    /* Add the following lines to display the checkmark */
+    position: relative;
+}
+
+.custom-checkbox:checked {
+    background-color: #4CAF50 !important;
+    border-color: #4CAF50 !important;
+}
+
+.custom-checkbox:checked::before {
+    content: '\2713';
+    /* Unicode checkmark character */
+    font-size: 14px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.checkbox-label {
+    cursor: pointer;
+}
+
+.action-button {
+    background-color: white;
+    border: 1px solid blue;
+    border-radius: 8px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    padding: 4px 12px;
+    box-shadow: 1px 1px;
+}
+
+.quotation-comapair-container .table-scroll table.custom-div-container {
+    min-width: auto;
+    display: initial;
+}
+
+.customDiv{
+    position: sticky;
+    left: 0;
+    background: #fff;
+}
+
+.customDiv:nth-child(1){
+    width: 90px;
+    max-width: 90px;
+    text-align: center;
+    left: 0;
+}
+.customDiv:nth-child(2){
+    left: 7%;
+    width: 250px;
+    max-width: 250px;
+}
+.customDiv:nth-child(3){
+    left: 25%;
+    width: 90px;
+    max-width: 90px;
+    text-align: center;
+}
+.customDiv:nth-child(4){
+    left: 32%;
+    width: 90px;
+    max-width: 90px;
+    text-align: center;
+}
+
+.item-table {
+    padding: 0 !important;
+    table {
+        height: 100%;
+        width: 100%;
+
+        tr {
+            td:nth-child(1){
+                width: 15%;
+            }
+            td:nth-child(2){
+                width: 35%;
+            }
+            td:nth-child(3){
+                width: 35%;
+            }
+            td:nth-child(4){
+                width: 15%;
+            }
+        }
+    }
+}
+
+.highlight-row {
+    background-color: #d8dfff !important;
+}
+.main-header1 {
+    th {
+        border-bottom: 1.5px solid white !important;
+    }
+}
+.print-now {
+    th {
+        background: #d8dfff !important;
+        color: black !important;
+        font-size: 20px;
+    }
+}

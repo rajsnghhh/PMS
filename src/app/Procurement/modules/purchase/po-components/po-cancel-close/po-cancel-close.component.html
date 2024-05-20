@@ -1,0 +1,163 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Purchase Order (Cancel/Close)</h2>
+    </div>
+
+    <div class="component-body">
+        <form name="addUser" #f="ngForm" (ngSubmit)="f.form.valid && onSearch()" novalidate
+            style="margin-bottom: 19px;">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12">
+                <div class="addressform">
+                    <label>From Date</label>
+                    <input type="date" [(ngModel)]="addUser.from_date" name="from_date" placeholder="From Date"
+                        id="date" class="form-control">
+                </div></div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                <div class="addressform">
+                    <label>To Date</label>
+                    <input type="date" [(ngModel)]="addUser.to_date" name="to_date" placeholder="To Date" id="date"
+                        class="form-control">
+                </div></div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                <div class="addressform">
+                    <label>Item Group</label>
+                    <angular2-multiselect [data]="dropdownMultiselectGroupList" [(ngModel)]="addUser.group" name="group"
+                        [settings]="dropdownMultiselectGroupListSettings" (onSelect)="onMultiSelectAddUser($event)"
+                        (onDeSelect)="OnMultiDeSelectAddUser($event)" (onSelectAll)="onMultiSelectAddUserAll($event)"
+                        (onDeSelectAll)="onMultiDeSelectAddUserAll($event)">
+                    </angular2-multiselect>
+                </div></div>
+                
+                 <div class="col-lg-4 col-md-6 col-12">
+                <div class="addressform">
+                    <label>Vendor</label>
+                    <angular2-multiselect [data]="dropdownMultiselectVendorList" [(ngModel)]="addUser.vendor"
+                        name="vendor" [settings]="dropdownMultiselectVendorListSettings"
+                        (onSelect)="onMultiSelectAddUser3($event)" (onDeSelect)="OnMultiDeSelectAddUser3($event)"
+                        (onSelectAll)="onMultiSelectAddUserAll3($event)"
+                        (onDeSelectAll)="onMultiDeSelectAddUserAll3($event)">
+                    </angular2-multiselect>
+                </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                <div class="addressform">
+                    <label>Site</label>
+                    <angular2-multiselect [data]="dropdownMultiselectSiteList" [(ngModel)]="addUser.site" name="site"
+                        [settings]="dropdownMultiselectSiteListSettings" (onSelect)="onMultiSelectAddUser2($event)"
+                        (onDeSelect)="OnMultiDeSelectAddUser2($event)" (onSelectAll)="onMultiSelectAddUserAll2($event)"
+                        (onDeSelectAll)="onMultiDeSelectAddUserAll2($event)">
+                    </angular2-multiselect>
+                </div></div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                <div class="addressform">
+                    <label>GRN Status</label>
+                    <select [(ngModel)]="addUser.grn_status" name="grn_status" class="form-control">
+                        <option value="">All</option>
+                        <option value="pending">Pending</option>
+                        <option value="checked">Checked</option>
+                        <option value="cancelled">Cancelled</option>
+                        <option value="close">Close</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div></div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                <div class="addressform">
+                    <label>Sanction Status</label>
+                    <select [(ngModel)]="addUser.sanc_status" name="sanc_status" class="form-control">
+                        <option value="">All</option>
+                        <option value="pending">Pending</option>
+                        <option value="checked">Checked</option>
+                        <option value="cancelled">Cancelled</option>
+                        <option value="close">Close</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div></div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                <div class="addressform">
+                    <label>PO No.</label>
+                    <input type="text" [(ngModel)]="addUser.po_no" name="po_no" placeholder="PO No"
+                        class="form-control">
+                </div></div>
+                <div class="col-lg-4 col-md-6 col-12">
+                <div class="addressform">
+                    <label>Sanction By</label>
+                    <select [(ngModel)]="addUser.sanction_by" name="sanction_by" class="form-control">
+                        <option value="">Please Select</option>
+                        <option *ngFor="let userData of userlist" value="{{userData.id}}">{{userData.full_name}}
+                        </option>
+                    </select>
+                </div></div>
+
+            </div>
+            <div class="btd-section">
+                <button type="submit" class="btn-save">Search</button>
+            </div>
+        </form>
+
+        <div class="component-header" *ngIf="poCheckboxIdsForCancelClose.length>0">
+            <div class="action-button-container">
+                <button data-bs-toggle="offcanvas"  data-bs-target="#offcanvasRightLabeladdrole"
+                    aria-controls="offcanvasRight" (click)="onSubmit()">Save<img src="assets/header/add.png"
+                alt=""></button>
+            </div>
+        </div>
+
+        <table class="table text-nowrap">
+            <tr>
+                <th>SrNo.</th>
+                <th>PO.No.</th>
+                <th>PO. Date</th>
+                <th>Indent No.</th>
+                <th>Vendor</th>
+                <th>GRN Status</th>
+                <th>Sanction Status</th>
+                <th>For Site</th>
+                <th>PO.Qty</th>
+                <th>Pen. Qty</th>
+                <th>Change PO. Status</th>
+            </tr>
+            <tr *ngFor="let po of purchaseOrderList;let i =index">
+                <td>{{i+1}}.</td>
+                <td>{{po.request_code}}</td>
+                <td>{{po.date | date:'dd-MM-yyyy'}}</td>
+                <td>{{po.linked_docs?.indent}}
+                </td>
+                <td>{{po.vendor}}</td>
+                <td>
+                    <div *ngIf="po.grn_details?.length>0">
+                        {{po.grn_details[0]?.status}}
+                    </div>
+                </td>
+                <td>{{po.status}}</td>
+                <td>
+                    <div *ngIf="po.site_details?.length>0">
+                        {{po.site_details[0]?.site_name}}
+                    </div>
+                </td>
+                <td>{{po?.total_item_item_quantity}}</td>
+                <td>{{po?.total_item_item_quantity - po?.grn_quantity}}</td>
+                <td>
+                    <input class="form-control" style="display: inline;width: unset;" type="date" name="satusDate{{i+1}}" [(ngModel)]="po.satusDate">
+                    <input class="" type="checkbox" name="poItem{{i+1}}" [(ngModel)]="po.poItem" (change)="onPOCheckboxChange($event, po.id)">
+                    
+                    <select class="form-control" style="display: inline;width: unset;" name="changeStatus{{i+1}}" [(ngModel)]="po.changeStatus">
+                        <option value="cancel">Cancel</option>
+                        <option value="close">Close</option>
+                    </select>
+                </td>
+            </tr>
+            <tr *ngIf="purchaseOrderList?.length==0">
+                <td class="text-center" colspan="11"> No Data Found!</td>
+            </tr>
+        </table>
+    </div>
+</div>

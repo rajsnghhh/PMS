@@ -1,0 +1,142 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Bill Received</h2>
+    </div>
+
+    <div class="component-body">
+        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>SrNo.</label>
+                        <input type="text" name="sr_no " [(ngModel)]="form.sr_no " #sr_no="ngModel" placeholder=""
+                            id="sr_no" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Received Date</label><input type="date" disabled  name="received_date "
+                            [(ngModel)]="form.received_date " #received_date="ngModel" placeholder="" id="received_date"
+                            class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Bill No. <span class="asterisk">*</span></label>
+                        <input type="text" name="manual_slip_number" required
+                            [ngClass]="{ 'is-invalid': f.submitted && manual_slip_number.errors }" [(ngModel)]="form.manual_slip_number "
+                            #manual_slip_number="ngModel" placeholder="" id="manual_slip_number" class="form-control">
+                        <div *ngIf="f.submitted && manual_slip_number.errors" class="invalid-feedback">
+                            <div *ngIf="manual_slip_number.errors['required']">Bill No is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Bill Date</label>
+                        <input type="date" name="bill_date " [(ngModel)]="form.bill_date "
+                            #bill_date="ngModel" placeholder="" id="bill_date" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Party Name<span class="asterisk">*</span></label>
+                        <select id="sel1" class="form-control" required ngDefaultControl name="vendor "
+                            [(ngModel)]="form.vendor " #vendor="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && vendor.errors }">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let vendor of vendorList" value="{{vendor.id}}">
+                                {{vendor.vendor_master_data.vendor_name}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && vendor .errors" class="invalid-feedback">
+                            <div *ngIf="vendor .errors['required']">Party is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Bill Type</label>
+                        <select id="sel1" class="form-control" ngDefaultControl name="bill_type "
+                            [(ngModel)]="form.bill_type " #bill_type="ngModel">
+                            <option value="">-- select --</option>
+                            <option value="purchase">Purchase</option>
+                            <option value="journal">Journal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Amount<span class="asterisk">*</span></label>
+                        <input type="number" name="amount " required
+                            [ngClass]="{ 'is-invalid': f.submitted && amount.errors }" [(ngModel)]="form.amount "
+                            #amount="ngModel" placeholder="" id="amount" class="form-control">
+                        <div *ngIf="f.submitted && amount.errors" class="invalid-feedback">
+                            <div *ngIf="amount.errors['required']">Amount is required</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Forward to User<span class="asterisk">*</span></label>
+                        <select id="sel1" class="form-control" required ngDefaultControl name="forward_to_user "
+                            [(ngModel)]="form.forward_to_user " #forward_to_user="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && forward_to_user.errors }">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let request of userList" value="{{request.id}}">
+                                {{request.full_name}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && forward_to_user.errors" class="invalid-feedback">
+                            <div *ngIf="forward_to_user .errors['required']">User is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Nature Of Work</label>
+                        <textarea type="text" name="nature_of_work " [(ngModel)]="form.nature_of_work "
+                            #nature_of_work="ngModel" placeholder="" id="nature_of_work"
+                            class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Site</label>
+                        <input type="text" class="form-control" [disabled]="true" [value]="localStorageData?.site_data?.site_name">
+                        <!-- <select id="sel1" class="form-control" required ngDefaultControl name="site "
+                            [(ngModel)]="form.site " #site="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && site.errors }">
+                            <option value="">-- select --</option>
+                            <option *ngFor="let siteData of siteList" value="{{siteData.id}}">
+                                {{siteData.site_name}}</option>
+                        </select> -->
+                        <!-- <div *ngIf="f.submitted && site .errors" class="invalid-feedback">
+                            <div *ngIf="site .errors['required']">Site is required</div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>File Number</label><input type="number" name="file_no " [(ngModel)]="form.file_no "
+                            #file_no="ngModel" placeholder="" id="file_no" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="adform">
+                        <label>Attach Doccument</label>
+                        <input type="file" name="fileData " [(ngModel)]="form.fileData" (change)="uploadFile($event)"
+                            #fileData="ngModel" placeholder="" id="fileData" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-12">
+                <div class="btd-section">
+                    <button *ngIf="!perticularEditID" type="submit" class="btn-save">SAVE</button>
+                    <button *ngIf="perticularEditID" type="submit" class="btn-save">UPDATE</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="main-container">
+    <div class="component-header">
+        <h2>Check List Item</h2>
+    </div>
+    
+    <div class="component-body">
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <label for="">Check Item<span class="asterisk">*</span></label>
+                <!-- [(ngModel)]="data.shortname" -->
+                <input type="text" [(ngModel)]="check_items" class="form-control" placeholder="Check Item" >
+
+                <div *ngIf="check_items ==''" class="invalid-feedback" style="display: block;">
+                    <div >Check item is required</div>
+                </div>
+            </div>
+        </div>
+
+        <table>
+
+            <tr>
+                <th style="width: 10%;">Item Group Name <span class="asterisk">*</span></th>
+                <th style="width: 15%;">Description</th>
+                <th style="width: 4%;">Add</th>
+            </tr>
+
+            <tr *ngFor="let data of checkListData;let i =index">
+                <td style="width: 10%;">
+                    <!-- (change)="typeChange(data.group)" -->
+                    <select [(ngModel)]="data.group" class="form-control">
+                        <option selected disabled value="">Select Group</option>
+                        <option value={{group.id}} *ngFor="let group of materialTypeList">{{group.name}}</option>
+                    </select>
+
+                    <div *ngIf="(itemGroupErrorFlag == true)" class="invalid-feedback" style="display: block;">
+                        <div *ngIf="(data.group == '')">Item Group Name is required</div>
+                    </div>
+                </td>
+                <td style="width: 15%;">
+                    <input class="form-control" [(ngModel)]="data.description" placeholder="Description" type="text">
+                </td>
+                
+                <td style="width: 4%;">
+                    <button *ngIf="i==0" class="addbtn" (click)=addRow()>Add</button>
+                    <button *ngIf="i!=0" class="deletebtn" (click)=deleteRow(i)>Delete</button>
+                </td>
+            </tr>
+
+        </table>
+        <div class="text-center mt-2">
+            <button type="button" class="btn btn-primary" (click)="onSave()">Save</button>
+        </div>
+    </div>
+
+
+</div>

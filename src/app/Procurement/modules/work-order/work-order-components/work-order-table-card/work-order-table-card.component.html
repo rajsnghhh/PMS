@@ -1,0 +1,489 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+
+    <div class="tabs">
+        <div class="tab" [class.active]="activeTab === 'tab1'" (click)="openTab(event, 'tab1')">Work Detail</div>
+        <div class="tab" [class.active]="activeTab === 'tab2'" (click)="openTab(event, 'tab2')">Terms & Conditions</div>
+        <div class="tab" [class.active]="activeTab === 'tab3'" (click)="openTab(event, 'tab3')">Requirement</div>
+        <div class="tab" [class.active]="activeTab === 'tab4'" (click)="openTab(event, 'tab4')">Material</div>
+        <div class="tab" [class.active]="activeTab === 'tab5'" (click)="openTab(event, 'tab5')">Labour</div>
+    </div>
+
+    <!-- Tab 1 begins here for work details -->
+
+    <div class="tab-content p-0" id="tab1">
+        <div class="workdetail-task">
+        <input type="checkbox" id="place_of_supply" class="form-check-input" [(ngModel)]="form.place_of_supply"
+            #place_of_supply="ngModel" name="place_of_supply">
+        <label for="place_of_supply">Fill Work Detail On Selection of Task.</label>
+        </div>
+
+
+        <div class="createtable-section">
+            <table>
+                <tr>
+                    <th>Sr.&nbsp;No</th>
+                    <th>Work</th>
+                    <th>Work Detail</th>
+                    <th>Rate</th>
+                    <th>Qty</th>
+                    <th>Unit</th>
+                    <th>Amt.</th>
+                    <th>Action</th>
+                </tr>
+                <tr class="">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="align-middle">
+                        <a (click)="addWorkDetails()" type="button" class="tablebtn-save">ADD
+                            <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png" alt=""></i>
+                        </a>
+                    </td>
+                </tr>
+
+                <tr class="tablebg" *ngFor="let item of form.details; let i = index">
+                    <td>#{{i+1}}</td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="task{{i+1}}">Service<br>Item:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select class="form-control" name="task{{i+1}}" [(ngModel)]="form.details[i].task"
+                                        required #task="ngModel" [ngClass]="{'is-invalid': f.submitted && task.errors}">
+                                        <option value="" disabled>-- select --</option>
+                                        <option *ngFor="let groupTask of groupTaskList" value="{{groupTask.id}}">
+                                            {{groupTask.short_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder="" required
+                                [(ngModel)]="form.details[i].work_detail" #work_detail="ngModel"
+                                name="work_detail{{i+1}}"
+                                [ngClass]="{ 'is-invalid': f.submitted && work_detail.errors }">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="tablegroup">
+                            <input type="number" class="form-control" id="data" placeholder="" required
+                                [(ngModel)]="form.details[i].rate" #rate="ngModel" name="details_rate{{i+1}}"
+                                [ngClass]="{ 'is-invalid': f.submitted && rate.errors }" amountNumber
+                                (ngModelChange)="showDetailsCalculatedAmt(i)" (change)="calculateTotal(discount_percentage, service_tax_amt)">
+                        </div>
+                    </td>
+
+                    <td style="width: 10%;">
+                        <div class="tablegroup">
+                            <input type="number" class="form-control" id="data" placeholder=""
+                                [(ngModel)]="form.details[i].quantity" #quantity="ngModel" required
+                                name="details_quantity{{i+1}}" [ngClass]="{ 'is-invalid': f.submitted && quantity.errors }"
+                                amountNumber (ngModelChange)="showDetailsCalculatedAmt(i)" (change)="calculateTotal(discount_percentage, service_tax_amt)">
+                        </div>
+                    </td>
+
+
+                    <td>
+                        <div class="tablegroup">
+                            <select class="form-control" name="uom{{i+1}}" [(ngModel)]="form.details[i].uom"
+                                #uom="ngModel" [ngClass]="{ 'is-invalid': f.submitted && uom.errors }" required>
+
+                                <option value="" disabled>-- select unit --</option>
+                                <option *ngFor="let uom of uomList" [value]="uom.id">{{uom.symbol}}</option>
+                            </select>
+                        </div>
+                    </td>
+
+                    <td style="width: 10%;">
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder="" required
+                                [(ngModel)]="form.details[i].amount" #amount="ngModel" name="details_amount{{i+1}}"
+                                [ngClass]="{ 'is-invalid': f.submitted && amount.errors }" amountNumber
+                                (ngModelChange)="showDetailsCalculatedAmt(i)" readonly>
+                        </div>
+                    </td>
+
+                    <td class="align-middle">
+                        <a (click)="deleteWorkDetails(i)" type="submit" class="vector-delete">DEL<i class="fa"
+                                aria-hidden="true"><img src="assets/img/vector-delete.png" alt=""></i></a>
+                    </td>
+
+                </tr>
+
+                    <tr>
+                        <td colspan="5"></td>
+                        <td >Total</td>
+                        <td colspan="2">
+                            <div class="tablegroup">
+                                <input type="text" class="form-control-num" id="data" placeholder="0.00"
+                                    name="total_item_amt" readonly [(ngModel)]="total_item_amt">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="5"></td>
+                        <td>Discount</td>
+                        <td colspan="2">
+                            <div class="tablegroup">
+                                <input type="number" class="form-control-num" id="data" name="discount_percentage" [(ngModel)]="discount_percentage"
+                                placeholder="0.00" (change)="calculateTotal(discount_percentage, service_tax_amt)">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="5"></td>
+                        <td><input type="checkbox" (change)="toggle()"/>(Inclusive) Service Tax</td>
+                        <td colspan="2">
+                            <div class="tablegroup">
+                                <input type="number" class="form-control-num" id="data" [disabled]="disable_service_tax_amt" placeholder="0.00"
+                                    name="service_tax_amt" [(ngModel)]="service_tax_amt" (change)="calculateTotal(discount_percentage, service_tax_amt)">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="5"></td>
+                        <td>Grand Total</td>
+                        <td colspan="2">
+                            <div class="tablegroup">
+                                <input type="text" class="form-control-num" id="data" placeholder="0.00"
+                                    name="total_net_amt" readonly [(ngModel)]="total_net_amt">
+                            </div>
+                        </td>
+                    </tr>
+
+
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Tab 2 begins here for Terms & Conditions -->
+
+    <div class="tab-content" id="tab2">
+
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Terms & Conditions</legend>
+            <div class="createtable-section">
+                <table>
+                    <tr>
+                        <th>Sr.&nbsp;No</th>
+                        <th>Title</th>
+                        <th>Particulars</th>
+                    </tr>
+
+
+                    <tr class="tablebg" *ngFor="let item of terms_conditions_of_wo; let i = index">
+                        <td>#{{i+1}}</td>
+                        <td>
+                            <input type="text" placeholder="" id="title{{i}}" class="form-control" name="title"
+                                [(ngModel)]="form.terms_conditions[i].title" [ngModelOptions]="{standalone: true}"
+                                #title="ngModel">
+                        </td>
+                        <td>
+                            <input type="text" placeholder="" id="description{{i}}" class="form-control"
+                                name="description" [(ngModel)]="form.terms_conditions[i].description"
+                                #description="ngModel" [ngModelOptions]="{standalone: true}">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </fieldset>
+    </div>
+
+
+    <!-- Tab 3 begins here for Requirement/Terms & Conditions -->
+
+    <div class="tab-content" id="tab3">
+
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Requirement</legend>
+            <div class="createtable-section">
+                <table>
+
+                    <tr>
+                        <th>Sr.&nbsp;No</th>
+                        <th>Requirement</th>
+                        <th>Action</th>
+                    </tr>
+
+                    <tr class="">
+                        <td></td>
+                        <td></td>
+                        <td class="align-middle narrow-column"><a (click)="addRequirements()" type="submit"
+                                class="tablebtn-save">ADD <i class="fa" aria-hidden="true"><img
+                                        src="assets/img/vector-add.png" alt=""></i></a></td>
+                    </tr>
+
+                    <tr class="tablebg" *ngFor="let item of form.requirements; let i = index">
+                        <td>#{{i+1}}</td>
+                        <td>
+                            <textarea [(ngModel)]="form.requirements[i].requirement" class="form-control"
+                                name="requirement{{i+1}}" name="requirement" #requirement="ngModel">
+                          </textarea>
+                        </td>
+                        <td class="align-middle narrow-column">
+                            <a (click)="deleteRequirements(i)" type="button" class="vector-delete">DEL
+                                <i class="fa" aria-hidden="true"><img src="assets/img/vector-delete.png" alt=""></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </fieldset>
+
+        <!-- <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Terms & Conditions</legend>
+            <div class="createtable-section">
+                <table>
+                    <tr>
+                        <th>Sr.&nbsp;No</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+
+                    <tr class="tablebg" *ngFor="let item of form.payment_schedule; let i = index">
+                        <td>{{i+1}}</td>
+                        <td><input type="text" [(ngModel)]="form.payment_schedule[i].percent" class="form-control"
+                                name="percent{{i+1}}" required name="percent" #percent="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && percent.errors }">
+                        </td>
+                        <td><input type="text" [(ngModel)]="form.payment_schedule[i].percent" class="form-control"
+                                name="percent{{i+1}}" required name="percent" #percent="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && percent.errors }">
+                        </td> 
+
+                        <td class="align-middle narrow-column">
+                            <a (click)="addRequirements()" type="button" class="tablebtn-save">ADD
+                                <i class="fa" aria-hidden="true"><img src="assets/img/vector-add.png" alt=""></i>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </fieldset> -->
+
+    </div>
+
+    <!-- Tab 4 begins here for materials -->
+    <div class="tab-content" id="tab4">
+        <div class="createtable-section table-responsive">
+            <table class="text-nowrap">
+                <tr>
+                    <th>Sr.&nbsp;No</th>
+                    <th>Material</th>
+                    <th>Qty.</th>
+                    <th>Unit</th>
+                    <th>Rate</th>
+                    <th>Amt.</th>
+                    <th>Adv. Less</th>
+                    <th>Action</th>
+                </tr>
+                <tr class="">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="align-middle narrow-column"><a (click)="addMoreMaterial()" type="submit"
+                            class="tablebtn-save">ADD <i class="fa" aria-hidden="true"><img
+                                    src="assets/img/vector-add.png" alt=""></i></a></td>
+                </tr>
+                <tr class="tablebg" *ngFor="let item of form.materials; let i = index">
+                    <td>#{{i+1}}</td>
+                    <td>
+                        <div class="tablegroup">
+
+                            <label>Item Group</label>
+                            <select class="form-control" name="requested_material_group{{i+1}}"
+                                [(ngModel)]="form.materials[i].requested_material_group"
+                                #requested_material_group="ngModel"
+                                (change)="typeChange(form.materials[i].requested_material_group,i)">
+                                <option value="" disabled>Select Material Group</option>
+                                <option *ngFor="let materialGroup of masterlist" [value]="materialGroup.id">
+                                    {{materialGroup.name}}</option>
+                            </select>
+
+                            <label>Item Sub Group</label>
+                            <select class="form-control" name="requested_material_sub_group{{i+1}}"
+                                [(ngModel)]="form.materials[i].requested_material_sub_group"
+                                #requested_material_sub_group="ngModel"
+                                (change)="subTypeChange(form.materials[i].requested_material_sub_group, i)">
+                                <option value="" disabled>Select Material Sub Group</option>
+                                <option *ngFor="let subGroup of form.materials[i].MaterilSubGroupList"
+                                    [value]="subGroup.id">{{subGroup.name}}</option>
+                            </select>
+
+                            <label>Item</label>
+                            <select class="form-control" name="material{{i+1}}" [(ngModel)]="form.materials[i].material"
+                                #material="ngModel" (change)="setUOM($event,i)">
+                                <option value="" disabled>Select Material</option>
+                                <option *ngFor="let masterData of form.materials[i].MaterilFilterList"
+                                    [value]="masterData.id">{{masterData.material_name}}</option>
+                            </select>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder="" name="materials_quantity{{i+1}}"
+                                [(ngModel)]="form.materials[i].quantity" #quantity="ngModel" amountNumber
+                                (ngModelChange)="showMaterialsCalculatedAmt(i)">
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <select class="form-control" name="unit{{i+1}}" [(ngModel)]="form.materials[i].unit"
+                                #unit="ngModel" [ngClass]="{ 'is-invalid': f.submitted && unit.errors }">
+
+                                <option value="" disabled>-- select unit --</option>
+                                <option *ngFor="let uom of uomList" [value]="uom.id">{{uom.symbol}}</option>
+                            </select>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder="" name="materials_rate{{i+1}}"
+                                [(ngModel)]="form.materials[i].rate" #rate="ngModel" amountNumber
+                                (ngModelChange)="showMaterialsCalculatedAmt(i)">
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder="" name="materials_amount{{i+1}}"
+                                [(ngModel)]="form.materials[i].amount" #amount="ngModel" amountNumber
+                                (ngModelChange)="showMaterialsCalculatedAmt(i)" readonly>
+                        </div>
+                    </td>
+
+                    <td>
+                        <label class="radio-label">
+                            <input type="radio" name="adv_less_material{{i+1}}" [(ngModel)]="form.materials[i].adv_less"
+                                value="add">(+)Add
+                        </label>
+
+                        <label class="radio-label">
+                            <input type="radio" name="adv_less_material{{i+1}}" [(ngModel)]="form.materials[i].adv_less"
+                                value="less">(-)Less
+                        </label>
+                    </td>
+
+                    <td class="align-middle narrow-column">
+                        <a (click)="deleteMaterials(i)" type="submit" class="vector-delete">DEL <i class="fa"
+                                aria-hidden="true"><img src="assets/img/vector-delete.png" alt=""></i></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Tab 5 begins here for labours -->
+
+    <div class="tab-content" id="tab5">
+        <div class="createtable-section table-responsive">
+            <table class="text-nowrap">
+                <tr>
+                    <th>Sr.&nbsp;No</th>
+                    <th>Category</th>
+                    <th>Nos./Qty.</th>
+                    <th>Rate</th>
+                    <th>Amt.</th>
+                    <th>Adv. Less</th>
+                    <th>Action</th>
+                </tr>
+                <tr class="">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="align-middle narrow-column"><a (click)="addMoreLabour()" type="submit"
+                            class="tablebtn-save">ADD <i class="fa" aria-hidden="true"><img
+                                    src="assets/img/vector-add.png" alt=""></i></a></td>
+                </tr>
+                <tr class="tablebg" *ngFor="let item of form.labors; let i = index">
+                    <td>#{{i+1}}</td>
+                    <td>
+                        <div class="tablegroup">
+                            <select class="form-control" name="category{{i+1}}" [(ngModel)]="form.labors[i].category"
+                                #category="ngModel">
+                                <option value="" disabled>-- select category --</option>
+                                <option value="{{labmasterData.id}}" *ngFor="let labmasterData of labourMasterlist">
+                                    {{labmasterData.cost_type}} |
+                                    {{labmasterData.component}} | {{labmasterData.name}} </option>
+                            </select>
+
+
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder="" name="labors_quantity{{i+1}}"
+                                [(ngModel)]="form.labors[i].quantity" #quantity="ngModel" amountNumber
+                                (ngModelChange)="showLaborsCalculatedAmt(i)">
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder="" name="labors_rate{{i+1}}"
+                                [(ngModel)]="form.labors[i].rate" #rate="ngModel" amountNumber
+                                (ngModelChange)="showLaborsCalculatedAmt(i)">
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="tablegroup">
+                            <input type="text" class="form-control" id="data" placeholder="" name="labors_amount{{i+1}}"
+                                [(ngModel)]="form.labors[i].amount" #amount="ngModel" amountNumber
+                                (ngModelChange)="showLaborsCalculatedAmt(i)" readonly>
+                        </div>
+                    </td>
+
+                    <td>
+                        <label class="radio-label">
+                            <input type="radio" name="adv_less_labor{{i+1}}" [(ngModel)]="form.labors[i].adv_less"
+                                value="add">(+)Add
+                        </label>
+
+                        <label class="radio-label">
+                            <input type="radio" name="adv_less_labor{{i+1}}" [(ngModel)]="form.labors[i].adv_less"
+                                value="less">(-)Less
+                        </label>
+                    </td>
+
+                    <td class="align-middle narrow-column">
+                        <a (click)="deleteLabours(i)" type="submit" class="vector-delete">DEL <i class="fa"
+                                aria-hidden="true"><img src="assets/img/vector-delete.png" alt=""></i></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <button hidden #submitButton="" type="submit">Save</button>
+
+</form>

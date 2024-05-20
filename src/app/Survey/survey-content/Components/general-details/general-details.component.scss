@@ -1,0 +1,14 @@
+.flex-div .mb-3 {
+    width: 32%!important;
+}
+
+.custom-select-input {
+    input:first-child {
+        border-radius: 25px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+.mb-3 label {
+    font-size: 10px!important;
+}

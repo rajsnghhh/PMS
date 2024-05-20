@@ -1,0 +1,150 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && addUpdateSingleLogBookMachine()" novalidate>
+    <!-- <div class="mb-3 float-now" >
+        <select class="form-select" name="financialyear" [ngClass]="{ 'is-invalid': f.submitted && financialyear.errors }"
+            [(ngModel)]="form.financialyear" required #financialyear="ngModel">
+            <option value="">Financial Year</option>
+            <option value="{{projectSite.id}}" *ngFor="let projectSite of financialYearData">{{projectSite.description}}</option>
+        </select>
+        <label class="floating-label">Financial Year <span class="asterisk">*</span></label>
+    </div> -->
+    <div class="mb-3 float-now" >
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3 float-now" >
+                    <input type="date" name="date" class="form-control" [(ngModel)]="form.date" #date="ngModel">
+                    <label class="floating-label">Date</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 float-now" >
+                    <input type="time" name="from_time" class="form-control" [(ngModel)]="form.from_time" #from_time="ngModel">
+                    <label class="floating-label">From</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 float-now" >
+                    <input type="time" name="to_time" class="form-control" [(ngModel)]="form.to_time" #to_time="ngModel">
+                    <label class="floating-label">To</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mb-3" [ngClass]="{ 'float-now': form.owner != '' }">
+        <label >Owner </label>
+        <div class="mb-3">
+            <input type="radio" name="owner" [(ngModel)]="form.owner" #owner="ngModel" value="self"> Self 
+            <input type="radio" name="owner" [(ngModel)]="form.owner" #owner="ngModel" value="hired"> Hired
+        </div>
+    </div>
+    <div class="mb-3 float-now" >
+        <label class="floating-label">Shift </label>
+        <select class="form-control" name="shift" [(ngModel)]="form.shift" #shift="ngModel">
+            <option value="">Select</option>
+            <option value="Day">Day</option>    
+            <option value="Night">Night</option>
+        </select>
+    </div>
+    <!-- <div class="mb-3" [ngClass]="{ 'float-now': form.shift != '' }">
+        <select class="form-control" name="" [(ngModel)]="form.shift" #shift="ngModel">
+            <option value="">Select</option>
+            
+        </select>
+        <label class="floating-label">Machine Category </label>
+    </div> -->
+    <div class="mb-3 float-now" >
+        <select name="machine_no" class="form-control" required [ngClass]="{ 'is-invalid': f.submitted && plantmachinery.errors }" [(ngModel)]="form.plantmachinery" #plantmachinery="ngModel">
+            <option value="">Select</option>
+            <option value="{{pnEmasterData.id}}" *ngFor="let pnEmasterData of PnEmasterlist">
+                {{pnEmasterData.plant_machinery_data[0].value}} |
+                {{pnEmasterData.plant_machinery_data[1].value}} | Monthly Charge -
+                {{pnEmasterData.plant_machinery_data[25].value}} 
+            </option>
+        </select>
+        <label class="floating-label">Machine <span class="asterisk">*</span></label>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3" [ngClass]="{ 'float-now': form.fuel_opening != '' }">
+                <input type="number" name="fuel_opening" class="form-control" [(ngModel)]="form.fuel_opening" #fuel_opening="ngModel">
+                <label class="floating-label">Fuel Opening</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3" [ngClass]="{ 'float-now': form.fuel_closing != '' }">
+                <input type="number" name="fuel_closing" class="form-control" [(ngModel)]="form.fuel_closing" #fuel_closing="ngModel">
+                <label class="floating-label">Closing</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3" [ngClass]="{ 'float-now': form.issue != '' }">
+                <input type="number" name="issue" class="form-control" [(ngModel)]="form.issue" #issue="ngModel">
+                <label class="floating-label">Fuel Issue</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3" [ngClass]="{ 'float-now': form.consumption != '' }">
+                <input type="number" name="consumption" class="form-control" [(ngModel)]="form.consumption" #consumption="ngModel">
+                <label class="floating-label">Consumption</label>
+            </div>
+        </div>
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': form.driver_operator != '' }">
+        <input type="text" name="driver_operator" [(ngModel)]="form.driver_operator" #driver_operator="ngModel" class="form-control">
+        <label class="floating-label">Driver/Operator </label>
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': form.helper_cleaner != '' }">
+        <input type="text" name="helper_cleaner" [(ngModel)]="form.helper_cleaner" #helper_cleaner="ngModel" class="form-control">
+        <label class="floating-label">Helper/Cleaner </label>
+    </div>
+    <div class="mb-3" [ngClass]="{'float-now': form.store != ''}">
+        <select class="form-control" name="store" [(ngModel)]="form.store" #store="ngModel" 
+        >
+            <option disabled>-- select --</option>
+            <option *ngFor="let storeData of storeList" value="{{storeData.id}}">
+                {{storeData.store_name}}
+            </option>
+        </select>
+        <label class="floating-label-select">Location</label>
+    </div>
+    <div class="row">
+        <!-- <div class="col-md-4">
+            <div class="mb-3" [ngClass]="{ 'float-now': form.consumption != '' }">
+                <input type="number" name="consumption" class="form-control" [(ngModel)]="form.consumption" #consumption="ngModel" disabled>
+                <label class="floating-label">Consumption</label>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3" [ngClass]="{ 'float-now': form.issue != '' }">
+                <input type="number" name="issue" class="form-control" [(ngModel)]="form.issue" #issue="ngModel" disabled>
+                <label class="floating-label">Issue</label>
+            </div>
+        </div> -->
+        <div class="col-md-6">
+            <div class="mb-3" [ngClass]="{ 'float-now': form.average != '' }">
+                <input type="number" name="average" class="form-control" [(ngModel)]="form.average" #average="ngModel" >
+                <label class="floating-label">Average</label>
+            </div>
+        </div>
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': form.work_done_type != '' }">
+        <textarea name="work_done_type" class="form-control" [(ngModel)]="form.work_done_type" #work_done_type="ngModel" cols="30" rows="5" class="form-control"></textarea>
+        <label class="floating-label">Work Done/Type</label>
+    </div>
+    <div class="mb-3" [ngClass]="{ 'float-now': form.remark != '' }">
+        <textarea name="remark" class="form-control" [(ngModel)]="form.remark" #remark="ngModel" cols="30" rows="5" class="form-control"></textarea>
+        <label class="floating-label">Remark</label>
+    </div>
+
+    <div class="mb-3 eachfield">
+        <label for="">Attachments <span class="asterisk" style="color: crimson;">*</span></label>
+        <input type="file" multiple="multiple" (change)="handleUpload($event)" class="custom-file-input" id="customFile">
+    </div>
+
+    <div class="pull-right">
+        <button class="btn-save" type="submit">Save</button>
+    </div>
+</form>
+    

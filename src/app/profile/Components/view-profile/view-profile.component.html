@@ -1,0 +1,514 @@
+<div class="row">
+  <div class="lefttSide">
+    <h5 class="seacondheader">User Profile</h5>
+    <div class="work-card" (click)="onTab('personal')">
+      <div class="work-header" [ngClass]="{ headerActive: ActiveClass=='personal' }">
+        <span>PERSONAL INFORMATION</span>
+      </div>
+    </div>
+    <div class="work-card" (click)="onTab('academic')">
+      <div class="work-header" [ngClass]="{ headerActive: ActiveClass=='academic' }">
+        <span>ACADEMIC INFORMATION</span>
+      </div>
+    </div>
+    <div class="work-card" (click)="onTab('professional')">
+      <div class="work-header" [ngClass]="{ headerActive: ActiveClass=='professional' }">
+        <span>PROFESSIONAL INFORMATION</span>
+      </div>
+    </div>
+    <div class="work-card" (click)="onTab('license')">
+      <div class="work-header" [ngClass]="{ headerActive: ActiveClass=='license' }">
+        <span>LICENSES & CERTIFICATIONS</span>
+      </div>
+    </div>
+    <div class="work-card" (click)="onTab('other')">
+      <div class="work-header" [ngClass]="{ headerActive: ActiveClass=='other' }">
+        <span>OTHER INFORMATION</span>
+      </div>
+    </div>
+  </div>
+  <div class="rightSide">
+
+    <div class="work-card1">
+      <div class="work-header1 workh_con" *ngIf="ActiveClass=='personal'">
+        <span>Personal Information</span>
+        <button *ngIf="editInput==''" class="editbtn" (click)="editProfile('editpersonal')"><img
+            src="assets/icons/editing.png">EDIT</button>
+      </div>
+      <div class="work-header1 workh_con" *ngIf="ActiveClass=='other'">
+        <span>OTHER INFORMATION</span>
+        <button *ngIf="editInput==''" class="editbtn" (click)="editProfile('editother')"><img
+            src="assets/icons/editing.png">EDIT</button>
+      </div>
+      <div class="work-header1 workh_con" *ngIf="ActiveClass=='academic'">
+        <span>ACADEMIC INFORMATION</span>
+        <button *ngIf="editInput==''" class="editbtn" (click)="editProfile('editacademic')"><img
+            src="assets/icons/editing.png">EDIT</button>
+      </div>
+      <div class="work-header1 workh_con" *ngIf="ActiveClass=='professional'">
+        <span>PROFESSIONAL INFORMATION</span>
+        <button *ngIf="editInput==''" class="editbtn" (click)="editProfile('editprofessional')"><img
+            src="assets/icons/editing.png">EDIT</button>
+      </div>
+      <div class="work-header1 workh_con" *ngIf="ActiveClass=='license'">
+        <span>LICENSES & CERTIFICATIONS</span>
+        <button *ngIf="editInput==''" class="editbtn" (click)="editProfile('editlicense')"><img
+            src="assets/icons/editing.png">EDIT</button>
+      </div>
+    </div>
+    <div class="upperbox">
+      <div class="roundimage">
+        <div class="profile-holder" *ngIf="profileListData?.profile_pic_url!=''">
+          <div class="profile_img">
+
+            <img alt="User Pic" src={{profileListData?.profile_pic_url}}
+              class="img-circle img-responsive Profile_image prouser">
+          </div>
+          <img *ngIf="editInput=='editpersonal'" class="uploadImage" (click)="userImagefile.click()"
+            src="assets/icons/upload-image.png">
+        </div>
+        <input class="filedisplay" type="file" accept="image/*" (change)="uploadFile($event)" #userImagefile>
+        <div *ngIf="profileListData?.profile_pic_url==''" class="avtar prouser profile-holder">
+          <p>{{profileListData?.first_name | titlecase | slice:0:1}}{{profileListData?.last_name | titlecase |
+            slice:0:1}}</p>
+          <img *ngIf="editInput=='editpersonal'" class="uploadImage" (click)="userImagefile.click()"
+            src="assets/icons/upload-image.png">
+        </div>
+      </div>
+      <div class="mainlabel">
+        <h1 class="labelName">User Name : <span> {{profileListData?.first_name}}
+            {{profileListData?.last_name}}</span></h1>
+        <h1 class="labelName">User Id : <span> {{profileListData?.employe_code}}</span></h1>
+      </div>
+    </div>
+    <div class="tableview" *ngIf="ActiveClass=='personal' && editInput==''">
+      <div class="tabledata personaltable">First Name : {{profileListData?.first_name}}</div>
+      <div class="tabledata personaltable">Last Name : {{profileListData?.last_name}}</div>
+      <div class="tabledata personaltable">Date of Birth : {{profileListData?.date_of_birth}}</div>
+      <div class="tabledata personaltable">Gender : {{profileListData?.gender}}</div>
+      <div class="tabledata personaltable">Marital Status : {{profileListData?.maratial_status}}</div>
+      <div class="tabledata personaltable">Blood Group : {{profileListData?.blood_group}}</div>
+      <div class="tabledata personaltable">Adhar No : {{profileListData?.aadhar_number}}</div>
+      <div class="tabledata personaltable">Pan No : {{profileListData?.pan_number}}</div>
+      <div class="tabledata personaltable">Phone No : {{profileListData?.phone_no}}</div>
+      <div class="tabledata personaltable">Father's Name : {{profileListData?.fathers_name}}</div>
+      <div class="tabledata personaltable">Mother's Name : {{profileListData?.mothers_name}}</div>
+      <div class="tabledata personaltable">Address 1 : {{profileListData?.address_line_1}}</div>
+      <div class="tabledata personaltable">Address 2 : {{profileListData?.address_line_2}}</div>
+      <div class="tabledata personaltable">Country : {{profileListData?.country_details?.name}}</div>
+      <div class="tabledata personaltable">State : {{profileListData?.state_details?.name}}</div>
+      <div class="tabledata personaltable">City : {{profileListData?.city_details?.name}}</div>
+      <div class="tabledata personaltable">Emergency Contact Name : {{profileListData?.emergency_contact_name}}</div>
+      <div class="tabledata personaltable">Emergency Contact Phone No : {{profileListData?.emergency_contact_phone_no}}
+      </div>
+    </div>
+    <div class="tableparent" *ngIf="ActiveClass=='academic' && editInput==''">
+      <div class="tableview" *ngFor="let academic of profileListData?.academic_qualifications">
+        <div class="tabledata">Academic Qualification : {{academic?.qualifications_name}}</div>
+        <div class="tabledata">Details : {{academic?.details}}</div>
+        <div class="actionbtn">
+          <img (click)="downloadFile(academic.file)" src="assets/icons/download.jfif">
+          <img (click)="deleteAcademic(academic.id)" src="assets/icons/delete1.png">
+        </div>
+      </div>
+    </div>
+    <div class="tableparent" *ngIf="ActiveClass=='professional' && editInput==''">
+      <div class="tableview" *ngFor="let profession of profileListData?.work_experience">
+        <div class="tabledata">Organization Name : {{profession?.organization_name}}</div>
+        <div class="actionbtn">
+          <img (click)="downloadFile(profession.file)" src="assets/icons/download.jfif">
+          <img (click)="deleteProfessional(profession.id)" src="assets/icons/delete1.png">
+        </div>
+      </div>
+    </div>
+    <div class="tableparent" *ngIf="ActiveClass=='license' && editInput==''">
+      <div class="tableview" *ngFor="let license of profileListData?.license_details">
+        <div class="tabledata">Licenses & Certifications : {{license?.license_name}}</div>
+        <div class="actionbtn">
+          <img (click)="downloadFile(license.file)" src="assets/icons/download.jfif">
+          <img (click)="deleteLicense(license.id)" src="assets/icons/delete1.png">
+        </div>
+      </div>
+    </div>
+    <div class="tableparent" *ngIf="ActiveClass=='other' && editInput==''">
+      <div class="tableview" *ngFor="let other of profileListData?.other_documents">
+        <div class="tabledata">Other Documents : {{other?.document_name}}</div>
+        <div class="actionbtn">
+          <img (click)="downloadFile(other.file)" src="assets/icons/download.jfif">
+          <img (click)="deleteOther(other.id)" src="assets/icons/delete1.png">
+        </div>
+      </div>
+    </div>
+    <div class="fieldForm" *ngIf="editInput=='editpersonal'">
+      <form class="allfield" name="addPersonalInformation" #f="ngForm" (ngSubmit)="f.form.valid && personalSubmit()"
+        novalidate>
+
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>First Name</label>
+            <input type="text" class="form-control" charOnly id="fname" name="first_name"
+              [ngClass]="{ 'is-invalid': f.submitted && first_name.errors }"
+              [(ngModel)]="addPersonalInformation.first_name" required #first_name="ngModel"
+              placeholder="Enter First Name">
+          </div>
+          <div *ngIf="f.submitted && first_name.errors" class="invalid-feedback">
+            <div *ngIf="first_name.errors['required']">First name is required</div>
+          </div>
+        </div>
+
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Last Name</label>
+            <input type="text" class="form-control" charOnly id="lname" name="last_name"
+              [ngClass]="{ 'is-invalid': f.submitted && last_name.errors }"
+              [(ngModel)]="addPersonalInformation.last_name" required #last_name="ngModel"
+              placeholder="Enter Last Name">
+          </div>
+          <div *ngIf="f.submitted && last_name.errors" class="invalid-feedback">
+            <div *ngIf="last_name.errors['required']">Last name is required</div>
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Date of Birth</label>
+            <input type="date" class="form-control" id="date" name="date_of_birth"
+              [ngClass]="{ 'is-invalid': f.submitted && date_of_birth.errors }"
+              [(ngModel)]="addPersonalInformation.date_of_birth" required #date_of_birth="ngModel"
+              placeholder="Enter Date of Birth">
+          </div>
+          <div *ngIf="f.submitted && date_of_birth.errors" class="invalid-feedback">
+            <div *ngIf="date_of_birth.errors['required']">Date of birth is required</div>
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Gender</label>
+            <select class="form-select" name="gender" [ngClass]="{ 'is-invalid': f.submitted && gender.errors }"
+              [(ngModel)]="addPersonalInformation.gender" required #gender="ngModel">
+              <option value="">Select Gender</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Others</option>
+            </select>
+          </div>
+          <div *ngIf="f.submitted && gender.errors" class="invalid-feedback">
+            <div *ngIf="gender.errors['required']">Gender is required</div>
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Marital Status</label>
+            <select class="form-select" name="maratial_status"
+              [ngClass]="{ 'is-invalid': f.submitted && maratial_status.errors }"
+              [(ngModel)]="addPersonalInformation.maratial_status" required #maratial_status="ngModel">
+              <option value=null>Select Marital Status</option>
+              <option>Single</option>
+              <option>Married</option>
+            </select>
+          </div>
+          <div *ngIf="f.submitted && maratial_status.errors" class="invalid-feedback">
+            <div *ngIf="maratial_status.errors['required']">Marital status is required</div>
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Blood Group</label>
+            <select class="form-select" name="blood_group"
+              [ngClass]="{ 'is-invalid': f.submitted && blood_group.errors }"
+              [(ngModel)]="addPersonalInformation.blood_group" required #blood_group="ngModel">
+              <option value="">Select Blood Group</option>
+              <option>A+</option>
+              <option>A-</option>
+              <option>B+</option>
+              <option>B-</option>
+              <option>AB+</option>
+              <option>AB-</option>
+              <option>O+</option>
+              <option>O-</option>
+            </select>
+          </div>
+          <div *ngIf="f.submitted && blood_group.errors" class="invalid-feedback">
+            <div *ngIf="blood_group.errors['required']">Blood group is required</div>
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Aadhaar No</label>
+            <input type="text" class="form-control" name="aadhar_number" numbersOnly maxlength="12"
+              [ngClass]="{ 'is-invalid': f.submitted && aadhar_number.errors }"
+              [(ngModel)]="addPersonalInformation.aadhar_number" required #aadhar_number="ngModel"
+              placeholder="Enter Aadhaar No">
+          </div>
+          <div *ngIf="f.submitted && aadhar_number.errors" class="invalid-feedback">
+            <div *ngIf="aadhar_number.errors['required']">Aadhaar number is required</div>
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Pan No</label>
+            <input type="text" class="form-control" name="pan_number" (keyup)="PANupCase($event)"
+              pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxlength="10"
+              [ngClass]="{ 'is-invalid': f.submitted && pan_number.errors }"
+              [(ngModel)]="addPersonalInformation.pan_number" required #pan_number="ngModel" placeholder="Enter Pan No">
+          </div>
+          <div *ngIf="f.submitted && pan_number.errors" class="invalid-feedback">
+            <div *ngIf="pan_number.errors['required']">PAN number is required</div>
+            <div *ngIf="pan_number.errors['pattern']">Please Enter valid PAN</div>
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Phone No</label>
+            <input type="text" class="form-control" name="phone_number" numbersOnly maxlength="10"
+              [ngClass]="{ 'is-invalid': f.submitted && phone_number.errors }"
+              [(ngModel)]="addPersonalInformation.phone_number" required #phone_number="ngModel"
+              placeholder="Enter Phone No">
+          </div>
+          <div *ngIf="f.submitted && phone_number.errors" class="invalid-feedback">
+            <div *ngIf="phone_number.errors['required']">Phone number is required</div>
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Father Name</label>
+            <input type="text" class="form-control" name="fathers_name"
+              [ngClass]="{ 'is-invalid': f.submitted && fathers_name.errors }"
+              [(ngModel)]="addPersonalInformation.fathers_name" required #fathers_name="ngModel"
+              placeholder="Enter Father Name">
+          </div>
+          <div *ngIf="f.submitted && fathers_name.errors" class="invalid-feedback">
+            <div *ngIf="fathers_name.errors['required']">Fathers name is required</div>
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Mother Name</label>
+            <input type="text" class="form-control" name="mothers_name"
+              [ngClass]="{ 'is-invalid': f.submitted && mothers_name.errors }"
+              [(ngModel)]="addPersonalInformation.mothers_name" required #mothers_name="ngModel"
+              placeholder="Enter Mother Name">
+          </div>
+          <div *ngIf="f.submitted && mothers_name.errors" class="invalid-feedback">
+            <div *ngIf="mothers_name.errors['required']">Mother name is required</div>
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Address 1</label>
+            <input type="text" class="form-control" name="address_line_1"
+              [ngClass]="{ 'is-invalid': f.submitted && address_line_1.errors }"
+              [(ngModel)]="addPersonalInformation.address_line_1" required #address_line_1="ngModel"
+              placeholder="Enter Address 1">
+          </div>
+          <div *ngIf="f.submitted && address_line_1.errors" class="invalid-feedback">
+            <div *ngIf="address_line_1.errors['required']">Address 1 is required</div>
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Address 2</label>
+            <input type="text" class="form-control" name="address_line_2"
+              [ngClass]="{ 'is-invalid': f.submitted && address_line_2.errors }"
+              [(ngModel)]="addPersonalInformation.address_line_2" #address_line_2="ngModel"
+              placeholder="Enter Address 2">
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Country</label>
+            <select class="form-select" name="country" [(ngModel)]="addPersonalInformation.country" required
+              #country="ngModel" [ngClass]="{ 'is-invalid': f.submitted && country.errors }" (change)="changeCountry()"
+              aria-label="Default select example">
+              <option value="" selected disabled>Select Country <span class="asterisk">*</span></option>
+              <option *ngFor="let country of countrylist" value={{country.id}}>{{country.name}}</option>
+            </select>
+          </div>
+          <div *ngIf="f.submitted && country.errors" class="invalid-feedback">
+            <div *ngIf="country.errors['required']">Country is required</div>
+          </div>
+        </div>
+
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>State</label>
+            <select class="form-select" name="state" [(ngModel)]="addPersonalInformation.state" required
+              #state="ngModel" [ngClass]="{ 'is-invalid': f.submitted && state.errors }"
+              (change)="changeState(addPersonalInformation.state)" aria-label="Default select example">
+              <option value="" selected disabled>Select State <span class="asterisk">*</span></option>
+              <option *ngFor="let state of statelist" value={{state.state_id}}>{{state.name}}</option>
+            </select>
+          </div>
+          <div *ngIf="f.submitted && state.errors" class="invalid-feedback">
+            <div *ngIf="state.errors['required']">State is required</div>
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>City</label>
+            <select class="form-select" name="city" [(ngModel)]="addPersonalInformation.city" required #city="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && city.errors }" aria-label="Default select example">
+              <option value="" selected disabled>Select City <span class="asterisk">*</span></option>
+              <option *ngFor="let city of cityList" value={{city.city_id}}>{{city.name}}</option>
+            </select>
+          </div>
+          <div *ngIf="f.submitted && city.errors" class="invalid-feedback">
+            <div *ngIf="city.errors['required']">city is required</div>
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Emergency Contact Name</label>
+            <input type="text" class="form-control" name="emergency_contact_name"
+              [ngClass]="{ 'is-invalid': f.submitted && emergency_contact_name.errors }"
+              [(ngModel)]="addPersonalInformation.emergency_contact_name" required #emergency_contact_name="ngModel"
+              placeholder="Enter Emergency Contact Name">
+          </div>
+          <div *ngIf="f.submitted && emergency_contact_name.errors" class="invalid-feedback">
+            <div *ngIf="emergency_contact_name.errors['required']">Emergency contact name is required</div>
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Emergency Contact Phone No</label>
+            <input type="number" class="form-control" name="emergency_contact_phone_no"
+              [ngClass]="{ 'is-invalid': f.submitted && emergency_contact_phone_no.errors }"
+              [(ngModel)]="addPersonalInformation.emergency_contact_phone_no" required
+              #emergency_contact_phone_no="ngModel" placeholder="Enter Emergency Contact Phone No">
+          </div>
+          <div *ngIf="f.submitted && emergency_contact_phone_no.errors" class="invalid-feedback">
+            <div *ngIf="emergency_contact_phone_no.errors['required']">Emergency contact phone no is required</div>
+          </div>
+        </div>
+        <div class="btnupdate btn_wrap">
+          <button type="submit" class="btn btn-primary">UPDATE</button>
+          <button type="button" class="btn btn-primary non-active-btn">CANCEL</button>
+        </div>
+      </form>
+    </div>
+    <div class="mainfield" *ngIf="editInput=='editacademic'">
+      <div class="allfield" *ngFor="let md of AcademicOptionData; let i=index">
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Academic Qualification</label>
+            <select class="form-select" [(ngModel)]="md.qualifications">
+              <option value="">Select Qualification</option>
+              <option *ngFor="let qualification of qualificationList" value="{{qualification.id}}">
+                {{qualification.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Add Details</label>
+            <input type="text" [(ngModel)]="md.details" class="form-control" placeholder="Enter Details">
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <input class="filedisplay" (change)="uploadAcademicFile($event ,i)" type="file" #academicfile>
+            <button class="docsUpload" (click)="academicfile.click()">Upload File</button>
+            <div class="AddBtn" (click)="addAcademicOption()" *ngIf="i==0"><img src="assets/icons/add1.png" alt="">
+            </div>
+            <div class="RemoveBtn" (click)="removeAcademicOption(i)" *ngIf="i!=0"><img src="assets/icons/minus.png"
+                alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="academic_btn">
+
+        <div class="btnupdate btn_wrap">
+          <button type="button" (click)="AcademicUpdate()" class="btn btn-primary">UPDATE</button>
+          <button type="button" class="btn btn-primary non-active-btn">CANCEL</button>
+        </div>
+      </div>
+    </div>
+    <div class="mainfield" *ngIf="editInput=='editprofessional'">
+      <div class="allfield" *ngFor="let md of ProfessionalOptionData; let i=index">
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Name of the Organization</label>
+            <input type="text" [(ngModel)]="md.organization_name" class="form-control"
+              placeholder="Enter Organization Name">
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <input class="filedisplay" (change)="uploadProfessionalFile($event ,i)" type="file" #file1>
+            <button class="docsUpload" (click)="file1.click()">Upload File</button>
+            <div class="AddBtn" (click)="addProfessionalOption()" *ngIf="i==0"><img src="assets/icons/add1.png" alt="">
+            </div>
+            <div class="RemoveBtn" (click)="removeProfessionalOption(i)" *ngIf="i!=0"><img src="assets/icons/minus.png"
+                alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="academic_btn">
+
+        <div class="btnupdate btn_wrap">
+          <button type="button" (click)="professionalUpdate()" class="btn btn-primary">UPDATE</button>
+          <button type="button" class="btn btn-primary non-active-btn">CANCEL</button>
+        </div>
+      </div>
+    </div>
+    <div class="mainfield" *ngIf="editInput=='editlicense'">
+      <div class="allfield" *ngFor="let md of LicenseOptionData; let i=index">
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Licenses & Certification</label>
+            <input type="text" [(ngModel)]="md.license_name" class="form-control"
+              placeholder="Licenses & Certification">
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <input class="filedisplay" (change)="uploadLicenseFile($event ,i)" type="file" #file2>
+            <button class="docsUpload" (click)="file2.click()">Upload File</button>
+            <div class="AddBtn" (click)="addLicenseOption()" *ngIf="i==0"><img src="assets/icons/add1.png" alt="">
+            </div>
+            <div class="RemoveBtn" (click)="removeLicenseOption(i)" *ngIf="i!=0"><img src="assets/icons/minus.png"
+                alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="academic_btn">
+        <div class="btnupdate btn_wrap">
+          <button type="button" (click)="licenseUpdate()" class="btn btn-primary">UPDATE</button>
+          <button type="button" class="btn btn-primary non-active-btn">CANCEL</button>
+        </div>
+
+      </div>
+    </div>
+    <div class="mainfield" *ngIf="editInput=='editother'">
+      <div class="allfield" *ngFor="let md of OtherOptionData; let i=index">
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <label>Document Name</label>
+            <input type="text" [(ngModel)]="md.document_name" class="form-control"
+              placeholder="Licenses & Certification">
+          </div>
+        </div>
+        <div class="mb-3 field">
+          <div class="fieldValue">
+            <input class="filedisplay" (change)="uploadOtherFile($event ,i)" type="file" #file3>
+            <button class="docsUpload" (click)="file3.click()">Upload File</button>
+            <div class="AddBtn" (click)="addOtherOption()" *ngIf="i==0"><img src="assets/icons/add1.png" alt="">
+            </div>
+            <div class="RemoveBtn" (click)="removeOtherOption(i)" *ngIf="i!=0"><img src="assets/icons/minus.png" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="academic_btn">
+        <div class="btnupdate btn_wrap">
+          <button type="button" (click)="otherUpdate()" class="btn btn-primary">UPDATE</button>
+          <button type="button" class="btn btn-primary non-active-btn">CANCEL</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

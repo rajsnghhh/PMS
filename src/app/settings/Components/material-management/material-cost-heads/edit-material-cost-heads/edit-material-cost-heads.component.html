@@ -1,0 +1,36 @@
+<form>
+
+    <h5 class="heading">Material Group</h5>
+    <div class="flex-div">
+    <div class="mb-3" [formGroup]="wbsForm" [ngClass]="{ 'float-now': materialtype != '' }">
+        <div class="fieldValue">
+            <input type="text" name="materialtype" formControlName="materialtype"  [ngClass]="displayFieldCss(wbsForm,'materialtype')" [(ngModel)]="materialtype"  class="form-control">
+            <label class="floating-label">Enter Material Head Cost <span class="asterisk">*</span></label>
+        </div>
+        <div class="required" *ngIf="isFieldValid(wbsForm,'materialtype')">
+            <span class="text-danger" *ngIf="wbsForm.get('materialtype')?.errors?.['required']">Material Group is required</span>
+          </div>
+    </div>
+
+</div>
+    <h5 class="heading">Material Sub Group</h5>
+    <div class="allfield" *ngFor="let md of KeyScopesData; let i=index">
+        <div class="mb-5" [formGroup]="wbsForm">
+            <div class="fieldValue">
+                <input type="text" name="name" [(ngModel)]="md.name" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Enter Material Sub Group">
+
+            </div> 
+        </div>
+        <div class="mb-5">
+            <div class="fieldValue">
+                <div class="AddBtn" (click)="addKeyScope()" *ngIf="i==0"><img src="assets/icons/add1.png" alt="">
+                </div>
+                <div class="RemoveBtn" (click)="removeKeyScope(i)" *ngIf="i!=0"><img src="assets/icons/minus.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="editWBS()">EDIT</button>
+
+</form>

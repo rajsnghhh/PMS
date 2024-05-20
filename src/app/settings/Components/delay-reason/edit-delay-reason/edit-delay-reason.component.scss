@@ -1,0 +1,62 @@
+.required{
+    font-size: 12px;
+    top: 33px;
+    margin-left: 12px;
+}
+
+.option {
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+.option-input {
+    width: 93%;
+}
+
+.RemoveBtn {
+    width: 5%;
+
+    img {
+        height: 38px;
+        width: 38px;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+}
+
+.AddBtn {
+    width: 5%;
+
+    img {
+        height: 38px;
+        width: 38px;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+}
+
+.labeloption{
+    font-size: 14px;
+    font-weight: 500;
+    margin: 10px;
+}
+
+.colorpic {
+    margin-top: -34px;
+    margin-left: 202px;
+    height: 28px;
+    position: absolute;
+}
+
+.floating-label {
+    max-height: 15px !important;
+}
+
+.colrcode {
+    color: rgb(108 108 108);
+    font-weight: 500;
+}
+
+.no-color {
+    background-color: white !important;
+}

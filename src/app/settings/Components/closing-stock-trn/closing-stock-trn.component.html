@@ -1,0 +1,91 @@
+<form class="allfield" name="addPersonalInformation" #f="ngForm" (ngSubmit)="f.form.valid && personalSubmit()"
+    novalidate>
+    <div class="row">
+    <div class="col-lg-6 col-md-6 col-12 mb-3 field">
+        <div class="fieldValue">
+            <label>Select Financial Year</label>
+            <select class="form-select" name="current_financial_year" [ngClass]="{ 'is-invalid': f.submitted && current_financial_year.errors }"
+                [(ngModel)]="addPersonalInformation.current_financial_year" required #current_financial_year="ngModel">
+                <option value="">Financial Year</option>
+                <option value="{{projectSite.id}}" *ngFor="let projectSite of financialYearData">{{projectSite.description}}</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && current_financial_year.errors" class="invalid-feedback">
+            <div *ngIf="current_financial_year.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-12 mb-3">
+        <div class="fieldValue">
+            <label>Select Store<span class="asterisk">*</span></label>
+            <ng-select 
+                [items]="storeList" 
+                bindLabel="store_name" 
+                bindValue="id" 
+                [multiple]="true"
+                [ngClass]="{ 'is-invalid': f.submitted && store_list.errors }"
+                [(ngModel)]="addPersonalInformation.store_list"
+                required
+                name="store_list" 
+                #store_list="ngModel"
+            >
+            </ng-select>
+        </div>
+        <div *ngIf="f.submitted && store_list.errors" class="invalid-feedback">
+            <div>Please select atleast one store to proceed.</div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-12 mb-3">
+        <div class="fieldValue">
+            <label>Select Item Group<span class="asterisk">*</span></label>
+            <ng-select 
+                [items]="materialTypeList" 
+                bindLabel="name" 
+                bindValue="id" 
+                [multiple]="true"
+                [ngClass]="{ 'is-invalid': f.submitted && material__material_type__in.errors }"
+                [(ngModel)]="addPersonalInformation.material__material_type__in"
+                name="material__material_type__in" 
+                #material__material_type__in="ngModel"
+            >
+            </ng-select>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Stock Transfer Type</label>
+            <select class="form-select" name="method" [ngClass]="{ 'is-invalid': f.submitted && method.errors }"
+                [(ngModel)]="addPersonalInformation.method" required #method="ngModel">
+                <option value="">Select Stock Transfer Type</option>
+                <option value="fifo">Qty with FIFO validation</option>
+                <option value="last_rate">Validation by latest Rate(If Qty already Transferred)</option>
+            </select>
+        </div>
+        <div *ngIf="f.submitted && method.errors" class="invalid-feedback">
+            <div *ngIf="method.errors['required']">This is required</div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-6 col-md-6 col-12 field">
+        <div class="fieldValue">
+            <label>Location</label>
+            <input type="text" class="form-control" name="store__site__location__icontains"
+                [ngClass]="{ 'is-invalid': f.submitted && store__site__location__icontains.errors }"
+                [(ngModel)]="addPersonalInformation.store__site__location__icontains" #store__site__location__icontains="ngModel"
+                placeholder="">
+        </div>
+        <div *ngIf="f.submitted && store__site__location__icontains.errors" class="invalid-feedback">
+            <div *ngIf="store__site__location__icontains.errors['required']">This is required</div>
+        </div>
+    </div>
+
+    <div class="btnupdate">
+        <button type="submit" class="btn btn-primary">UPDATE</button>
+    </div>
+
+
+    </div>
+</form>

@@ -1,0 +1,404 @@
+.main-container {
+    display: flex;
+    margin-top: 10px;
+
+    .menu {
+        width: 20%;
+        padding: 0px 5px;
+    }
+
+    .secondheader {
+        width: 80%;
+        padding: 0 5px;
+        margin-top: -27px;
+    }
+}
+
+
+.monthlist {
+    list-style: none;
+    background: rgba(102, 118, 255, 0.05);
+    padding: 0;
+}
+
+.mnthrange:hover {
+    background: #dbf1ff;
+}
+
+.mnthrange.active {
+    background: #b0e0fe;
+}
+
+.year {
+    color: rgb(11, 136, 214);
+    font-size: 20px;
+    font-weight: 500;
+    border: solid 1px #CCCCCC;
+    width: 100%;
+    height: 45px;
+    padding: 0 15px;
+    border-radius: 4px;
+
+    option {
+        font-size: 12px;
+    }
+}
+
+.mnthrange.active {
+    border-bottom: 1px solid#3F65FF;
+    color: #3F65FF;
+}
+
+.headerlinedata.bg {
+    background-color: rgb(244, 171, 186, .3)
+}
+
+.datebtn.bg {
+    background-color: #DD2E44;
+}
+
+.mnthrange {
+    padding: 13px 20px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 400;
+    color: #666666;
+}
+
+.firsthead {
+    border: 0;
+    background: transparent;
+    font-weight: 600;
+    color: #3F65FF;
+    padding: 0;
+    border-bottom: 1px solid;
+}
+
+.yeardropdown {
+    border-radius: 5px;
+    margin-left: 28px;
+    border: solid 1px #CCCCCC;
+    background: white;
+}
+
+.yearselect {
+    border: 0;
+    font-size: 10px;
+}
+
+.tablediv {
+    position: absolute;
+}
+
+.firstrow {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.firstrowhead {
+    list-style: none;
+    margin-top: 36px;
+}
+
+.headerline {
+    display: flex;
+    font-size: 13px;
+    color: #1795C7;
+
+    .daterow {
+        margin-left: 21px;
+    }
+
+    .loginrow {
+        margin-left: 80px;
+    }
+
+    .logoutrow {
+        margin-left: 52px;
+    }
+
+    .loggedrow {
+        margin-left: 38px;
+    }
+
+    .deviationrow {
+        margin-left: 23px;
+    }
+}
+
+.headerlinedata {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    align-items: center;
+    font-size: 11px;
+    color: black;
+    font-weight: 500;
+    background: #E7F2F8;
+    padding: 6px;
+    position: relative;
+    height: 40px;
+    margin: 5px 5px 5px 75px;
+}
+
+.headerlinedata2 {
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    align-items: center;
+    font-size: 16px;
+    color: black;
+    font-weight: 500;
+    background: #dddddd59;
+    padding: 20px;
+    position: relative;
+    height: 40px;
+    margin: 5px 5px 5px 5px;
+}
+
+.addbutton {
+    height: 20px;
+    width: 20px;
+    margin-top: 2px;
+    margin-left: -21px;
+    cursor: pointer;
+}
+
+.addmore {
+    background: transparent;
+    border: 0;
+}
+
+.modal-content {
+    position: relative;
+    display: flex;
+    width: 70%;
+}
+
+.submitJustify {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.flex-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .mb-3 {
+        width: 48.5%;
+    }
+}
+
+.flex-div4 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.datenum {
+    font-size: 22px;
+    padding: 0;
+    line-height: 1;
+    font-weight: 700;
+    color: white;
+    width: 100%;
+    margin: 0px 0 -20px 0;
+}
+
+.mnthtxt {
+    font-size: 10px;
+    color: white;
+    width: 100%;
+}
+
+.datebtn {
+    background: #09689D;
+    width: 70px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: -75px;
+    top: -5px;
+    height: 50px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    flex-wrap: wrap;
+    text-align: center;
+    align-items: center;
+}
+
+.floating-label {
+    color: #7a7a7a;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+
+    .asterisk {
+        color: red;
+    }
+}
+
+.modal-header {
+    font-weight: 500;
+    height: 40px;
+}
+
+.modal-header .btn-close {
+    font-size: 28px;
+    color: #6f7478c9;
+    background: #dbe6e6cc !important;
+    padding: 1px 1px;
+}
+
+.cross {
+    margin-top: -5px;
+}
+
+
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    margin-top: -8px;
+    margin-bottom: -10px;
+}
+
+.modal-title {
+    margin-bottom: 0px;
+    font-size: 16px !important;
+    font-weight: 500;
+}
+
+.applybtn {
+    border-radius: 20px;
+    height: 26px;
+    display: flex;
+    margin-top: -5px;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+.status {
+    margin-right: 15px;
+}
+
+.statusabsent {
+    margin-right: 15px;
+    background-color: #1795C7;
+}
+
+.attendancebody {
+    padding: 0;
+
+    li {
+        border: solid 1px #CCCCCC;
+        border-radius: 5px;
+    }
+}
+
+.required {
+    font-size: 12px;
+    top: 33px;
+    margin-left: 12px;
+}
+
+.loginrow2 {
+    margin-left: -90px;
+}
+
+.loginrow3 {
+    margin-right: 38px;
+}
+
+.viewState{
+    display: flex !important;
+    .custom-section {
+        .dropdown-content {
+            right: -122px;
+            top: -11px;
+            width: 123px;
+        }
+        .dropdown-content::after {
+            transform: rotateZ(90deg);
+            top: 14px;
+            right: 59px;
+        }
+    }
+}
+
+.img-container {
+    span {
+        display: inline-flex;
+        min-width: 165px;
+        padding: 3px 10px;
+        cursor: pointer;
+    }
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    padding: 5px;
+}
+
+.custom-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    img {
+        max-height: 20px;
+    }
+      
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        padding: 5px;
+        margin-right: 50px;
+    }
+      
+    .dropdown-content {
+        display: none;
+        right: -10px;
+        top: 26px;
+        position: absolute;
+        background-color: white;
+        box-shadow: 0px 0px 11px 0px rgb(0 0 0 / 54%);
+        z-index: 1;
+        border-radius: 13px;
+        padding: 0px 5px;
+    }
+    .dropdown-content::after {
+        display: inline-block;
+        margin-left: 0.255em;
+        vertical-align: 0.255em;
+        content: "";
+        border-top: 0.3em solid;
+        border-right: 0.3em solid transparent;
+        border-bottom: 0;
+        border-left: 0.3em solid transparent;
+        color: white;
+        position: absolute;
+        transform: rotateZ(180deg);
+        top: -2px;
+        zoom: 2;
+        right: 7px;
+    }
+    .img-container {
+        margin-top: 10px;
+        padding: 0px 4px;
+        font-size: 10px;
+        span {
+            display: inline-flex;
+            min-width: 165px;
+            padding: 3px 10px;
+            cursor: pointer;
+        }
+    }
+    .dropdown:hover .dropdown-content {display: block;}
+    
+}

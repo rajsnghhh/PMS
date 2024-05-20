@@ -1,0 +1,74 @@
+.sendsmsemail-section {
+    margin: 0px 0px;
+    padding: 40px 0px;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 46px;
+}
+
+.sendsmsemail-sect {
+    margin: 0px 0px;
+    padding: 0px 0px;
+    background: #f4f4f4;
+    width: 447px;
+    border: #5577FF 1px solid;
+}
+
+.header-text {
+    margin: 0px 0px;
+    padding: 14px 19px;
+    background: #5577FF;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.sendsmsemail-text {
+    margin: 0px 0px;
+    padding: 14px 19px;
+    position: relative;
+    width: 100%;
+}
+
+.sendsmsemail-text .form-check-inline {
+    display: inline-block;
+    margin-right: 1rem;
+    margin-bottom: 7px;
+    font-size: 18px;
+    width: 100%;
+}
+
+.sendsmsemail-text .form-check-input {
+    width: 22px;
+    height: 22px;
+    margin-right: 4px;
+    border-radius: 0px !important;
+}
+
+.btd-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 60px;
+}
+
+.btn-save {
+    background-image: linear-gradient(to right, #40d4e6, #6675fe);
+    font-weight: initial;
+    padding: 12px 30px;
+    margin-top: 8px;
+    border-radius: 28px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    float: right;
+    min-width: 130px;
+    margin-left: 15px;
+}

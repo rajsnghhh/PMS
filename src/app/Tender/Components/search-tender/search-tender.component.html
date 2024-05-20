@@ -1,0 +1,91 @@
+<form role="form" [formGroup]="filterForm">
+    <div class="flex-div">
+        <div class="mb-3" *ngFor="let controls of TenderJVList">
+            <section [ngSwitch]="controls.form_input_type">
+                <div class="adform" *ngSwitchCase="'text'">
+                    <label class="formlabel">{{controls.form_label}}</label>
+                    <input type="text" class="form-control" placeholder="{{controls.form_label}}"
+                        #[controls.form_internal_name]="ngModel" [ngModelOptions]="{standalone: true}"
+                        name="{{controls.form_internal_name}}" [(ngModel)]="tenderdata[controls.id]">
+                </div>
+                <div class="adform" *ngSwitchCase="'textarea'">
+                    <label class="formlabel">{{controls.form_label}}</label>
+                    <input type="textarea" class="form-control" placeholder="{{controls.form_label}}"
+                        #[controls.form_internal_name]="ngModel" [ngModelOptions]="{standalone: true}"
+                        name="{{controls.form_internal_name}}" [(ngModel)]="tenderdata[controls.id]">
+                </div>
+                <div class="adform" *ngSwitchCase="'number'">
+                    <label class="formlabel">{{controls.form_label}}</label>
+                    <input type="number" class="form-control" placeholder="{{controls.form_label}}"
+                        #[controls.form_internal_name]="ngModel" [ngModelOptions]="{standalone: true}"
+                        name="{{controls.form_internal_name}}" [(ngModel)]="tenderdata[controls.id]">
+                </div>
+                <div class="adform" *ngSwitchCase="'date'">
+                    <label class="formlabel">{{controls.form_label}}</label>
+                    <input type="date" class="form-control" placeholder="{{controls.form_label}}"
+                        #[controls.form_internal_name]="ngModel" [ngModelOptions]="{standalone: true}"
+                        name="{{controls.form_internal_name}}" [(ngModel)]="tenderdata[controls.id]">
+                </div>
+
+                <!-- <section *ngSwitchCase="'reference'" [ngClass]="{'hiddenField': controls.is_hidden }">
+                    <label class="formlabel">{{controls.form_label}}</label>
+                    <angular2-multiselect [data]="controls.dependent_dropdown_choices"
+                        [settings]="MultidropdownSettings" [required]="controls.is_required == true ? true : false"
+                        #[controls.form_internal_name]="ngModel" name="{{controls.form_internal_name}}"
+                        [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="tenderdata[controls.id]"></angular2-multiselect>
+                </section> -->
+
+                <div class="adform" *ngSwitchCase="'boolean'" class="custom-check booleanInput"
+                    [ngClass]="{'hiddenField': controls.is_hidden }">
+                    <label class="container price_box">
+                        <h1>{{controls.form_label}}</h1>
+                        <h2>{{controls.form_description}}</h2>
+                        <input type="checkbox" [required]="controls.is_required == true ? true : false"
+                            #[controls.form_internal_name]="ngModel" name="{{controls.form_internal_name}}"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="tenderdata[controls.id]"
+                            [checked]="tenderdata[controls.form_internal_name]=='true'">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+
+                <div class="adform" *ngSwitchCase="'formulla'" [ngClass]="{'hiddenField': controls.is_hidden }">
+                    <label class="formlabel">{{controls.form_label}}</label>
+                    <input type="text" class="form-control" [required]="controls.is_required == true ? true : false"
+                        #[controls.form_internal_name]="ngModel" name="{{controls.form_internal_name}}"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="tenderdata[controls.id]">
+                </div>
+
+                <div class="adform" *ngSwitchCase="'dropdown'">
+                    <label class="formlabel">{{controls.form_label}}</label>
+                    <select class="form-control" aria-label="Default select example"
+                        #[controls.form_internal_name]="ngModel" name="{{controls.form_internal_name}}"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="tenderdata[controls.id]">
+                        <option selected value="">Select {{controls.form_label}}</option>
+                        <option value="{{dropdown_choice.id}}"
+                            *ngFor="let dropdown_choice of controls.dropdown_choices">
+                            {{dropdown_choice.itemName}}</option>
+                    </select>
+                </div>
+
+                <div class="adform" *ngSwitchCase="'reference'" [ngClass]="{'hiddenField': controls.is_hidden }">
+                    <label class="formlabel">{{controls.form_label}}</label>
+                    <select class="form-control" aria-label="Default select example"
+                        #[controls.form_internal_name]="ngModel" name="{{controls.form_internal_name}}"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="tenderdata[controls.id]">
+                        <option selected value="">Select {{controls.form_label}}</option>
+                        <option value="{{dropdown_choice.option_id}}"
+                            *ngFor="let dropdown_choice of controls.dependent_dropdown_choices">
+                            {{dropdown_choice.itemName}}</option>
+                    </select>
+                </div>
+                
+            </section>
+        </div>
+    </div>
+
+    <div class="actionButton">
+        <button type="submit" class="btn btn-primary" (click)="tenderFilter()">FILTER</button>
+        <button type="submit" class="btn btn-primary" (click)="resetFilter()">RESET FILTER</button>
+    </div>
+</form>

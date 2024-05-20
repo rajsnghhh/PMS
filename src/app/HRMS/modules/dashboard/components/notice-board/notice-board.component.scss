@@ -1,0 +1,81 @@
+::ng-deep{
+    .owl-theme .owl-dots, .owl-theme .owl-nav {
+        display: none;
+    }
+    .owl-nav {
+        display: none !important;
+    }
+    .owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span {
+        background: #3F65FF !important;
+    }
+    .owl-stage {
+        .notice-item {
+            background: #f4f4f4c7;
+            position: relative;
+            padding: 15px;
+            padding: 30px 20px 40px 20px;
+            border-radius: 8px;
+            img {
+                position: absolute;
+                bottom: 10px;
+                right: 20px;
+                height: 30px;
+                width: auto;
+            }
+            p {
+                color: #666666;
+                font-size: 12px;
+                line-height: 1;
+                min-height: 55px;
+                max-height: 55px;
+                overflow-y: scroll;
+                padding-right: 15px;
+                margin-bottom: 7px;
+            }
+            h5 {
+                color: #000000;
+                font-size: 12px;
+                font-weight: 500;
+            }
+            h4 {
+                color: #000000;
+                font-size: 12px;
+                font-weight: 500;
+            }
+        }
+        
+    }
+}
+.notice-container {
+    margin: 5px;
+    border: 1px solid #D9D9D9;
+    padding: 20px;
+    border-radius: 18px;
+    h1 {
+        color: #3F65FF;
+        font-size: 18px;
+    }
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 18px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #6676FF;
+    border-radius: 18px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #6676FF;
+    border-radius: 18px;
+  }

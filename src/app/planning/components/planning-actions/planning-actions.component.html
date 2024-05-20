@@ -1,0 +1,88 @@
+<section *ngIf="swowRiskApprovalStatus" class="approver-status-section">
+    <h1>Approval Status</h1>
+    <ul>
+        <li *ngFor="let approver of RiskApprovalMatrixData">
+            <span class="approver-icon" [ngClass]="{'approved': approver.action_status == 'Agree' }"></span>
+            <span class="approver-name">{{approver.full_name}}</span>
+            <span class="approver-role">{{approver.role}}</span>
+            <span class="approver-status">
+                <span class="approver-actioin">{{approver.action_status}}</span>
+                <span class="approver-remarks">{{approver.remarks}}</span>
+            </span>
+        </li>
+    </ul>
+    <section *ngIf="projectData.is_risk_approval_user" class="approver-update-status">
+        <form #risk_approval="ngForm" (ngSubmit)="risk_approval.form.valid && submitriskApproval()" novalidate>
+        <h1>Update approval status :</h1>
+        <section class="custom-radio-conatainer">
+            <div class="mb-3">
+            <label class="container">Agree
+                <input type="radio" required name="option" #riskApprovalOptionn="ngModel" value="Agree" [(ngModel)]="riskApprovalOption">
+                <span class="checkmark"></span>
+              </label>
+              
+              <label class="container">Need Further Clarification
+                <input type="radio" required name="option" #riskApprovalOptionn="ngModel" value="Need Further Clarification" [(ngModel)]="riskApprovalOption">
+                <span class="checkmark"></span>
+              </label>
+              
+              <label class="container">Hold
+                <input type="radio" required name="option" #riskApprovalOptionn="ngModel" value="Hold" [(ngModel)]="riskApprovalOption">
+                <span class="checkmark"></span>
+              </label>
+              
+              <label class="container">Pending
+                <input type="radio" required name="option" #riskApprovalOptionn="ngModel" value="Pending" [(ngModel)]="riskApprovalOption">
+                <span class="checkmark"></span>
+              </label>
+              <div *ngIf="risk_approval.submitted && riskApprovalOptionn.errors" class="invalid-feedback">
+                <div *ngIf="riskApprovalOptionn.errors['required']">Please select one.</div>
+              </div>
+            </div>
+        </section>
+        <div class="mb-3">
+            <label for="selectGroup">Remarks <span class="asterisk">*</span></label>
+            <textarea [ngModelOptions]="{standalone: true}" #riskApprovalRemarkss="ngModel" required name="" id="" cols="30" rows="3" [(ngModel)]="riskApprovalRemarks"></textarea>
+            <div *ngIf="risk_approval.submitted && riskApprovalRemarkss.errors" class="invalid-feedback">
+                <div *ngIf="riskApprovalRemarkss.errors['required']">This is required.</div>
+            </div>
+        </div>
+        <div class="mb-3 member-input">
+            <section class="custom-section" >
+                <label class="container">I have verified all the document.
+                    <input type="checkbox" #checkboxChecked="ngModel" required  name="sentForApproval" [ngModelOptions]="{standalone: true}" [(ngModel)]="RiskApprovalTnCAccepted">
+                    <span class="checkmark"></span>
+                </label>
+            </section>
+            <div *ngIf="risk_approval.submitted && checkboxChecked.errors" class="invalid-feedback">
+                <div *ngIf="checkboxChecked.errors['required']">Please check to proceed.</div>
+            </div>
+        </div>
+        <button type="submit">Update</button>
+        </form>
+    </section>
+</section>
+<!-- <button  class="reject" type="button" *ngIf="rejectScope?.includes(selectedScope)">Reject</button>
+<button type="button" *ngIf="approveScope?.includes(selectedScope)">Approve</button> -->
+<!-- <button type="button" (click)="planningSave()">Save</button> -->
+<button type="button" class="nxt_btn" (click)="planningNext()" *ngIf="!nextScope?.includes(selectedScope)">{{actionButtonText}}</button>
+<!-- Modal -->
+<!-- <div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this email ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary close" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div> -->

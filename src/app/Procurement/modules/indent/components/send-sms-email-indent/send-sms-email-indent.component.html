@@ -1,0 +1,71 @@
+<div class="sendsmsemail-section hideOnPrintScreen">
+
+  <div class="sendsmsemail-sect">
+    <div class="header-text">Notify Vendor</div>
+    <div class="sendsmsemail-text">
+
+      <div class="form-check-inline" *ngFor="let item of vendorList; let i = index">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" value="" (change)="onVendorRfq($event, item.id)"
+            [disabled]="alreadyRfqVendor?.includes(item.id)" [checked]="alreadyRfqVendor?.includes(item.id)">
+          {{item.vendor_master_data[0]?.value}} | <b>{{item.vendor_master_data[1]?.value}}</b> |
+          {{item.vendor_master_data[2]?.value}} | <b> {{item.vendor_master_data[4]?.value}}</b>
+        </label>
+      </div>
+
+
+    </div>
+    <div class="btd-section" *ngIf="vendorRfqIds.length>0">
+      <button type="submit" class="btn-save" (click)="notifyVendor()">Notify</button>
+    </div>
+  </div>
+
+
+  <!-- <div class="form-check-inline">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" value=""> Mobile No. <b>123 456 7890</b> | Name: Ravi Jha
+        </label>
+      </div>
+
+      <div class="form-check-inline">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" value=""> Mobile No. <b>123 456 7890</b> | Name: Ravi Jha
+        </label>
+      </div>
+
+      <div class="form-check-inline">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" value=""> Mobile No. <b>123 456 7890</b> | Name: Ravi Jha
+        </label>
+      </div>
+
+      <div class="form-check-inline">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" value=""> Mobile No. <b>123 456 7890</b> | Name: Ravi Jha
+        </label>
+      </div>
+
+      <div class="form-check-inline">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" value=""> Mobile No. <b>123 456 7890</b> | Name: Ravi Jha
+        </label>
+      </div>
+
+      <div class="form-check-inline">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" value=""> Mobile No. <b>123 456 7890</b> | Name: Ravi Jha
+        </label>
+      </div>
+
+      <div class="form-check-inline">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" value=""> Mobile No. <b>123 456 7890</b> | Name: Ravi Jha
+        </label>
+      </div>
+
+      <div class="form-check-inline">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" value=""> Mobile No. <b>123 456 7890</b> | Name: Ravi Jha
+        </label>
+      </div>
+    </div> -->

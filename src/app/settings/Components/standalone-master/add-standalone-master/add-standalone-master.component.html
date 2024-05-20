@@ -1,0 +1,71 @@
+<form role="form" [formGroup]="addcompanyForm">
+
+  <div class="mb-3" [ngClass]="{ 'float-now': addCompany.partyname != '' }">
+    <input type="text" class="form-control" id="role" formControlName="party_name" [(ngModel)]="addCompany.partyname"
+      [ngClass]="displayFieldCss(addcompanyForm,'party_name')">
+    <label class="floating-label">Enter Party Name <span class="asterisk">*</span></label>
+
+    <div class="required" *ngIf="isFieldValid(addcompanyForm,'party_name')">
+      <span class="text-danger" *ngIf="addcompanyForm.get('party_name')?.errors?.['required']">Party Name is
+        required</span>
+    </div>
+  </div>
+  <div class="mb-3" [ngClass]="{ 'float-now': addCompany.partyaddress != '' }">
+    <textarea type="text" class="form-control" id="role" formControlName="party_address"
+      [(ngModel)]="addCompany.partyaddress" [ngClass]="displayFieldCss(addcompanyForm,'party_address')"></textarea>
+    <label class="floating-label">Enter Party Address <span class="asterisk">*</span></label>
+
+    <div class="required" *ngIf="isFieldValid(addcompanyForm,'party_address')">
+      <span class="text-danger" *ngIf="addcompanyForm.get('party_address')?.errors?.['required']">Party Address is
+        required</span>
+    </div>
+  </div>
+  <div class="mb-3" [ngClass]="{ 'float-now': addCompany.leadmembername != '' }">
+    <input type="text" class="form-control" id="role" formControlName="lead_member_name"
+      [(ngModel)]="addCompany.leadmembername" [ngClass]="displayFieldCss(addcompanyForm,'lead_member_name')">
+    <label class="floating-label">Enter Lead Member Name <span class="asterisk">*</span></label>
+
+    <div class="required" *ngIf="isFieldValid(addcompanyForm,'lead_member_name')">
+      <span class="text-danger" *ngIf="addcompanyForm.get('lead_member_name')?.errors?.['required']">Lead Member Name is
+        required</span>
+    </div>
+  </div>
+
+  <div class="mb-3" [ngClass]="{ 'float-now': addCompany.pannumber != '' }">
+    <input type="text" class="form-control" id="role" formControlName="pan" [(ngModel)]="addCompany.pannumber"
+      (keyup)="PANupCase($event)" maxlength="10">
+    <label class="floating-label">Enter PAN No.</label>
+    <div class="required" *ngIf="addcompanyForm.get('pan')?.errors?.['pattern']">
+      <span class="text-danger">Valid PAN is required</span>
+    </div>
+  </div>
+
+  <div class="mb-3" [ngClass]="{ 'float-now': addCompany.gstnumber != '' }">
+    <input type="text" class="form-control" id="role" formControlName="gst" [(ngModel)]="addCompany.gstnumber">
+    <label class="floating-label">Enter GST No.</label>
+
+    <!-- <div class="required" *ngIf="isFieldValid(addcompanyForm,'gst')">
+      <span class="text-danger" *ngIf="addcompanyForm.get('gst')?.errors?.['required']">GST No. is required</span>
+    </div> -->
+  </div>
+
+  <div class="mb-3" [ngClass]="{ 'float-now': addCompany.emailid != '' }">
+    <input type="text" class="form-control" id="role" autocomplete="off" formControlName="email"
+      [(ngModel)]="addCompany.emailid">
+    <label class="floating-label">Enter Email Id</label>
+    <div class="required" *ngIf="addcompanyForm.get('email')?.errors?.['pattern']">
+      <span class="text-danger">Valid Email is required</span>
+    </div>
+  </div>
+
+  <div class="mb-3" [ngClass]="{ 'float-now': addCompany.phonenumber != '' }">
+    <input type="text" class="form-control" id="role" formControlName="phone" [(ngModel)]="addCompany.phonenumber"
+      numbersOnly pattern="^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" minlength="4" maxlength="10">
+    <label class="floating-label">Enter Phone No.</label>
+    <div class="required" *ngIf="addcompanyForm.get('phone')?.errors?.['pattern']">
+      <span class="text-danger">Valid Phone is required</span>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary" (click)="addnewEmpMaster()">ADD</button>
+</form>

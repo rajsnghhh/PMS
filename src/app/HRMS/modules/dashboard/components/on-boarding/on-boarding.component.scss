@@ -1,0 +1,75 @@
+::ng-deep{
+    .owl-nav {
+        display: none !important;
+    }
+    .onboarding .owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span {
+        background: #fff !important;
+    }
+    .owl-stage {
+        .birth-item {
+            background: #fefbfb;
+            padding: 23px 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: auto;
+            height: 190px;
+            max-width: 180px;
+            .profile {
+                border-radius: 50px;
+                height: 40px;
+                width: 40px;
+            }
+            p {
+                color: #666666;
+                font-size: 10px;
+                line-height: 1;
+            }
+            h5 {
+                color: #000000;
+                font-size: 12px;
+                font-weight: 500;
+            }
+            h4 {
+                color: #000000;
+                font-size: 12px;
+                font-weight: 500;
+            }
+        }
+        
+    }
+}
+.notice-container {
+    border: 1px solid #D9D9D9;
+    padding: 20px 20px 25px 20px;
+    border-radius: 18px;
+    background: #3F65FF;
+    h1 {
+        color: #fff;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+    }
+    img {   
+        width: 60px;
+        height: 60px;
+        margin: 13px auto;
+    }
+    .ProfileIcon {
+        height: 60px;
+        width: 60px;
+        margin: 13px auto;
+        display: block;
+        background: url(../../../../../../assets/icons/bussiness-dress.png);
+        border-radius: 50px;
+        border: 1px solid black;
+        background-size: 85%;
+        background-repeat: no-repeat;
+        background-position: bottom;
+    }
+    .iocon {
+        width: 30px;
+        height: 30px;
+        margin: 0;
+        margin-right: 10px;
+    }
+}
